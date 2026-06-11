@@ -1,0 +1,6 @@
+{
+  "name": "VANTAM Strategy & Proposals",
+  "description": "Premium brand strategy, agency proposals, and client offers for VANTAM Netherlands Support Service.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
