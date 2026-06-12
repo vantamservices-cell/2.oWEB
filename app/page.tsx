@@ -27,7 +27,7 @@ import {
   SINGLE_SERVICES, 
   CONSULTATIONS_STORE,
   TESTIMONIALS 
-} from '../lib/data';
+} from '../data';
 
 // ============================================================================
 // SLEEK VECTOR MONOGRAM BRAND LOGO (PURE INLINE COMPONENT)
