@@ -16,6 +16,13 @@ type ContactPayload = {
   language?: unknown;
   website?: unknown;
   sourceUrl?: unknown;
+  audience?: unknown;
+  movingDate?: unknown;
+  city?: unknown;
+  budget?: unknown;
+  status?: unknown;
+  guarantor?: unknown;
+  help?: unknown;
 };
 
 type RateLimitEntry = {
@@ -119,6 +126,13 @@ export async function POST(request: NextRequest) {
   const language = cleanSingleLine(payload.language, 10) || 'unknown';
   const sourceUrl = cleanSingleLine(payload.sourceUrl, 500);
   const website = cleanText(payload.website, 200);
+  const audience = cleanSingleLine(payload.audience, 50);
+  const movingDate = cleanSingleLine(payload.movingDate, 20);
+  const city = cleanSingleLine(payload.city, 80);
+  const budget = cleanSingleLine(payload.budget, 40);
+  const status = cleanSingleLine(payload.status, 40);
+  const guarantor = cleanSingleLine(payload.guarantor, 40);
+  const help = cleanSingleLine(payload.help, 80);
 
   // Bots frequently fill this hidden field. Return success without sending anything.
   if (website) {
@@ -141,6 +155,13 @@ export async function POST(request: NextRequest) {
     `Email: ${email}`,
     `Request type: ${inquiryType}`,
     `Language: ${language}`,
+    audience ? `Audience: ${audience}` : '',
+    movingDate ? `Moving date: ${movingDate}` : '',
+    city ? `City / region: ${city}` : '',
+    budget ? `Housing budget: ${budget}` : '',
+    status ? `Current status: ${status}` : '',
+    guarantor ? `Guarantor situation: ${guarantor}` : '',
+    help ? `Required help: ${help}` : '',
     `Submitted: ${submittedAt}`,
     sourceUrl ? `Page: ${sourceUrl}` : '',
     '',
@@ -159,6 +180,13 @@ export async function POST(request: NextRequest) {
           <tr><td style="padding:8px 0;color:#64748b">Email</td><td style="padding:8px 0"><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></td></tr>
           <tr><td style="padding:8px 0;color:#64748b">Request type</td><td style="padding:8px 0">${escapeHtml(inquiryType)}</td></tr>
           <tr><td style="padding:8px 0;color:#64748b">Language</td><td style="padding:8px 0">${escapeHtml(language)}</td></tr>
+          ${audience ? `<tr><td style="padding:8px 0;color:#64748b">Audience</td><td style="padding:8px 0">${escapeHtml(audience)}</td></tr>` : ''}
+          ${movingDate ? `<tr><td style="padding:8px 0;color:#64748b">Moving date</td><td style="padding:8px 0">${escapeHtml(movingDate)}</td></tr>` : ''}
+          ${city ? `<tr><td style="padding:8px 0;color:#64748b">City / region</td><td style="padding:8px 0">${escapeHtml(city)}</td></tr>` : ''}
+          ${budget ? `<tr><td style="padding:8px 0;color:#64748b">Housing budget</td><td style="padding:8px 0">${escapeHtml(budget)}</td></tr>` : ''}
+          ${status ? `<tr><td style="padding:8px 0;color:#64748b">Current status</td><td style="padding:8px 0">${escapeHtml(status)}</td></tr>` : ''}
+          ${guarantor ? `<tr><td style="padding:8px 0;color:#64748b">Guarantor situation</td><td style="padding:8px 0">${escapeHtml(guarantor)}</td></tr>` : ''}
+          ${help ? `<tr><td style="padding:8px 0;color:#64748b">Required help</td><td style="padding:8px 0">${escapeHtml(help)}</td></tr>` : ''}
           <tr><td style="padding:8px 0;color:#64748b">Submitted</td><td style="padding:8px 0">${escapeHtml(submittedAt)}</td></tr>
           ${sourceUrl ? `<tr><td style="padding:8px 0;color:#64748b">Page</td><td style="padding:8px 0">${escapeHtml(sourceUrl)}</td></tr>` : ''}
         </tbody>

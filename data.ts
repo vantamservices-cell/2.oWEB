@@ -1,5 +1,32 @@
 export type Language = 'uk' | 'ru' | 'en';
 
+export const SUPPORTED_LOCALES = ['uk', 'ru', 'en'] as const;
+export const DEFAULT_LOCALE: Language = 'uk';
+
+export type RegionCode = 'nl';
+
+export interface RegionalProfile {
+  code: RegionCode;
+  name: Record<Language, string>;
+  defaultLocale: Language;
+}
+
+export const REGION_PROFILES: RegionalProfile[] = [
+  {
+    code: 'nl',
+    name: {
+      uk: 'Нідерланди',
+      ru: 'Нидерланды',
+      en: 'The Netherlands',
+    },
+    defaultLocale: 'en',
+  },
+];
+
+export function localize<T>(values: Record<Language, T>, language: Language) {
+  return values[language];
+}
+
 export interface TranslationMatrix {
   navTitle: string;
   navSub: string;
@@ -166,7 +193,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     checklistTitle: "Планер переїзду",
     checklistSub: "Простий список завдань до від'їзду та на перші тижні в Нідерландах.",
     faqTitle: "Поширені запитання",
-    faqSub: "Чіткі відповіді про обсяг роботи, строки, підтримку до або після приїзду, житло та що відбувається після звернення.",
+    faqSub: "Чіткі відповіді про обсяг роботи, строки, оплату, повернення коштів, підтримку до або після приїзду та що відбувається після звернення.",
     pdfExportTitle: "Зберегти обраний пакет як PDF",
     pdfExportDesc: "Створіть зрозумілий PDF з обраним пакетом, його складом та межами роботи.",
     pdfBtn: "Експортувати PDF пакета",
@@ -210,7 +237,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
 
     calcSidebarTitle: "Що може коштувати затримка",
     calcAlternative: "Що допомога може зменшити",
-    calcPackageLabel: "Пакет Settle",
+    calcPackageLabel: "Пакет Arrival Setup",
     calcPackageDesc: "Покриває головні кроки після приїзду: реєстрацію, BSN, DigiD, банк, страхування, GP і листи.",
     calcSavingTag: "Порівняння для планування",
     calcNoRiskSelected: "Оберіть сценарії, щоб порівняти можливі витрати з підтримкою",
@@ -225,7 +252,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     calcRiskTextLabel: "Обрані сценарії:",
 
     pkgGridTitle: "Порівняйте пакети",
-    pkgGridSub: "Prepare, Settle і Thrive покривають різні обсяги допомоги до виїзду та після приїзду.",
+    pkgGridSub: "Prepare, Arrival Setup і Thrive покривають різні обсяги допомоги до виїзду та після приїзду.",
     pkgIdealTitle: "Найкраще для:",
     pkgScopeTitle: "Що входить у пакет:",
     pkgLimitsTitle: "Що не входить:",
@@ -235,8 +262,8 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     checklistPrepDesc: "Підготовка",
     checklistArrivalTab: "2. Перші 72 години",
     checklistArrivalDesc: "Після приїзду",
-    checklistSettleTab: "3. Протягом 30 днів",
-    checklistSettleDesc: "Налаштування побуту",
+    checklistSettleTab: "3. Arrival Setup",
+    checklistSettleDesc: "Післяприїзна організація",
 
     testimonialsTitle: "Типові ситуації",
     testimonialsSub: "Короткі приклади звернень, з якими люди приходять до VANTAM.",
@@ -248,7 +275,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     contactEmailLabel: "Адреса електронної пошти",
     contactTypeLabel: "З чим потрібна допомога?",
     contactTypePlaceholder: "Оберіть послугу або пакет...",
-    contactTypeOpt1: "Пакет: Prepare, Settle або Thrive",
+    contactTypeOpt1: "Пакет: Prepare, Arrival Setup або Thrive",
     contactTypeOpt2: "Окрема послуга",
     contactTypeOpt3: "Партнерський або рекомендаційний запит",
     contactTypeOpt4: "Консультація або загальне питання",
@@ -306,7 +333,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     checklistTitle: "Планировщик переезда",
     checklistSub: "Простой список задач до отъезда и на первые недели в Нидерландах.",
     faqTitle: "Часто задаваемые вопросы",
-    faqSub: "Понятные ответы об объёме работы, сроках, поддержке до или после приезда, жилье и том, что происходит после обращения.",
+    faqSub: "Понятные ответы об объёме работы, сроках, оплате, возвратах, поддержке до или после приезда и том, что происходит после обращения.",
     pdfExportTitle: "Сохранить выбранный пакет в PDF",
     pdfExportDesc: "Создайте понятный PDF с выбранным пакетом, его составом и границами работы.",
     pdfBtn: "Экспортировать PDF пакета",
@@ -350,7 +377,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
 
     calcSidebarTitle: "Что может стоить задержка",
     calcAlternative: "Что может снизить поддержка",
-    calcPackageLabel: "Пакет Settle",
+    calcPackageLabel: "Пакет Arrival Setup",
     calcPackageDesc: "Покрывает главные шаги после приезда: регистрацию, BSN, DigiD, банк, страховку, GP и письма.",
     calcSavingTag: "Сравнение для планирования",
     calcNoRiskSelected: "Выберите сценарии, чтобы сравнить возможные расходы с поддержкой",
@@ -365,7 +392,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     calcRiskTextLabel: "Выбранные сценарии:",
 
     pkgGridTitle: "Сравните пакеты",
-    pkgGridSub: "Prepare, Settle и Thrive покрывают разный объём помощи до выезда и после приезда.",
+    pkgGridSub: "Prepare, Arrival Setup и Thrive покрывают разный объём помощи до выезда и после приезда.",
     pkgIdealTitle: "Лучше всего для:",
     pkgScopeTitle: "Что входит в пакет:",
     pkgLimitsTitle: "Что не входит:",
@@ -375,8 +402,8 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     checklistPrepDesc: "Подготовка",
     checklistArrivalTab: "2. Первые 72 часа",
     checklistArrivalDesc: "После приезда",
-    checklistSettleTab: "3. В течение 30 дней",
-    checklistSettleDesc: "Настройка быта",
+    checklistSettleTab: "3. Arrival Setup",
+    checklistSettleDesc: "Послеприездная организация",
 
     testimonialsTitle: "Типичные ситуации",
     testimonialsSub: "Короткие примеры обращений, с которыми люди приходят в VANTAM.",
@@ -388,7 +415,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     contactEmailLabel: "Адрес электронной почты",
     contactTypeLabel: "С чем нужна помощь?",
     contactTypePlaceholder: "Выберите услугу или пакет...",
-    contactTypeOpt1: "Пакет: Prepare, Settle или Thrive",
+    contactTypeOpt1: "Пакет: Prepare, Arrival Setup или Thrive",
     contactTypeOpt2: "Отдельная услуга",
     contactTypeOpt3: "Партнёрский или рекомендательный запрос",
     contactTypeOpt4: "Консультация или общий вопрос",
@@ -446,7 +473,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     checklistTitle: "Relocation planner",
     checklistSub: "A simple task list for before departure and the first weeks in the Netherlands.",
     faqTitle: "Frequently asked questions",
-    faqSub: "Clear answers about scope, timing, before-or-after-arrival support, housing and what happens after you contact VANTAM.",
+    faqSub: "Clear answers about scope, timing, payment, refunds, before-or-after-arrival support and what happens after you contact VANTAM.",
     pdfExportTitle: "Save the selected package as PDF",
     pdfExportDesc: "Create a clear PDF with the selected package, its scope and its limits.",
     pdfBtn: "Export package PDF",
@@ -490,7 +517,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
 
     calcSidebarTitle: "What a delay can cost",
     calcAlternative: "What support can reduce",
-    calcPackageLabel: "Settle package",
+    calcPackageLabel: "Arrival Setup package",
     calcPackageDesc: "Covers the main post-arrival steps: registration, BSN, DigiD, banking, insurance, GP and letters.",
     calcSavingTag: "Planning comparison",
     calcNoRiskSelected: "Select scenarios to compare possible extra costs with support",
@@ -505,7 +532,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     calcRiskTextLabel: "Selected scenarios:",
 
     pkgGridTitle: "Compare the packages",
-    pkgGridSub: "Prepare, Settle and Thrive cover different levels of help before departure and after arrival.",
+    pkgGridSub: "Prepare, Arrival Setup and Thrive cover different levels of help before departure and after arrival.",
     pkgIdealTitle: "Best for:",
     pkgScopeTitle: "Included in this package:",
     pkgLimitsTitle: "What is not included:",
@@ -515,8 +542,8 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     checklistPrepDesc: "Preparation",
     checklistArrivalTab: "2. Crucial 72 Hours",
     checklistArrivalDesc: "After arrival",
-    checklistSettleTab: "3. Within First 30 Days",
-    checklistSettleDesc: "Everyday setup",
+    checklistSettleTab: "3. Arrival Setup",
+    checklistSettleDesc: "Post-arrival organisation",
 
     testimonialsTitle: "Typical situations",
     testimonialsSub: "Short examples of the kinds of requests people bring to VANTAM.",
@@ -528,7 +555,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     contactEmailLabel: "Email address",
     contactTypeLabel: "What do you need help with?",
     contactTypePlaceholder: "Select preferred support path...",
-    contactTypeOpt1: "Package: Prepare, Settle or Thrive",
+    contactTypeOpt1: "Package: Prepare, Arrival Setup or Thrive",
     contactTypeOpt2: "Single service",
     contactTypeOpt3: "Partnership or referral enquiry",
     contactTypeOpt4: "Consultation or general question",
@@ -566,6 +593,181 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     selectorConsultDesc: "A consultation is the easiest way to understand the right next step."
   }
 };
+
+export interface AudienceFocus {
+  id: string;
+  title: Record<Language, string>;
+  note: Record<Language, string>;
+  timing: Record<Language, string>;
+}
+
+export const AUDIENCE_FOCUS: AudienceFocus[] = [
+  {
+    id: 'students',
+    title: { uk: 'Студенти', ru: 'Студенты', en: 'Students' },
+    note: {
+      uk: 'Переїзд, університетські листи, житло й перші адміністративні кроки.',
+      ru: 'Переезд, университетские письма, жилье и первые административные шаги.',
+      en: 'Move-in, university letters, housing and the first admin steps.',
+    },
+    timing: {
+      uk: 'Часто до приїзду і в перший місяць після.',
+      ru: 'Часто до приезда и в первый месяц после.',
+      en: 'Often before arrival and through the first month after.',
+    },
+  },
+  {
+    id: 'professionals',
+    title: { uk: 'Експати та професіонали', ru: 'Экспаты и профессионалы', en: 'Expats & Professionals' },
+    note: {
+      uk: 'Робочий старт, адміністрація, листування та практичні побутові питання.',
+      ru: 'Рабочий старт, администрация, переписка и практические бытовые вопросы.',
+      en: 'Work setup, administration, correspondence and everyday practical questions.',
+    },
+    timing: {
+      uk: 'Часто після прибуття або якщо вже не вистачає ясності.',
+      ru: 'Часто после приезда или когда уже не хватает ясности.',
+      en: 'Often after arrival or once things need catching up.',
+    },
+  },
+  {
+    id: 'families',
+    title: { uk: 'Сім’ї', ru: 'Семьи', en: 'Families' },
+    note: {
+      uk: 'Більше видимості, менше сюрпризів і зрозумілий план для близьких.',
+      ru: 'Больше видимости, меньше сюрпризов и понятный план для близких.',
+      en: 'More visibility, fewer surprises and a clear plan for the people involved.',
+    },
+    timing: {
+      uk: 'До переїзду, на етапі заселення або в перші тижні.',
+      ru: 'До переезда, на этапе заселения или в первые недели.',
+      en: 'Before the move, at move-in or during the first weeks.',
+    },
+  },
+];
+
+export interface SituationOption {
+  id: string;
+  title: Record<Language, string>;
+  description: Record<Language, string>;
+  target: 'consultation' | 'services' | 'packages' | 'contact';
+  inquiryType: 'consultation' | 'single' | 'packages' | 'b2b';
+  audienceHint: Record<Language, string>;
+  statusHint: Record<Language, string>;
+}
+
+export const SITUATION_OPTIONS: SituationOption[] = [
+  {
+    id: 'moving',
+    title: { uk: 'Я переїжджаю до Нідерландів', ru: 'Я переезжаю в Нидерланды', en: 'I am moving to the Netherlands' },
+    description: {
+      uk: 'Почніть із консультації або пакета, якщо ще плануєте перший практичний крок.',
+      ru: 'Начните с консультации или пакета, если ещё планируете первый практический шаг.',
+      en: 'Start with a consultation or package if you are still planning the first practical step.',
+    },
+    target: 'consultation',
+    inquiryType: 'consultation',
+    audienceHint: { uk: 'Студент, професіонал або сім’я', ru: 'Студент, профессионал или семья', en: 'Student, professional or family' },
+    statusHint: { uk: 'До приїзду', ru: 'До приезда', en: 'Before arrival' },
+  },
+  {
+    id: 'found_housing',
+    title: { uk: 'Я вже знайшов/знайшла житло', ru: 'Я уже нашёл/нашла жильё', en: 'I have already found housing' },
+    description: {
+      uk: 'Тут корисні підготовка документів, заявка, комунікація та договір.',
+      ru: 'Здесь полезны подготовка документов, заявка, коммуникация и договор.',
+      en: 'Here the useful steps are document prep, application support, communication and the contract.',
+    },
+    target: 'services',
+    inquiryType: 'single',
+    audienceHint: { uk: 'Потрібен житловий крок', ru: 'Нужен жилищный шаг', en: 'A housing step is needed' },
+    statusHint: { uk: 'Житло знайдено', ru: 'Жильё найдено', en: 'Housing already found' },
+  },
+  {
+    id: 'need_housing',
+    title: { uk: 'Мені потрібна житлова підтримка', ru: 'Мне нужна жилищная поддержка', en: 'I need housing support' },
+    description: {
+      uk: 'Окремий сервіс для підготовки заявки та практичної комунікації з житловою стороною.',
+      ru: 'Отдельная услуга для подготовки заявки и практической коммуникации с жилищной стороной.',
+      en: 'A dedicated service for application prep and practical communication with the housing side.',
+    },
+    target: 'services',
+    inquiryType: 'single',
+    audienceHint: { uk: 'Найчастіше студент або професіонал', ru: 'Чаще всего студент или профессионал', en: 'Most often a student or professional' },
+    statusHint: { uk: 'Потрібна житлова допомога', ru: 'Нужна жилищная помощь', en: 'Housing help is needed' },
+  },
+  {
+    id: 'organisation',
+    title: { uk: 'Я представляю організацію', ru: 'Я представляю организацию', en: 'I represent an organisation' },
+    description: {
+      uk: 'Для агентств, HR-команд, університетів та консультантів з освіти.',
+      ru: 'Для агентств, HR-команд, университетов и консультантов по образованию.',
+      en: 'For agencies, HR teams, universities and education consultants.',
+    },
+    target: 'contact',
+    inquiryType: 'b2b',
+    audienceHint: { uk: 'Партнерський запит', ru: 'Партнёрский запрос', en: 'Partnership enquiry' },
+    statusHint: { uk: 'Організаційний контакт', ru: 'Организационный контакт', en: 'Organisation contact' },
+  },
+];
+
+export interface ProcessStep {
+  id: string;
+  title: Record<Language, string>;
+  description: Record<Language, string>;
+}
+
+export const PROCESS_STEPS: ProcessStep[] = [
+  {
+    id: 'step_1',
+    title: { uk: 'Надішліть запит', ru: 'Отправьте запрос', en: 'Submit your enquiry' },
+    description: { uk: 'Коротко опишіть ситуацію і вкажіть дату переїзду або поточний стан.', ru: 'Коротко опишите ситуацию и укажите дату переезда или текущее положение.', en: 'Briefly describe the situation and include the move date or current status.' },
+  },
+  {
+    id: 'step_2',
+    title: { uk: 'VANTAM оцінює контекст', ru: 'VANTAM оценивает контекст', en: 'VANTAM reviews the context' },
+    description: { uk: 'Ми дивимось, який рівень допомоги доречний і де потрібна узгодженість.', ru: 'Мы смотрим, какой уровень помощи уместен и где нужна согласованность.', en: 'We look at the right level of support and where coordination is needed.' },
+  },
+  {
+    id: 'step_3',
+    title: { uk: 'Ви обираєте формат', ru: 'Вы выбираете формат', en: 'You choose the format' },
+    description: { uk: 'Після оцінки ви обираєте окрему послугу або пакет.', ru: 'После оценки вы выбираете отдельную услугу или пакет.', en: 'After the assessment, you choose a single service or a package.' },
+  },
+  {
+    id: 'step_4',
+    title: { uk: 'Починається підтримка', ru: 'Начинается поддержка', en: 'Support begins' },
+    description: { uk: 'Робота стартує після узгодження обсягу, умов і відповідного наступного кроку.', ru: 'Работа стартует после согласования объёма, условий и следующего шага.', en: 'Work starts after the scope, terms and next step have been agreed.' },
+  },
+];
+
+export interface PartnerAudience {
+  id: string;
+  title: Record<Language, string>;
+  description: Record<Language, string>;
+}
+
+export const PARTNER_AUDIENCES: PartnerAudience[] = [
+  {
+    id: 'agencies',
+    title: { uk: 'Житлові агенції', ru: 'Жилищные агентства', en: 'Rental agencies' },
+    description: { uk: 'Спокійний спосіб узгодити запит і очікування клієнта.', ru: 'Спокойный способ согласовать запрос и ожидания клиента.', en: 'A calm way to align the request and the client expectation.' },
+  },
+  {
+    id: 'hr',
+    title: { uk: 'HR-команди', ru: 'HR-команды', en: 'HR teams' },
+    description: { uk: 'Для співробітників, які релокуються і потребують практичної координації.', ru: 'Для сотрудников, которые релокируются и нуждаются в практической координации.', en: 'For relocating employees who need practical coordination.' },
+  },
+  {
+    id: 'universities',
+    title: { uk: 'Університети', ru: 'Университеты', en: 'Universities' },
+    description: { uk: 'Для студентів, які потребують ясного першого кроку та подальшого супроводу.', ru: 'Для студентов, которым нужен ясный первый шаг и дальнейшее сопровождение.', en: 'For students who need a clear first step and follow-up support.' },
+  },
+  {
+    id: 'consultants',
+    title: { uk: 'Освітні консультанти', ru: 'Образовательные консультанты', en: 'Education consultants' },
+    description: { uk: 'Зручний вхід для рекомендацій і акуратного передавання клієнта.', ru: 'Удобный вход для рекомендаций и аккуратной передачи клиента.', en: 'A practical entry point for referrals and clean handoffs.' },
+  },
+];
 
 export interface ServiceItem {
   name: string;
@@ -765,17 +967,17 @@ export const PREMIUM_PACKAGES: Package[] = [
   },
   {
     id: "pkg_setup",
-    name: { uk: "Settle", ru: "Settle", en: "Settle" },
+    name: { uk: "Arrival Setup", ru: "Arrival Setup", en: "Arrival Setup" },
     subtitle: {
-      uk: "Перший місяць у Нідерландах",
-      ru: "Первый месяц в Нидерландах",
-      en: "First-month setup"
+      uk: "Перший місяць після приїзду",
+      ru: "Первый месяц после приезда",
+      en: "First month after arrival"
     },
     price: "€749",
     tagline: {
-      uk: "Повне адміністративне налаштування протягом першого місяця в Нідерландах.",
-      ru: "Полная административная настройка в течение первого месяца в Нидерландах.",
-      en: "Full administrative setup during the first month in the Netherlands."
+      uk: "Повне практичне налаштування протягом першого місяця після приїзду в Нідерланди.",
+      ru: "Полная практическая настройка в течение первого месяца после приезда в Нидерланды.",
+      en: "Full practical setup during the first month after arrival in the Netherlands."
     },
     workload: {
       uk: "~26 годин роботи VANTAM",
@@ -873,7 +1075,7 @@ export const PREMIUM_PACKAGES: Package[] = [
     },
     scope: {
       uk: [
-        "усе з Settle",
+        "усе з Arrival Setup",
         "підтримка з офіційними листами, до 4 листів",
         "університетська адміністрація, до 2 кейсів",
         "фізичний супровід на 2 ключові зустрічі",
@@ -886,7 +1088,7 @@ export const PREMIUM_PACKAGES: Package[] = [
         "координація облаштування кімнати"
       ],
       ru: [
-        "все из Settle",
+        "все из Arrival Setup",
         "поддержка с официальными письмами, до 4 писем",
         "университетская администрация, до 2 кейсов",
         "физическое сопровождение на 2 ключевые встречи",
@@ -899,7 +1101,7 @@ export const PREMIUM_PACKAGES: Package[] = [
         "координация обустройства комнаты"
       ],
       en: [
-        "everything in Settle",
+        "everything in Arrival Setup",
         "official letter support, up to 4 letters",
         "university admin support, up to 2 cases",
         "physical accompaniment to 2 key appointments",
@@ -1000,6 +1202,39 @@ export interface SingleService {
 }
 
 export const SINGLE_SERVICES: SingleService[] = [
+  {
+    id: "single_housing_application_support",
+    name: {
+      uk: "Housing Preparation & Application Support",
+      ru: "Housing Preparation & Application Support",
+      en: "Housing Preparation & Application Support",
+    },
+    price: {
+      uk: "Після оцінки",
+      ru: "После оценки",
+      en: "After assessment",
+    }[DEFAULT_LOCALE],
+    mode: {
+      uk: "дистанційно",
+      ru: "удаленно",
+      en: "remote",
+    },
+    desc: {
+      uk: "Підготовка документів для орендної заявки, пояснення ситуації з guarantor, комунікація з агенцією або орендодавцем, подання заявки та практична підтримка з rental contract.",
+      ru: "Подготовка документов для арендной заявки, объяснение ситуации с guarantor, коммуникация с агентством или арендодателем, подача заявки и практическая поддержка по rental contract.",
+      en: "Preparing the rental-application file, explaining the guarantor situation, communicating with the agency or landlord, submitting the application and supporting rental-contract questions.",
+    },
+    limit: {
+      uk: "Ліміт: один кейс, без гарантії результату.",
+      ru: "Лимит: один кейс, без гарантии результата.",
+      en: "Limit: one case, no outcome guarantee.",
+    },
+    notIncluded: {
+      uk: "Не включено: юридичний висновок, представництво або гарантія отримання житла.",
+      ru: "Не включено: юридическое заключение, представительство или гарантия получения жилья.",
+      en: "Not included: legal opinion, representation or a housing guarantee.",
+    }
+  },
   {
     id: "single_registration_bsn",
     name: { uk: "Підтримка реєстрації та BSN", ru: "Поддержка регистрации и BSN", en: "Registration & BSN Support" },
@@ -1265,53 +1500,79 @@ export const FAQS_STORE: FaqItem[] = [
   {
     id: "f1",
     q: {
-      uk: "VANTAM займається тільки житлом?",
-      ru: "VANTAM занимается только жильем?",
-      en: "Is VANTAM only about housing?"
+      uk: "Що входить у послуги та пакети VANTAM?",
+      ru: "Что входит в услуги и пакеты VANTAM?",
+      en: "What is included in VANTAM services and packages?"
     },
     a: {
-      uk: "Ні. Житлові питання - лише одна частина. Основна робота VANTAM - практичний старт у Нідерландах: реєстрація, BSN, DigiD, банк, страхування, GP, листи та університетська адміністрація.",
-      ru: "Нет. Жилищные вопросы - только одна часть. Основная работа VANTAM - практический старт в Нидерландах: регистрация, BSN, DigiD, банк, страховка, GP, письма и университетская администрация.",
-      en: "No. Housing is only one part of the picture. VANTAM's main work is practical setup in the Netherlands: registration, BSN, DigiD, banking, insurance, GP setup, letters and university admin."
+      uk: "Окремі послуги покривають один конкретний крок, наприклад житлову заявку, орендний договір, лист, банківське або університетське питання. Arrival Setup - це пакет для перших практичних кроків після приїзду, а Prepare - для підготовки до виїзду.",
+      ru: "Отдельные услуги покрывают один конкретный шаг, например жилищную заявку, договор аренды, письмо, банковский или университетский вопрос. Arrival Setup - это пакет для первых практических шагов после приезда, а Prepare - для подготовки к выезду.",
+      en: "Single services cover one concrete step, such as a housing application, rental contract, letter, banking or university question. Arrival Setup is the package for the first practical steps after arrival, and Prepare is for pre-arrival preparation."
     }
   },
   {
     id: "f2",
     q: {
-      uk: "Протягом якого часу діє підтримка після приїзду?",
-      ru: "Сколько длится поддержка после приезда?",
-      en: "How long does support last after arrival?"
+      uk: "Що VANTAM не гарантує?",
+      ru: "Что VANTAM не гарантирует?",
+      en: "What does VANTAM not guarantee?"
     },
     a: {
-      uk: "Prepare діє 30 днів з моменту покупки та підходить для підготовки до приїзду. Settle покриває 35 днів після приїзду. Thrive покриває 60 днів після приїзду з пріоритетним опрацюванням звернень у робочий час.",
-      ru: "Prepare действует 30 дней с момента покупки и подходит для подготовки к приезду. Settle покрывает 35 дней после приезда. Thrive покрывает 60 дней после приезда с приоритетной обработкой обращений в рабочее время.",
-      en: "Prepare runs for 30 days from purchase and is designed for pre-arrival prep. Settle covers 35 days after arrival. Thrive covers 60 days after arrival with priority handling during working hours."
+      uk: "VANTAM не гарантує житло, схвалення заявки, рішення банку, страховика чи державного органу, а також не виступає агентством нерухомості, юридичною фірмою або страховим брокером.",
+      ru: "VANTAM не гарантирует жильё, одобрение заявки, решение банка, страховщика или государственного органа, а также не выступает агентством недвижимости, юридической фирмой или страховым брокером.",
+      en: "VANTAM does not guarantee housing, application approval, bank, insurer or public-authority decisions, and it does not act as a real-estate agency, law firm or insurance broker."
     }
   },
   {
     id: "f3",
     q: {
-      uk: "Чи надає VANTAM юридичні, фінансові або страхові консультації?",
-      ru: "Предоставляет ли VANTAM юридические, финансовые или страховые консультации?",
-      en: "Does VANTAM provide legal, financial or insurance advice?"
+      uk: "Скільки зазвичай триває підтримка?",
+      ru: "Сколько обычно длится поддержка?",
+      en: "How long does support usually take?"
     },
     a: {
-      uk: "Ні. VANTAM не є юридичною фірмою, фінансовим консультантом, страховим брокером або агентством нерухомості. Ми пояснюємо практичні кроки та допомагаємо з документами і комунікацією; ліцензовані питання краще вирішувати з відповідними фахівцями.",
-      ru: "Нет. VANTAM не является юридической фирмой, финансовым консультантом, страховым брокером или агентством недвижимости. Мы объясняем практические шаги и помогаем с документами и коммуникацией; лицензируемые вопросы лучше решать с профильными специалистами.",
-      en: "No. VANTAM is not a law firm, financial advisor, insurance broker or real estate agency. We explain practical steps and help with documents and communication; licensed matters should go to the relevant professionals."
+      uk: "Тривалість залежить від того, чи ви ще до приїзду, чи вже на місці, наскільки готові документи і чи потрібна комунікація з третьою стороною. VANTAM підтверджує реальний обсяг роботи після оцінки ситуації.",
+      ru: "Продолжительность зависит от того, до приезда вы или уже на месте, насколько готовы документы и нужна ли коммуникация с третьей стороной. VANTAM подтверждает реальный объём работы после оценки ситуации.",
+      en: "Timing depends on whether you are before or after arrival, how ready the documents are and whether third-party communication is needed. VANTAM confirms the real scope after assessing the situation."
     }
   },
   {
     id: "f4",
     q: {
-      uk: "Чи можна замовити одну послугу без пакета?",
-      ru: "Можно заказать одну услугу без пакета?",
-      en: "Can I request one service without a package?"
+      uk: "Як працює оплата?",
+      ru: "Как работает оплата?",
+      en: "How does payment work?"
     },
     a: {
-      uk: "Так. Окремі послуги створені саме для одного конкретного кроку: BSN, DigiD, банк, страхування, офіційний лист, університетська адміністрація, договір оренди, депозит, GP або комунікація з орендодавцем.",
-      ru: "Да. Отдельные услуги созданы именно для одного конкретного шага: BSN, DigiD, банк, страховка, официальное письмо, университетская администрация, договор аренды, депозит, GP или коммуникация с арендодателем.",
-      en: "Yes. Single services are designed for one specific step: BSN, DigiD, banking, insurance, an official letter, university admin, rental contract explanation, deposit support, GP registration or landlord communication."
+      uk: "Оплата узгоджується у письмовій пропозиції для вибраної послуги або пакета. Якщо обсяг ще уточнюється, VANTAM підтверджує умови до початку роботи.",
+      ru: "Оплата согласуется в письменном предложении для выбранной услуги или пакета. Если объём ещё уточняется, VANTAM подтверждает условия до начала работы.",
+      en: "Payment is agreed in the written offer for the selected service or package. If the scope is still being clarified, VANTAM confirms the terms before work starts."
+    }
+  },
+  {
+    id: "f5",
+    q: {
+      uk: "Які правила скасування або повернення коштів?",
+      ru: "Какие правила отмены или возврата средств?",
+      en: "What are the cancellation or refund rules?"
+    },
+    a: {
+      uk: "Правила скасування або повернення коштів підтверджуються у письмовій пропозиції для конкретної послуги або пакета. Для сайту окрему універсальну політику поки не опубліковано.",
+      ru: "Правила отмены или возврата средств подтверждаются в письменном предложении для конкретной услуги или пакета. Для сайта отдельная универсальная политика пока не опубликована.",
+      en: "Cancellation or refund terms are confirmed in the written offer for the specific service or package. A separate universal website policy is not published yet."
+    }
+  },
+  {
+    id: "f6",
+    q: {
+      uk: "Чи можна почати дистанційно до приїзду?",
+      ru: "Можно ли начать дистанционно до приезда?",
+      en: "Can support start remotely before arrival?"
+    },
+    a: {
+      uk: "Так. Підтримка може початися до приїзду, якщо це потрібно для підготовки документів, пояснення кроків або оцінки житлової ситуації.",
+      ru: "Да. Поддержка может начаться до приезда, если это нужно для подготовки документов, объяснения шагов или оценки жилищной ситуации.",
+      en: "Yes. Support can start before arrival when documents need preparing, steps need explaining or the housing situation needs assessment."
     }
   }
 ];

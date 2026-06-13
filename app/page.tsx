@@ -14,7 +14,6 @@ import {
   Clock,
   Download,
   FileText,
-  GraduationCap,
   HeartPulse,
   House,
   Info,
@@ -23,18 +22,22 @@ import {
   Moon,
   ShieldCheck,
   Sun,
-  WalletCards,
   X,
 } from 'lucide-react';
 
 import {
+  AUDIENCE_FOCUS,
   BLUEPRINT_CHECKLIST,
   CONSULTATIONS_STORE,
   DICTIONARY,
   FAQS_STORE,
+  PARTNER_AUDIENCES,
+  PROCESS_STEPS,
   Language,
   PITFALLS,
   PREMIUM_PACKAGES,
+  SITUATION_OPTIONS,
+  SUPPORTED_LOCALES,
   SERVICES_STORE,
   SINGLE_SERVICES,
   TESTIMONIALS,
@@ -64,6 +67,7 @@ export default function VantamsHub() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [selectedPackage, setSelectedPackage] = useState('pkg_setup');
   const [activeServiceCategory, setActiveServiceCategory] = useState('admin');
+  const [activeSituation, setActiveSituation] = useState('moving');
   const [calculatorToggles, setCalculatorToggles] = useState<Record<string, boolean>>({
     scam: true,
     fine: false,
@@ -77,6 +81,13 @@ export default function VantamsHub() {
   const [formName, setFormName] = useState('');
   const [formEmail, setFormEmail] = useState('');
   const [formInquiryType, setFormInquiryType] = useState('packages');
+  const [formAudience, setFormAudience] = useState('student');
+  const [formMovingDate, setFormMovingDate] = useState('');
+  const [formCity, setFormCity] = useState('');
+  const [formBudget, setFormBudget] = useState('');
+  const [formStatus, setFormStatus] = useState('before');
+  const [formGuarantor, setFormGuarantor] = useState('maybe');
+  const [formHelp, setFormHelp] = useState('');
   const [formMessage, setFormMessage] = useState('');
   const [formConsent, setFormConsent] = useState(false);
   const [formWebsite, setFormWebsite] = useState('');
@@ -149,10 +160,12 @@ export default function VantamsHub() {
       darkTheme: 'Увімкнути темну тему',
       lightTheme: 'Увімкнути світлу тему',
       heroTitle: 'Практична допомога з перших кроків у Нідерландах',
-      heroText: 'До або після приїзду: реєстрація, BSN, банк, медицина, житло та університетська адміністрація для студентів, експатів і інших новоприбулих.',
+      heroText: 'Практична підтримка для студентів, експатів і сімей до приїзду та після приїзду: житло, документи, банк, страхування, медицина і університетські кроки.',
       heroImageAlt: 'Житлова вулиця з цегляними будинками в Амстердамі',
       photoCredit: 'Фото: Haberdoedas, Unsplash',
       localNote: 'Три мови. Чіткі межі. Один локальний контакт.',
+      heroPrimary: 'Оберіть свою ситуацію',
+      heroSecondary: 'Подивитися послуги',
       entryTitle: 'Оберіть формат, який відповідає вашій ситуації',
       entryConsult: 'Почати з консультації',
       entryPackage: 'Потрібен супровід',
@@ -173,7 +186,7 @@ export default function VantamsHub() {
       toolsText: 'Оцініть типові витрати та відмітьте, що вже готово. Інструменти допомагають спланувати розмову, а не замінюють консультацію.',
       estimate: 'Сума вибраних сценаріїв',
       maximum: 'Максимум у калькуляторі: €4,575',
-      difference: 'Різниця із Settle',
+      difference: 'Різниця із Arrival Setup',
       progress: 'готово',
       testimonialLead: 'Приклади',
       contactLead: 'Розкажіть, що відбувається',
@@ -184,6 +197,51 @@ export default function VantamsHub() {
       limitsLabel: 'Межі',
       result: 'Результат',
       details: 'Деталі',
+      audienceLead: 'Хто отримує користь',
+      audienceTitle: 'Підтримка для студентів, експатів і сімей',
+      audienceText: 'Одна пропозиція для міжнародних людей у Нідерландах. Деяким потрібен лише один крок, іншим - кілька кроків до і після приїзду.',
+      audienceBefore: 'До приїзду',
+      audienceAfter: 'Після приїзду',
+      selectorLead: 'Почніть із вашої ситуації',
+      selectorTitle: 'Ситуаційний вибір',
+      selectorText: 'Оберіть варіант, який швидше підведе вас до правильного розділу або форми.',
+      selectorServices: 'До послуг',
+      selectorPackages: 'До пакетів',
+      selectorConsult: 'Почати з консультації',
+      selectorPartner: 'Партнерський запит',
+      processLead: 'Як це працює',
+      processTitle: 'Чотири короткі кроки',
+      processText: 'Спершу ми дивимося на ситуацію, потім ви обираєте відповідний формат. Підтримка починається після узгодження обсягу і умов.',
+      partnerLead: 'Партнерство',
+      partnerTitle: 'Партнер з VANTAM',
+      partnerText: 'Для житлових агенцій, HR-команд, університетів та освітніх консультантів, які хочуть акуратно передавати запити на практичну підтримку.',
+      partnerCTA: 'Обговорити співпрацю',
+      housingLead: 'Головна житлова послуга',
+      housingTitle: 'Housing Preparation & Application Support',
+      housingText: 'Підготовка документів для заявки, пояснення ситуації з гарантом, комунікація з агенцією або орендодавцем, подання заявки та підтримка з орендним договором.',
+      housingNote: 'Без гарантії отримання житла і без юридичного представництва.',
+      housingCta: 'Запитати цю послугу',
+      housingPriceLabel: 'Після оцінки',
+      formSectionTitle: 'Кваліфікація запиту',
+      formSectionSub: 'Дайте нам кілька практичних деталей. Це допоможе швидше зрозуміти, чи вам потрібна послуга, пакет або партнерська розмова.',
+      formAudienceLabel: 'Контекст',
+      formMovingDateLabel: 'Очікувана дата переїзду',
+      formCityLabel: 'Переважне місто або регіон',
+      formBudgetLabel: 'Орієнтовний бюджет на житло',
+      formStatusLabel: 'Поточний стан',
+      formGuarantorLabel: 'Гарант / guarantor',
+      formHelpLabel: 'Яка допомога потрібна',
+      formStatusBefore: 'Ще до приїзду',
+      formStatusAfter: 'Вже в Нідерландах',
+      formStatusFoundHousing: 'Житло вже знайдено',
+      formStatusNeedHousing: 'Потрібна житлова підтримка',
+      formAudienceStudent: 'Студент',
+      formAudienceProfessional: 'Експат / професіонал',
+      formAudienceFamily: 'Сім’я',
+      formAudienceOrganisation: 'Організація',
+      formGuarantorYes: 'Так, гарант є',
+      formGuarantorMaybe: 'Може знадобитися',
+      formGuarantorNo: 'Немає / не впевнений(-а)',
     },
     ru: {
       notice: 'Практическая поддержка для международных студентов, экспатов и новоприбывших в Нидерландах',
@@ -191,10 +249,12 @@ export default function VantamsHub() {
       darkTheme: 'Включить темную тему',
       lightTheme: 'Включить светлую тему',
       heroTitle: 'Практическая помощь с первых шагов в Нидерландах',
-      heroText: 'До или после приезда: регистрация, BSN, банк, медицина, жильё и университетская администрация для студентов, экспатов и других новоприбывших.',
+      heroText: 'Практическая поддержка для студентов, экспатов и семей до приезда и после приезда: жильё, документы, банк, страховка, медицина и университетские шаги.',
       heroImageAlt: 'Жилая улица с кирпичными домами в Амстердаме',
       photoCredit: 'Фото: Haberdoedas, Unsplash',
       localNote: 'Три языка. Четкие границы. Один локальный контакт.',
+      heroPrimary: 'Выберите свою ситуацию',
+      heroSecondary: 'Посмотреть услуги',
       entryTitle: 'Выберите формат, который подходит вашей ситуации',
       entryConsult: 'Начать с консультации',
       entryPackage: 'Нужно сопровождение',
@@ -215,7 +275,7 @@ export default function VantamsHub() {
       toolsText: 'Оцените типичные расходы и отметьте, что уже готово. Инструменты помогают спланировать разговор, а не заменяют консультацию.',
       estimate: 'Сумма выбранных сценариев',
       maximum: 'Максимум в калькуляторе: €4,575',
-      difference: 'Разница с Settle',
+      difference: 'Разница с Arrival Setup',
       progress: 'готово',
       testimonialLead: 'Примеры',
       contactLead: 'Расскажите, что происходит',
@@ -226,6 +286,51 @@ export default function VantamsHub() {
       limitsLabel: 'Границы',
       result: 'Результат',
       details: 'Детали',
+      audienceLead: 'Кому это полезно',
+      audienceTitle: 'Поддержка для студентов, экспатов и семей',
+      audienceText: 'Одно предложение для международных людей в Нидерландах. Кому-то нужен один шаг, кому-то - несколько шагов до и после приезда.',
+      audienceBefore: 'До приезда',
+      audienceAfter: 'После приезда',
+      selectorLead: 'Начните со своей ситуации',
+      selectorTitle: 'Выбор по ситуации',
+      selectorText: 'Выберите вариант, который быстрее приведёт вас к нужному разделу или форме.',
+      selectorServices: 'К услугам',
+      selectorPackages: 'К пакетам',
+      selectorConsult: 'Начать с консультации',
+      selectorPartner: 'Партнёрский запрос',
+      processLead: 'Как это работает',
+      processTitle: 'Четыре коротких шага',
+      processText: 'Сначала мы смотрим на ситуацию, затем вы выбираете подходящий формат. Поддержка начинается после согласования объёма и условий.',
+      partnerLead: 'Партнёрство',
+      partnerTitle: 'Партнёр с VANTAM',
+      partnerText: 'Для жилищных агентств, HR-команд, университетов и образовательных консультантов, которые хотят аккуратно передавать запросы на практическую поддержку.',
+      partnerCTA: 'Обсудить сотрудничество',
+      housingLead: 'Главная жилищная услуга',
+      housingTitle: 'Housing Preparation & Application Support',
+      housingText: 'Подготовка документов для заявки, объяснение ситуации с гарантом, коммуникация с агентством или арендодателем, подача заявки и поддержка по договору аренды.',
+      housingNote: 'Без гарантии получения жилья и без юридического представительства.',
+      housingCta: 'Запросить эту услугу',
+      housingPriceLabel: 'После оценки',
+      formSectionTitle: 'Квалификация запроса',
+      formSectionSub: 'Дайте нам несколько практических деталей. Это поможет быстрее понять, нужна ли вам услуга, пакет или партнёрский разговор.',
+      formAudienceLabel: 'Контекст',
+      formMovingDateLabel: 'Ожидаемая дата переезда',
+      formCityLabel: 'Предпочтительный город или регион',
+      formBudgetLabel: 'Ориентировочный бюджет на жильё',
+      formStatusLabel: 'Текущий статус',
+      formGuarantorLabel: 'Гарант / guarantor',
+      formHelpLabel: 'Какая помощь нужна',
+      formStatusBefore: 'Ещё до приезда',
+      formStatusAfter: 'Уже в Нидерландах',
+      formStatusFoundHousing: 'Жильё уже найдено',
+      formStatusNeedHousing: 'Нужна жилищная поддержка',
+      formAudienceStudent: 'Студент',
+      formAudienceProfessional: 'Экспат / профессионал',
+      formAudienceFamily: 'Семья',
+      formAudienceOrganisation: 'Организация',
+      formGuarantorYes: 'Да, гарант есть',
+      formGuarantorMaybe: 'Может понадобиться',
+      formGuarantorNo: 'Нет / не уверен(-а)',
     },
     en: {
       notice: 'Practical support for international students, expats and newcomers in the Netherlands',
@@ -233,10 +338,12 @@ export default function VantamsHub() {
       darkTheme: 'Use dark theme',
       lightTheme: 'Use light theme',
       heroTitle: 'Practical help with the first steps in the Netherlands',
-      heroText: 'Before or after arrival: registration, BSN, banking, healthcare, housing and university admin for students, expats and other newcomers.',
+      heroText: 'Practical support for students, expats and families before and after arrival: housing, documents, banking, insurance, healthcare and university steps.',
       heroImageAlt: 'Residential brick street in Amsterdam',
       photoCredit: 'Photo: Haberdoedas, Unsplash',
       localNote: 'Three languages. Clear boundaries. One local contact.',
+      heroPrimary: 'Choose your situation',
+      heroSecondary: 'See the services',
       entryTitle: 'Choose the format that fits your situation',
       entryConsult: 'Start with a consultation',
       entryPackage: 'I need ongoing support',
@@ -257,7 +364,7 @@ export default function VantamsHub() {
       toolsText: 'Review common costs and mark what is already prepared. The tools help you plan the conversation; they do not replace a consultation.',
       estimate: 'Selected scenario total',
       maximum: 'Maximum in the calculator: €4,575',
-      difference: 'Difference from Settle',
+      difference: 'Difference from Arrival Setup',
       progress: 'ready',
       testimonialLead: 'Representative examples',
       contactLead: 'Tell us what is happening',
@@ -268,6 +375,51 @@ export default function VantamsHub() {
       limitsLabel: 'Boundaries',
       result: 'Outcome',
       details: 'Details',
+      audienceLead: 'Who we help',
+      audienceTitle: 'Support for students, expats and families',
+      audienceText: 'One offer for international people in the Netherlands. Some need one step, others need several steps before and after arrival.',
+      audienceBefore: 'Before arrival',
+      audienceAfter: 'After arrival',
+      selectorLead: 'Start with your situation',
+      selectorTitle: 'Situation selector',
+      selectorText: 'Choose the path that gets you to the right section or form faster.',
+      selectorServices: 'Go to services',
+      selectorPackages: 'Go to packages',
+      selectorConsult: 'Start with a consultation',
+      selectorPartner: 'Partnership enquiry',
+      processLead: 'How it works',
+      processTitle: 'Four short steps',
+      processText: 'We first look at your situation, then you choose the right format. Support begins after the scope and terms are agreed.',
+      partnerLead: 'Partnership',
+      partnerTitle: 'Partner with VANTAM',
+      partnerText: 'For rental agencies, HR teams, universities and education consultants who want a clean handoff to practical support.',
+      partnerCTA: 'Discuss cooperation',
+      housingLead: 'Featured housing service',
+      housingTitle: 'Housing Preparation & Application Support',
+      housingText: 'Application-file preparation, explaining the guarantor situation, communicating with the agency or landlord, submitting the application and supporting rental-contract questions.',
+      housingNote: 'No housing guarantee and no legal representation.',
+      housingCta: 'Request this service',
+      housingPriceLabel: 'After assessment',
+      formSectionTitle: 'Qualification form',
+      formSectionSub: 'Share a few practical details. It helps us see faster whether you need a service, a package or a partnership conversation.',
+      formAudienceLabel: 'Context',
+      formMovingDateLabel: 'Expected move date',
+      formCityLabel: 'Preferred city or region',
+      formBudgetLabel: 'Approximate housing budget',
+      formStatusLabel: 'Current status',
+      formGuarantorLabel: 'Guarantor situation',
+      formHelpLabel: 'What help is needed',
+      formStatusBefore: 'Before arrival',
+      formStatusAfter: 'Already in the Netherlands',
+      formStatusFoundHousing: 'Housing already found',
+      formStatusNeedHousing: 'Need housing support',
+      formAudienceStudent: 'Student',
+      formAudienceProfessional: 'Expat / professional',
+      formAudienceFamily: 'Family',
+      formAudienceOrganisation: 'Organisation',
+      formGuarantorYes: 'Yes, guarantor available',
+      formGuarantorMaybe: 'May be needed',
+      formGuarantorNo: 'No / not sure',
     },
   }[lang]), [lang]);
 
@@ -280,9 +432,9 @@ export default function VantamsHub() {
     },
     {
       id: 'housing', label: lang === 'uk' ? 'Житлові питання' : lang === 'ru' ? 'Жилищные вопросы' : 'Housing questions',
-      description: lang === 'uk' ? 'Договір, перевірка пропозиції, депозит і комунікація' : lang === 'ru' ? 'Договор, проверка предложения, депозит и коммуникация' : 'Contract, listing check, deposit and communication',
+      description: lang === 'uk' ? 'Підготовка заявки, гарантії, договір і комунікація' : lang === 'ru' ? 'Подготовка заявки, guarantor, договор и коммуникация' : 'Application prep, guarantor, contract and communication',
       icon: House,
-      ids: ['single_rental_contract', 'single_housing_scam_check', 'single_deposit_return', 'single_landlord_communication'],
+      ids: ['single_housing_application_support', 'single_rental_contract', 'single_housing_scam_check', 'single_deposit_return', 'single_landlord_communication'],
     },
     {
       id: 'health', label: lang === 'uk' ? 'Медицина та відшкодування' : lang === 'ru' ? 'Медицина и возмещения' : 'Healthcare and claims',
@@ -297,29 +449,144 @@ export default function VantamsHub() {
   const calculatorTotal = useMemo(() => PITFALLS.reduce((sum, item) => calculatorToggles[item.id] ? sum + item.cost : sum, 0), [calculatorToggles]);
   const progressPercent = useMemo(() => Math.round((BLUEPRINT_CHECKLIST.filter((item) => completedTasks[item.id]).length / BLUEPRINT_CHECKLIST.length) * 100), [completedTasks]);
   const currentSelectedPkgObj = useMemo(() => PREMIUM_PACKAGES.find((item) => item.id === selectedPackage) || PREMIUM_PACKAGES[1], [selectedPackage]);
+  const activeSituationObj = useMemo(() => SITUATION_OPTIONS.find((item) => item.id === activeSituation) || SITUATION_OPTIONS[0], [activeSituation]);
 
   const scrollToContact = () => document.getElementById('contact')?.scrollIntoView({behavior: prefersReducedMotion ? 'auto' : 'smooth'});
+  const scrollToTarget = (target: 'consultation' | 'services' | 'packages' | 'contact') => document.getElementById(target === 'consultation' ? 'consultations' : target === 'services' ? 'single-services' : target === 'packages' ? 'packages' : 'contact')?.scrollIntoView({behavior: prefersReducedMotion ? 'auto' : 'smooth'});
+
+  const applyQualificationContext = (overrides: Partial<{
+    inquiryType: string;
+    audience: string;
+    movingDate: string;
+    city: string;
+    budget: string;
+    status: string;
+    guarantor: string;
+    help: string;
+    message: string;
+  }>) => {
+    if (overrides.inquiryType) setFormInquiryType(overrides.inquiryType);
+    if (overrides.audience) setFormAudience(overrides.audience);
+    if (overrides.movingDate !== undefined) setFormMovingDate(overrides.movingDate);
+    if (overrides.city !== undefined) setFormCity(overrides.city);
+    if (overrides.budget !== undefined) setFormBudget(overrides.budget);
+    if (overrides.status !== undefined) setFormStatus(overrides.status);
+    if (overrides.guarantor !== undefined) setFormGuarantor(overrides.guarantor);
+    if (overrides.help !== undefined) setFormHelp(overrides.help);
+    if (overrides.message !== undefined) setFormMessage(overrides.message);
+  };
 
   const handleSelectSingleService = (serviceId: string) => {
     setFormInquiryType('single');
     const service = SINGLE_SERVICES.find((item) => item.id === serviceId);
-    if (service) setFormMessage(lang === 'uk' ? `Мені потрібна окрема послуга: ${service.name.uk}.` : lang === 'ru' ? `Мне нужна отдельная услуга: ${service.name.ru}.` : `I need a single service: ${service.name.en}.`);
+    if (service) {
+      applyQualificationContext({
+        inquiryType: 'single',
+        help: service.id,
+        message: lang === 'uk'
+          ? `Мені потрібна окрема послуга: ${service.name.uk}.`
+          : lang === 'ru'
+            ? `Мне нужна отдельная услуга: ${service.name.ru}.`
+            : `I need a single service: ${service.name.en}.`,
+      });
+    }
     scrollToContact();
   };
 
   const handleSelectConsultation = (consultationId: string) => {
-    setFormInquiryType('consultation');
     const consultation = CONSULTATIONS_STORE.find((item) => item.id === consultationId);
-    if (consultation) setFormMessage(lang === 'uk' ? `Мені потрібна консультація: ${consultation.name.uk}.` : lang === 'ru' ? `Мне нужна консультация: ${consultation.name.ru}.` : `I need a consultation: ${consultation.name.en}.`);
+    if (consultation) applyQualificationContext({
+      inquiryType: 'consultation',
+      help: 'consultation',
+      message: lang === 'uk'
+        ? `Мені потрібна консультація: ${consultation.name.uk}.`
+        : lang === 'ru'
+          ? `Мне нужна консультация: ${consultation.name.ru}.`
+          : `I need a consultation: ${consultation.name.en}.`,
+    });
     scrollToContact();
   };
 
   const handleSelectPackage = (packageId: string) => {
     const item = PREMIUM_PACKAGES.find((pkg) => pkg.id === packageId);
     setSelectedPackage(packageId);
-    setFormInquiryType('packages');
-    if (item) setFormMessage(lang === 'uk' ? `Мені потрібен пакет: ${item.name.uk} (${item.price}).` : lang === 'ru' ? `Мне нужен пакет: ${item.name.ru} (${item.price}).` : `I need the package: ${item.name.en} (${item.price}).`);
+    if (item) applyQualificationContext({
+      inquiryType: 'packages',
+      help: 'packages',
+      message: lang === 'uk'
+        ? `Мені потрібен пакет: ${item.name.uk} (${item.price}).`
+        : lang === 'ru'
+          ? `Мне нужен пакет: ${item.name.ru} (${item.price}).`
+          : `I need the package: ${item.name.en} (${item.price}).`,
+    });
     scrollToContact();
+  };
+
+  const handleSelectSituation = (situationId: string) => {
+    const option = SITUATION_OPTIONS.find((item) => item.id === situationId) || SITUATION_OPTIONS[0];
+    setActiveSituation(option.id);
+    if (option.target === 'consultation') {
+      applyQualificationContext({
+        inquiryType: option.inquiryType,
+        audience: 'student',
+        status: 'before',
+        help: 'consultation',
+        message: lang === 'uk'
+          ? `Я переїжджаю до Нідерландів і хочу почати з консультації.`
+          : lang === 'ru'
+            ? `Я переезжаю в Нидерланды и хочу начать с консультации.`
+            : `I am moving to the Netherlands and want to start with a consultation.`,
+      });
+      scrollToTarget(option.target);
+      return;
+    }
+
+    if (option.id === 'found_housing') {
+      setActiveServiceCategory('housing');
+      applyQualificationContext({
+        inquiryType: 'single',
+        audience: 'professional',
+        status: 'found_housing',
+        help: 'single_housing_application_support',
+        message: lang === 'uk'
+          ? `Я вже знайшов/знайшла житло і мені потрібна допомога з документами, заявкою або договором.`
+          : lang === 'ru'
+            ? `Я уже нашёл/нашла жильё и мне нужна помощь с документами, заявкой или договором.`
+            : `I have already found housing and need help with documents, the application or the contract.`,
+      });
+      scrollToTarget(option.target);
+      return;
+    }
+
+    if (option.id === 'need_housing') {
+      setActiveServiceCategory('housing');
+      applyQualificationContext({
+        inquiryType: 'single',
+        audience: 'student',
+        status: 'need_housing',
+        help: 'single_housing_application_support',
+        message: lang === 'uk'
+          ? `Мені потрібна житлова підтримка: підготовка заявки, комунікація та контракт.`
+          : lang === 'ru'
+            ? `Мне нужна жилищная поддержка: подготовка заявки, коммуникация и договор.`
+            : `I need housing support: application prep, communication and the contract.`,
+      });
+      scrollToTarget(option.target);
+      return;
+    }
+
+    applyQualificationContext({
+      inquiryType: 'b2b',
+      audience: 'organisation',
+      status: 'organisation',
+      help: 'b2b',
+      message: lang === 'uk'
+        ? `Я представляю організацію і хочу обговорити співпрацю.`
+        : lang === 'ru'
+          ? `Я представляю организацию и хочу обсудить сотрудничество.`
+          : `I represent an organisation and would like to discuss cooperation.`,
+    });
+    scrollToTarget(option.target);
   };
 
   const handleFormSubmit = async (event: React.FormEvent) => {
@@ -330,7 +597,23 @@ export default function VantamsHub() {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({name: formName, email: formEmail, inquiryType: formInquiryType, message: formMessage, consent: formConsent, language: lang, website: formWebsite, sourceUrl: window.location.href}),
+        body: JSON.stringify({
+          name: formName,
+          email: formEmail,
+          inquiryType: formInquiryType,
+          message: formMessage,
+          consent: formConsent,
+          language: lang,
+          website: formWebsite,
+          sourceUrl: window.location.href,
+          audience: formAudience,
+          movingDate: formMovingDate,
+          city: formCity,
+          budget: formBudget,
+          status: formStatus,
+          guarantor: formGuarantor,
+          help: formHelp,
+        }),
       });
       if (!response.ok) throw new Error('Contact request failed');
       setFormState('success');
@@ -345,6 +628,14 @@ export default function VantamsHub() {
     setFormMessage('');
     setFormConsent(false);
     setFormWebsite('');
+    setFormAudience('student');
+    setFormMovingDate('');
+    setFormCity('');
+    setFormBudget('');
+    setFormStatus('before');
+    setFormGuarantor('maybe');
+    setFormHelp('');
+    setActiveSituation('moving');
     setFormState('idle');
   };
 
@@ -355,6 +646,39 @@ export default function VantamsHub() {
     {category: 'arrival' as const, title: dict.checklistArrivalTab, description: dict.checklistArrivalDesc},
     {category: 'settle' as const, title: dict.checklistSettleTab, description: dict.checklistSettleDesc},
   ];
+  const qualificationOptions = useMemo(() => ({
+    audience: [
+      { value: 'student', label: ui.formAudienceStudent },
+      { value: 'professional', label: ui.formAudienceProfessional },
+      { value: 'family', label: ui.formAudienceFamily },
+      { value: 'organisation', label: ui.formAudienceOrganisation },
+    ],
+    status: [
+      { value: 'before', label: ui.formStatusBefore },
+      { value: 'after', label: ui.formStatusAfter },
+      { value: 'found_housing', label: ui.formStatusFoundHousing },
+      { value: 'need_housing', label: ui.formStatusNeedHousing },
+    ],
+    guarantor: [
+      { value: 'yes', label: ui.formGuarantorYes },
+      { value: 'maybe', label: ui.formGuarantorMaybe },
+      { value: 'no', label: ui.formGuarantorNo },
+    ],
+    help: [
+      { value: '', label: lang === 'uk' ? 'Оберіть потрібну допомогу' : lang === 'ru' ? 'Выберите нужную помощь' : 'Choose the required help' },
+      { value: 'consultation', label: ui.selectorConsult },
+      { value: 'single_housing_application_support', label: ui.housingTitle },
+      { value: 'packages', label: ui.selectorPackages },
+      { value: 'b2b', label: ui.selectorPartner },
+    ],
+    budget: [
+      { value: 'under-700', label: lang === 'uk' ? 'До €700' : lang === 'ru' ? 'До €700' : 'Under €700' },
+      { value: '700-1000', label: '€700–€1,000' },
+      { value: '1000-1500', label: '€1,000–€1,500' },
+      { value: '1500-plus', label: lang === 'uk' ? 'Понад €1,500' : lang === 'ru' ? 'Свыше €1,500' : '€1,500+' },
+      { value: 'not-sure', label: lang === 'uk' ? 'Ще не знаю' : lang === 'ru' ? 'Пока не знаю' : 'Not sure yet' },
+    ],
+  }), [lang, ui]);
 
   return (
     <div className="vantam-site" data-theme={theme}>
@@ -389,7 +713,7 @@ export default function VantamsHub() {
               {theme === 'light' ? <Moon /> : <Sun />}
             </button>
             <div className="language-switcher" aria-label={dict.langLabel}>
-              {(['uk', 'ru', 'en'] as Language[]).map((code) => (
+              {SUPPORTED_LOCALES.map((code) => (
                 <button key={code} onClick={() => setLang(code)} aria-pressed={lang === code}>{code === 'uk' ? 'UA' : code.toUpperCase()}</button>
               ))}
             </div>
@@ -416,8 +740,11 @@ export default function VantamsHub() {
               <h1>{ui.heroTitle}</h1>
               <p className="hero-lede">{ui.heroText}</p>
               <div className="hero-actions">
-                <a href="#consultations" className="button button-primary">{dict.selectorConsultTitle}<ArrowRight /></a>
-                <a href="#single-services" className="text-link">{dict.navServices}<ArrowUpRight /></a>
+                <a href="#start-here" className="button button-primary">{ui.heroPrimary}<ArrowRight /></a>
+                <a href="#single-services" className="text-link">{ui.heroSecondary}<ArrowUpRight /></a>
+              </div>
+              <div className="hero-tags" aria-label={ui.audienceLead}>
+                {AUDIENCE_FOCUS.map((audience) => <span key={audience.id}>{audience.title[lang]}</span>)}
               </div>
               <p className="hero-note"><ShieldCheck />{ui.localNote}</p>
             </div>
@@ -431,26 +758,101 @@ export default function VantamsHub() {
           </div>
         </section>
 
-        <section className="entry-section" aria-labelledby="entry-title">
-          <div className="site-container">
-            <h2 id="entry-title">{ui.entryTitle}</h2>
-            <div className="entry-routes">
-              <a href="#consultations"><span>{ui.entryConsult}</span><strong>{ui.from} {CONSULTATIONS_STORE[0].price}</strong><ArrowRight /></a>
-              <a href="#packages"><span>{ui.entryPackage}</span><strong>{ui.from} {PREMIUM_PACKAGES[0].price}</strong><ArrowRight /></a>
-              <a href="#single-services"><span>{ui.entrySingle}</span><strong>{ui.from} €79</strong><ArrowRight /></a>
+        <section className="entry-section section-anchor" aria-labelledby="start-here-title" id="start-here">
+          <div className="site-container start-hub">
+            <div className="start-hub-copy">
+              <p>{ui.audienceLead}</p>
+              <h2 id="start-here-title">{ui.audienceTitle}</h2>
+              <p className="large-copy">{ui.audienceText}</p>
+              <div className="audience-grid">
+                {AUDIENCE_FOCUS.map((audience) => (
+                  <article key={audience.id} className="audience-item">
+                    <strong>{audience.title[lang]}</strong>
+                    <p>{audience.note[lang]}</p>
+                    <span>{audience.timing[lang]}</span>
+                  </article>
+                ))}
+              </div>
+              <div className="arrival-contrast" aria-label={lang === 'uk' ? 'До і після приїзду' : lang === 'ru' ? 'До и после приезда' : 'Before and after arrival'}>
+                <div>
+                  <span>{ui.audienceBefore}</span>
+                  <strong>{lang === 'uk' ? 'Планування, документи, вибір формату' : lang === 'ru' ? 'Планирование, документы, выбор формата' : 'Planning, documents, format choice'}</strong>
+                </div>
+                <div>
+                  <span>{ui.audienceAfter}</span>
+                  <strong>{lang === 'uk' ? 'Заселення, комунікація, налаштування' : lang === 'ru' ? 'Заселение, коммуникация, настройка' : 'Move-in, communication, setup'}</strong>
+                </div>
+              </div>
+            </div>
+
+            <div className="situation-selector-shell">
+              <p>{ui.selectorLead}</p>
+              <h2>{ui.selectorTitle}</h2>
+              <p className="selector-text">{ui.selectorText}</p>
+              <div className="situation-selector">
+                {SITUATION_OPTIONS.map((option) => (
+                  <button key={option.id} type="button" className={activeSituation === option.id ? 'is-selected' : ''} aria-pressed={activeSituation === option.id} onClick={() => handleSelectSituation(option.id)}>
+                    <strong>{option.title[lang]}</strong>
+                    <span>{option.description[lang]}</span>
+                    <small>{option.target === 'consultation' ? ui.selectorConsult : option.target === 'services' ? ui.selectorServices : option.target === 'packages' ? ui.selectorPackages : ui.selectorPartner}</small>
+                  </button>
+                ))}
+              </div>
+              <div className="selector-links">
+                <a href="#consultations">{ui.selectorConsult}</a>
+                <a href="#single-services">{ui.selectorServices}</a>
+                <a href="#packages">{ui.selectorPackages}</a>
+                <a href="#contact">{ui.selectorPartner}</a>
+              </div>
+              <p className="selector-current"><strong>{activeSituationObj.title[lang]}</strong><span>{activeSituationObj.description[lang]}</span></p>
             </div>
           </div>
         </section>
 
         <section id="why" className="trust-section section-anchor">
           <div className="site-container trust-layout">
-            <div>
-              <h2>{ui.trustTitle}</h2>
-              <p className="large-copy">{ui.trustText}</p>
+            <div className="process-panel">
+              <p>{ui.processLead}</p>
+              <h2>{ui.processTitle}</h2>
+              <p className="large-copy">{ui.processText}</p>
+              <div className="process-list">
+                {PROCESS_STEPS.map((step, index) => (
+                  <article key={step.id}>
+                    <span>{index + 1}</span>
+                    <div>
+                      <h3>{step.title[lang]}</h3>
+                      <p>{step.description[lang]}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
             </div>
-            <div className="trust-points">
-              <article><GraduationCap /><div><h3>{dict.roleTitle}</h3><p>{dict.roleDesc}</p></div></article>
-              <article><Info /><div><h3>{dict.antiRoleTitle}</h3><p>{ui.boundary}</p></div></article>
+            <div className="partner-panel">
+              <p>{ui.partnerLead}</p>
+              <h2>{ui.partnerTitle}</h2>
+              <p className="large-copy">{ui.partnerText}</p>
+              <div className="partner-grid">
+                {PARTNER_AUDIENCES.map((partner) => (
+                  <article key={partner.id}>
+                    <strong>{partner.title[lang]}</strong>
+                    <p>{partner.description[lang]}</p>
+                  </article>
+                ))}
+              </div>
+              <button
+                type="button"
+                className="button button-secondary"
+                onClick={() => {
+                  handleSelectSituation('organisation');
+                  scrollToContact();
+                }}
+              >
+                {ui.partnerCTA}<ArrowRight />
+              </button>
+              <div className="boundary-note">
+                <Info />
+                <p><strong>{dict.antiRoleTitle}</strong>{ui.boundary}</p>
+              </div>
             </div>
           </div>
         </section>
@@ -487,6 +889,13 @@ export default function VantamsHub() {
               <p>{ui.servicesLead}</p>
               <h2>{dict.singleTitle}</h2>
               <span>{dict.singleSub}</span>
+              <div className="housing-highlight">
+                <p>{ui.housingLead}</p>
+                <h3>{ui.housingTitle}</h3>
+                <p>{ui.housingText}</p>
+                <small><Info />{ui.housingNote}</small>
+                <button type="button" className="button button-secondary" onClick={() => handleSelectSingleService('single_housing_application_support')}>{ui.housingCta}<ArrowRight /></button>
+              </div>
               <div className="service-category-tabs" role="tablist" aria-label={ui.servicesLead}>
                 {serviceCategories.map((category) => {
                   const Icon = category.icon;
@@ -505,7 +914,7 @@ export default function VantamsHub() {
                   <article key={service.id}>
                     <div className="service-name"><h4>{service.name[lang]}</h4><span>{service.mode[lang]}</span></div>
                     <div className="service-description"><p>{service.desc[lang]}</p><small><Check />{service.limit[lang]}</small>{service.notIncluded && <small className="service-exclusion">{service.notIncluded[lang]}</small>}</div>
-                    <div className="service-action"><strong>{service.price}</strong><button onClick={() => handleSelectSingleService(service.id)} aria-label={`${dict.singleCta}: ${service.name[lang]}`}><ArrowUpRight /></button></div>
+                    <div className="service-action"><strong>{service.id === 'single_housing_application_support' ? ui.housingPriceLabel : service.price}</strong><button onClick={() => handleSelectSingleService(service.id)} aria-label={`${dict.singleCta}: ${service.name[lang]}`}><ArrowUpRight /></button></div>
                   </article>
                 ))}
               </div>
@@ -591,9 +1000,22 @@ export default function VantamsHub() {
                 <form onSubmit={handleFormSubmit}>
                   <div className="sr-only" aria-hidden="true"><label htmlFor="contact-website">Website</label><input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" value={formWebsite} onChange={(event) => setFormWebsite(event.target.value)} /></div>
                   {formState === 'error' && <div role="alert" className="form-error">{formErrorMessage}</div>}
+                  <div className="form-section-copy">
+                    <p>{ui.formSectionTitle}</p>
+                    <span>{ui.formSectionSub}</span>
+                  </div>
+                  <div className="qualification-grid">
+                    <label htmlFor="contact-audience"><span>{ui.formAudienceLabel}</span><select id="contact-audience" name="audience" value={formAudience} onChange={(event) => setFormAudience(event.target.value)} disabled={formState === 'sending'}>{qualificationOptions.audience.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
+                    <label htmlFor="contact-status"><span>{ui.formStatusLabel}</span><select id="contact-status" name="status" value={formStatus} onChange={(event) => setFormStatus(event.target.value)} disabled={formState === 'sending'}>{qualificationOptions.status.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
+                    <label htmlFor="contact-moving-date"><span>{ui.formMovingDateLabel}</span><input id="contact-moving-date" name="movingDate" type="date" value={formMovingDate} onChange={(event) => setFormMovingDate(event.target.value)} disabled={formState === 'sending'} /></label>
+                    <label htmlFor="contact-city"><span>{ui.formCityLabel}</span><input id="contact-city" name="city" type="text" value={formCity} onChange={(event) => setFormCity(event.target.value)} disabled={formState === 'sending'} maxLength={80} placeholder={lang === 'uk' ? 'Амстердам, Гаага, Делфт...' : lang === 'ru' ? 'Амстердам, Гаага, Делфт...' : 'Amsterdam, The Hague, Delft...'} /></label>
+                    <label htmlFor="contact-budget"><span>{ui.formBudgetLabel}</span><select id="contact-budget" name="budget" value={formBudget} onChange={(event) => setFormBudget(event.target.value)} disabled={formState === 'sending'}><option value="">{lang === 'uk' ? 'Оберіть діапазон' : lang === 'ru' ? 'Выберите диапазон' : 'Choose a range'}</option>{qualificationOptions.budget.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
+                    <label htmlFor="contact-guarantor"><span>{ui.formGuarantorLabel}</span><select id="contact-guarantor" name="guarantor" value={formGuarantor} onChange={(event) => setFormGuarantor(event.target.value)} disabled={formState === 'sending'}>{qualificationOptions.guarantor.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
+                  </div>
+                  <label htmlFor="contact-help"><span>{ui.formHelpLabel}</span><select id="contact-help" name="help" value={formHelp} onChange={(event) => setFormHelp(event.target.value)} disabled={formState === 'sending'}>{qualificationOptions.help.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
                   <div className="form-grid"><label htmlFor="contact-name"><span>{dict.contactNameLabel} *</span><input id="contact-name" name="name" type="text" required value={formName} onChange={(event) => {setFormName(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={120} autoComplete="name" placeholder="Maria" /></label><label htmlFor="contact-email"><span>{dict.contactEmailLabel} *</span><input id="contact-email" name="email" type="email" required value={formEmail} onChange={(event) => {setFormEmail(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={254} autoComplete="email" placeholder="maria@example.com" /></label></div>
                   <label htmlFor="contact-type"><span>{dict.contactTypeLabel}</span><select id="contact-type" name="inquiryType" value={formInquiryType} onChange={(event) => setFormInquiryType(event.target.value)} disabled={formState === 'sending'}><option value="packages">{dict.contactTypeOpt1}</option><option value="single">{dict.contactTypeOpt2}</option><option value="consultation">{dict.consultTitle}</option><option value="b2b">{dict.contactTypeOpt3}</option><option value="general">{dict.contactTypeOpt4}</option></select></label>
-                  <label htmlFor="contact-message"><span>{dict.contactMessageLabel} *</span><textarea id="contact-message" name="message" rows={5} required value={formMessage} onChange={(event) => {setFormMessage(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={5000} placeholder={lang === 'uk' ? 'Наприклад: потрібна допомога з BSN і банком.' : lang === 'ru' ? 'Например: нужна помощь с BSN и банком.' : 'For example: I need help with BSN and banking.'} /></label>
+                  <label htmlFor="contact-message"><span>{dict.contactMessageLabel} *</span><textarea id="contact-message" name="message" rows={5} required value={formMessage} onChange={(event) => {setFormMessage(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={5000} placeholder={lang === 'uk' ? 'Наприклад: потрібна допомога з BSN, житлом або пакетом.' : lang === 'ru' ? 'Например: нужна помощь с BSN, жильём или пакетом.' : 'For example: I need help with BSN, housing or a package.'} /></label>
                   <label className="consent-row" htmlFor="privacy-consent"><input type="checkbox" id="privacy-consent" name="consent" required checked={formConsent} onChange={(event) => setFormConsent(event.target.checked)} disabled={formState === 'sending'} /><span>{dict.contactConsent}</span></label>
                   <button type="submit" disabled={formState === 'sending' || !formConsent} className="button button-primary contact-submit"><span aria-live="polite">{formState === 'sending' ? dict.contactSending : dict.contactSubmitBtn}</span>{formState !== 'sending' && <ArrowRight />}</button>
                 </form>}

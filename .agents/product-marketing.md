@@ -3,9 +3,9 @@
 *Last updated: 2026-06-13*
 
 ## Product Overview
-**One-liner:** VANTAM is practical housing and relocation support for international people settling in the Netherlands.
+**One-liner:** VANTAM is practical housing and relocation support for international people before and after arrival in the Netherlands.
 
-**What it does:** VANTAM helps people understand and complete practical setup steps before or after arrival: registration, BSN, DigiD, banking, insurance, healthcare, university admin, official letters and housing-related communication or document review. The site also helps visitors compare consultations, single services and packages before they contact VANTAM.
+**What it does:** VANTAM helps people understand and complete practical setup steps before or after arrival: housing preparation and application support, registration, BSN, DigiD, banking, insurance, healthcare, university admin, official letters and housing-related communication or document review. The site also helps visitors compare consultations, single services and packages before they contact VANTAM.
 
 **Product category:** Practical relocation support / setup coordination service.
 
@@ -14,9 +14,9 @@
 **Business model:** Paid consultations, single services and fixed-price packages.
 
 ## Target Audience
-**Target companies:** Primarily individuals; also education or relocation partners that may refer clients.
+**Target companies:** Primarily individuals; also agencies, HR teams, universities and education consultants that may refer clients.
 
-**Decision-makers:** International students, expats and other newcomers, plus partners or family members supporting the move.
+**Decision-makers:** International students, expats and professionals, families supporting the move, and organisational partners.
 
 **Primary use case:** Getting through the first practical steps in the Netherlands without missing something important.
 
@@ -29,7 +29,7 @@
 - Before arrival planning.
 - First weeks after arrival.
 - Already in the Netherlands and still sorting practical setup.
-- One-off help with BSN, DigiD, bank, insurance, GP, letters, university admin or housing communication.
+- One-off help with BSN, DigiD, bank, insurance, GP, letters, university admin, housing application support, rental-contract support or housing communication.
 
 ## Personas
 | Persona | Cares about | Challenge | Value we promise |
@@ -113,7 +113,7 @@ official, guaranteed, best, leading, seamless, compliant-sounding filler, legal 
 | BSN | Dutch citizen service number required for many setup steps |
 | DigiD | Dutch digital identity used for public services |
 | GP / huisarts | General practitioner / family doctor |
-| Settle | Package for first-month setup after arrival |
+| Arrival Setup | Package for first-month setup after arrival |
 | Prepare | Package for pre-arrival planning |
 | Thrive | Package for more complex, higher-touch support |
 

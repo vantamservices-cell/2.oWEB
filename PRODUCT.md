@@ -8,9 +8,9 @@ brand
 
 VANTAM serves people who need practical help navigating relocation and early life in the Netherlands:
 
-- International students who are preparing to arrive, completing registration, or settling into study and daily life.
-- Young expats who need a clear route through Dutch administration, healthcare, banking, insurance, housing communication, and official correspondence.
-- Parents and families who want visibility, reduced uncertainty, and a trusted local point of coordination for a student or young adult.
+- Students who need practical housing, relocation, and settlement support before or after arrival.
+- Expats and professionals who want a clear route through Dutch administration, housing communication, banking, insurance, and official correspondence.
+- Families who want visibility, reduced uncertainty, and a trusted local point of coordination for a student or young adult.
 - Education and relocation partners who may refer clients needing hands-on, multilingual support.
 
 Visitors usually arrive with limited local knowledge, time pressure, unfamiliar terminology, and a high cost of making avoidable administrative mistakes. Their core job is to understand what must happen, in what order, what VANTAM can handle, and what remains their responsibility.
@@ -28,13 +28,14 @@ Success means that a visitor can quickly identify the right level of help, under
 The production website follows one continuous decision journey:
 
 1. A concise value proposition and authentic Amsterdam street image establish local context without institutional imagery.
-2. Three early routes let visitors start with a consultation, ongoing package, or focused service.
+2. A compact situation selector and direct links let visitors route themselves to a consultation, service, package, or partner enquiry.
 3. Consultations remain the lowest-friction paid entry product.
 4. Focused services are grouped by administration, housing context, and healthcare rather than presented as a card wall.
-5. Prepare, Settle, and Thrive are visible together on desktop and fully stacked on mobile, followed by complete inclusions and boundaries.
+5. Prepare, Arrival Setup, and Thrive are visible together on desktop and fully stacked on mobile, followed by complete inclusions and boundaries.
 6. The cost-scenario calculator and adaptation planner provide useful preparation before contact.
 7. Testimonials, FAQ, and the final enquiry area resolve remaining trust and scope questions.
 8. Service, consultation, and package actions prefill the multilingual contact form while preserving the visitor's selected context.
+9. The homepage now includes a situation selector, a compact audience/timing explanation, a partnership entry point, and a more detailed qualification form.
 
 The interface supports Ukrainian, Russian, and English with equal pricing, content, controls, and responsive behavior. Light mode is the default and a complete dark theme is available as a user-controlled preference.
 
