@@ -144,38 +144,38 @@ export default function VantamsHub() {
 
   const ui = useMemo(() => ({
     uk: {
-      notice: 'Практична підтримка студентів та експатів у Нідерландах',
+      notice: 'Практична підтримка студентів, експатів і родин у Нідерландах',
       menu: 'Меню',
       darkTheme: 'Увімкнути темну тему',
       lightTheme: 'Увімкнути світлу тему',
-      heroTitle: 'Перші кроки. Людина поруч.',
-      heroText: 'Документи, реєстрація, медицина, банк і житлові питання. Зрозумілий план та людина поруч.',
+      heroTitle: 'Перші кроки в Нідерландах без зайвого шуму',
+      heroText: 'Документи, реєстрація, банк, медицина, житло та університетська адміністрація. Ви бачите зрозумілий план і знаєте, що робити далі.',
       heroImageAlt: 'Житлова вулиця з цегляними будинками в Амстердамі',
       photoCredit: 'Фото: Haberdoedas, Unsplash',
-      localNote: 'Місцевий контекст. Три мови. Чіткі межі роботи.',
-      entryTitle: 'Почніть з формату, який відповідає вашій ситуації',
-      entryConsult: 'Розібратися разом',
+      localNote: 'Три мови. Чіткі межі. Один локальний контакт.',
+      entryTitle: 'Оберіть формат, який відповідає вашій ситуації',
+      entryConsult: 'Почати з консультації',
       entryPackage: 'Потрібен супровід',
-      entrySingle: 'Відомий конкретний крок',
+      entrySingle: 'Потрібен один крок',
       from: 'від',
       trustTitle: 'Підтримка без інституційної дистанції',
-      trustText: 'VANTAM пояснює незнайомі процеси нормальною мовою, допомагає підготуватися та координує практичні кроки.',
-      boundary: 'Ми не замінюємо ліцензованих фахівців і не обіцяємо рішень державних органів, банків, страховиків або орендодавців.',
+      trustText: 'VANTAM пояснює процеси простою мовою, допомагає підготуватися і тримає наступний крок у фокусі.',
+      boundary: 'Ми не замінюємо ліцензованих фахівців і не обіцяємо результатів, які залежать від банків, державних органів, страховиків або орендодавців.',
       consultLead: 'Найпростіший спосіб почати',
       servicesLead: 'Окремі послуги',
       categoryCount: 'послуг',
       packageLead: 'Три рівні підтримки',
-      packageCompare: 'Порівняйте всі варіанти одночасно',
-      packageDetails: 'Повний склад обраного пакета',
+      packageCompare: 'Порівняйте варіанти поруч',
+      packageDetails: 'Склад обраного пакета',
       selected: 'Обрано',
       choose: 'Переглянути',
       toolsLead: 'Корисні інструменти до розмови',
-      toolsText: 'Оцініть сценарії витрат і відмітьте, що вже підготовлено. Результати є орієнтиром для планування.',
+      toolsText: 'Оцініть типові витрати та відмітьте, що вже готово. Інструменти допомагають спланувати розмову, а не замінюють консультацію.',
       estimate: 'Сума вибраних сценаріїв',
       maximum: 'Максимум у калькуляторі: €4,575',
       difference: 'Різниця із Settle',
       progress: 'готово',
-      testimonialLead: 'Досвід клієнтів',
+      testimonialLead: 'Приклади',
       contactLead: 'Розкажіть, що відбувається',
       contactAside: 'Можна почати без готового рішення',
       contactAsideText: 'Оберіть тип запиту або просто опишіть ситуацію. Контекст обраної послуги чи пакета вже буде у формі.',
@@ -186,38 +186,38 @@ export default function VantamsHub() {
       details: 'Деталі',
     },
     ru: {
-      notice: 'Практическая поддержка студентов и экспатов в Нидерландах',
+      notice: 'Практическая поддержка студентов, экспатов и семей в Нидерландах',
       menu: 'Меню',
       darkTheme: 'Включить темную тему',
       lightTheme: 'Включить светлую тему',
-      heroTitle: 'Первые шаги. Человек рядом.',
-      heroText: 'Документы, регистрация, медицина, банк и жилье. Понятный план и человек рядом.',
+      heroTitle: 'Первые шаги в Нидерландах без лишнего шума',
+      heroText: 'Документы, регистрация, банк, медицина, жилье и университетская администрация. Вы видите понятный план и знаете, что делать дальше.',
       heroImageAlt: 'Жилая улица с кирпичными домами в Амстердаме',
       photoCredit: 'Фото: Haberdoedas, Unsplash',
-      localNote: 'Местный контекст. Три языка. Четкие границы работы.',
-      entryTitle: 'Начните с формата, который подходит вашей ситуации',
-      entryConsult: 'Разобраться вместе',
+      localNote: 'Три языка. Четкие границы. Один локальный контакт.',
+      entryTitle: 'Выберите формат, который подходит вашей ситуации',
+      entryConsult: 'Начать с консультации',
       entryPackage: 'Нужно сопровождение',
-      entrySingle: 'Известен конкретный шаг',
+      entrySingle: 'Нужен один шаг',
       from: 'от',
       trustTitle: 'Поддержка без институциональной дистанции',
-      trustText: 'VANTAM объясняет незнакомые процессы нормальным языком, помогает подготовиться и координирует практические шаги.',
-      boundary: 'Мы не заменяем лицензированных специалистов и не обещаем решений государственных органов, банков, страховщиков или арендодателей.',
+      trustText: 'VANTAM объясняет процессы простым языком, помогает подготовиться и держит следующий шаг в фокусе.',
+      boundary: 'Мы не заменяем лицензированных специалистов и не обещаем результатов, которые зависят от банков, государственных органов, страховщиков или арендодателей.',
       consultLead: 'Самый простой способ начать',
       servicesLead: 'Отдельные услуги',
       categoryCount: 'услуг',
       packageLead: 'Три уровня поддержки',
-      packageCompare: 'Сравните все варианты одновременно',
-      packageDetails: 'Полный состав выбранного пакета',
+      packageCompare: 'Сравните варианты рядом',
+      packageDetails: 'Состав выбранного пакета',
       selected: 'Выбрано',
       choose: 'Посмотреть',
       toolsLead: 'Полезные инструменты до разговора',
-      toolsText: 'Оцените сценарии расходов и отметьте, что уже подготовлено. Результаты служат ориентиром для планирования.',
+      toolsText: 'Оцените типичные расходы и отметьте, что уже готово. Инструменты помогают спланировать разговор, а не заменяют консультацию.',
       estimate: 'Сумма выбранных сценариев',
       maximum: 'Максимум в калькуляторе: €4,575',
       difference: 'Разница с Settle',
       progress: 'готово',
-      testimonialLead: 'Опыт клиентов',
+      testimonialLead: 'Примеры',
       contactLead: 'Расскажите, что происходит',
       contactAside: 'Можно начать без готового решения',
       contactAsideText: 'Выберите тип запроса или просто опишите ситуацию. Контекст выбранной услуги или пакета уже будет в форме.',
@@ -228,38 +228,38 @@ export default function VantamsHub() {
       details: 'Детали',
     },
     en: {
-      notice: 'Practical support for students and expats in the Netherlands',
+      notice: 'Practical support for students, expats and families in the Netherlands',
       menu: 'Menu',
       darkTheme: 'Use dark theme',
       lightTheme: 'Use light theme',
-      heroTitle: 'First steps. A person nearby.',
-      heroText: 'Documents, registration, healthcare, banking and housing questions. A clear plan and a person nearby.',
+      heroTitle: 'First steps in the Netherlands, without the noise',
+      heroText: 'Documents, registration, banking, healthcare, housing and university admin. You get a clear plan and know what to do next.',
       heroImageAlt: 'Residential brick street in Amsterdam',
       photoCredit: 'Photo: Haberdoedas, Unsplash',
-      localNote: 'Local context. Three languages. Clear professional boundaries.',
-      entryTitle: 'Start with the format that fits your situation',
-      entryConsult: 'Work it out together',
+      localNote: 'Three languages. Clear boundaries. One local contact.',
+      entryTitle: 'Choose the format that fits your situation',
+      entryConsult: 'Start with a consultation',
       entryPackage: 'I need ongoing support',
-      entrySingle: 'I know the exact step',
+      entrySingle: 'I need one concrete step',
       from: 'from',
       trustTitle: 'Support without institutional distance',
-      trustText: 'VANTAM explains unfamiliar processes in normal language, helps you prepare, and coordinates practical next steps.',
-      boundary: 'We do not replace licensed professionals or promise decisions by public bodies, banks, insurers or landlords.',
+      trustText: 'VANTAM explains processes in plain language, helps you prepare and keeps the next step in focus.',
+      boundary: 'We do not replace licensed professionals or promise outcomes that depend on banks, public bodies, insurers or landlords.',
       consultLead: 'The simplest place to start',
       servicesLead: 'Focused services',
       categoryCount: 'services',
       packageLead: 'Three levels of support',
-      packageCompare: 'Compare every option at the same time',
-      packageDetails: 'Full details of the selected package',
+      packageCompare: 'Compare the options side by side',
+      packageDetails: 'Contents of the selected package',
       selected: 'Selected',
       choose: 'View details',
       toolsLead: 'Useful tools before we talk',
-      toolsText: 'Review cost scenarios and mark what is already prepared. Results are planning guides, not official assessments.',
+      toolsText: 'Review common costs and mark what is already prepared. The tools help you plan the conversation; they do not replace a consultation.',
       estimate: 'Selected scenario total',
       maximum: 'Maximum in the calculator: €4,575',
       difference: 'Difference from Settle',
       progress: 'ready',
-      testimonialLead: 'Client experiences',
+      testimonialLead: 'Representative examples',
       contactLead: 'Tell us what is happening',
       contactAside: 'You can start without knowing the answer',
       contactAsideText: 'Choose a request type or describe the situation. Any selected service or package context is already included.',
@@ -303,14 +303,14 @@ export default function VantamsHub() {
   const handleSelectSingleService = (serviceId: string) => {
     setFormInquiryType('single');
     const service = SINGLE_SERVICES.find((item) => item.id === serviceId);
-    if (service) setFormMessage(lang === 'uk' ? `Мене цікавить окрема послуга: ${service.name.uk}` : lang === 'ru' ? `Меня интересует разовая услуга: ${service.name.ru}` : `I am interested in the standalone service: ${service.name.en}`);
+    if (service) setFormMessage(lang === 'uk' ? `Мені потрібна окрема послуга: ${service.name.uk}.` : lang === 'ru' ? `Мне нужна отдельная услуга: ${service.name.ru}.` : `I need a single service: ${service.name.en}.`);
     scrollToContact();
   };
 
   const handleSelectConsultation = (consultationId: string) => {
     setFormInquiryType('consultation');
     const consultation = CONSULTATIONS_STORE.find((item) => item.id === consultationId);
-    if (consultation) setFormMessage(lang === 'uk' ? `Мене цікавить консультація: ${consultation.name.uk}` : lang === 'ru' ? `Меня интересует консультация: ${consultation.name.ru}` : `I am interested in the consultation: ${consultation.name.en}`);
+    if (consultation) setFormMessage(lang === 'uk' ? `Мені потрібна консультація: ${consultation.name.uk}.` : lang === 'ru' ? `Мне нужна консультация: ${consultation.name.ru}.` : `I need a consultation: ${consultation.name.en}.`);
     scrollToContact();
   };
 
@@ -318,7 +318,7 @@ export default function VantamsHub() {
     const item = PREMIUM_PACKAGES.find((pkg) => pkg.id === packageId);
     setSelectedPackage(packageId);
     setFormInquiryType('packages');
-    if (item) setFormMessage(lang === 'uk' ? `Мене цікавить пакет: ${item.name.uk} ${item.price}` : lang === 'ru' ? `Меня интересует пакет: ${item.name.ru} ${item.price}` : `I am interested in the package: ${item.name.en} ${item.price}`);
+    if (item) setFormMessage(lang === 'uk' ? `Мені потрібен пакет: ${item.name.uk} (${item.price}).` : lang === 'ru' ? `Мне нужен пакет: ${item.name.ru} (${item.price}).` : `I need the package: ${item.name.en} (${item.price}).`);
     scrollToContact();
   };
 
@@ -349,7 +349,7 @@ export default function VantamsHub() {
   };
 
   const closeNavigation = (event: React.MouseEvent<HTMLAnchorElement>) => event.currentTarget.closest('details')?.removeAttribute('open');
-  const formErrorMessage = lang === 'uk' ? 'Не вдалося надіслати запит. Спробуйте ще раз або напишіть на vantam.nl@proton.me.' : lang === 'ru' ? 'Не удалось отправить запрос. Попробуйте еще раз или напишите на vantam.nl@proton.me.' : 'The request could not be sent. Please try again or email vantam.nl@proton.me.';
+  const formErrorMessage = lang === 'uk' ? 'Не вдалося надіслати запит. Спробуйте ще раз або напишіть на vantam.nl@proton.me.' : lang === 'ru' ? 'Не удалось отправить запрос. Попробуйте ещё раз или напишите на vantam.nl@proton.me.' : 'The enquiry could not be sent. Please try again or email vantam.nl@proton.me.';
   const plannerGroups = [
     {category: 'prep' as const, title: dict.checklistPrepTab, description: dict.checklistPrepDesc},
     {category: 'arrival' as const, title: dict.checklistArrivalTab, description: dict.checklistArrivalDesc},
@@ -567,11 +567,11 @@ export default function VantamsHub() {
             <div className="testimonial-stage">
               <AnimatePresence initial={false}>
                 <motion.figure key={activeTestimonialIdx} initial={{opacity: 0, transform: prefersReducedMotion ? 'none' : 'translateY(4px)'}} animate={{opacity: 1, transform: 'none'}} exit={{opacity: 0}} transition={{duration: prefersReducedMotion ? 0 : 0.18}}>
-                  <blockquote>“{TESTIMONIALS[activeTestimonialIdx].story[lang]}”</blockquote>
+                  <p>{TESTIMONIALS[activeTestimonialIdx].story[lang]}</p>
                   <figcaption><strong>{TESTIMONIALS[activeTestimonialIdx].name[lang]}</strong><span>{TESTIMONIALS[activeTestimonialIdx].role[lang]}</span><span>{TESTIMONIALS[activeTestimonialIdx].city[lang]} / {TESTIMONIALS[activeTestimonialIdx].university[lang]}</span></figcaption>
                 </motion.figure>
               </AnimatePresence>
-              <div className="testimonial-controls"><span>{activeTestimonialIdx + 1} / {TESTIMONIALS.length}</span><div><button onClick={() => setActiveTestimonialIdx((previous) => previous === 0 ? TESTIMONIALS.length - 1 : previous - 1)} aria-label={lang === 'uk' ? 'Попередній відгук' : lang === 'ru' ? 'Предыдущий отзыв' : 'Previous testimonial'}><ChevronLeft /></button><button onClick={() => setActiveTestimonialIdx((previous) => previous === TESTIMONIALS.length - 1 ? 0 : previous + 1)} aria-label={lang === 'uk' ? 'Наступний відгук' : lang === 'ru' ? 'Следующий отзыв' : 'Next testimonial'}><ChevronRight /></button></div></div>
+              <div className="testimonial-controls"><span>{activeTestimonialIdx + 1} / {TESTIMONIALS.length}</span><div><button onClick={() => setActiveTestimonialIdx((previous) => previous === 0 ? TESTIMONIALS.length - 1 : previous - 1)} aria-label={lang === 'uk' ? 'Попередня ситуація' : lang === 'ru' ? 'Предыдущая ситуация' : 'Previous situation'}><ChevronLeft /></button><button onClick={() => setActiveTestimonialIdx((previous) => previous === TESTIMONIALS.length - 1 ? 0 : previous + 1)} aria-label={lang === 'uk' ? 'Наступна ситуація' : lang === 'ru' ? 'Следующая ситуация' : 'Next situation'}><ChevronRight /></button></div></div>
             </div>
           </div>
         </section>
@@ -593,13 +593,13 @@ export default function VantamsHub() {
                   {formState === 'error' && <div role="alert" className="form-error">{formErrorMessage}</div>}
                   <div className="form-grid"><label htmlFor="contact-name"><span>{dict.contactNameLabel} *</span><input id="contact-name" name="name" type="text" required value={formName} onChange={(event) => {setFormName(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={120} autoComplete="name" placeholder="Maria" /></label><label htmlFor="contact-email"><span>{dict.contactEmailLabel} *</span><input id="contact-email" name="email" type="email" required value={formEmail} onChange={(event) => {setFormEmail(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={254} autoComplete="email" placeholder="maria@example.com" /></label></div>
                   <label htmlFor="contact-type"><span>{dict.contactTypeLabel}</span><select id="contact-type" name="inquiryType" value={formInquiryType} onChange={(event) => setFormInquiryType(event.target.value)} disabled={formState === 'sending'}><option value="packages">{dict.contactTypeOpt1}</option><option value="single">{dict.contactTypeOpt2}</option><option value="consultation">{dict.consultTitle}</option><option value="b2b">{dict.contactTypeOpt3}</option><option value="general">{dict.contactTypeOpt4}</option></select></label>
-                  <label htmlFor="contact-message"><span>{dict.contactMessageLabel} *</span><textarea id="contact-message" name="message" rows={5} required value={formMessage} onChange={(event) => {setFormMessage(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={5000} placeholder="..." /></label>
+                  <label htmlFor="contact-message"><span>{dict.contactMessageLabel} *</span><textarea id="contact-message" name="message" rows={5} required value={formMessage} onChange={(event) => {setFormMessage(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={5000} placeholder={lang === 'uk' ? 'Наприклад: потрібна допомога з BSN і банком.' : lang === 'ru' ? 'Например: нужна помощь с BSN и банком.' : 'For example: I need help with BSN and banking.'} /></label>
                   <label className="consent-row" htmlFor="privacy-consent"><input type="checkbox" id="privacy-consent" name="consent" required checked={formConsent} onChange={(event) => setFormConsent(event.target.checked)} disabled={formState === 'sending'} /><span>{dict.contactConsent}</span></label>
                   <button type="submit" disabled={formState === 'sending' || !formConsent} className="button button-primary contact-submit"><span aria-live="polite">{formState === 'sending' ? dict.contactSending : dict.contactSubmitBtn}</span>{formState !== 'sending' && <ArrowRight />}</button>
                 </form>}
             </div>
           </div>
-          <footer className="site-footer"><div className="site-container footer-layout"><a href="#top" className="footer-brand"><VantamLogo className="brand-mark" light /><strong>VANTAM</strong></a><p>{dict.footerSub}</p><div><a href="#consultations">{dict.consultTitle}</a><a href="#single-services">{dict.navSingleServices}</a><a href="#packages">{dict.navPackages}</a><a href="mailto:vantam.nl@proton.me">vantam.nl@proton.me</a></div></div></footer>
+          <footer className="site-footer"><div className="site-container footer-layout"><a href="#top" className="footer-brand"><VantamLogo className="brand-mark" light /><strong>VANTAM</strong></a><p>{dict.footerSub}</p><div><a href="#consultations">{dict.consultTitle}</a><a href="#single-services">{dict.navSingleServices}</a><a href="#packages">{dict.navPackages}</a><a href="#testimonials">{dict.navTestimonials}</a><a href="mailto:vantam.nl@proton.me">vantam.nl@proton.me</a></div></div></footer>
         </section>
       </main>
 
