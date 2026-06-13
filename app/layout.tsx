@@ -10,7 +10,7 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
   title: 'VANTAM | Practical housing and relocation support',
-  description: 'Multilingual practical support for international students, expats and families in the Netherlands, including housing preparation, application support, Arrival Setup and practical relocation coordination.',
+  description: 'Multilingual practical housing and relocation support in the Netherlands for international students, expats and families before and after arrival.',
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {

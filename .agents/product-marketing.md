@@ -3,9 +3,9 @@
 *Last updated: 2026-06-13*
 
 ## Product Overview
-**One-liner:** VANTAM is practical housing and relocation support for international people before and after arrival in the Netherlands.
+**One-liner:** VANTAM is practical housing and relocation support for international students, expats and families before and after arrival in the Netherlands.
 
-**What it does:** VANTAM helps people understand and complete practical setup steps before or after arrival: housing preparation and application support, registration, BSN, DigiD, banking, insurance, healthcare, university admin, official letters and housing-related communication or document review. The site also helps visitors compare consultations, single services and packages before they contact VANTAM.
+**What it does:** VANTAM helps people understand and complete practical setup steps before or after arrival: housing preparation and application support, registration, BSN, DigiD, banking, insurance, healthcare, university admin, official letters and housing-related communication or document review. The site also helps visitors choose between consultations, single services and packages before they contact VANTAM.
 
 **Product category:** Practical relocation support / setup coordination service.
 

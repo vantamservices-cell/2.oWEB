@@ -174,11 +174,11 @@ export interface TranslationMatrix {
 export const DICTIONARY: Record<Language, TranslationMatrix> = {
   uk: {
     navTitle: "VANTAM",
-    navSub: "Практична підтримка для міжнародних людей у Нідерландах",
+    navSub: "Практична допомога з житлом і переїздом у Нідерландах",
     langLabel: "Мова",
-    heroBadge: "Практична підтримка для міжнародних людей",
-    heroHeadline: "Практична допомога з перших кроків у Нідерландах",
-    heroSub: "Для міжнародних студентів, експатів та інших новоприбулих до або після приїзду: реєстрація, BSN, DigiD, банк, страхування, медицина, житлові питання та університетська адміністрація.",
+    heroBadge: "Підтримка до і після приїзду",
+    heroHeadline: "Практична допомога з житлом і переїздом у Нідерландах",
+    heroSub: "Для міжнародних студентів, експатів і сімей до і після приїзду: житло, реєстрація, BSN, DigiD, банк, страхування, медицина та університетська адміністрація.",
     heroCtaPrimary: "Почати з консультації",
     heroCtaSecondary: "Подивитися послуги",
     whyTitle: "Чому до VANTAM звертаються",
@@ -198,7 +198,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     pdfExportDesc: "Створіть зрозумілий PDF з обраним пакетом, його складом та межами роботи.",
     pdfBtn: "Експортувати PDF пакета",
 
-    statusBanner: "Практична підтримка для міжнародних людей у Нідерландах",
+    statusBanner: "Практична допомога з житлом і переїздом у Нідерландах",
     statusScope: "Документи, налаштування та щоденні кроки",
     navWhy: "Чому ми",
     navServices: "Послуги",
@@ -230,7 +230,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     singleCta: "Обрати послугу",
 
     consultTitle: "Консультації",
-    consultSub: "Якщо ви скоро приїжджаєте, уже в Нідерландах або ще порівнюєте варіанти, консультація дає найпростіший вхід.",
+    consultSub: "Якщо ви скоро приїжджаєте, уже в Нідерландах або ще порівнюєте варіанти, консультація допоможе швидко зрозуміти правильний наступний крок.",
     consultBadge: "Початок тут",
     consultResultLabel: "Після дзвінка у вас буде:",
     consultNoteLabel: "Найкраще для:",
@@ -278,7 +278,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     contactTypeOpt1: "Пакет: Prepare, Arrival Setup або Thrive",
     contactTypeOpt2: "Окрема послуга",
     contactTypeOpt3: "Партнерський або рекомендаційний запит",
-    contactTypeOpt4: "Консультація або загальне питання",
+    contactTypeOpt4: "Ще не знаю / загальне питання",
     contactMessageLabel: "Коротко опишіть ситуацію",
     contactConsent: "Я погоджуюся, щоб VANTAM використав мої дані для відповіді на цей запит.",
     contactSubmitBtn: "Надіслати запит",
@@ -297,7 +297,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     modalPrintBtn: "Роздрукувати PDF",
     modalCloseBtn: "Закрити",
 
-    footerSub: "VANTAM надає практичну підтримку для міжнародних людей у Нідерландах, пояснює процеси та допомагає з комунікацією. Ми не замінюємо ліцензовані юридичні, фінансові, страхові чи ріелторські послуги.",
+    footerSub: "VANTAM надає практичну допомогу з житлом і переїздом у Нідерландах, пояснює процеси та допомагає з комунікацією. Ми не замінюємо ліцензовані юридичні, фінансові, страхові чи ріелторські послуги.",
     footerContact: "Контакти:",
 
     housingDisclaimerTitle: "Межі роботи VANTAM",
@@ -314,11 +314,11 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
   },
   ru: {
     navTitle: "VANTAM",
-    navSub: "Практическая поддержка для международных людей в Нидерландах",
+    navSub: "Практическая помощь с жильём и переездом в Нидерландах",
     langLabel: "Язык",
-    heroBadge: "Практическая поддержка для международных людей",
-    heroHeadline: "Практическая помощь с первыми шагами в Нидерландах",
-    heroSub: "Для международных студентов, экспатов и других новоприбывших до или после приезда: регистрация, BSN, DigiD, банк, страховка, медицина, жилищные вопросы и университетская администрация.",
+    heroBadge: "Поддержка до и после приезда",
+    heroHeadline: "Практическая помощь с жильём и переездом в Нидерландах",
+    heroSub: "Для международных студентов, экспатов и семей до и после приезда: жильё, регистрация, BSN, DigiD, банк, страховка, медицина и университетская администрация.",
     heroCtaPrimary: "Начать с консультации",
     heroCtaSecondary: "Посмотреть услуги",
     whyTitle: "Почему обращаются в VANTAM",
@@ -338,7 +338,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     pdfExportDesc: "Создайте понятный PDF с выбранным пакетом, его составом и границами работы.",
     pdfBtn: "Экспортировать PDF пакета",
 
-    statusBanner: "Практическая поддержка для международных людей в Нидерландах",
+    statusBanner: "Практическая помощь с жильём и переездом в Нидерландах",
     statusScope: "Документы, настройки и повседневные шаги",
     navWhy: "Почему мы",
     navServices: "Услуги",
@@ -370,7 +370,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     singleCta: "Выбрать услугу",
 
     consultTitle: "Консультации",
-    consultSub: "Если вы скоро приезжаете, уже в Нидерландах или ещё сравниваете варианты, консультация даёт самый простой вход.",
+    consultSub: "Если вы скоро приезжаете, уже в Нидерландах или ещё сравниваете варианты, консультация поможет быстро понять правильный следующий шаг.",
     consultBadge: "Начать здесь",
     consultResultLabel: "После звонка у вас будет:",
     consultNoteLabel: "Лучше всего для:",
@@ -418,7 +418,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     contactTypeOpt1: "Пакет: Prepare, Arrival Setup или Thrive",
     contactTypeOpt2: "Отдельная услуга",
     contactTypeOpt3: "Партнёрский или рекомендательный запрос",
-    contactTypeOpt4: "Консультация или общий вопрос",
+    contactTypeOpt4: "Пока не знаю / общий вопрос",
     contactMessageLabel: "Кратко опишите ситуацию",
     contactConsent: "Я согласен, чтобы VANTAM использовал мои данные для ответа на этот запрос.",
     contactSubmitBtn: "Отправить запрос",
@@ -437,7 +437,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     modalPrintBtn: "Распечатать PDF",
     modalCloseBtn: "Закрыть",
 
-    footerSub: "VANTAM даёт практическую поддержку для международных людей в Нидерландах, объясняет процессы и помогает с коммуникацией. Мы не заменяем лицензированные юридические, финансовые, страховые или риелторские услуги.",
+    footerSub: "VANTAM даёт практическую помощь с жильём и переездом в Нидерландах, объясняет процессы и помогает с коммуникацией. Мы не заменяем лицензированные юридические, финансовые, страховые или риелторские услуги.",
     footerContact: "Контакты:",
 
     housingDisclaimerTitle: "Границы работы VANTAM",
@@ -454,11 +454,11 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
   },
   en: {
     navTitle: "VANTAM",
-    navSub: "Practical support for international people in the Netherlands",
+    navSub: "Practical housing and relocation support in the Netherlands",
     langLabel: "Language",
-    heroBadge: "Practical support for international people",
-    heroHeadline: "Practical help with the first steps in the Netherlands",
-    heroSub: "For international students, expats and other newcomers before or after arrival: registration, BSN, DigiD, banking, insurance, healthcare, housing questions and university admin.",
+    heroBadge: "Support before and after arrival",
+    heroHeadline: "Practical housing and relocation support in the Netherlands",
+    heroSub: "For international students, expats and families before and after arrival: housing, registration, BSN, DigiD, banking, insurance, healthcare and university admin.",
     heroCtaPrimary: "Start with a consultation",
     heroCtaSecondary: "See the services",
     whyTitle: "Why people come to VANTAM",
@@ -478,7 +478,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     pdfExportDesc: "Create a clear PDF with the selected package, its scope and its limits.",
     pdfBtn: "Export package PDF",
 
-    statusBanner: "Practical support for international people in the Netherlands",
+    statusBanner: "Practical housing and relocation support in the Netherlands",
     statusScope: "Documents, setup and everyday tasks",
     navWhy: "Why VANTAM",
     navServices: "Services",
@@ -510,7 +510,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     singleCta: "Choose service",
 
     consultTitle: "Consultations",
-    consultSub: "If you are arriving soon, already in the Netherlands, or still comparing options, a consultation is the simplest entry point.",
+    consultSub: "If you are arriving soon, already in the Netherlands, or still comparing options, a consultation helps you quickly identify the right next step.",
     consultBadge: "Start here",
     consultResultLabel: "You leave with:",
     consultNoteLabel: "Best for:",
@@ -558,7 +558,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     contactTypeOpt1: "Package: Prepare, Arrival Setup or Thrive",
     contactTypeOpt2: "Single service",
     contactTypeOpt3: "Partnership or referral enquiry",
-    contactTypeOpt4: "Consultation or general question",
+    contactTypeOpt4: "Not sure yet / general question",
     contactMessageLabel: "Briefly describe your situation",
     contactConsent: "I agree that VANTAM may use my details to reply to this enquiry.",
     contactSubmitBtn: "Send enquiry",
@@ -577,7 +577,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     modalPrintBtn: "Print PDF",
     modalCloseBtn: "Close",
 
-    footerSub: "VANTAM provides practical support for international people in the Netherlands, explains the process and helps with communication. We do not replace licensed legal, financial, insurance or real-estate services.",
+    footerSub: "VANTAM provides practical housing and relocation support in the Netherlands, explains the process and helps with communication. We do not replace licensed legal, financial, insurance or real-estate services.",
     footerContact: "Contact:",
 
     housingDisclaimerTitle: "VANTAM working boundaries",
@@ -1505,9 +1505,9 @@ export const FAQS_STORE: FaqItem[] = [
       en: "What is included in VANTAM services and packages?"
     },
     a: {
-      uk: "Окремі послуги покривають один конкретний крок, наприклад житлову заявку, орендний договір, лист, банківське або університетське питання. Arrival Setup - це пакет для перших практичних кроків після приїзду, а Prepare - для підготовки до виїзду.",
-      ru: "Отдельные услуги покрывают один конкретный шаг, например жилищную заявку, договор аренды, письмо, банковский или университетский вопрос. Arrival Setup - это пакет для первых практических шагов после приезда, а Prepare - для подготовки к выезду.",
-      en: "Single services cover one concrete step, such as a housing application, rental contract, letter, banking or university question. Arrival Setup is the package for the first practical steps after arrival, and Prepare is for pre-arrival preparation."
+      uk: "Консультації допомагають обрати правильний наступний крок. Окремі послуги покривають один конкретний крок, наприклад житлову заявку, орендний договір, лист, банківське або університетське питання. Arrival Setup - це пакет для перших практичних кроків після приїзду, а Prepare - для підготовки до виїзду.",
+      ru: "Консультации помогают выбрать правильный следующий шаг. Отдельные услуги покрывают один конкретный шаг, например жилищную заявку, договор аренды, письмо, банковский или университетский вопрос. Arrival Setup - это пакет для первых практических шагов после приезда, а Prepare - для подготовки к выезду.",
+      en: "Consultations help you choose the right next step. Single services cover one concrete step, such as a housing application, rental contract, letter, banking or university question. Arrival Setup is the package for the first practical steps after arrival, and Prepare is for pre-arrival preparation."
     }
   },
   {
