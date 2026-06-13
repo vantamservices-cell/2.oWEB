@@ -1,20 +1,33 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
-
-# Run and deploy your AI Studio app
-
-This contains everything you need to run your app locally.
-
-View your app in AI Studio: https://ai.studio/apps/00556d25-3d71-4e15-9dcb-123b78a348a1
+# VANTAM website
 
 ## Run Locally
 
-**Prerequisites:**  Node.js
+**Prerequisites:** Node.js
 
+1. Install dependencies with `npm install`.
+2. Copy `.env.example` to `.env.local` and configure the contact form variables described below.
+3. Run the app with `npm run dev`.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Contact form
+
+The form sends `POST /api/contact`. The server validates the request and sends an email through [Resend](https://resend.com) to `CONTACT_TO_EMAIL` (or `vantam.nl@proton.me` when the variable is omitted). The visitor's email is used as Reply-To, so replying to the delivered message replies directly to the visitor.
+
+Environment variables:
+
+```env
+RESEND_API_KEY=re_replace_with_your_key
+# Optional; defaults to vantam.nl@proton.me
+CONTACT_TO_EMAIL=vantam.nl@proton.me
+CONTACT_FROM_EMAIL="VANTAM Website <website@updates.your-domain.com>"
+```
+
+Setup:
+
+1. Create a Resend account and API key.
+2. Add a domain or sending subdomain to Resend and add the DNS records Resend provides.
+3. Wait until the domain status is `verified`.
+4. Use an address on that verified domain for `CONTACT_FROM_EMAIL`.
+5. Add the same variables to the hosting provider's production environment and redeploy.
+6. Submit one test request and confirm it arrives at `vantam.nl@proton.me`. Check the Resend Logs page if it does not arrive.
+
+The API key must never use a `NEXT_PUBLIC_` prefix and must not be committed to Git.
