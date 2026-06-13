@@ -147,31 +147,31 @@ export interface TranslationMatrix {
 export const DICTIONARY: Record<Language, TranslationMatrix> = {
   uk: {
     navTitle: "VANTAM",
-    navSub: "Практична підтримка в Нідерландах",
+    navSub: "Практична підтримка для міжнародних людей у Нідерландах",
     langLabel: "Мова",
-    heroBadge: "Практична підтримка студентів, експатів і родин",
-    heroHeadline: "Допомога з першим місяцем у Нідерландах без зайвого шуму",
-    heroSub: "VANTAM допомагає розібратися з реальними кроками після приїзду: реєстрацією, BSN, DigiD, банком, страхуванням, медичними питаннями, листами та університетською адміністрацією.",
+    heroBadge: "Практична підтримка для міжнародних людей",
+    heroHeadline: "Практична допомога з перших кроків у Нідерландах",
+    heroSub: "Для міжнародних студентів, експатів та інших новоприбулих до або після приїзду: реєстрація, BSN, DigiD, банк, страхування, медицина, житлові питання та університетська адміністрація.",
     heroCtaPrimary: "Почати з консультації",
     heroCtaSecondary: "Подивитися послуги",
     whyTitle: "Чому до VANTAM звертаються",
-    whySub: "Ви отримуєте один локальний контакт, пояснення простою мовою та зрозумілий наступний крок без перебільшень і тиску.",
+    whySub: "Ви отримуєте один локальний контакт, пояснення простою мовою та зрозумілий наступний крок до або після приїзду без перебільшень і тиску.",
     roleTitle: "Локальний координатор практичних кроків",
-    roleDesc: "Ми готуємо документи, пояснюємо листи, допомагаємо розібратися з реєстрацією, BSN, DigiD, банком, страховкою, GP і комунікацією з університетом.",
+    roleDesc: "Ми готуємо документи, пояснюємо листи, допомагаємо розібратися з реєстрацією, BSN, DigiD, банком, страховкою, GP, житловою комунікацією та листуванням з університетом.",
     antiRoleTitle: "Що VANTAM не робить",
     antiRoleDesc: "VANTAM не є юридичною фірмою, фінансовим консультантом, страховим брокером, агентством нерухомості чи державним органом. Ми пояснюємо процес, готуємо документи та допомагаємо з комунікацією.",
     calculatorTitle: "Скільки може коштувати затримка",
-    calculatorSub: "Порівняйте типові витрати переїзду з вартістю підтримки VANTAM і побачте, де виникає ризик зайвих витрат.",
+    calculatorSub: "Порівняйте типові витрати переїзду й облаштування з вартістю підтримки VANTAM і побачте, де виникає ризик зайвих витрат.",
     calculatorInfo: "Оберіть сценарії, які стосуються вашої ситуації, щоб побачити орієнтовну суму.",
     checklistTitle: "Планер переїзду",
     checklistSub: "Простий список завдань до від'їзду та на перші тижні в Нідерландах.",
     faqTitle: "Поширені запитання",
-    faqSub: "Чіткі відповіді про обсяг роботи, строки, житло, та що відбувається після звернення.",
+    faqSub: "Чіткі відповіді про обсяг роботи, строки, підтримку до або після приїзду, житло та що відбувається після звернення.",
     pdfExportTitle: "Зберегти обраний пакет як PDF",
     pdfExportDesc: "Створіть зрозумілий PDF з обраним пакетом, його складом та межами роботи.",
     pdfBtn: "Експортувати PDF пакета",
 
-    statusBanner: "Практична підтримка у Нідерландах",
+    statusBanner: "Практична підтримка для міжнародних людей у Нідерландах",
     statusScope: "Документи, налаштування та щоденні кроки",
     navWhy: "Чому ми",
     navServices: "Послуги",
@@ -193,7 +193,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     metric4Text: "контекст запиту підтягується у форму",
 
     servicesTitle: "Як структурована допомога VANTAM",
-    servicesSub: "Сайт розкладає підтримку на адміністративні, медичні та житлові запити, щоб ви швидко знайшли потрібний рівень допомоги.",
+    servicesSub: "Сайт розкладає підтримку на адміністративні, медичні та житлові запити, щоб студенти й інші новоприбулі швидко знайшли потрібний рівень допомоги.",
     servicesFooter: "Ціни та склад послуг показані у вибраній мові",
 
     singleTitle: "Окремі послуги",
@@ -203,7 +203,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     singleCta: "Обрати послугу",
 
     consultTitle: "Консультації",
-    consultSub: "Якщо ви не знаєте, з чого почати, консультація дає найпростіший вхід.",
+    consultSub: "Якщо ви скоро приїжджаєте, уже в Нідерландах або ще порівнюєте варіанти, консультація дає найпростіший вхід.",
     consultBadge: "Початок тут",
     consultResultLabel: "Після дзвінка у вас буде:",
     consultNoteLabel: "Найкраще для:",
@@ -243,7 +243,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     testimonialsVerified: "Приклад ситуації",
 
     contactTitle: "Розкажіть, що вам потрібно",
-    contactSub: "Надішліть короткий запит. Ми відповімо на електронну адресу, яку ви вкажете.",
+    contactSub: "Надішліть короткий запит. Ми відповімо на електронну адресу, яку ви вкажете, і зможемо працювати від уже вибраного контексту.",
     contactNameLabel: "Ваше ім'я",
     contactEmailLabel: "Адреса електронної пошти",
     contactTypeLabel: "З чим потрібна допомога?",
@@ -270,14 +270,14 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     modalPrintBtn: "Роздрукувати PDF",
     modalCloseBtn: "Закрити",
 
-    footerSub: "VANTAM надає практичну підтримку, пояснює процеси та допомагає з комунікацією. Ми не замінюємо ліцензовані юридичні, фінансові, страхові чи ріелторські послуги.",
+    footerSub: "VANTAM надає практичну підтримку для міжнародних людей у Нідерландах, пояснює процеси та допомагає з комунікацією. Ми не замінюємо ліцензовані юридичні, фінансові, страхові чи ріелторські послуги.",
     footerContact: "Контакти:",
 
     housingDisclaimerTitle: "Межі роботи VANTAM",
     housingDisclaimerText: "VANTAM не надає юридичних, фінансових, страхових чи ріелторських послуг. Ми допомагаємо з поясненням, підготовкою, плануванням кроків і професійною комунікацією.",
 
     selectorTitle: "Оберіть, як почати",
-    selectorSub: "Почніть з консультації, окремої послуги або пакета, залежно від того, скільки допомоги вам потрібно.",
+    selectorSub: "Почніть з консультації, окремої послуги або пакета, залежно від того, скільки допомоги вам потрібно і чи ви ще до приїзду, чи вже в Нідерландах.",
     selectorSingleTitle: "Один конкретний крок",
     selectorSingleDesc: "Оберіть окрему послугу, якщо одна задача гальмує все інше.",
     selectorPackageTitle: "Супровід на кілька кроків",
@@ -287,31 +287,31 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
   },
   ru: {
     navTitle: "VANTAM",
-    navSub: "Практическая поддержка в Нидерландах",
+    navSub: "Практическая поддержка для международных людей в Нидерландах",
     langLabel: "Язык",
-    heroBadge: "Практическая поддержка студентов, экспатов и семей",
-    heroHeadline: "Помощь с первым месяцем в Нидерландах без лишнего шума",
-    heroSub: "VANTAM помогает разобраться с реальными шагами после приезда: регистрацией, BSN, DigiD, банком, страховкой, медициной, письмами и университетской администрацией.",
+    heroBadge: "Практическая поддержка для международных людей",
+    heroHeadline: "Практическая помощь с первыми шагами в Нидерландах",
+    heroSub: "Для международных студентов, экспатов и других новоприбывших до или после приезда: регистрация, BSN, DigiD, банк, страховка, медицина, жилищные вопросы и университетская администрация.",
     heroCtaPrimary: "Начать с консультации",
     heroCtaSecondary: "Посмотреть услуги",
     whyTitle: "Почему обращаются в VANTAM",
-    whySub: "Вы получаете один локальный контакт, объяснения простым языком и понятный следующий шаг без давления и громких обещаний.",
+    whySub: "Вы получаете один локальный контакт, объяснения простым языком и понятный следующий шаг до или после приезда без давления и громких обещаний.",
     roleTitle: "Локальный координатор практических шагов",
-    roleDesc: "Мы готовим документы, объясняем письма, помогаем разобраться с регистрацией, BSN, DigiD, банком, страховкой, GP и коммуникацией с университетом.",
+    roleDesc: "Мы готовим документы, объясняем письма, помогаем разобраться с регистрацией, BSN, DigiD, банком, страховкой, GP, жилищной коммуникацией и общением с университетом.",
     antiRoleTitle: "Чего VANTAM не делает",
     antiRoleDesc: "VANTAM не является юридической фирмой, финансовым консультантом, страховым брокером, агентством недвижимости или государственным органом. Мы объясняем процесс, готовим документы и помогаем с коммуникацией.",
     calculatorTitle: "Сколько может стоить задержка",
-    calculatorSub: "Сравните типичные расходы при переезде со стоимостью поддержки VANTAM и увидьте, где возникает риск лишних затрат.",
+    calculatorSub: "Сравните типичные расходы при переезде и обустройстве со стоимостью поддержки VANTAM и увидьте, где возникает риск лишних затрат.",
     calculatorInfo: "Выберите сценарии, которые относятся к вашей ситуации, чтобы увидеть ориентировочную сумму.",
     checklistTitle: "Планировщик переезда",
     checklistSub: "Простой список задач до отъезда и на первые недели в Нидерландах.",
     faqTitle: "Часто задаваемые вопросы",
-    faqSub: "Понятные ответы об объёме работы, сроках, жилье и том, что происходит после обращения.",
+    faqSub: "Понятные ответы об объёме работы, сроках, поддержке до или после приезда, жилье и том, что происходит после обращения.",
     pdfExportTitle: "Сохранить выбранный пакет в PDF",
     pdfExportDesc: "Создайте понятный PDF с выбранным пакетом, его составом и границами работы.",
     pdfBtn: "Экспортировать PDF пакета",
 
-    statusBanner: "Практическая поддержка в Нидерландах",
+    statusBanner: "Практическая поддержка для международных людей в Нидерландах",
     statusScope: "Документы, настройки и повседневные шаги",
     navWhy: "Почему мы",
     navServices: "Услуги",
@@ -333,7 +333,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     metric4Text: "контекст запроса подставляется в форму",
 
     servicesTitle: "Как устроена помощь VANTAM",
-    servicesSub: "Сайт делит поддержку на административные, медицинские и жилищные запросы, чтобы вы быстро нашли нужный уровень помощи.",
+    servicesSub: "Сайт делит поддержку на административные, медицинские и жилищные запросы, чтобы студенты и другие новоприбывшие быстро нашли нужный уровень помощи.",
     servicesFooter: "Цены и состав услуг показаны на выбранном языке",
 
     singleTitle: "Отдельные услуги",
@@ -343,7 +343,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     singleCta: "Выбрать услугу",
 
     consultTitle: "Консультации",
-    consultSub: "Если вы не знаете, с чего начать, консультация даёт самый простой вход.",
+    consultSub: "Если вы скоро приезжаете, уже в Нидерландах или ещё сравниваете варианты, консультация даёт самый простой вход.",
     consultBadge: "Начать здесь",
     consultResultLabel: "После звонка у вас будет:",
     consultNoteLabel: "Лучше всего для:",
@@ -383,7 +383,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     testimonialsVerified: "Пример ситуации",
 
     contactTitle: "Расскажите, что вам нужно",
-    contactSub: "Отправьте короткий запрос. Мы ответим на электронную почту, которую вы укажете.",
+    contactSub: "Отправьте короткий запрос. Мы ответим на электронную почту, которую вы укажете, и сможем работать от уже выбранного контекста.",
     contactNameLabel: "Ваше имя",
     contactEmailLabel: "Адрес электронной почты",
     contactTypeLabel: "С чем нужна помощь?",
@@ -410,14 +410,14 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     modalPrintBtn: "Распечатать PDF",
     modalCloseBtn: "Закрыть",
 
-    footerSub: "VANTAM даёт практическую поддержку, объясняет процессы и помогает с коммуникацией. Мы не заменяем лицензированные юридические, финансовые, страховые или риелторские услуги.",
+    footerSub: "VANTAM даёт практическую поддержку для международных людей в Нидерландах, объясняет процессы и помогает с коммуникацией. Мы не заменяем лицензированные юридические, финансовые, страховые или риелторские услуги.",
     footerContact: "Контакты:",
 
     housingDisclaimerTitle: "Границы работы VANTAM",
     housingDisclaimerText: "VANTAM не оказывает юридических, финансовых, страховых или риелторских услуг. Мы помогаем с объяснением, подготовкой, планированием шагов и профессиональной коммуникацией.",
 
     selectorTitle: "Выберите, как начать",
-    selectorSub: "Начните с консультации, отдельной услуги или пакета, в зависимости от того, сколько помощи вам нужно.",
+    selectorSub: "Начните с консультации, отдельной услуги или пакета, в зависимости от того, сколько помощи вам нужно и до выезда ли вы ещё или уже в Нидерландах.",
     selectorSingleTitle: "Один конкретный шаг",
     selectorSingleDesc: "Выберите отдельную услугу, если одна задача тормозит всё остальное.",
     selectorPackageTitle: "Поддержка на несколько шагов",
@@ -427,31 +427,31 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
   },
   en: {
     navTitle: "VANTAM",
-    navSub: "Practical support in the Netherlands",
+    navSub: "Practical support for international people in the Netherlands",
     langLabel: "Language",
-    heroBadge: "Practical support for students, expats and families",
-    heroHeadline: "Help with the first month in the Netherlands, without the noise",
-    heroSub: "VANTAM helps you handle the real steps after arrival: registration, BSN, DigiD, banking, insurance, healthcare, letters and university admin.",
+    heroBadge: "Practical support for international people",
+    heroHeadline: "Practical help with the first steps in the Netherlands",
+    heroSub: "For international students, expats and other newcomers before or after arrival: registration, BSN, DigiD, banking, insurance, healthcare, housing questions and university admin.",
     heroCtaPrimary: "Start with a consultation",
     heroCtaSecondary: "See the services",
     whyTitle: "Why people come to VANTAM",
-    whySub: "You get one local contact, plain-language explanations and a clear next step, without pressure or exaggerated promises.",
+    whySub: "You get one local contact, plain-language explanations and a clear next step before or after arrival, without pressure or exaggerated promises.",
     roleTitle: "Local coordinator for practical steps",
-    roleDesc: "We prepare documents, explain letters, and help you work through registration, BSN, DigiD, banking, insurance, GP setup and university communication.",
+    roleDesc: "We prepare documents, explain letters, and help you work through registration, BSN, DigiD, banking, insurance, GP setup, housing communication and university communication.",
     antiRoleTitle: "What VANTAM does not do",
     antiRoleDesc: "VANTAM is not a law firm, financial advisor, insurance broker, real estate agency or government office. We explain the process, prepare documents and help with communication.",
     calculatorTitle: "What a delay can cost",
-    calculatorSub: "Compare common relocation costs with the price of support and see where extra expenses may appear.",
+    calculatorSub: "Compare common relocation and setup costs with the price of support and see where extra expenses may appear.",
     calculatorInfo: "Select the scenarios that fit your situation to see an illustrative total.",
     checklistTitle: "Relocation planner",
     checklistSub: "A simple task list for before departure and the first weeks in the Netherlands.",
     faqTitle: "Frequently asked questions",
-    faqSub: "Clear answers about scope, timing, housing and what happens after you contact VANTAM.",
+    faqSub: "Clear answers about scope, timing, before-or-after-arrival support, housing and what happens after you contact VANTAM.",
     pdfExportTitle: "Save the selected package as PDF",
     pdfExportDesc: "Create a clear PDF with the selected package, its scope and its limits.",
     pdfBtn: "Export package PDF",
 
-    statusBanner: "Practical support in the Netherlands",
+    statusBanner: "Practical support for international people in the Netherlands",
     statusScope: "Documents, setup and everyday tasks",
     navWhy: "Why VANTAM",
     navServices: "Services",
@@ -473,7 +473,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     metric4Text: "selected context is prefilled in the form",
 
     servicesTitle: "How VANTAM is structured",
-    servicesSub: "The site groups help into administrative, healthcare and housing requests so you can find the right level fast.",
+    servicesSub: "The site groups help into administrative, healthcare and housing requests so students and other newcomers can find the right level fast.",
     servicesFooter: "Prices and scope are shown in the selected language",
 
     singleTitle: "Single services",
@@ -483,7 +483,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     singleCta: "Choose service",
 
     consultTitle: "Consultations",
-    consultSub: "If you are unsure where to start, a consultation is the simplest entry point.",
+    consultSub: "If you are arriving soon, already in the Netherlands, or still comparing options, a consultation is the simplest entry point.",
     consultBadge: "Start here",
     consultResultLabel: "You leave with:",
     consultNoteLabel: "Best for:",
@@ -523,7 +523,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     testimonialsVerified: "Example situation",
 
     contactTitle: "Tell us what you need",
-    contactSub: "Send a short enquiry. We will reply to the email address you provide.",
+    contactSub: "Send a short enquiry. We will reply to the email address you provide and can work from the context already selected.",
     contactNameLabel: "Your name",
     contactEmailLabel: "Email address",
     contactTypeLabel: "What do you need help with?",
@@ -550,14 +550,14 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     modalPrintBtn: "Print PDF",
     modalCloseBtn: "Close",
 
-    footerSub: "VANTAM provides practical support, explains the process and helps with communication. We do not replace licensed legal, financial, insurance or real-estate services.",
+    footerSub: "VANTAM provides practical support for international people in the Netherlands, explains the process and helps with communication. We do not replace licensed legal, financial, insurance or real-estate services.",
     footerContact: "Contact:",
 
     housingDisclaimerTitle: "VANTAM working boundaries",
     housingDisclaimerText: "VANTAM does not provide legal, financial, insurance or real-estate services. We help with explanations, preparation, step planning and professional communication.",
 
     selectorTitle: "Choose how to start",
-    selectorSub: "Start with a consultation, a single service or a package, depending on how much help you need.",
+    selectorSub: "Start with a consultation, a single service or a package, depending on how much help you need and whether you are before or after arrival.",
     selectorSingleTitle: "One concrete step",
     selectorSingleDesc: "Choose a single service when one task is blocking the rest.",
     selectorPackageTitle: "Support across several steps",
@@ -649,8 +649,8 @@ export const SERVICES_STORE: Record<Language, ServiceColumn[]> = {
       sub: "Registration, BSN, DigiD, banking",
       items: [
         { name: "Registration & BSN", desc: "Document readiness, appointment planning and plain-language guidance through municipal registration." },
-        { name: "DigiD activation", desc: "Step-by-step support after BSN so the student can access Dutch public-service portals." },
-        { name: "Bank account", desc: "Guidance on choosing a suitable option and opening one student account." },
+        { name: "DigiD activation", desc: "Step-by-step support after BSN so you can access Dutch public-service portals." },
+        { name: "Bank account", desc: "Guidance on choosing a suitable bank option and opening one account for your situation." },
         { name: "Official letters", desc: "Explanation of official correspondence and help preparing a clear response or next step." }
       ]
     },
@@ -658,10 +658,10 @@ export const SERVICES_STORE: Record<Language, ServiceColumn[]> = {
       pillar: "Health and daily setup",
       sub: "Insurance, GP, university",
       items: [
-        { name: "Insurance setup", desc: "Support choosing and setting up the right insurance direction for the student's situation." },
+        { name: "Insurance setup", desc: "Support choosing and setting up the right insurance option for your situation." },
         { name: "GP / huisarts", desc: "Help finding and registering with a GP and understanding the basic healthcare route." },
         { name: "University admin", desc: "Support with department communication, administrative questions and document requests." },
-        { name: "First-month steps", desc: "Practical coordination after arrival so the student is not left guessing in a new system." }
+        { name: "First-month steps", desc: "Practical coordination after arrival so you are not left guessing in a new system." }
       ]
     },
     {
@@ -701,9 +701,9 @@ export const PREMIUM_PACKAGES: Package[] = [
     },
     price: "€349",
     tagline: {
-      uk: "Підготовча ясність до того, як студент виїде з дому.",
-      ru: "Подготовительная ясность до того, как студент уедет из дома.",
-      en: "Pre-arrival clarity before the student leaves home."
+      uk: "Підготовча ясність до переїзду в Нідерланди.",
+      ru: "Подготовительная ясность до переезда в Нидерланды.",
+      en: "Pre-arrival clarity before you move to the Netherlands."
     },
     workload: {
       uk: "~9 годин роботи VANTAM",
@@ -711,9 +711,9 @@ export const PREMIUM_PACKAGES: Package[] = [
       en: "~9 hours of VANTAM work"
     },
     idealFor: {
-      uk: "Студенти, які вже мають зарахування і хочуть чіткий план до приїзду, але більшість кроків виконуватимуть самостійно.",
-      ru: "Студенты, которые уже получили зачисление и хотят четкий план до приезда, но большинство шагов будут делать самостоятельно.",
-      en: "Students who already have admission and want a clear plan before arrival, but will manage most steps themselves."
+      uk: "Студенти та інші новоприбулі, які вже мають підтверджений переїзд і хочуть чіткий план до приїзду, але більшість кроків виконуватимуть самостійно.",
+      ru: "Студенты и другие новоприбывшие, которые уже подтвердили переезд и хотят четкий план до приезда, но большинство шагов будут делать самостоятельно.",
+      en: "Students and other newcomers who already have a confirmed move and want a clear plan before arrival, while handling most steps themselves."
     },
     scope: {
       uk: [
@@ -783,9 +783,9 @@ export const PREMIUM_PACKAGES: Package[] = [
       en: "~26 hours of VANTAM work"
     },
     idealFor: {
-      uk: "Студенти та молоді експати, які хочуть правильно пройти ключові практичні кроки після приїзду без самостійної навігації всією системою.",
-      ru: "Студенты и молодые экспаты, которые хотят правильно пройти ключевые практические шаги после приезда без самостоятельной навигации по всей системе.",
-      en: "Students and young expats who want the key practical steps handled correctly after arrival without navigating everything alone."
+      uk: "Люди, які хочуть правильно пройти ключові практичні кроки після приїзду без самостійної навігації всією системою.",
+      ru: "Люди, которые хотят правильно пройти ключевые практические шаги после приезда без самостоятельной навигации по всей системе.",
+      en: "People who want the key practical steps handled correctly after arrival without navigating everything alone."
     },
     scope: {
       uk: [
@@ -951,9 +951,9 @@ export const CONSULTATIONS_STORE: Consultation[] = [
     price: "€59",
     duration: { uk: "45 хв · дистанційно", ru: "45 мин · удаленно", en: "45 min · remote" },
     desc: {
-      uk: "Для студентів, які вже приїжджають або скоро приїдуть, але ще не склали план перших кроків. Разом збираємо таймлайн: реєстрація, BSN, банк, страхування, житло та перші дні.",
-      ru: "Для студентов, которые уже едут или скоро приедут, но ещё не собрали план первых шагов. Вместе выстраиваем таймлайн: регистрация, BSN, банк, страховка, жильё и первые дни.",
-      en: "For students who are arriving soon or have already arrived, but still need a clear plan. Together we map the timeline: registration, BSN, bank, insurance, housing and the first days."
+      uk: "Для студентів та інших новоприбулих, які вже приїжджають або скоро приїдуть, але ще не склали план перших кроків. Разом збираємо таймлайн: реєстрація, BSN, банк, страхування, житло та перші дні.",
+      ru: "Для студентов и других новоприбывших, которые уже едут или скоро приедут, но ещё не собрали план первых шагов. Вместе выстраиваем таймлайн: регистрация, BSN, банк, страховка, жильё и первые дни.",
+      en: "For students and other newcomers who are arriving soon or have already arrived, but still need a clear plan. Together we map the timeline: registration, BSN, bank, insurance, housing and the first days."
     },
     result: { uk: "письмовий план дій", ru: "письменный план действий", en: "written action plan" },
     note: { uk: "Можна зарахувати до будь-якого пакета протягом 14 днів.", ru: "Можно зачесть в любой пакет в течение 14 дней.", en: "Can be credited toward any package within 14 days." },
@@ -961,15 +961,15 @@ export const CONSULTATIONS_STORE: Consultation[] = [
   },
   {
     id: "consult_parent",
-    name: { uk: "Дзвінок для батьків", ru: "Звонок для родителей", en: "Parent confidence call" },
+    name: { uk: "Дзвінок для родини", ru: "Звонок для семьи", en: "Family confidence call" },
     price: "€79",
     duration: { uk: "45 хв · дистанційно", ru: "45 мин · удаленно", en: "45 min · remote" },
     desc: {
-      uk: "Для батьків, які хочуть зрозуміти, які кроки чекають на дитину в Нідерландах, де потрібна їхня участь і де VANTAM може взяти частину роботи на себе.",
-      ru: "Для родителей, которые хотят понять, какие шаги ждут ребёнка в Нидерландах, где нужна их помощь и где VANTAM может взять часть работы на себя.",
-      en: "For parents who want to understand the steps ahead, where they need to be involved and where VANTAM can take some of the work off their plate."
+      uk: "Для батьків, партнерів або інших близьких, які хочуть зрозуміти, які кроки чекають на людину в Нідерландах, де потрібна їхня участь і де VANTAM може взяти частину роботи на себе.",
+      ru: "Для родителей, партнёров или других близких, которые хотят понять, какие шаги ждут человека в Нидерландах, где нужна их помощь и где VANTAM может взять часть работы на себя.",
+      en: "For parents, partners or other close people who want to understand the steps ahead, where they need to be involved and where VANTAM can take some of the work off their plate."
     },
-    result: { uk: "зрозумілі перші кроки студента і можливий формат підтримки", ru: "понятные первые шаги студента и возможный формат поддержки", en: "clear understanding of the student's first steps and possible support format" },
+    result: { uk: "зрозумілі перші кроки та можливий формат підтримки", ru: "понятные первые шаги и возможный формат поддержки", en: "clear understanding of the first steps and possible support format" },
     note: { uk: "Можна зарахувати до будь-якого пакета протягом 14 днів.", ru: "Можно зачесть в любой пакет в течение 14 дней.", en: "Can be credited toward any package within 14 days." },
     cta: { uk: "Записатися на дзвінок", ru: "Записаться на звонок", en: "Book a call" }
   },
@@ -1021,7 +1021,7 @@ export const SINGLE_SERVICES: SingleService[] = [
     name: { uk: "Налаштування банківського рахунку", ru: "Открытие банковского счета", en: "Bank Account Setup" },
     price: "€89",
     mode: { uk: "дистанційно / гібридно", ru: "удаленно / гибридно", en: "remote / hybrid" },
-    desc: { uk: "Допомога з вибором відповідного банківського варіанта та відкриттям одного студентського рахунку.", ru: "Помощь с выбором подходящего банковского варианта и открытием одного студенческого счета.", en: "Guidance with choosing a suitable bank option and opening one student account." },
+    desc: { uk: "Допомога з вибором відповідного банківського варіанта та відкриттям одного рахунку.", ru: "Помощь с выбором подходящего банковского варианта и открытием одного счета.", en: "Guidance with choosing a suitable bank option and opening one account." },
     limit: { uk: "Ліміт: один банк / один рахунок.", ru: "Лимит: один банк / один счет.", en: "Limit: one bank / one account." }
   },
   {
@@ -1029,7 +1029,7 @@ export const SINGLE_SERVICES: SingleService[] = [
     name: { uk: "Підтримка зі страхуванням", ru: "Поддержка со страховкой", en: "Insurance Setup Support" },
     price: "€99",
     mode: { uk: "дистанційно", ru: "удаленно", en: "remote" },
-    desc: { uk: "Підтримка з вибором та налаштуванням правильного страхового напрямку для ситуації студента.", ru: "Поддержка с выбором и настройкой подходящего страхового направления для ситуации студента.", en: "Support with selecting and setting up the right insurance direction for the student's situation." },
+    desc: { uk: "Підтримка з вибором та налаштуванням правильного страхового рішення для вашої ситуації.", ru: "Поддержка с выбором и настройкой подходящего страхового решения для вашей ситуации.", en: "Support with selecting and setting up the right insurance option for your situation." },
     limit: { uk: "Ліміт: один страховик.", ru: "Лимит: один страховщик.", en: "Limit: one insurer." },
     notIncluded: { uk: "Не включено: ліцензована страхова консультація.", ru: "Не включено: лицензированная страховая консультация.", en: "Not included: licensed insurance advice." }
   },
@@ -1117,7 +1117,7 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     id: "t1",
     name: { uk: "Перед приїздом", ru: "До приезда", en: "Before arrival" },
-    role: { uk: "Студенту потрібен зрозумілий план", ru: "Студенту нужен понятный план", en: "A student needs a clear plan" },
+    role: { uk: "Новоприбулому потрібен зрозумілий план", ru: "Новоприбывшему нужен понятный план", en: "A newcomer needs a clear plan" },
     university: { uk: "Реєстрація і BSN", ru: "Регистрация и BSN", en: "Registration and BSN" },
     city: { uk: "Нідерланди", ru: "Нидерланды", en: "The Netherlands" },
     story: {
@@ -1129,7 +1129,7 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     id: "t2",
     name: { uk: "Перший місяць", ru: "Первый месяц", en: "First month" },
-    role: { uk: "Студент починає життя на місці", ru: "Студент начинает жизнь на месте", en: "A student starting life on site" },
+    role: { uk: "Новоприбулий починає життя на місці", ru: "Новоприбывший начинает жизнь на месте", en: "A newcomer starting life on site" },
     university: { uk: "Адміністративні кроки", ru: "Административные шаги", en: "Administrative steps" },
     city: { uk: "Делфт", ru: "Делфт", en: "Delft" },
     story: {
@@ -1250,7 +1250,7 @@ export const BLUEPRINT_CHECKLIST: RelocationTask[] = [
   { id: "c7", category: "arrival", title: { uk: "Пройти реєстрацію та отримати шлях до BSN", ru: "Пройти регистрацию и получить путь к BSN", en: "Complete registration and receive the BSN route" } },
   { id: "c8", category: "arrival", title: { uk: "Зберегти офіційні листи та інструкції після візитів", ru: "Сохранить официальные письма и инструкции после визитов", en: "Keep official letters and next-step instructions after appointments" } },
   { id: "c9", category: "settle", title: { uk: "Активувати DigiD після отримання BSN", ru: "Активировать DigiD после получения BSN", en: "Activate DigiD after receiving BSN" } },
-  { id: "c10", category: "settle", title: { uk: "Відкрити один студентський банківський рахунок", ru: "Открыть один студенческий банковский счет", en: "Open one student bank account" } },
+  { id: "c10", category: "settle", title: { uk: "Відкрити місцевий банківський рахунок", ru: "Открыть местный банковский счет", en: "Open a local bank account" } },
   { id: "c11", category: "settle", title: { uk: "Налаштувати страхування та перевірити можливість zorgtoeslag", ru: "Настроить страховку и проверить возможность zorgtoeslag", en: "Set up insurance and check zorgtoeslag route" } },
   { id: "c12", category: "settle", title: { uk: "Зареєструватися у GP / huisarts", ru: "Зарегистрироваться у GP / huisarts", en: "Register with a GP / huisarts" } }
 ];

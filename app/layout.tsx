@@ -10,7 +10,7 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
   title: 'VANTAM | Practical support in the Netherlands',
-  description: 'Multilingual practical support for students, expats and families navigating registration, BSN, DigiD, banking, healthcare, housing questions and university admin in the Netherlands.',
+  description: 'Multilingual practical support for international students, expats and other newcomers navigating registration, BSN, DigiD, banking, healthcare, housing questions and university admin in the Netherlands.',
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {

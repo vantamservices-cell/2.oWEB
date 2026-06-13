@@ -3,9 +3,9 @@
 *Last updated: 2026-06-13*
 
 ## Product Overview
-**One-liner:** VANTAM is practical support for students, young expats and families navigating the first months in the Netherlands.
+**One-liner:** VANTAM is practical housing and relocation support for international people settling in the Netherlands.
 
-**What it does:** VANTAM helps people understand and complete practical setup steps after arrival: registration, BSN, DigiD, banking, insurance, healthcare, university admin, official letters and housing-related communication or document review. The site also helps visitors compare consultations, single services and packages before they contact VANTAM.
+**What it does:** VANTAM helps people understand and complete practical setup steps before or after arrival: registration, BSN, DigiD, banking, insurance, healthcare, university admin, official letters and housing-related communication or document review. The site also helps visitors compare consultations, single services and packages before they contact VANTAM.
 
 **Product category:** Practical relocation support / setup coordination service.
 
@@ -16,7 +16,7 @@
 ## Target Audience
 **Target companies:** Primarily individuals; also education or relocation partners that may refer clients.
 
-**Decision-makers:** Students, young expats and parents or family members supporting the move.
+**Decision-makers:** International students, expats and other newcomers, plus partners or family members supporting the move.
 
 **Primary use case:** Getting through the first practical steps in the Netherlands without missing something important.
 
@@ -28,14 +28,15 @@
 **Use cases:**
 - Before arrival planning.
 - First weeks after arrival.
+- Already in the Netherlands and still sorting practical setup.
 - One-off help with BSN, DigiD, bank, insurance, GP, letters, university admin or housing communication.
 
 ## Personas
 | Persona | Cares about | Challenge | Value we promise |
 |---------|-------------|-----------|------------------|
 | Student | Clear steps, low stress, getting setup done correctly | They do not know the Dutch process or terminology | Plain-language guidance and a clear next step |
-| Parent | Visibility, confidence, fewer surprises | They want to know what their child needs to do and where help is needed | Calm, structured support and visible scope |
-| Young expat | Speed, practical answers, less admin friction | They need to handle local systems quickly | One local point of contact for the practical parts |
+| Partner or family member | Visibility, confidence, fewer surprises | They want to know what needs to happen and where help is needed | Calm, structured support and visible scope |
+| Expat or other newcomer | Speed, practical answers, less admin friction | They need to handle local systems quickly or catch up after arrival | One local point of contact for the practical parts |
 | Referral partner | Reliability, clarity, easy handoff | They need to know what VANTAM covers and what it does not | Transparent scope and predictable follow-up |
 
 ## Problems & Pain Points
@@ -46,7 +47,7 @@
 - Generic relocation advice is too broad.
 - Licensed professionals are not the right fit for simple practical setup questions.
 
-**What it costs them:** Time, stress, missed steps, avoidable fees and uncertainty for the student and family.
+**What it costs them:** Time, stress, missed steps, avoidable fees and uncertainty for the person moving and the people supporting them.
 
 **Emotional tension:** Confusion, fear of making a mistake, pressure to act quickly and worry about whether the move is under control.
 
@@ -126,7 +127,7 @@ official, guaranteed, best, leading, seamless, compliant-sounding filler, legal 
 ## Proof Points
 **Metrics:** No verified performance statistics are documented in the repository.
 
-**Customers:** Students, young expats, parents and referral partners.
+**Customers:** International students, expats, other newcomers, their partners or families and referral partners.
 
 **Testimonials:** The site should avoid fake testimonials or invented identities. Use scenario-based examples only.
 
