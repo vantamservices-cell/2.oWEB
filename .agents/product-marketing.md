@@ -3,9 +3,9 @@
 *Last updated: 2026-06-13*
 
 ## Product Overview
-**One-liner:** VANTAM is practical housing and relocation support for international students, expats and families before and after arrival in the Netherlands.
+**One-liner:** VANTAM is practical support for international people in the Netherlands across three equally clear pillars: housing and rental applications, pre-arrival preparation, and practical settlement after arrival.
 
-**What it does:** VANTAM helps people understand and complete practical setup steps before or after arrival: housing preparation and application support, registration, BSN, DigiD, banking, insurance, healthcare, university admin, official letters and housing-related communication or document review. The site also helps visitors choose between consultations, single services and packages before they contact VANTAM.
+**What it does:** VANTAM helps people understand and complete practical steps before arrival, during the housing and rental process, and after arrival. That includes housing preparation and application support, consultation-led planning, and practical settlement tasks such as registration, BSN, DigiD, banking, insurance, healthcare, letters and university admin. The site also helps visitors choose between consultations, single services and packages before they contact VANTAM.
 
 **Product category:** Practical relocation support / setup coordination service.
 
@@ -16,31 +16,30 @@
 ## Target Audience
 **Target companies:** Primarily individuals; also agencies, HR teams, universities and education consultants that may refer clients.
 
-**Decision-makers:** International students, expats and professionals, families supporting the move, and organisational partners.
+**Decision-makers:** International people moving to the Netherlands, their partners or family supporters, and organisational partners.
 
-**Primary use case:** Getting through the first practical steps in the Netherlands without missing something important.
+**Primary use case:** Getting through the practical steps before arrival, during housing and rental work, and after arrival without missing something important.
 
 **Jobs to be done:**
-- Understand what needs to happen, in what order.
+- Understand what needs to happen, in what order, across the three support pillars.
 - Prepare the right documents and next actions.
-- Reduce uncertainty around administration, housing questions and everyday setup.
+- Reduce uncertainty around housing, arrival planning and everyday setup.
 
 **Use cases:**
-- Before arrival planning.
-- First weeks after arrival.
+- Before arrival planning and consultation.
+- Housing and rental-application support.
 - Already in the Netherlands and still sorting practical setup.
 - One-off help with BSN, DigiD, bank, insurance, GP, letters, university admin, housing application support, rental-contract support or housing communication.
 
 ## Personas
 | Persona | Cares about | Challenge | Value we promise |
 |---------|-------------|-----------|------------------|
-| Student | Clear steps, low stress, getting setup done correctly | They do not know the Dutch process or terminology | Plain-language guidance and a clear next step |
+| Newcomer | Clear steps, low stress, getting setup done correctly | They do not know the Dutch process or terminology | Plain-language guidance and a clear next step |
 | Partner or family member | Visibility, confidence, fewer surprises | They want to know what needs to happen and where help is needed | Calm, structured support and visible scope |
-| Expat or other newcomer | Speed, practical answers, less admin friction | They need to handle local systems quickly or catch up after arrival | One local point of contact for the practical parts |
 | Referral partner | Reliability, clarity, easy handoff | They need to know what VANTAM covers and what it does not | Transparent scope and predictable follow-up |
 
 ## Problems & Pain Points
-**Core problem:** People arrive in the Netherlands without enough local knowledge to confidently handle the required setup steps.
+**Core problem:** People moving to the Netherlands do not always know how to plan the move, handle housing or complete the required practical setup steps with confidence.
 
 **Why alternatives fall short:**
 - Official sources are often unclear, fragmented or hard to navigate.
@@ -61,7 +60,7 @@
 ## Differentiation
 **Key differentiators:**
 - Clear separation between consultation, single services and packages.
-- Practical help focused on the first months in the Netherlands.
+- Three equally understandable service pillars instead of a housing-only story.
 - Transparent boundaries: VANTAM does not pose as legal, financial, insurance or real-estate advice.
 - Multilingual visitor experience in Ukrainian, Russian and English.
 
@@ -102,7 +101,7 @@
 - "Someone who can explain the steps."
 
 **Words to use:**
-practical, local, clear, next step, registration, support, consultation, single service, package, housing context, university admin
+practical, local, clear, next step, registration, support, consultation, single service, package, housing context, arrival setup, university admin
 
 **Words to avoid:**
 official, guaranteed, best, leading, seamless, compliant-sounding filler, legal advice, financial advice, insurance advice, real estate agency, promise

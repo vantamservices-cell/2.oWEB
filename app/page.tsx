@@ -66,7 +66,7 @@ export default function VantamsHub() {
   const [lang, setLang] = useState<Language>('uk');
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [selectedPackage, setSelectedPackage] = useState('pkg_setup');
-  const [activeServiceCategory, setActiveServiceCategory] = useState('admin');
+  const [activeServiceCategory, setActiveServiceCategory] = useState('housing');
   const [activeSituation, setActiveSituation] = useState('moving');
   const [calculatorToggles, setCalculatorToggles] = useState<Record<string, boolean>>({
     scam: true,
@@ -80,7 +80,7 @@ export default function VantamsHub() {
   const [activeTestimonialIdx, setActiveTestimonialIdx] = useState(0);
   const [formName, setFormName] = useState('');
   const [formEmail, setFormEmail] = useState('');
-  const [formInquiryType, setFormInquiryType] = useState('packages');
+  const [formInquiryType, setFormInquiryType] = useState('consultation');
   const [formAudience, setFormAudience] = useState('student');
   const [formMovingDate, setFormMovingDate] = useState('');
   const [formCity, setFormCity] = useState('');
@@ -155,24 +155,24 @@ export default function VantamsHub() {
 
   const ui = useMemo(() => ({
     uk: {
-      notice: 'Практична допомога з житлом і переїздом у Нідерландах',
+      notice: 'Підтримка до, під час і після приїзду',
       menu: 'Меню',
       darkTheme: 'Увімкнути темну тему',
       lightTheme: 'Увімкнути світлу тему',
-      heroTitle: 'Практична допомога з житлом і переїздом у Нідерландах',
-      heroText: 'Практична підтримка для студентів, експатів і сімей до і після приїзду: житло, реєстрація, BSN, DigiD, банк, страхування, медицина та університетські кроки.',
+      heroTitle: 'Практична підтримка для міжнародних людей у Нідерландах',
+      heroText: 'До приїзду, під час пошуку житла та оренди, і після приїзду для практичного облаштування - з чіткими наступними кроками без зайвого шуму.',
       heroImageAlt: 'Житлова вулиця з цегляними будинками в Амстердамі',
       photoCredit: 'Фото: Haberdoedas, Unsplash',
-      localNote: 'Три мови. Чіткі межі. Один локальний контакт.',
-      heroPrimary: 'Оберіть свою ситуацію',
+      localNote: 'Три мови. Три рівні підтримки. Один локальний контакт.',
+      heroPrimary: 'Оберіть свій шлях',
       heroSecondary: 'Подивитися послуги',
       entryTitle: 'Оберіть формат, який відповідає вашій ситуації',
-      entryConsult: 'Почати з консультації',
-      entryPackage: 'Потрібен супровід',
-      entrySingle: 'Потрібен один крок',
+      entryConsult: 'Планую переїзд',
+      entryPackage: 'Потрібна допомога з житлом',
+      entrySingle: 'Потрібне практичне облаштування',
       from: 'від',
       trustTitle: 'Підтримка без інституційної дистанції',
-      trustText: 'VANTAM пояснює процеси простою мовою, допомагає підготуватися і тримає наступний крок у фокусі.',
+      trustText: 'VANTAM пояснює процеси простою мовою, допомагає підготуватися і тримає наступний крок у фокусі для житла, приїзду й практичного облаштування.',
       boundary: 'Ми не замінюємо ліцензованих фахівців і не обіцяємо результатів, які залежать від банків, державних органів, страховиків або орендодавців.',
       consultLead: 'Найпростіший спосіб почати',
       servicesLead: 'Окремі послуги',
@@ -198,16 +198,16 @@ export default function VantamsHub() {
       result: 'Результат',
       details: 'Деталі',
       audienceLead: 'Хто отримує користь',
-      audienceTitle: 'Підтримка для студентів, експатів і сімей',
-      audienceText: 'Одна пропозиція для міжнародних новоприбулих і жителів у Нідерландах. Деяким потрібен один чіткий крок, іншим - підтримка до, після або з обох боків приїзду.',
+      audienceTitle: 'Підтримка для людей, які рухаються до Нідерландів',
+      audienceText: 'Одна пропозиція для міжнародних людей до приїзду, під час житла та оренди, і після приїзду для практичного облаштування. Комусь потрібен один чіткий крок, комусь - ширший супровід.',
       audienceBefore: 'До приїзду',
       audienceAfter: 'Після приїзду',
       selectorLead: 'Почніть із вашої ситуації',
-      selectorTitle: 'Ситуаційний вибір',
-      selectorText: 'Оберіть варіант, який швидше підведе вас до правильного розділу або форми.',
-      selectorServices: 'До послуг',
-      selectorPackages: 'До пакетів',
-      selectorConsult: 'Почати з консультації',
+      selectorTitle: 'Вибір за ситуацією',
+      selectorText: 'Оберіть варіант, який швидше підведе вас до правильного розділу і підставить потрібний контекст у форму.',
+      selectorServices: 'Потрібна допомога з житлом',
+      selectorPackages: 'Після приїзду потрібне облаштування',
+      selectorConsult: 'Планую переїзд',
       selectorPartner: 'Партнерський запит',
       processLead: 'Як це працює',
       processTitle: 'Чотири короткі кроки',
@@ -216,7 +216,7 @@ export default function VantamsHub() {
       partnerTitle: 'Партнер з VANTAM',
       partnerText: 'Для житлових агенцій, HR-команд, університетів та освітніх консультантів, які хочуть акуратно передавати запити на практичну підтримку.',
       partnerCTA: 'Обговорити співпрацю',
-      housingLead: 'Головна житлова послуга',
+      housingLead: 'Важлива житлова послуга',
       housingTitle: 'Housing Preparation & Application Support',
       housingText: 'Підготовка документів для заявки, пояснення ситуації з гарантом, комунікація з агенцією або орендодавцем, подання заявки та підтримка з орендним договором.',
       housingNote: 'Без гарантії отримання житла і без юридичного представництва.',
@@ -234,7 +234,7 @@ export default function VantamsHub() {
       formStatusBefore: 'Ще до приїзду',
       formStatusAfter: 'Вже в Нідерландах',
       formStatusFoundHousing: 'Житло вже знайдено',
-      formStatusNeedHousing: 'Потрібна житлова підтримка',
+      formStatusNeedHousing: 'Потрібна житлова або практична підтримка',
       formAudienceStudent: 'Студент',
       formAudienceProfessional: 'Експат / професіонал',
       formAudienceFamily: 'Сім’я',
@@ -244,24 +244,24 @@ export default function VantamsHub() {
       formGuarantorNo: 'Немає / не впевнений(-а)',
     },
     ru: {
-      notice: 'Практическая помощь с жильём и переездом в Нидерландах',
+      notice: 'Поддержка до, во время и после приезда',
       menu: 'Меню',
       darkTheme: 'Включить темную тему',
       lightTheme: 'Включить светлую тему',
-      heroTitle: 'Практическая помощь с жильём и переездом в Нидерландах',
-      heroText: 'Практическая поддержка для студентов, экспатов и семей до и после приезда: жильё, регистрация, BSN, DigiD, банк, страховка, медицина и университетские шаги.',
+      heroTitle: 'Практическая поддержка для международных людей в Нидерландах',
+      heroText: 'До приезда, во время поиска жилья и аренды, и после приезда для практического обустройства - с понятными следующими шагами без лишнего шума.',
       heroImageAlt: 'Жилая улица с кирпичными домами в Амстердаме',
       photoCredit: 'Фото: Haberdoedas, Unsplash',
-      localNote: 'Три языка. Четкие границы. Один локальный контакт.',
-      heroPrimary: 'Выберите свою ситуацию',
+      localNote: 'Три языка. Три уровня поддержки. Один локальный контакт.',
+      heroPrimary: 'Выберите свой путь',
       heroSecondary: 'Посмотреть услуги',
       entryTitle: 'Выберите формат, который подходит вашей ситуации',
-      entryConsult: 'Начать с консультации',
-      entryPackage: 'Нужно сопровождение',
-      entrySingle: 'Нужен один шаг',
+      entryConsult: 'Планирую переезд',
+      entryPackage: 'Нужна помощь с жильём',
+      entrySingle: 'Нужно практическое обустройство',
       from: 'от',
       trustTitle: 'Поддержка без институциональной дистанции',
-      trustText: 'VANTAM объясняет процессы простым языком, помогает подготовиться и держит следующий шаг в фокусе.',
+      trustText: 'VANTAM объясняет процессы простым языком, помогает подготовиться и держит следующий шаг в фокусе для жилья, приезда и практического обустройства.',
       boundary: 'Мы не заменяем лицензированных специалистов и не обещаем результатов, которые зависят от банков, государственных органов, страховщиков или арендодателей.',
       consultLead: 'Самый простой способ начать',
       servicesLead: 'Отдельные услуги',
@@ -287,16 +287,16 @@ export default function VantamsHub() {
       result: 'Результат',
       details: 'Детали',
       audienceLead: 'Кому это полезно',
-      audienceTitle: 'Поддержка для студентов, экспатов и семей',
-      audienceText: 'Одно предложение для международных новоприбывших и жителей в Нидерландах. Кому-то нужен один чёткий шаг, кому-то - поддержка до, после или с обеих сторон приезда.',
+      audienceTitle: 'Поддержка для людей, которые едут в Нидерланды',
+      audienceText: 'Одно предложение для международных людей до приезда, во время жилья и аренды, и после приезда для практического обустройства. Кому-то нужен один чёткий шаг, кому-то - более широкий сопровождение.',
       audienceBefore: 'До приезда',
       audienceAfter: 'После приезда',
       selectorLead: 'Начните со своей ситуации',
       selectorTitle: 'Выбор по ситуации',
-      selectorText: 'Выберите вариант, который быстрее приведёт вас к нужному разделу или форме.',
-      selectorServices: 'К услугам',
-      selectorPackages: 'К пакетам',
-      selectorConsult: 'Начать с консультации',
+      selectorText: 'Выберите вариант, который быстрее приведёт вас к нужному разделу и подставит нужный контекст в форму.',
+      selectorServices: 'Нужна помощь с жильём',
+      selectorPackages: 'После приезда нужно обустройство',
+      selectorConsult: 'Планирую переезд',
       selectorPartner: 'Партнёрский запрос',
       processLead: 'Как это работает',
       processTitle: 'Четыре коротких шага',
@@ -305,7 +305,7 @@ export default function VantamsHub() {
       partnerTitle: 'Партнёр с VANTAM',
       partnerText: 'Для жилищных агентств, HR-команд, университетов и образовательных консультантов, которые хотят аккуратно передавать запросы на практическую поддержку.',
       partnerCTA: 'Обсудить сотрудничество',
-      housingLead: 'Главная жилищная услуга',
+      housingLead: 'Важная жилищная услуга',
       housingTitle: 'Housing Preparation & Application Support',
       housingText: 'Подготовка документов для заявки, объяснение ситуации с гарантом, коммуникация с агентством или арендодателем, подача заявки и поддержка по договору аренды.',
       housingNote: 'Без гарантии получения жилья и без юридического представительства.',
@@ -323,7 +323,7 @@ export default function VantamsHub() {
       formStatusBefore: 'Ещё до приезда',
       formStatusAfter: 'Уже в Нидерландах',
       formStatusFoundHousing: 'Жильё уже найдено',
-      formStatusNeedHousing: 'Нужна жилищная поддержка',
+      formStatusNeedHousing: 'Нужна жилищная или практическая поддержка',
       formAudienceStudent: 'Студент',
       formAudienceProfessional: 'Экспат / профессионал',
       formAudienceFamily: 'Семья',
@@ -333,24 +333,24 @@ export default function VantamsHub() {
       formGuarantorNo: 'Нет / не уверен(-а)',
     },
     en: {
-      notice: 'Practical housing and relocation support in the Netherlands',
+      notice: 'Support before, during and after arrival',
       menu: 'Menu',
       darkTheme: 'Use dark theme',
       lightTheme: 'Use light theme',
-      heroTitle: 'Practical housing and relocation support in the Netherlands',
-      heroText: 'Practical support for students, expats and families before and after arrival: housing, registration, BSN, DigiD, banking, insurance, healthcare and university steps.',
+      heroTitle: 'Practical support for international people in the Netherlands',
+      heroText: 'Before arrival, during the housing and rental process, and after arrival for practical settlement - with clear next steps and no extra noise.',
       heroImageAlt: 'Residential brick street in Amsterdam',
       photoCredit: 'Photo: Haberdoedas, Unsplash',
-      localNote: 'Three languages. Clear boundaries. One local contact.',
-      heroPrimary: 'Choose your situation',
+      localNote: 'Three languages. Three support levels. One local contact.',
+      heroPrimary: 'Choose your path',
       heroSecondary: 'See the services',
       entryTitle: 'Choose the format that fits your situation',
-      entryConsult: 'Start with a consultation',
-      entryPackage: 'I need ongoing support',
-      entrySingle: 'I need one concrete step',
+      entryConsult: 'Planning my move',
+      entryPackage: 'I need housing help',
+      entrySingle: 'I need practical setup',
       from: 'from',
       trustTitle: 'Support without institutional distance',
-      trustText: 'VANTAM explains processes in plain language, helps you prepare and keeps the next step in focus.',
+      trustText: 'VANTAM explains processes in plain language, helps you prepare and keeps the next step in focus for housing, arrival and practical settlement.',
       boundary: 'We do not replace licensed professionals or promise outcomes that depend on banks, public bodies, insurers or landlords.',
       consultLead: 'The simplest place to start',
       servicesLead: 'Focused services',
@@ -376,16 +376,16 @@ export default function VantamsHub() {
       result: 'Outcome',
       details: 'Details',
       audienceLead: 'Who we help',
-      audienceTitle: 'Support for students, expats and families',
-      audienceText: 'One offer for international newcomers and residents in the Netherlands. Some need one clear step, others need support before, after or across both sides of arrival.',
+      audienceTitle: 'Support for people moving to the Netherlands',
+      audienceText: 'One offer for international people before arrival, during housing and rental steps, and after arrival for practical settlement. Some need one clear step, others need broader support.',
       audienceBefore: 'Before arrival',
       audienceAfter: 'After arrival',
       selectorLead: 'Start with your situation',
-      selectorTitle: 'Situation selector',
-      selectorText: 'Choose the path that gets you to the right section or form faster.',
-      selectorServices: 'Go to services',
-      selectorPackages: 'Go to packages',
-      selectorConsult: 'Start with a consultation',
+      selectorTitle: 'Select by situation',
+      selectorText: 'Choose the path that gets you to the right section and pre-fills the form with the matching context.',
+      selectorServices: 'Need housing help',
+      selectorPackages: 'Need practical setup after arrival',
+      selectorConsult: 'Planning my move',
       selectorPartner: 'Partnership enquiry',
       processLead: 'How it works',
       processTitle: 'Four short steps',
@@ -394,7 +394,7 @@ export default function VantamsHub() {
       partnerTitle: 'Partner with VANTAM',
       partnerText: 'For rental agencies, HR teams, universities and education consultants who want a clean handoff to practical support.',
       partnerCTA: 'Discuss cooperation',
-      housingLead: 'Featured housing service',
+      housingLead: 'Important housing service',
       housingTitle: 'Housing Preparation & Application Support',
       housingText: 'Application-file preparation, explaining the guarantor situation, communicating with the agency or landlord, submitting the application and supporting rental-contract questions.',
       housingNote: 'No housing guarantee and no legal representation.',
@@ -412,7 +412,7 @@ export default function VantamsHub() {
       formStatusBefore: 'Before arrival',
       formStatusAfter: 'Already in the Netherlands',
       formStatusFoundHousing: 'Housing already found',
-      formStatusNeedHousing: 'Need housing support',
+      formStatusNeedHousing: 'Need housing or practical setup support',
       formAudienceStudent: 'Student',
       formAudienceProfessional: 'Expat / professional',
       formAudienceFamily: 'Family',
@@ -425,22 +425,22 @@ export default function VantamsHub() {
 
   const serviceCategories = useMemo(() => [
     {
-      id: 'admin', label: lang === 'uk' ? 'Документи та адміністрація' : lang === 'ru' ? 'Документы и администрация' : 'Documents and administration',
-      description: lang === 'uk' ? 'Реєстрація, DigiD, банк, страхування, листи та університет' : lang === 'ru' ? 'Регистрация, DigiD, банк, страховка, письма и университет' : 'Registration, DigiD, banking, insurance, letters and university',
-      icon: FileText,
-      ids: ['single_registration_bsn', 'single_digid_activation', 'single_bank_setup', 'single_insurance_setup', 'single_official_letter', 'single_university_admin'],
-    },
-    {
-      id: 'housing', label: lang === 'uk' ? 'Житлові питання' : lang === 'ru' ? 'Жилищные вопросы' : 'Housing questions',
-      description: lang === 'uk' ? 'Підготовка заявки, гарантії, договір і комунікація' : lang === 'ru' ? 'Подготовка заявки, guarantor, договор и коммуникация' : 'Application prep, guarantor, contract and communication',
+      id: 'housing', label: lang === 'uk' ? 'Житло та орендні заявки' : lang === 'ru' ? 'Жильё и арендные заявки' : 'Housing and rental applications',
+      description: lang === 'uk' ? 'Підготовка заявки, гарантія, договір і комунікація' : lang === 'ru' ? 'Подготовка заявки, guarantor, договор и коммуникация' : 'Application prep, guarantor, contract and communication',
       icon: House,
       ids: ['single_housing_application_support', 'single_rental_contract', 'single_housing_scam_check', 'single_deposit_return', 'single_landlord_communication'],
     },
     {
-      id: 'health', label: lang === 'uk' ? 'Медицина та відшкодування' : lang === 'ru' ? 'Медицина и возмещения' : 'Healthcare and claims',
-      description: lang === 'uk' ? 'GP / huisarts та страхові запити' : lang === 'ru' ? 'GP / huisarts и страховые запросы' : 'GP / huisarts and insurance requests',
+      id: 'arrival', label: lang === 'uk' ? 'Підготовка до приїзду' : lang === 'ru' ? 'Подготовка к приезду' : 'Pre-arrival preparation',
+      description: lang === 'uk' ? 'План, документи, консультація та інші кроки до виїзду' : lang === 'ru' ? 'План, документы, консультация и другие шаги до выезда' : 'Plan, documents, consultation and other pre-departure steps',
+      icon: FileText,
+      ids: ['single_official_letter', 'single_university_admin', 'single_registration_bsn', 'single_digid_activation', 'single_bank_setup'],
+    },
+    {
+      id: 'settlement', label: lang === 'uk' ? 'Практичне облаштування після приїзду' : lang === 'ru' ? 'Практическое обустройство после приезда' : 'Practical settlement after arrival',
+      description: lang === 'uk' ? 'Реєстрація, DigiD, банк, страхування, GP' : lang === 'ru' ? 'Регистрация, DigiD, банк, страховка, GP' : 'Registration, DigiD, banking, insurance, GP',
       icon: HeartPulse,
-      ids: ['single_insurance_claim', 'single_healthcare_registration'],
+      ids: ['single_insurance_setup', 'single_insurance_claim', 'single_healthcare_registration'],
     },
   ], [lang]);
 
@@ -528,60 +528,57 @@ export default function VantamsHub() {
     if (option.target === 'consultation') {
       applyQualificationContext({
         inquiryType: option.inquiryType,
-        audience: 'student',
         status: 'before',
         help: 'consultation',
         message: lang === 'uk'
-          ? `Я переїжджаю до Нідерландів і хочу почати з консультації.`
+          ? `Я планую переїзд до Нідерландів і хочу почати з консультації.`
           : lang === 'ru'
-            ? `Я переезжаю в Нидерланды и хочу начать с консультации.`
-            : `I am moving to the Netherlands and want to start with a consultation.`,
+            ? `Я планирую переезд в Нидерланды и хочу начать с консультации.`
+            : `I am planning my move to the Netherlands and want to start with a consultation.`,
       });
       scrollToTarget(option.target);
       return;
     }
 
-    if (option.id === 'found_housing') {
+    if (option.target === 'services') {
       setActiveServiceCategory('housing');
       applyQualificationContext({
         inquiryType: 'single',
-        audience: 'professional',
-        status: 'found_housing',
-        help: 'single_housing_application_support',
-        message: lang === 'uk'
-          ? `Я вже знайшов/знайшла житло і мені потрібна допомога з документами, заявкою або договором.`
-          : lang === 'ru'
-            ? `Я уже нашёл/нашла жильё и мне нужна помощь с документами, заявкой или договором.`
-            : `I have already found housing and need help with documents, the application or the contract.`,
-      });
-      scrollToTarget(option.target);
-      return;
-    }
-
-    if (option.id === 'need_housing') {
-      setActiveServiceCategory('housing');
-      applyQualificationContext({
-        inquiryType: 'single',
-        audience: 'student',
         status: 'need_housing',
-        help: 'single_housing_application_support',
+        help: 'single',
         message: lang === 'uk'
-          ? `Мені потрібна житлова підтримка: підготовка заявки, комунікація та контракт.`
+          ? `Мені потрібна допомога з житлом або орендною заявкою.`
           : lang === 'ru'
-            ? `Мне нужна жилищная поддержка: подготовка заявки, коммуникация и договор.`
-            : `I need housing support: application prep, communication and the contract.`,
+            ? `Мне нужна помощь с жильём или арендной заявкой.`
+            : `I need help with housing or my rental application.`,
+      });
+      scrollToTarget(option.target);
+      return;
+    }
+
+    if (option.target === 'packages') {
+      setSelectedPackage('pkg_setup');
+      applyQualificationContext({
+        inquiryType: 'packages',
+        status: 'after',
+        help: 'packages',
+        message: lang === 'uk'
+          ? `Я вже приїхав(-ла) і мені потрібне практичне облаштування після приїзду.`
+          : lang === 'ru'
+            ? `Я уже приехал(-а) и мне нужно практическое обустройство после приезда.`
+            : `I have arrived and need practical setup support after arrival.`,
       });
       scrollToTarget(option.target);
       return;
     }
 
     applyQualificationContext({
-      inquiryType: 'b2b',
-      audience: 'organisation',
-      status: 'organisation',
-      help: 'b2b',
-      message: lang === 'uk'
-        ? `Я представляю організацію і хочу обговорити співпрацю.`
+        inquiryType: 'b2b',
+        audience: 'organisation',
+        status: 'organisation',
+        help: 'b2b',
+        message: lang === 'uk'
+          ? `Я представляю організацію і хочу обговорити співпрацю.`
         : lang === 'ru'
           ? `Я представляю организацию и хочу обсудить сотрудничество.`
           : `I represent an organisation and would like to discuss cooperation.`,
@@ -667,7 +664,7 @@ export default function VantamsHub() {
     help: [
       { value: '', label: lang === 'uk' ? 'Оберіть потрібну допомогу' : lang === 'ru' ? 'Выберите нужную помощь' : 'Choose the required help' },
       { value: 'consultation', label: ui.selectorConsult },
-      { value: 'single_housing_application_support', label: ui.housingTitle },
+      { value: 'single', label: ui.selectorServices },
       { value: 'packages', label: ui.selectorPackages },
       { value: 'b2b', label: ui.selectorPartner },
     ],
@@ -1014,7 +1011,7 @@ export default function VantamsHub() {
                   </div>
                   <label htmlFor="contact-help"><span>{ui.formHelpLabel}</span><select id="contact-help" name="help" value={formHelp} onChange={(event) => setFormHelp(event.target.value)} disabled={formState === 'sending'}>{qualificationOptions.help.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
                   <div className="form-grid"><label htmlFor="contact-name"><span>{dict.contactNameLabel} *</span><input id="contact-name" name="name" type="text" required value={formName} onChange={(event) => {setFormName(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={120} autoComplete="name" placeholder="Maria" /></label><label htmlFor="contact-email"><span>{dict.contactEmailLabel} *</span><input id="contact-email" name="email" type="email" required value={formEmail} onChange={(event) => {setFormEmail(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={254} autoComplete="email" placeholder="maria@example.com" /></label></div>
-                  <label htmlFor="contact-type"><span>{dict.contactTypeLabel}</span><select id="contact-type" name="inquiryType" value={formInquiryType} onChange={(event) => setFormInquiryType(event.target.value)} disabled={formState === 'sending'}><option value="packages">{dict.contactTypeOpt1}</option><option value="single">{dict.contactTypeOpt2}</option><option value="consultation">{dict.consultTitle}</option><option value="b2b">{dict.contactTypeOpt3}</option><option value="general">{dict.contactTypeOpt4}</option></select></label>
+                  <label htmlFor="contact-type"><span>{dict.contactTypeLabel}</span><select id="contact-type" name="inquiryType" value={formInquiryType} onChange={(event) => setFormInquiryType(event.target.value)} disabled={formState === 'sending'}><option value="consultation">{dict.contactTypeOpt1}</option><option value="single">{dict.contactTypeOpt2}</option><option value="packages">{dict.contactTypeOpt3}</option><option value="b2b">{dict.contactTypeOpt4}</option></select></label>
                   <label htmlFor="contact-message"><span>{dict.contactMessageLabel} *</span><textarea id="contact-message" name="message" rows={5} required value={formMessage} onChange={(event) => {setFormMessage(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={5000} placeholder={lang === 'uk' ? 'Наприклад: потрібна допомога з BSN, житлом або пакетом.' : lang === 'ru' ? 'Например: нужна помощь с BSN, жильём или пакетом.' : 'For example: I need help with BSN, housing or a package.'} /></label>
                   <label className="consent-row" htmlFor="privacy-consent"><input type="checkbox" id="privacy-consent" name="consent" required checked={formConsent} onChange={(event) => setFormConsent(event.target.checked)} disabled={formState === 'sending'} /><span>{dict.contactConsent}</span></label>
                   <button type="submit" disabled={formState === 'sending' || !formConsent} className="button button-primary contact-submit"><span aria-live="polite">{formState === 'sending' ? dict.contactSending : dict.contactSubmitBtn}</span>{formState !== 'sending' && <ArrowRight />}</button>

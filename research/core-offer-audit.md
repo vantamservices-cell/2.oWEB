@@ -6,6 +6,8 @@ Date: 2026-06-13
 
 Reviewed the current website offer, public competitor pages and public guidance sources for the Netherlands housing / relocation / newcomer support market. The goal was not to rank the market exhaustively, but to validate whether VANTAM has a coherent, commercially understandable offer for international newcomers and residents navigating housing and practical settlement in the Netherlands.
 
+Correction note: the sample used for this audit was housing-heavy, so the housing findings should be read as one part of the offer context rather than evidence that VANTAM needs to become a housing-only brand.
+
 ## Competitors And Alternatives Reviewed
 
 - [HousingAnywhere](https://housinganywhere.com/)
@@ -104,7 +106,7 @@ Alternatives customers also use:
 
 ## Implemented Improvements
 
-- Updated the public positioning copy to emphasize housing and relocation support before and after arrival.
+- Updated the public positioning copy to reflect the three service pillars across the journey.
 - Tightened the audience wording in Ukrainian, Russian and English.
 - Strengthened the consultation framing as the easiest way to identify the right next step.
 - Replaced the vague general-enquiry label with a more natural `Not sure yet / general question` variant.
