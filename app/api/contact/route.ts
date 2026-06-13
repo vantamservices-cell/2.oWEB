@@ -151,7 +151,7 @@ export async function POST(request: NextRequest) {
   ].filter(Boolean).join('\n');
 
   const html = `
-    <div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;color:#0f172a;line-height:1.6">
+    <div style="font-family:ui-sans-serif,system-ui,sans-serif;max-width:680px;margin:0 auto;color:#0f172a;line-height:1.6">
       <h1 style="font-size:22px;margin-bottom:20px">New VANTAM website request</h1>
       <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
         <tbody>

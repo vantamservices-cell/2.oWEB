@@ -193,7 +193,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     metric4Text: "Замість десятків заплутаних нідерландських служб",
 
     servicesTitle: "Практична матриця підтримки VANTAM",
-    servicesSub: "Основний фокус VANTAM — зрозумілий студентський старт у Нідерландах: документи, повсякденна адміністрація, медицина, університет і житлові питання як частина контексту.",
+    servicesSub: "Основний фокус VANTAM: зрозумілий студентський старт у Нідерландах, документи, повсякденна адміністрація, медицина, університет і житлові питання як частина контексту.",
     servicesFooter: "СТАНДАРТИ ОПЕРАЦІЙНОЇ ДІЯЛЬНОСТІ VANTAM 2026 • НАЦІОНАЛЬНИЙ КОМПЛАЄНС",
 
     singleTitle: "Окремі послуги",
@@ -333,7 +333,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     metric4Text: "Вместо десятков голландских и местных служб",
 
     servicesTitle: "Практическая матрица поддержки VANTAM",
-    servicesSub: "Главный фокус VANTAM — понятный студенческий старт в Нидерландах: документы, бытовая администрация, медицина, университет и жилищные вопросы как часть контекста.",
+    servicesSub: "Главный фокус VANTAM: понятный студенческий старт в Нидерландах, документы, бытовая администрация, медицина, университет и жилищные вопросы как часть контекста.",
     servicesFooter: "СТАНДАРТЫ ОПЕРАЦИОННОЙ ДЕЯТЕЛЬНОСТИ VANTAM 2026 • НАЦИОНАЛЬНЫЙ КОМПЛАЕНС",
 
     singleTitle: "Отдельные услуги",
@@ -1163,73 +1163,73 @@ export const PITFALLS: Pitfall[] = [
   {
     id: "scam",
     label: {
-      uk: "Шахрайство з орендою житла (передоплата фейку)",
-      ru: "Мошенничество с арендой жилья (предоплата фейку)",
-      en: "Rent scam (fake landlord prepayment)"
+      uk: "Ризик втрати передоплати за житло",
+      ru: "Риск потери предоплаты за жилье",
+      en: "Risk of losing a housing prepayment"
     },
     cost: 1600,
     explanation: {
-      uk: "Студент переказує кошти на іноземний рахунок до перевірки власника за кадастром, після чого фейковий орендодавець зникає з грошима.",
-      ru: "Студент отправляет залог на зарубежный банковский счет до реальной кадастровой проверки, после чего фейковый хозяин пропадает.",
-      en: "The student transfers prepayment to an overseas IBAN prior to verification of title deed, resulting in immediate loss."
+      uk: "Приклад для планування: депозит або передоплата переказані до перевірки пропозиції та особи орендодавця.",
+      ru: "Пример для планирования: депозит или предоплата переведены до проверки предложения и личности арендодателя.",
+      en: "Planning example: a deposit or prepayment is transferred before the listing and landlord identity are checked."
     }
   },
   {
     id: "fine",
     label: {
-      uk: "Державні штрафи за несвоєчасну реєстрацію BSN",
-      ru: "Штрафы мэрии за несвоевременную регистрацию BSN",
-      en: "Municipal penalty for late address registry"
+      uk: "Додаткові витрати через затримку реєстрації",
+      ru: "Дополнительные расходы из-за задержки регистрации",
+      en: "Extra costs linked to delayed registration"
     },
     cost: 350,
     explanation: {
-      uk: "Несвоєчасний запис на прийом або подача договору без права реєстрації веде до порушень закону про проживання та штрафів до €350.",
-      ru: "Пропуск законных сроков регистрации адреса в Gemeente или договор без права прописки ведет к муниципальному аудиту и штрафу.",
-      en: "Missing legal timelines for municipal registration yields official compliance fines and freezes BSN generation."
+      uk: "Приклад резерву на повторні візити, термінові документи, транспорт або інші витрати, якщо реєстрація затримується.",
+      ru: "Пример резерва на повторные визиты, срочные документы, транспорт или другие расходы при задержке регистрации.",
+      en: "Example allowance for repeat visits, urgent documents, transport or other costs when registration is delayed."
     }
   },
   {
     id: "insurance",
     label: { 
-      uk: "Неправильне оформлення медичної страховки", 
-      ru: "Оформление неподходящей страховки", 
-      en: "Suboptimal health insurance registration" 
+      uk: "Витрати через невідповідний страховий маршрут",
+      ru: "Расходы из-за неподходящего страхового маршрута",
+      en: "Costs linked to the wrong insurance route"
     },
     cost: 450,
     explanation: {
-      uk: "Реєстрація невідповідного студентського полісу веде до відмов у компенсаціях від компаній та вимушених переплат.",
-      ru: "Оформление неподходящего полиса приводит к отказам страховых и вынужденной потере льготных субсидий.",
-      en: "Entering incorrect insurance categories voids governmental subsidy opportunities. High out-of-pocket costs."
+      uk: "Приклад для планування: тимчасові переплати або медичні витрати до з'ясування відповідного типу страхування.",
+      ru: "Пример для планирования: временные переплаты или медицинские расходы до выяснения подходящего типа страхования.",
+      en: "Planning example: temporary overpayments or medical costs while the appropriate insurance route is clarified."
     }
   },
   {
     id: "hostel",
-    label: { uk: "Незаплановане проживання в готелі / хостелі у вересні", ru: "Незапланированное проживание в отеле в сентябре", en: "Overstaying in high-priced hostels" },
+    label: { uk: "Незаплановане короткострокове проживання", ru: "Незапланированное краткосрочное проживание", en: "Unplanned short-term accommodation" },
     cost: 1200,
     explanation: {
-      uk: "Через затримку з пошуком або відсутністю безпечної супроводжувальної папки доводиться орендувати хостел за шаленою ціною.",
-      ru: "Из-за задержек с документами приходится неделями жить в переполненных отелях Нидерландов по пиковой цене сезона.",
-      en: "Failure to organize tenancy folders smoothly forces short-term luxury hotel booking in high-demand autumn months."
+      uk: "Приклад резерву на готель, хостел або інше тимчасове житло, якщо дата заселення змінюється.",
+      ru: "Пример резерва на отель, хостел или другое временное жилье, если дата заселения меняется.",
+      en: "Example allowance for a hotel, hostel or other temporary stay when the move-in date changes."
     }
   },
   {
     id: "banking",
-    label: { uk: "Затримки з відкриттям європейського банку", ru: "Задержка открытия европейского банковского счета", en: "Banking establishment delays" },
+    label: { uk: "Тимчасові банківські та конвертаційні витрати", ru: "Временные банковские расходы и конвертация", en: "Temporary banking and conversion costs" },
     cost: 200,
     explanation: {
-      uk: "Вимушені додаткові комісії на конвертаціях, проблеми з покупками на касах Albert Heijn, де не працює Visa.",
-      ru: "Вынужденные траты на комиссии при снятии денег, сбои при расчете картами в супермаркетах Albert Heijn.",
-      en: "Loss on currency conversion and inability to spend money since premium stores strictly decline standard Visa/Mastercard."
+      uk: "Приклад резерву на комісії, конвертацію та тимчасові способи оплати до відкриття місцевого рахунку.",
+      ru: "Пример резерва на комиссии, конвертацию и временные способы оплаты до открытия местного счета.",
+      en: "Example allowance for fees, conversion and temporary payment methods before a local account is available."
     }
   },
   {
     id: "panic",
-    label: { uk: "Втрата робочого часу батьків на паніку та дзвінки", ru: "Потеря времени родителей на панику и ночные звонки", en: "Lost parental work productivity due to extreme stress" },
+    label: { uk: "Час родини на дистанційну координацію", ru: "Время семьи на дистанционную координацию", en: "Family time spent coordinating remotely" },
     cost: 800,
     explanation: {
-      uk: "Психологічна вартість хаосу: батьки відволікаються від власного бізнесу або роботи, намагаючись дистанційно координувати дитину.",
-      ru: "Психологическая цена хаоса: родители вынуждены бросать свои дела дома, чтобы решать вопросы чада по телефону.",
-      en: "Indirect loss of work hours and severe mental toll, trying to handle distant foreign administrative tasks remotely."
+      uk: "Умовна оцінка часу, який родина може витратити на дзвінки, пошук інформації та координацію з іншої країни.",
+      ru: "Условная оценка времени, которое семья может потратить на звонки, поиск информации и координацию из другой страны.",
+      en: "An illustrative value for time spent on calls, research and coordination from another country."
     }
   }
 ];
@@ -1270,8 +1270,8 @@ export const FAQS_STORE: FaqItem[] = [
       en: "Is VANTAM only about housing?"
     },
     a: {
-      uk: "Ні. Житлові питання є лише частиною контексту. Основна цінність VANTAM — практичний студентський старт у Нідерландах: реєстрація, BSN, DigiD, банк, страхування, лікар, офіційні листи, університетські питання і впевненість батьків.",
-      ru: "Нет. Жилищные вопросы — только часть контекста. Главная ценность VANTAM — практический студенческий старт в Нидерландах: регистрация, BSN, DigiD, банк, страховка, врач, официальные письма, университетские вопросы и спокойствие родителей.",
+      uk: "Ні. Житлові питання є лише частиною контексту. Основна цінність VANTAM: практичний студентський старт у Нідерландах, реєстрація, BSN, DigiD, банк, страхування, лікар, офіційні листи, університетські питання і впевненість батьків.",
+      ru: "Нет. Жилищные вопросы только часть контекста. Главная ценность VANTAM: практический студенческий старт в Нидерландах, регистрация, BSN, DigiD, банк, страховка, врач, официальные письма, университетские вопросы и спокойствие родителей.",
       en: "No. Housing questions are only one part of the context. VANTAM's main value is practical student setup in the Netherlands: registration, BSN, DigiD, banking, insurance, GP registration, official letters, university admin and parent confidence."
     }
   },

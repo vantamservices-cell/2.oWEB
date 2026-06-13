@@ -23,6 +23,21 @@ The service is practical rather than advisory in a regulated sense. VANTAM prepa
 
 Success means that a visitor can quickly identify the right level of help, understand the price and limits before contacting VANTAM, use the calculator or adaptation planner without confusion, and submit a request with realistic expectations.
 
+## Implemented Experience
+
+The production website follows one continuous decision journey:
+
+1. A concise value proposition and authentic Amsterdam street image establish local context without institutional imagery.
+2. Three early routes let visitors start with a consultation, ongoing package, or focused service.
+3. Consultations remain the lowest-friction paid entry product.
+4. Focused services are grouped by administration, housing context, and healthcare rather than presented as a card wall.
+5. Prepare, Settle, and Thrive are visible together on desktop and fully stacked on mobile, followed by complete inclusions and boundaries.
+6. The cost-scenario calculator and adaptation planner provide useful preparation before contact.
+7. Testimonials, FAQ, and the final enquiry area resolve remaining trust and scope questions.
+8. Service, consultation, and package actions prefill the multilingual contact form while preserving the visitor's selected context.
+
+The interface supports Ukrainian, Russian, and English with equal pricing, content, controls, and responsive behavior. Light mode is the default and a complete dark theme is available as a user-controlled preference.
+
 ## Brand Personality
 
 **Calm, capable, transparent.**
@@ -57,3 +72,5 @@ All three language versions, Ukrainian, Russian, and English, must communicate t
 Target WCAG 2.2 AA for contrast, keyboard operation, focus visibility, form labeling, semantic structure, and touch targets. Body text must remain readable on standard laptop screens without zooming, and important meaning must never depend on color alone.
 
 Respect `prefers-reduced-motion`, preserve clear active and selected states, and keep interactive tools usable by keyboard. Typography and layouts must support both Latin and Cyrillic scripts without clipping, artificial condensation, or excessive uppercase. Responsive behavior must be intentionally designed for desktop, laptop, tablet, and mobile rather than achieved by shrinking the desktop layout.
+
+The package prospectus dialog traps focus, closes with Escape or backdrop selection, locks background scrolling, and restores focus to its trigger. Mobile navigation supports link, outside-click, and Escape dismissal. FAQ content exposes expanded and collapsed state semantically. Form sending, error, and success feedback is announced without losing keyboard context.

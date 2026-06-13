@@ -1,22 +1,29 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
+import Image from 'next/image';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import {
   AlertCircle,
   ArrowRight,
+  ArrowUpRight,
   Check,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
   Clock,
   Download,
-  FileCheck2,
-  HelpCircle,
+  FileText,
+  GraduationCap,
+  HeartPulse,
+  House,
   Info,
   Menu,
+  MessageCircle,
+  Moon,
   ShieldCheck,
-  Wrench,
+  Sun,
+  WalletCards,
   X,
 } from 'lucide-react';
 
@@ -33,31 +40,28 @@ import {
   TESTIMONIALS,
 } from '../data';
 
-const VantamLogo = ({ className = 'w-8 h-8', light = false }: { className?: string; light?: boolean }) => {
-  const primaryColor = light ? '#ffffff' : '#13252f';
+const HERO_IMAGE = 'https://images.unsplash.com/photo-1780064214195-01dc4e54949c?auto=format&fit=crop&w=1600&q=84';
+
+const VantamLogo = ({className = 'w-8 h-8', light = false}: {className?: string; light?: boolean}) => {
+  const primaryColor = light ? '#f4f8f7' : 'currentColor';
 
   return (
     <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path
-        d="M15 25 L45 83 C47 87, 53 87, 55 83 L85 25"
-        stroke={primaryColor}
-        strokeWidth="10"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M38 18 L50 42 L62 18"
-        stroke="#0f766e"
-        strokeWidth="8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M15 25 L45 83 C47 87, 53 87, 55 83 L85 25" stroke={primaryColor} strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M38 18 L50 42 L62 18" stroke="#0f766e" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 };
 
 export default function VantamsHub() {
+  const prefersReducedMotion = useReducedMotion();
+  const mobileNavigationRef = useRef<HTMLDetailsElement>(null);
+  const pdfTriggerRef = useRef<HTMLButtonElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const modalCloseRef = useRef<HTMLButtonElement>(null);
+  const successRef = useRef<HTMLDivElement>(null);
   const [lang, setLang] = useState<Language>('uk');
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [selectedPackage, setSelectedPackage] = useState('pkg_setup');
   const [activeServiceCategory, setActiveServiceCategory] = useState('admin');
   const [calculatorToggles, setCalculatorToggles] = useState<Record<string, boolean>>({
@@ -66,12 +70,8 @@ export default function VantamsHub() {
     insurance: true,
     hostel: false,
   });
-  const [completedTasks, setCompletedTasks] = useState<Record<string, boolean>>({
-    c1: true,
-    c2: false,
-    c3: false,
-  });
-  const [faqOpen, setFaqOpen] = useState<Record<string, boolean>>({ f1: true });
+  const [completedTasks, setCompletedTasks] = useState<Record<string, boolean>>({c1: true, c2: false, c3: false});
+  const [faqOpen, setFaqOpen] = useState<Record<string, boolean>>({f1: true});
   const [showExportModal, setShowExportModal] = useState(false);
   const [activeTestimonialIdx, setActiveTestimonialIdx] = useState(0);
   const [formName, setFormName] = useState('');
@@ -82,221 +82,243 @@ export default function VantamsHub() {
   const [formWebsite, setFormWebsite] = useState('');
   const [formState, setFormState] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
+  useEffect(() => {
+    const navigation = mobileNavigationRef.current;
+    const handlePointerDown = (event: PointerEvent) => {
+      if (navigation?.open && !navigation.contains(event.target as Node)) navigation.removeAttribute('open');
+    };
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && navigation?.open) {
+        navigation.removeAttribute('open');
+        navigation.querySelector('summary')?.focus();
+      }
+    };
+    document.addEventListener('pointerdown', handlePointerDown);
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!showExportModal) return;
+    const trigger = pdfTriggerRef.current;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    modalCloseRef.current?.focus();
+
+    const handleModalKeys = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setShowExportModal(false);
+        return;
+      }
+      if (event.key !== 'Tab' || !modalRef.current) return;
+      const focusable = Array.from(modalRef.current.querySelectorAll<HTMLElement>('button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])')).filter((element) => !element.hasAttribute('disabled'));
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleModalKeys);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', handleModalKeys);
+      trigger?.focus();
+    };
+  }, [showExportModal]);
+
+  useEffect(() => {
+    if (formState === 'success') successRef.current?.focus();
+  }, [formState]);
+
   const dict = useMemo(() => DICTIONARY[lang], [lang]);
   const sList = useMemo(() => SERVICES_STORE[lang], [lang]);
 
   const ui = useMemo(() => ({
     uk: {
       notice: 'Практична підтримка студентів та експатів у Нідерландах',
-      tools: 'Інструменти',
-      more: 'Ще',
       menu: 'Меню',
-      heroGuide: 'Підтримка крок за кроком',
-      heroGuideIntro: 'Зрозумілий маршрут через ключові адміністративні та побутові кроки.',
+      darkTheme: 'Увімкнути темну тему',
+      lightTheme: 'Увімкнути світлу тему',
+      heroTitle: 'Перші кроки. Людина поруч.',
+      heroText: 'Документи, реєстрація, медицина, банк і житлові питання. Зрозумілий план та людина поруч.',
+      heroImageAlt: 'Житлова вулиця з цегляними будинками в Амстердамі',
+      photoCredit: 'Фото: Haberdoedas, Unsplash',
+      localNote: 'Місцевий контекст. Три мови. Чіткі межі роботи.',
+      entryTitle: 'Почніть з формату, який відповідає вашій ситуації',
+      entryConsult: 'Розібратися разом',
+      entryPackage: 'Потрібен супровід',
+      entrySingle: 'Відомий конкретний крок',
       from: 'від',
-      standards: 'Як ми працюємо',
-      structure: 'Напрями підтримки',
-      transparentFees: 'Прозорі формати',
-      serviceCategories: 'Категорії послуг',
-      admin: 'Документи та щоденна адміністрація',
-      adminSub: 'Реєстрація, DigiD, банк, страхування, листи та університет',
-      housing: 'Житлові питання',
-      housingSub: 'Договір, перевірка пропозиції, депозит і комунікація',
-      health: 'Медицина та відшкодування',
-      healthSub: 'GP / huisarts та страхові запити',
-      servicesCount: 'послуги',
-      result: 'Результат',
-      details: 'Деталі пакета',
+      trustTitle: 'Підтримка без інституційної дистанції',
+      trustText: 'VANTAM пояснює незнайомі процеси нормальною мовою, допомагає підготуватися та координує практичні кроки.',
+      boundary: 'Ми не замінюємо ліцензованих фахівців і не обіцяємо рішень державних органів, банків, страховиків або орендодавців.',
+      consultLead: 'Найпростіший спосіб почати',
+      servicesLead: 'Окремі послуги',
+      categoryCount: 'послуг',
+      packageLead: 'Три рівні підтримки',
+      packageCompare: 'Порівняйте всі варіанти одночасно',
+      packageDetails: 'Повний склад обраного пакета',
       selected: 'Обрано',
-      choose: 'Переглянути деталі',
-      estimate: 'Орієнтовна сума вибраних ризиків',
-      maximum: 'Максимум у цьому сценарії: €4,575',
-      difference: 'Різниця порівняно з Settle',
-      riskLowDesc: 'Вибрані сценарії мають відносно невелику орієнтовну вартість, але кожен крок усе одно варто перевірити.',
-      riskMediumDesc: 'Кілька вибраних сценаріїв можуть помітно вплинути на бюджет. Перевірте строки, документи та умови заздалегідь.',
-      riskHighDesc: 'Сукупна орієнтовна вартість вибраних сценаріїв висока. Варто розібрати кожен ризик окремо та скласти план дій.',
-      planner: 'Практичний план',
-      progress: 'виконано',
-      customerStory: 'Досвід клієнта',
-      contactAside: 'Опишіть ситуацію своїми словами',
-      contactAsideText: 'Оберіть формат запиту або почніть з консультації. Відповідь надійде на вказану електронну адресу.',
+      choose: 'Переглянути',
+      toolsLead: 'Корисні інструменти до розмови',
+      toolsText: 'Оцініть сценарії витрат і відмітьте, що вже підготовлено. Результати є орієнтиром для планування.',
+      estimate: 'Сума вибраних сценаріїв',
+      maximum: 'Максимум у калькуляторі: €4,575',
+      difference: 'Різниця із Settle',
+      progress: 'готово',
+      testimonialLead: 'Досвід клієнтів',
+      contactLead: 'Розкажіть, що відбувається',
+      contactAside: 'Можна почати без готового рішення',
+      contactAsideText: 'Оберіть тип запиту або просто опишіть ситуацію. Контекст обраної послуги чи пакета вже буде у формі.',
       emailLabel: 'Електронна пошта',
-      packageCompare: 'Порівняйте всі три варіанти',
+      scopeLabel: 'Включено',
+      limitsLabel: 'Межі',
+      result: 'Результат',
+      details: 'Деталі',
     },
     ru: {
       notice: 'Практическая поддержка студентов и экспатов в Нидерландах',
-      tools: 'Инструменты',
-      more: 'Ещё',
       menu: 'Меню',
-      heroGuide: 'Поддержка шаг за шагом',
-      heroGuideIntro: 'Понятный маршрут через ключевые административные и бытовые шаги.',
+      darkTheme: 'Включить темную тему',
+      lightTheme: 'Включить светлую тему',
+      heroTitle: 'Первые шаги. Человек рядом.',
+      heroText: 'Документы, регистрация, медицина, банк и жилье. Понятный план и человек рядом.',
+      heroImageAlt: 'Жилая улица с кирпичными домами в Амстердаме',
+      photoCredit: 'Фото: Haberdoedas, Unsplash',
+      localNote: 'Местный контекст. Три языка. Четкие границы работы.',
+      entryTitle: 'Начните с формата, который подходит вашей ситуации',
+      entryConsult: 'Разобраться вместе',
+      entryPackage: 'Нужно сопровождение',
+      entrySingle: 'Известен конкретный шаг',
       from: 'от',
-      standards: 'Как мы работаем',
-      structure: 'Направления поддержки',
-      transparentFees: 'Прозрачные форматы',
-      serviceCategories: 'Категории услуг',
-      admin: 'Документы и повседневная администрация',
-      adminSub: 'Регистрация, DigiD, банк, страховка, письма и университет',
-      housing: 'Жилищные вопросы',
-      housingSub: 'Договор, проверка предложения, депозит и коммуникация',
-      health: 'Медицина и возмещения',
-      healthSub: 'GP / huisarts и страховые запросы',
-      servicesCount: 'услуги',
-      result: 'Результат',
-      details: 'Детали пакета',
+      trustTitle: 'Поддержка без институциональной дистанции',
+      trustText: 'VANTAM объясняет незнакомые процессы нормальным языком, помогает подготовиться и координирует практические шаги.',
+      boundary: 'Мы не заменяем лицензированных специалистов и не обещаем решений государственных органов, банков, страховщиков или арендодателей.',
+      consultLead: 'Самый простой способ начать',
+      servicesLead: 'Отдельные услуги',
+      categoryCount: 'услуг',
+      packageLead: 'Три уровня поддержки',
+      packageCompare: 'Сравните все варианты одновременно',
+      packageDetails: 'Полный состав выбранного пакета',
       selected: 'Выбрано',
-      choose: 'Посмотреть детали',
-      estimate: 'Ориентировочная сумма выбранных рисков',
-      maximum: 'Максимум в этом сценарии: €4,575',
-      difference: 'Разница по сравнению с Settle',
-      riskLowDesc: 'Выбранные сценарии имеют относительно небольшую ориентировочную стоимость, но каждый шаг всё равно стоит проверить.',
-      riskMediumDesc: 'Несколько выбранных сценариев могут заметно повлиять на бюджет. Проверьте сроки, документы и условия заранее.',
-      riskHighDesc: 'Совокупная ориентировочная стоимость выбранных сценариев высока. Стоит разобрать каждый риск отдельно и составить план действий.',
-      planner: 'Практический план',
-      progress: 'выполнено',
-      customerStory: 'Опыт клиента',
-      contactAside: 'Опишите ситуацию своими словами',
-      contactAsideText: 'Выберите формат запроса или начните с консультации. Ответ придёт на указанный электронный адрес.',
+      choose: 'Посмотреть',
+      toolsLead: 'Полезные инструменты до разговора',
+      toolsText: 'Оцените сценарии расходов и отметьте, что уже подготовлено. Результаты служат ориентиром для планирования.',
+      estimate: 'Сумма выбранных сценариев',
+      maximum: 'Максимум в калькуляторе: €4,575',
+      difference: 'Разница с Settle',
+      progress: 'готово',
+      testimonialLead: 'Опыт клиентов',
+      contactLead: 'Расскажите, что происходит',
+      contactAside: 'Можно начать без готового решения',
+      contactAsideText: 'Выберите тип запроса или просто опишите ситуацию. Контекст выбранной услуги или пакета уже будет в форме.',
       emailLabel: 'Электронная почта',
-      packageCompare: 'Сравните все три варианта',
+      scopeLabel: 'Включено',
+      limitsLabel: 'Границы',
+      result: 'Результат',
+      details: 'Детали',
     },
     en: {
       notice: 'Practical support for students and expats in the Netherlands',
-      tools: 'Tools',
-      more: 'More',
       menu: 'Menu',
-      heroGuide: 'Support, step by step',
-      heroGuideIntro: 'A clear route through the key administrative and everyday setup steps.',
+      darkTheme: 'Use dark theme',
+      lightTheme: 'Use light theme',
+      heroTitle: 'First steps. A person nearby.',
+      heroText: 'Documents, registration, healthcare, banking and housing questions. A clear plan and a person nearby.',
+      heroImageAlt: 'Residential brick street in Amsterdam',
+      photoCredit: 'Photo: Haberdoedas, Unsplash',
+      localNote: 'Local context. Three languages. Clear professional boundaries.',
+      entryTitle: 'Start with the format that fits your situation',
+      entryConsult: 'Work it out together',
+      entryPackage: 'I need ongoing support',
+      entrySingle: 'I know the exact step',
       from: 'from',
-      standards: 'How we work',
-      structure: 'Support areas',
-      transparentFees: 'Transparent formats',
-      serviceCategories: 'Service categories',
-      admin: 'Documents and daily administration',
-      adminSub: 'Registration, DigiD, banking, insurance, letters and university',
-      housing: 'Housing questions',
-      housingSub: 'Contract, listing check, deposit and communication',
-      health: 'Healthcare and claims',
-      healthSub: 'GP / huisarts and insurance requests',
-      servicesCount: 'services',
-      result: 'Outcome',
-      details: 'Package details',
+      trustTitle: 'Support without institutional distance',
+      trustText: 'VANTAM explains unfamiliar processes in normal language, helps you prepare, and coordinates practical next steps.',
+      boundary: 'We do not replace licensed professionals or promise decisions by public bodies, banks, insurers or landlords.',
+      consultLead: 'The simplest place to start',
+      servicesLead: 'Focused services',
+      categoryCount: 'services',
+      packageLead: 'Three levels of support',
+      packageCompare: 'Compare every option at the same time',
+      packageDetails: 'Full details of the selected package',
       selected: 'Selected',
       choose: 'View details',
-      estimate: 'Estimated total of selected risks',
-      maximum: 'Maximum in this scenario: €4,575',
-      difference: 'Difference compared with Settle',
-      riskLowDesc: 'The selected scenarios have a relatively low illustrative cost, but each step is still worth checking.',
-      riskMediumDesc: 'Several selected scenarios could have a noticeable budget impact. Check timelines, documents, and conditions in advance.',
-      riskHighDesc: 'The combined illustrative cost of the selected scenarios is high. Review each risk separately and prepare a clear action plan.',
-      planner: 'Practical plan',
-      progress: 'complete',
-      customerStory: 'Customer experience',
-      contactAside: 'Describe the situation in your own words',
-      contactAsideText: 'Choose a request type or start with a consultation. The reply will go to the email address you provide.',
+      toolsLead: 'Useful tools before we talk',
+      toolsText: 'Review cost scenarios and mark what is already prepared. Results are planning guides, not official assessments.',
+      estimate: 'Selected scenario total',
+      maximum: 'Maximum in the calculator: €4,575',
+      difference: 'Difference from Settle',
+      progress: 'ready',
+      testimonialLead: 'Client experiences',
+      contactLead: 'Tell us what is happening',
+      contactAside: 'You can start without knowing the answer',
+      contactAsideText: 'Choose a request type or describe the situation. Any selected service or package context is already included.',
       emailLabel: 'Email',
-      packageCompare: 'Compare all three options',
+      scopeLabel: 'Included',
+      limitsLabel: 'Boundaries',
+      result: 'Outcome',
+      details: 'Details',
     },
   }[lang]), [lang]);
 
   const serviceCategories = useMemo(() => [
     {
-      id: 'admin',
-      label: ui.admin,
-      description: ui.adminSub,
-      ids: [
-        'single_registration_bsn',
-        'single_digid_activation',
-        'single_bank_setup',
-        'single_insurance_setup',
-        'single_official_letter',
-        'single_university_admin',
-      ],
+      id: 'admin', label: lang === 'uk' ? 'Документи та адміністрація' : lang === 'ru' ? 'Документы и администрация' : 'Documents and administration',
+      description: lang === 'uk' ? 'Реєстрація, DigiD, банк, страхування, листи та університет' : lang === 'ru' ? 'Регистрация, DigiD, банк, страховка, письма и университет' : 'Registration, DigiD, banking, insurance, letters and university',
+      icon: FileText,
+      ids: ['single_registration_bsn', 'single_digid_activation', 'single_bank_setup', 'single_insurance_setup', 'single_official_letter', 'single_university_admin'],
     },
     {
-      id: 'housing',
-      label: ui.housing,
-      description: ui.housingSub,
-      ids: [
-        'single_rental_contract',
-        'single_housing_scam_check',
-        'single_deposit_return',
-        'single_landlord_communication',
-      ],
+      id: 'housing', label: lang === 'uk' ? 'Житлові питання' : lang === 'ru' ? 'Жилищные вопросы' : 'Housing questions',
+      description: lang === 'uk' ? 'Договір, перевірка пропозиції, депозит і комунікація' : lang === 'ru' ? 'Договор, проверка предложения, депозит и коммуникация' : 'Contract, listing check, deposit and communication',
+      icon: House,
+      ids: ['single_rental_contract', 'single_housing_scam_check', 'single_deposit_return', 'single_landlord_communication'],
     },
     {
-      id: 'health',
-      label: ui.health,
-      description: ui.healthSub,
+      id: 'health', label: lang === 'uk' ? 'Медицина та відшкодування' : lang === 'ru' ? 'Медицина и возмещения' : 'Healthcare and claims',
+      description: lang === 'uk' ? 'GP / huisarts та страхові запити' : lang === 'ru' ? 'GP / huisarts и страховые запросы' : 'GP / huisarts and insurance requests',
+      icon: HeartPulse,
       ids: ['single_insurance_claim', 'single_healthcare_registration'],
     },
-  ], [ui]);
+  ], [lang]);
 
   const activeCategory = serviceCategories.find((category) => category.id === activeServiceCategory) || serviceCategories[0];
   const activeServices = SINGLE_SERVICES.filter((service) => activeCategory.ids.includes(service.id));
+  const calculatorTotal = useMemo(() => PITFALLS.reduce((sum, item) => calculatorToggles[item.id] ? sum + item.cost : sum, 0), [calculatorToggles]);
+  const progressPercent = useMemo(() => Math.round((BLUEPRINT_CHECKLIST.filter((item) => completedTasks[item.id]).length / BLUEPRINT_CHECKLIST.length) * 100), [completedTasks]);
+  const currentSelectedPkgObj = useMemo(() => PREMIUM_PACKAGES.find((item) => item.id === selectedPackage) || PREMIUM_PACKAGES[1], [selectedPackage]);
 
-  const calculatorTotal = useMemo(() => PITFALLS.reduce((sum, item) => (
-    calculatorToggles[item.id] ? sum + item.cost : sum
-  ), 0), [calculatorToggles]);
-
-  const progressPercent = useMemo(() => {
-    const completed = BLUEPRINT_CHECKLIST.filter((item) => completedTasks[item.id]).length;
-    return Math.round((completed / BLUEPRINT_CHECKLIST.length) * 100);
-  }, [completedTasks]);
-
-  const currentSelectedPkgObj = useMemo(() => (
-    PREMIUM_PACKAGES.find((item) => item.id === selectedPackage) || PREMIUM_PACKAGES[1]
-  ), [selectedPackage]);
-
-  const riskStatus = useMemo(() => {
-    if (calculatorTotal <= 1000) {
-      return { label: dict.calcRiskLow, desc: ui.riskLowDesc, color: 'text-emerald-800 bg-emerald-50 border-emerald-200' };
-    }
-    if (calculatorTotal <= 2500) {
-      return { label: dict.calcRiskMedium, desc: ui.riskMediumDesc, color: 'text-amber-900 bg-amber-50 border-amber-200' };
-    }
-    return { label: dict.calcRiskHigh, desc: ui.riskHighDesc, color: 'text-rose-800 bg-rose-50 border-rose-200' };
-  }, [calculatorTotal, dict, ui]);
-
-  const scrollToContact = () => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToContact = () => document.getElementById('contact')?.scrollIntoView({behavior: prefersReducedMotion ? 'auto' : 'smooth'});
 
   const handleSelectSingleService = (serviceId: string) => {
     setFormInquiryType('single');
-    const serviceObj = SINGLE_SERVICES.find((service) => service.id === serviceId);
-    if (serviceObj) {
-      setFormMessage(lang === 'uk'
-        ? `Мене цікавить окрема послуга: ${serviceObj.name.uk}`
-        : lang === 'ru'
-          ? `Меня интересует разовая услуга: ${serviceObj.name.ru}`
-          : `I am interested in the standalone service: ${serviceObj.name.en}`);
-    }
+    const service = SINGLE_SERVICES.find((item) => item.id === serviceId);
+    if (service) setFormMessage(lang === 'uk' ? `Мене цікавить окрема послуга: ${service.name.uk}` : lang === 'ru' ? `Меня интересует разовая услуга: ${service.name.ru}` : `I am interested in the standalone service: ${service.name.en}`);
     scrollToContact();
   };
 
   const handleSelectConsultation = (consultationId: string) => {
     setFormInquiryType('consultation');
-    const consultationObj = CONSULTATIONS_STORE.find((consultation) => consultation.id === consultationId);
-    if (consultationObj) {
-      setFormMessage(lang === 'uk'
-        ? `Мене цікавить консультація: ${consultationObj.name.uk}`
-        : lang === 'ru'
-          ? `Меня интересует консультация: ${consultationObj.name.ru}`
-          : `I am interested in the consultation: ${consultationObj.name.en}`);
-    }
+    const consultation = CONSULTATIONS_STORE.find((item) => item.id === consultationId);
+    if (consultation) setFormMessage(lang === 'uk' ? `Мене цікавить консультація: ${consultation.name.uk}` : lang === 'ru' ? `Меня интересует консультация: ${consultation.name.ru}` : `I am interested in the consultation: ${consultation.name.en}`);
     scrollToContact();
   };
 
   const handleSelectPackage = (packageId: string) => {
-    const packageObj = PREMIUM_PACKAGES.find((item) => item.id === packageId);
+    const item = PREMIUM_PACKAGES.find((pkg) => pkg.id === packageId);
     setSelectedPackage(packageId);
     setFormInquiryType('packages');
-    if (packageObj) {
-      setFormMessage(lang === 'uk'
-        ? `Мене цікавить пакет: ${packageObj.name.uk} ${packageObj.price}`
-        : lang === 'ru'
-          ? `Меня интересует пакет: ${packageObj.name.ru} ${packageObj.price}`
-          : `I am interested in the package: ${packageObj.name.en} ${packageObj.price}`);
-    }
+    if (item) setFormMessage(lang === 'uk' ? `Мене цікавить пакет: ${item.name.uk} ${item.price}` : lang === 'ru' ? `Меня интересует пакет: ${item.name.ru} ${item.price}` : `I am interested in the package: ${item.name.en} ${item.price}`);
     scrollToContact();
   };
 
@@ -304,23 +326,12 @@ export default function VantamsHub() {
     event.preventDefault();
     if (!formName.trim() || !formEmail.trim() || !formMessage.trim() || !formConsent) return;
     setFormState('sending');
-
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formName,
-          email: formEmail,
-          inquiryType: formInquiryType,
-          message: formMessage,
-          consent: formConsent,
-          language: lang,
-          website: formWebsite,
-          sourceUrl: window.location.href,
-        }),
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({name: formName, email: formEmail, inquiryType: formInquiryType, message: formMessage, consent: formConsent, language: lang, website: formWebsite, sourceUrl: window.location.href}),
       });
-
       if (!response.ok) throw new Error('Contact request failed');
       setFormState('success');
     } catch {
@@ -337,100 +348,58 @@ export default function VantamsHub() {
     setFormState('idle');
   };
 
-  const closeNavigation = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.currentTarget.closest('details')?.removeAttribute('open');
-  };
-
-  const formErrorMessage = lang === 'uk'
-    ? 'Не вдалося надіслати запит. Спробуйте ще раз або напишіть на vantam.nl@proton.me.'
-    : lang === 'ru'
-      ? 'Не удалось отправить запрос. Попробуйте ещё раз или напишите на vantam.nl@proton.me.'
-      : 'The request could not be sent. Please try again or email vantam.nl@proton.me.';
-
+  const closeNavigation = (event: React.MouseEvent<HTMLAnchorElement>) => event.currentTarget.closest('details')?.removeAttribute('open');
+  const formErrorMessage = lang === 'uk' ? 'Не вдалося надіслати запит. Спробуйте ще раз або напишіть на vantam.nl@proton.me.' : lang === 'ru' ? 'Не удалось отправить запрос. Попробуйте еще раз или напишите на vantam.nl@proton.me.' : 'The request could not be sent. Please try again or email vantam.nl@proton.me.';
   const plannerGroups = [
-    { category: 'prep' as const, title: dict.checklistPrepTab, description: dict.checklistPrepDesc },
-    { category: 'arrival' as const, title: dict.checklistArrivalTab, description: dict.checklistArrivalDesc },
-    { category: 'settle' as const, title: dict.checklistSettleTab, description: dict.checklistSettleDesc },
+    {category: 'prep' as const, title: dict.checklistPrepTab, description: dict.checklistPrepDesc},
+    {category: 'arrival' as const, title: dict.checklistArrivalTab, description: dict.checklistArrivalDesc},
+    {category: 'settle' as const, title: dict.checklistSettleTab, description: dict.checklistSettleDesc},
   ];
 
   return (
-    <div className="min-h-screen bg-[var(--page)] text-[var(--ink)] selection:bg-[var(--brand)] selection:text-white">
-      <div className="site-notice">
-        <div className="site-container flex items-center justify-between gap-4 py-2.5">
+    <div className="vantam-site" data-theme={theme}>
+      <div className="service-strip">
+        <div className="site-container">
           <span>{ui.notice}</span>
-          <a href="mailto:vantam.nl@proton.me" className="hidden sm:inline font-semibold">vantam.nl@proton.me</a>
+          <a href="mailto:vantam.nl@proton.me">vantam.nl@proton.me</a>
         </div>
       </div>
 
       <header className="site-header">
-        <div className="site-container min-h-18 flex items-center justify-between gap-4">
-          <a href="#" className="brand-lockup" aria-label="VANTAM">
-            <VantamLogo className="w-9 h-9" />
-            <span>
-              <strong>VANTAM</strong>
-              <small>{dict.navSub}</small>
-            </span>
+        <div className="site-container header-inner">
+          <a href="#top" className="brand-lockup" aria-label="VANTAM">
+            <VantamLogo className="brand-mark" />
+            <span><strong>VANTAM</strong><small>{dict.navSub}</small></span>
           </a>
 
-          <nav className="hidden xl:flex items-center gap-1 ml-auto" aria-label={ui.menu}>
-            <a href="#why" className="nav-link">{dict.navWhy}</a>
-            <a href="#services" className="nav-link">{dict.navServices}</a>
-            <a href="#packages" className="nav-link">{dict.navPackages}</a>
-            <a href="#contact" className="nav-link">{dict.navContact}</a>
-
-            <details className="nav-details relative">
-              <summary className="nav-link flex items-center gap-1.5 cursor-pointer">
-                <Wrench className="w-4 h-4" />
-                {ui.tools}
-                <ChevronDown className="nav-chevron w-3.5 h-3.5" />
-              </summary>
-              <div className="nav-menu">
-                <a href="#calculator" onClick={closeNavigation}>{dict.navCalculator}</a>
-                <a href="#checklist" onClick={closeNavigation}>{dict.navChecklist}</a>
-              </div>
-            </details>
-
-            <details className="nav-details relative">
-              <summary className="nav-link flex items-center gap-1.5 cursor-pointer">
-                {ui.more}
-                <ChevronDown className="nav-chevron w-3.5 h-3.5" />
-              </summary>
-              <div className="nav-menu">
-                <a href="#consultations" onClick={closeNavigation}>{dict.consultTitle}</a>
-                <a href="#single-services" onClick={closeNavigation}>{dict.navSingleServices}</a>
-                <a href="#testimonials" onClick={closeNavigation}>{dict.navTestimonials}</a>
-                <a href="#faq" onClick={closeNavigation}>{dict.navFaq}</a>
-              </div>
-            </details>
+          <nav className="desktop-nav" aria-label={ui.menu}>
+            <a href="#consultations">{dict.consultTitle}</a>
+            <a href="#single-services">{dict.navSingleServices}</a>
+            <a href="#packages">{dict.navPackages}</a>
+            <a href="#tools">{dict.navCalculator}</a>
+            <a href="#contact" className="nav-cta">{dict.navContact}</a>
           </nav>
 
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="header-actions">
+            <button
+              className="theme-toggle"
+              onClick={() => setTheme((current) => current === 'light' ? 'dark' : 'light')}
+              aria-label={theme === 'light' ? ui.darkTheme : ui.lightTheme}
+            >
+              {theme === 'light' ? <Moon /> : <Sun />}
+            </button>
             <div className="language-switcher" aria-label={dict.langLabel}>
               {(['uk', 'ru', 'en'] as Language[]).map((code) => (
-                <button
-                  id={`lang-btn-${code}`}
-                  key={code}
-                  onClick={() => setLang(code)}
-                  aria-pressed={lang === code}
-                >
-                  {code === 'uk' ? 'UA' : code.toUpperCase()}
-                </button>
+                <button key={code} onClick={() => setLang(code)} aria-pressed={lang === code}>{code === 'uk' ? 'UA' : code.toUpperCase()}</button>
               ))}
             </div>
-
-            <details className="nav-details relative xl:hidden">
-              <summary className="mobile-menu-trigger" aria-label={ui.menu}>
-                <Menu className="w-5 h-5" />
-              </summary>
-              <nav className="nav-menu mobile-menu" aria-label={ui.menu}>
-                <a href="#why" onClick={closeNavigation}>{dict.navWhy}</a>
-                <a href="#services" onClick={closeNavigation}>{dict.navServices}</a>
+            <details ref={mobileNavigationRef} className="mobile-navigation">
+              <summary aria-label={ui.menu}><Menu /></summary>
+              <nav>
                 <a href="#consultations" onClick={closeNavigation}>{dict.consultTitle}</a>
                 <a href="#single-services" onClick={closeNavigation}>{dict.navSingleServices}</a>
                 <a href="#packages" onClick={closeNavigation}>{dict.navPackages}</a>
-                <a href="#calculator" onClick={closeNavigation}>{dict.navCalculator}</a>
-                <a href="#checklist" onClick={closeNavigation}>{dict.navChecklist}</a>
-                <a href="#testimonials" onClick={closeNavigation}>{dict.navTestimonials}</a>
+                <a href="#tools" onClick={closeNavigation}>{dict.navCalculator}</a>
                 <a href="#faq" onClick={closeNavigation}>{dict.navFaq}</a>
                 <a href="#contact" onClick={closeNavigation}>{dict.navContact}</a>
               </nav>
@@ -439,697 +408,208 @@ export default function VantamsHub() {
         </div>
       </header>
 
-      <main>
+      <main id="top">
         <section className="hero-section">
-          <div className="site-container hero-grid">
-            <div className="hero-copy">
-              <span className="section-label">{dict.heroBadge}</span>
-              <h1>{dict.heroHeadline}</h1>
-              <p>{dict.heroSub}</p>
+          <div className="site-container hero-layout">
+            <div className="hero-copy reveal-block">
+              <p className="hero-kicker">VANTAM Netherlands</p>
+              <h1>{ui.heroTitle}</h1>
+              <p className="hero-lede">{ui.heroText}</p>
               <div className="hero-actions">
-                <a href="#consultations" className="btn-primary">
-                  {dict.selectorConsultTitle}
-                  <ArrowRight className="w-4 h-4" />
-                </a>
-                <a href="#packages" className="btn-secondary">{dict.heroCtaPrimary}</a>
+                <a href="#consultations" className="button button-primary">{dict.selectorConsultTitle}<ArrowRight /></a>
+                <a href="#single-services" className="text-link">{dict.navServices}<ArrowUpRight /></a>
               </div>
+              <p className="hero-note"><ShieldCheck />{ui.localNote}</p>
             </div>
+            <figure className="hero-media reveal-media">
+              <Image src={HERO_IMAGE} alt={ui.heroImageAlt} fill priority sizes="(max-width: 767px) 100vw, 48vw" />
+              <figcaption>
+                <span>Amsterdam Oost</span>
+                <a href="https://unsplash.com/photos/_vAGc7k6REg" target="_blank" rel="noreferrer">{ui.photoCredit}</a>
+              </figcaption>
+            </figure>
+          </div>
+        </section>
 
-            <div className="hero-guide" aria-label={ui.heroGuide}>
-              <div className="hero-guide-header">
-                <div>
-                  <span>{ui.heroGuide}</span>
-                  <p>{ui.heroGuideIntro}</p>
-                </div>
-                <FileCheck2 className="w-6 h-6" />
+        <section className="entry-section" aria-labelledby="entry-title">
+          <div className="site-container">
+            <h2 id="entry-title">{ui.entryTitle}</h2>
+            <div className="entry-routes">
+              <a href="#consultations"><span>{ui.entryConsult}</span><strong>{ui.from} {CONSULTATIONS_STORE[0].price}</strong><ArrowRight /></a>
+              <a href="#packages"><span>{ui.entryPackage}</span><strong>{ui.from} {PREMIUM_PACKAGES[0].price}</strong><ArrowRight /></a>
+              <a href="#single-services"><span>{ui.entrySingle}</span><strong>{ui.from} €79</strong><ArrowRight /></a>
+            </div>
+          </div>
+        </section>
+
+        <section id="why" className="trust-section section-anchor">
+          <div className="site-container trust-layout">
+            <div>
+              <h2>{ui.trustTitle}</h2>
+              <p className="large-copy">{ui.trustText}</p>
+            </div>
+            <div className="trust-points">
+              <article><GraduationCap /><div><h3>{dict.roleTitle}</h3><p>{dict.roleDesc}</p></div></article>
+              <article><Info /><div><h3>{dict.antiRoleTitle}</h3><p>{ui.boundary}</p></div></article>
+            </div>
+          </div>
+        </section>
+
+        <section id="consultations" className="consultations-section section-anchor">
+          <div className="site-container">
+            <div className="section-intro"><p>{ui.consultLead}</p><h2>{dict.consultTitle}</h2><span>{dict.consultSub}</span></div>
+            <div className="consultation-composition">
+              {CONSULTATIONS_STORE.map((consultation, index) => (
+                <article key={consultation.id} className={index === 0 ? 'consultation consultation-featured' : 'consultation'}>
+                  <div className="consultation-top"><span><Clock />{consultation.duration[lang]}</span><strong>{consultation.price}</strong></div>
+                  <h3>{consultation.name[lang]}</h3>
+                  <p>{consultation.desc[lang]}</p>
+                  <dl><div><dt>{ui.result}</dt><dd>{consultation.result[lang]}</dd></div><div><dt>{ui.details}</dt><dd>{consultation.note[lang]}</dd></div></dl>
+                  <button onClick={() => handleSelectConsultation(consultation.id)} className="button button-secondary">{consultation.cta[lang]}<ArrowRight /></button>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="services" className="service-map-section section-anchor">
+          <div className="site-container">
+            <div className="section-intro section-intro-wide"><p>{dict.servicesTitle}</p><h2>{dict.servicesSub}</h2></div>
+            <div className="pillar-band">
+              {sList.map((column) => <div key={column.pillar}><strong>{column.pillar}</strong><span>{column.sub}</span></div>)}
+            </div>
+          </div>
+        </section>
+
+        <section id="single-services" className="single-services-section section-anchor">
+          <div className="site-container services-layout">
+            <aside>
+              <p>{ui.servicesLead}</p>
+              <h2>{dict.singleTitle}</h2>
+              <span>{dict.singleSub}</span>
+              <div className="service-category-tabs" role="tablist" aria-label={ui.servicesLead}>
+                {serviceCategories.map((category) => {
+                  const Icon = category.icon;
+                  return (
+                    <button key={category.id} role="tab" aria-selected={activeServiceCategory === category.id} onClick={() => setActiveServiceCategory(category.id)}>
+                      <Icon /><span><strong>{category.label}</strong><small>{category.ids.length} {ui.categoryCount}</small></span><ChevronRight />
+                    </button>
+                  );
+                })}
               </div>
-              <ol>
-                {sList.map((column, index) => (
-                  <li key={column.pillar}>
-                    <span>{String(index + 1).padStart(2, '0')}</span>
-                    <div>
-                      <strong>{column.pillar}</strong>
-                      <p>{column.items[0]?.desc}</p>
-                    </div>
-                  </li>
+            </aside>
+            <div className="service-list-panel" role="tabpanel">
+              <div className="service-panel-heading"><div><h3>{activeCategory.label}</h3><p>{activeCategory.description}</p></div><span>{activeServices.length}</span></div>
+              <div className="service-rows">
+                {activeServices.map((service) => (
+                  <article key={service.id}>
+                    <div className="service-name"><h4>{service.name[lang]}</h4><span>{service.mode[lang]}</span></div>
+                    <div className="service-description"><p>{service.desc[lang]}</p><small><Check />{service.limit[lang]}</small>{service.notIncluded && <small className="service-exclusion">{service.notIncluded[lang]}</small>}</div>
+                    <div className="service-action"><strong>{service.price}</strong><button onClick={() => handleSelectSingleService(service.id)} aria-label={`${dict.singleCta}: ${service.name[lang]}`}><ArrowUpRight /></button></div>
+                  </article>
                 ))}
-              </ol>
-              <div className="hero-guide-footer">UA / RU / EN</div>
+              </div>
+              <div className="boundary-note"><Info /><p><strong>{dict.housingDisclaimerTitle}</strong>{dict.housingDisclaimerText}</p></div>
             </div>
           </div>
         </section>
 
-        <section className="start-section" aria-labelledby="start-title">
+        <section id="packages" className="packages-section section-anchor">
           <div className="site-container">
-            <div className="section-heading compact-heading">
-              <span className="section-label">{dict.selectorTitle}</span>
-              <h2 id="start-title">{dict.selectorSub}</h2>
-            </div>
-            <div className="start-options">
-              {[
-                { title: dict.selectorConsultTitle, desc: dict.selectorConsultDesc, price: CONSULTATIONS_STORE[0].price, href: '#consultations' },
-                { title: dict.selectorPackageTitle, desc: dict.selectorPackageDesc, price: PREMIUM_PACKAGES[0].price, href: '#packages' },
-                { title: dict.selectorSingleTitle, desc: dict.selectorSingleDesc, price: '€79', href: '#single-services' },
-              ].map((option, index) => (
-                <a key={option.href} href={option.href} className="start-option">
-                  <span className="start-number">0{index + 1}</span>
-                  <div>
-                    <h3>{option.title}</h3>
-                    <p>{option.desc}</p>
-                  </div>
-                  <div className="start-price">
-                    <small>{ui.from}</small>
-                    <strong>{option.price}</strong>
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="why" className="section-block editorial-section">
-          <div className="site-container editorial-grid">
-            <div className="section-heading">
-              <span className="section-label">{ui.standards}</span>
-              <h2>{dict.whyTitle}</h2>
-              <p>{dict.whySub}</p>
-            </div>
-            <div className="principles-list">
-              <article>
-                <ShieldCheck className="w-6 h-6" />
-                <div>
-                  <h3>{dict.roleTitle}</h3>
-                  <p>{dict.roleDesc}</p>
-                </div>
-              </article>
-              <article>
-                <Info className="w-6 h-6" />
-                <div>
-                  <h3>{dict.antiRoleTitle}</h3>
-                  <p>{dict.antiRoleDesc}</p>
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section id="services" className="section-block service-overview">
-          <div className="site-container">
-            <div className="section-heading split-heading">
-              <div>
-                <span className="section-label">{ui.structure}</span>
-                <h2>{dict.servicesTitle}</h2>
-              </div>
-              <p>{dict.servicesSub}</p>
-            </div>
-            <div className="pillar-grid">
-              {sList.map((column, index) => (
-                <article key={column.pillar} className="pillar-column">
-                  <span className="pillar-index">0{index + 1}</span>
-                  <h3>{column.pillar}</h3>
-                  <p className="pillar-subtitle">{column.sub}</p>
-                  <ul>
-                    {column.items.map((item) => (
-                      <li key={item.name}>
-                        <Check className="w-4 h-4" />
-                        <div>
-                          <strong>{item.name}</strong>
-                          <p>{item.desc}</p>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="consultations" className="section-block editorial-section">
-          <div className="site-container">
-            <div className="section-heading split-heading">
-              <div>
-                <span className="section-label">{dict.consultBadge}</span>
-                <h2>{dict.consultTitle}</h2>
-              </div>
-              <p>{dict.consultSub}</p>
-            </div>
-            <div className="consultation-list">
-              {CONSULTATIONS_STORE.map((consultation) => (
-                <article key={consultation.id} className="consultation-row">
-                  <div className="consultation-title">
-                    <h3>{consultation.name[lang]}</h3>
-                    <span><Clock className="w-4 h-4" />{consultation.duration[lang]}</span>
-                  </div>
-                  <div className="consultation-copy">
-                    <p>{consultation.desc[lang]}</p>
-                    <p className="consultation-result"><strong>{dict.consultResultLabel}</strong> {consultation.result[lang]}</p>
-                    <p className="consultation-note"><strong>{dict.consultNoteLabel}</strong> {consultation.note[lang]}</p>
-                  </div>
-                  <div className="consultation-action">
-                    <strong>{consultation.price}</strong>
-                    <button onClick={() => handleSelectConsultation(consultation.id)} className="btn-service">
-                      {consultation.cta[lang]}
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="single-services" className="section-block single-services-section">
-          <div className="site-container">
-            <div className="section-heading split-heading">
-              <div>
-                <span className="section-label">{ui.serviceCategories}</span>
-                <h2>{dict.singleTitle}</h2>
-              </div>
-              <p>{dict.singleSub}</p>
-            </div>
-
-            <div className="service-category-tabs" role="tablist" aria-label={ui.serviceCategories}>
-              {serviceCategories.map((category) => (
-                <button
-                  key={category.id}
-                  role="tab"
-                  aria-selected={activeServiceCategory === category.id}
-                  onClick={() => setActiveServiceCategory(category.id)}
-                >
-                  <strong>{category.label}</strong>
-                  <span>{category.ids.length} {ui.servicesCount}</span>
-                </button>
-              ))}
-            </div>
-
-            <div className="service-category-intro">
-              <div>
-                <h3>{activeCategory.label}</h3>
-                <p>{activeCategory.description}</p>
-              </div>
-              <span>{activeServices.length} {ui.servicesCount}</span>
-            </div>
-
-            <div className="single-service-list" role="tabpanel">
-              {activeServices.map((service) => (
-                <article key={service.id} className="single-service-row">
-                  <div className="single-service-name">
-                    <h4>{service.name[lang]}</h4>
-                    <span>{service.mode[lang]}</span>
-                  </div>
-                  <div className="single-service-copy">
-                    <p>{service.desc[lang]}</p>
-                    <p className="service-limit"><Check className="w-4 h-4" />{service.limit[lang]}</p>
-                    {service.notIncluded && <p className="service-exclusion">{service.notIncluded[lang]}</p>}
-                  </div>
-                  <div className="single-service-action">
-                    <strong>{service.price}</strong>
-                    <button onClick={() => handleSelectSingleService(service.id)} className="btn-service">
-                      {dict.singleCta}
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </article>
-              ))}
-            </div>
-
-            <div className="warning-note">
-              <Info className="w-5 h-5" />
-              <div>
-                <strong>{dict.housingDisclaimerTitle}</strong>
-                <p>{dict.housingDisclaimerText}</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="calculator" className="section-block tool-section">
-          <div className="site-container">
-            <div className="section-heading split-heading">
-              <div>
-                <span className="section-label">{dict.navCalculator}</span>
-                <h2>{dict.calculatorTitle}</h2>
-              </div>
-              <p>{dict.calculatorSub}</p>
-            </div>
-
-            <div className="calculator-layout">
-              <div>
-                <p className="tool-instruction">{dict.calculatorInfo}</p>
-                <div className="risk-list">
-                  {PITFALLS.map((item) => {
-                    const isChecked = !!calculatorToggles[item.id];
-                    return (
-                      <button
-                        key={item.id}
-                        onClick={() => setCalculatorToggles((previous) => ({ ...previous, [item.id]: !previous[item.id] }))}
-                        aria-pressed={isChecked}
-                        className={isChecked ? 'is-selected' : ''}
-                      >
-                        <span className="check-control">{isChecked && <Check className="w-3.5 h-3.5" />}</span>
-                        <span className="risk-copy">
-                          <strong>{item.label[lang]}</strong>
-                          <small>{item.explanation[lang]}</small>
-                        </span>
-                        <b>+€{item.cost}</b>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <aside className="calculator-result">
-                <span>{ui.estimate}</span>
-                <strong>€{calculatorTotal}</strong>
-                <small>{ui.maximum}</small>
-                <div className={`risk-status ${riskStatus.color}`}>
-                  <b>{riskStatus.label}</b>
-                  <p>{riskStatus.desc}</p>
-                </div>
-                <div className="calculator-comparison">
-                  <div>
-                    <span>{dict.calcPackageLabel}</span>
-                    <strong>€749</strong>
-                  </div>
-                  <p>{dict.calcPackageDesc}</p>
-                  {calculatorTotal > 749 && <b>{ui.difference}: €{calculatorTotal - 749}</b>}
-                </div>
-                <p className="calculator-note"><AlertCircle className="w-4 h-4" />{dict.calcFooterNotice}</p>
-              </aside>
-            </div>
-          </div>
-        </section>
-
-        <section id="packages" className="section-block packages-section">
-          <div className="site-container">
-            <div className="section-heading split-heading">
-              <div>
-                <span className="section-label">{ui.transparentFees}</span>
-                <h2>{dict.pkgGridTitle}</h2>
-              </div>
-              <p>{dict.pkgGridSub}</p>
-            </div>
-
-            <p className="package-comparison-label">{ui.packageCompare}</p>
-            <div className="package-grid">
+            <div className="section-intro"><p>{ui.packageLead}</p><h2>{dict.pkgGridTitle}</h2><span>{ui.packageCompare}</span></div>
+            <div className="package-comparison">
               {PREMIUM_PACKAGES.map((item) => {
                 const isSelected = item.id === selectedPackage;
                 return (
-                  <article key={item.id} className={`package-card ${isSelected ? 'is-selected' : ''}`}>
-                    <div className="package-card-header">
-                      <div>
-                        <span>{item.subtitle[lang]}</span>
-                        <h3>{item.name[lang]}</h3>
-                      </div>
-                      <strong>{item.price}</strong>
-                    </div>
+                  <article key={item.id} className={isSelected ? 'package-option is-selected' : 'package-option'}>
+                    <div className="package-heading"><span>{item.subtitle[lang]}</span><strong>{item.price}</strong></div>
+                    <h3>{item.name[lang]}</h3>
                     <p>{item.tagline[lang]}</p>
-                    <div className="package-workload"><Clock className="w-4 h-4" />{item.workload[lang]}</div>
-                    <ul>
-                      {item.scope[lang].slice(0, 4).map((scope) => (
-                        <li key={scope}><Check className="w-4 h-4" />{scope}</li>
-                      ))}
-                    </ul>
-                    <button onClick={() => setSelectedPackage(item.id)} aria-pressed={isSelected} className="package-select">
-                      {isSelected ? ui.selected : ui.choose}
-                      {!isSelected && <ArrowRight className="w-4 h-4" />}
-                    </button>
+                    <small><Clock />{item.workload[lang]}</small>
+                    <ul>{item.scope[lang].slice(0, 4).map((scope) => <li key={scope}><Check />{scope}</li>)}</ul>
+                    <button onClick={() => setSelectedPackage(item.id)} aria-pressed={isSelected}>{isSelected ? ui.selected : ui.choose}<ArrowRight /></button>
                   </article>
                 );
               })}
             </div>
-
             <div className="package-detail" aria-live="polite">
               <div className="package-summary">
-                <span className="section-label">{ui.details}</span>
+                <p>{ui.packageDetails}</p>
                 <h3>{currentSelectedPkgObj.name[lang]}</h3>
-                <strong className="package-detail-price">{currentSelectedPkgObj.price}</strong>
-                <p>{currentSelectedPkgObj.idealFor[lang]}</p>
-                <blockquote>{currentSelectedPkgObj.tagline[lang]}</blockquote>
-                <button onClick={() => handleSelectPackage(currentSelectedPkgObj.id)} className="btn-primary">
-                  {currentSelectedPkgObj.cta[lang]}
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-                <button id="pdf-download-btn" onClick={() => setShowExportModal(true)} className="btn-secondary">
-                  <Download className="w-4 h-4" />
-                  {dict.pdfBtn}
-                </button>
+                <strong>{currentSelectedPkgObj.price}</strong>
+                <span>{currentSelectedPkgObj.idealFor[lang]}</span>
+                <div className="package-actions"><button onClick={() => handleSelectPackage(currentSelectedPkgObj.id)} className="button button-primary">{currentSelectedPkgObj.cta[lang]}<ArrowRight /></button><button ref={pdfTriggerRef} id="pdf-download-btn" onClick={() => setShowExportModal(true)} className="button button-quiet"><Download />{dict.pdfBtn}</button></div>
               </div>
-              <div className="package-lists">
-                <div>
-                  <h4><ShieldCheck className="w-5 h-5" />{dict.pkgScopeTitle}</h4>
-                  <ul>
-                    {currentSelectedPkgObj.scope[lang].map((item) => (
-                      <li key={item}><Check className="w-4 h-4" />{item}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="limits-list">
-                  <h4><AlertCircle className="w-5 h-5" />{dict.pkgLimitsTitle}</h4>
-                  <ul>
-                    {currentSelectedPkgObj.limits[lang].map((item) => (
-                      <li key={item}><AlertCircle className="w-4 h-4" />{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+              <div className="package-list"><h4><ShieldCheck />{ui.scopeLabel}</h4><ul>{currentSelectedPkgObj.scope[lang].map((item) => <li key={item}><Check />{item}</li>)}</ul></div>
+              <div className="package-list package-limits"><h4><AlertCircle />{ui.limitsLabel}</h4><ul>{currentSelectedPkgObj.limits[lang].map((item) => <li key={item}><AlertCircle />{item}</li>)}</ul></div>
             </div>
           </div>
         </section>
 
-        <section id="checklist" className="section-block planner-section">
+        <section id="tools" className="tools-section section-anchor">
           <div className="site-container">
-            <div className="planner-header">
-              <div className="section-heading">
-                <span className="section-label">{ui.planner}</span>
-                <h2>{dict.checklistTitle}</h2>
-                <p>{dict.checklistSub}</p>
-              </div>
-              <div className="planner-progress" aria-label={`${progressPercent}% ${ui.progress}`}>
-                <strong>{progressPercent}%</strong>
-                <span>{ui.progress}</span>
-              </div>
+            <div className="section-intro section-intro-wide"><p>{ui.toolsLead}</p><h2>{ui.toolsText}</h2></div>
+            <div id="calculator" className="calculator-shell section-anchor">
+              <div className="calculator-copy"><h3>{dict.calculatorTitle}</h3><p>{dict.calculatorInfo}</p><div className="risk-list">{PITFALLS.map((item) => { const checked = !!calculatorToggles[item.id]; return <button key={item.id} onClick={() => setCalculatorToggles((previous) => ({...previous, [item.id]: !previous[item.id]}))} aria-pressed={checked} className={checked ? 'is-selected' : ''}><span className="check-box">{checked && <Check />}</span><span><strong>{item.label[lang]}</strong><small>{item.explanation[lang]}</small></span><b>+€{item.cost}</b></button>; })}</div></div>
+              <aside className="calculator-result"><span>{ui.estimate}</span><strong>€{calculatorTotal}</strong><small>{ui.maximum}</small><div><span>{dict.calcPackageLabel}</span><b>€749</b>{calculatorTotal > 749 && <p>{ui.difference}: €{calculatorTotal - 749}</p>}</div><p><AlertCircle />{dict.calcFooterNotice}</p></aside>
             </div>
 
-            <div className="planner-grid">
-              {plannerGroups.map((group) => (
-                <div key={group.category} className="planner-column">
-                  <div className="planner-column-heading">
-                    <h3>{group.title}</h3>
-                    <span>{group.description}</span>
-                  </div>
-                  {BLUEPRINT_CHECKLIST.filter((item) => item.category === group.category).map((task) => {
-                    const isDone = !!completedTasks[task.id];
-                    return (
-                      <button
-                        key={task.id}
-                        onClick={() => setCompletedTasks((previous) => ({ ...previous, [task.id]: !previous[task.id] }))}
-                        aria-pressed={isDone}
-                        className={isDone ? 'is-complete' : ''}
-                      >
-                        <span className="check-control">{isDone && <Check className="w-3.5 h-3.5" />}</span>
-                        <span>{task.title[lang]}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              ))}
+            <div id="checklist" className="planner-shell section-anchor">
+              <div className="planner-heading"><div><h3>{dict.checklistTitle}</h3><p>{dict.checklistSub}</p></div><div className="planner-progress"><strong>{progressPercent}%</strong><span>{ui.progress}</span></div></div>
+              <div className="planner-columns">{plannerGroups.map((group) => <section key={group.category}><header><h4>{group.title}</h4><span>{group.description}</span></header>{BLUEPRINT_CHECKLIST.filter((item) => item.category === group.category).map((task) => { const done = !!completedTasks[task.id]; return <button key={task.id} onClick={() => setCompletedTasks((previous) => ({...previous, [task.id]: !previous[task.id]}))} aria-pressed={done} className={done ? 'is-complete' : ''}><span className="check-box">{done && <Check />}</span><span>{task.title[lang]}</span></button>; })}</section>)}</div>
             </div>
           </div>
         </section>
 
-        <section id="testimonials" className="section-block proof-section">
-          <div className="site-container proof-grid">
-            <div className="section-heading">
-              <span className="section-label">{ui.customerStory}</span>
-              <h2>{dict.testimonialsTitle}</h2>
-              <p>{dict.testimonialsSub}</p>
-            </div>
+        <section id="testimonials" className="proof-section section-anchor">
+          <div className="site-container proof-layout">
+            <div className="proof-heading"><p>{ui.testimonialLead}</p><h2>{dict.testimonialsTitle}</h2><span>{dict.testimonialsSub}</span></div>
             <div className="testimonial-stage">
-              <AnimatePresence mode="wait">
-                <motion.figure
-                  key={activeTestimonialIdx}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
+              <AnimatePresence initial={false}>
+                <motion.figure key={activeTestimonialIdx} initial={{opacity: 0, transform: prefersReducedMotion ? 'none' : 'translateY(4px)'}} animate={{opacity: 1, transform: 'none'}} exit={{opacity: 0}} transition={{duration: prefersReducedMotion ? 0 : 0.18}}>
                   <blockquote>“{TESTIMONIALS[activeTestimonialIdx].story[lang]}”</blockquote>
-                  <figcaption>
-                    <strong>{TESTIMONIALS[activeTestimonialIdx].name[lang]}</strong>
-                    <span>{TESTIMONIALS[activeTestimonialIdx].role[lang]} · {TESTIMONIALS[activeTestimonialIdx].city[lang]}</span>
-                    <span>{TESTIMONIALS[activeTestimonialIdx].university[lang]}</span>
-                  </figcaption>
+                  <figcaption><strong>{TESTIMONIALS[activeTestimonialIdx].name[lang]}</strong><span>{TESTIMONIALS[activeTestimonialIdx].role[lang]}</span><span>{TESTIMONIALS[activeTestimonialIdx].city[lang]} / {TESTIMONIALS[activeTestimonialIdx].university[lang]}</span></figcaption>
                 </motion.figure>
               </AnimatePresence>
-              <div className="testimonial-controls">
-                <span>{activeTestimonialIdx + 1} / {TESTIMONIALS.length}</span>
-                <div>
-                  <button
-                    onClick={() => setActiveTestimonialIdx((previous) => previous === 0 ? TESTIMONIALS.length - 1 : previous - 1)}
-                    aria-label={lang === 'uk' ? 'Попередній відгук' : lang === 'ru' ? 'Предыдущий отзыв' : 'Previous testimonial'}
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => setActiveTestimonialIdx((previous) => previous === TESTIMONIALS.length - 1 ? 0 : previous + 1)}
-                    aria-label={lang === 'uk' ? 'Наступний відгук' : lang === 'ru' ? 'Следующий отзыв' : 'Next testimonial'}
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
+              <div className="testimonial-controls"><span>{activeTestimonialIdx + 1} / {TESTIMONIALS.length}</span><div><button onClick={() => setActiveTestimonialIdx((previous) => previous === 0 ? TESTIMONIALS.length - 1 : previous - 1)} aria-label={lang === 'uk' ? 'Попередній відгук' : lang === 'ru' ? 'Предыдущий отзыв' : 'Previous testimonial'}><ChevronLeft /></button><button onClick={() => setActiveTestimonialIdx((previous) => previous === TESTIMONIALS.length - 1 ? 0 : previous + 1)} aria-label={lang === 'uk' ? 'Наступний відгук' : lang === 'ru' ? 'Следующий отзыв' : 'Next testimonial'}><ChevronRight /></button></div></div>
             </div>
           </div>
         </section>
 
-        <section id="faq" className="section-block faq-section">
-          <div className="site-container faq-grid">
-            <div className="section-heading">
-              <span className="section-label">FAQ</span>
-              <h2>{dict.faqTitle}</h2>
-              <p>{dict.faqSub}</p>
-            </div>
-            <div className="faq-list">
-              {FAQS_STORE.map((faq) => {
-                const isOpen = !!faqOpen[faq.id];
-                return (
-                  <div key={faq.id} className="faq-item">
-                    <button
-                      onClick={() => setFaqOpen((previous) => ({ ...previous, [faq.id]: !previous[faq.id] }))}
-                      aria-expanded={isOpen}
-                    >
-                      <span>{faq.q[lang]}</span>
-                      <HelpCircle className={`w-5 h-5 ${isOpen ? 'rotate-45' : ''}`} />
-                    </button>
-                    {isOpen && <p>{faq.a[lang]}</p>}
-                  </div>
-                );
-              })}
-            </div>
+        <section id="faq" className="faq-section section-anchor">
+          <div className="site-container faq-layout">
+            <div><h2>{dict.faqTitle}</h2><p>{dict.faqSub}</p></div>
+            <div className="faq-list">{FAQS_STORE.map((faq) => { const open = !!faqOpen[faq.id]; const answerId = `faq-answer-${faq.id}`; return <div key={faq.id} className="faq-item"><button onClick={() => setFaqOpen((previous) => ({...previous, [faq.id]: !previous[faq.id]}))} aria-expanded={open} aria-controls={answerId}><span>{faq.q[lang]}</span><ChevronDown className={open ? 'is-open' : ''} /></button><div id={answerId} aria-hidden={!open} className={open ? 'faq-answer is-open' : 'faq-answer'}><p>{faq.a[lang]}</p></div></div>; })}</div>
           </div>
         </section>
 
-        <section id="contact" className="section-block contact-section">
-          <div className="site-container contact-grid">
-            <div className="contact-copy">
-              <span className="section-label">{dict.navContact}</span>
-              <h2>{dict.contactTitle}</h2>
-              <p>{dict.contactSub}</p>
-              <div className="contact-note">
-                <strong>{ui.contactAside}</strong>
-                <p>{ui.contactAsideText}</p>
-              </div>
-              <a href="mailto:vantam.nl@proton.me">{ui.emailLabel}: vantam.nl@proton.me</a>
-            </div>
-
+        <section id="contact" className="contact-section section-anchor">
+          <div className="site-container contact-layout">
+            <div className="contact-copy"><p>{ui.contactLead}</p><h2>{dict.contactTitle}</h2><span>{dict.contactSub}</span><div className="contact-note"><MessageIcon /><div><strong>{ui.contactAside}</strong><p>{ui.contactAsideText}</p></div></div><a href="mailto:vantam.nl@proton.me">{ui.emailLabel}: vantam.nl@proton.me</a></div>
             <div className="contact-form-shell">
-              {formState === 'success' ? (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="form-success">
-                  <span><Check className="w-6 h-6" /></span>
-                  <h3>{dict.contactSuccessTitle}</h3>
-                  <p>{dict.contactSuccessDesc}</p>
-                  <button onClick={handleResetForm} className="btn-primary">{dict.contactFailBtn}</button>
-                </motion.div>
-              ) : (
+              {formState === 'success' ? <motion.div ref={successRef} tabIndex={-1} role="status" initial={{opacity: 0}} animate={{opacity: 1}} className="form-success"><span><Check /></span><h3>{dict.contactSuccessTitle}</h3><p>{dict.contactSuccessDesc}</p><button onClick={handleResetForm} className="button button-primary">{dict.contactFailBtn}</button></motion.div> :
                 <form onSubmit={handleFormSubmit}>
-                  <div className="sr-only" aria-hidden="true">
-                    <label htmlFor="contact-website">Website</label>
-                    <input
-                      id="contact-website"
-                      name="website"
-                      type="text"
-                      tabIndex={-1}
-                      autoComplete="off"
-                      value={formWebsite}
-                      onChange={(event) => setFormWebsite(event.target.value)}
-                    />
-                  </div>
-
+                  <div className="sr-only" aria-hidden="true"><label htmlFor="contact-website">Website</label><input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" value={formWebsite} onChange={(event) => setFormWebsite(event.target.value)} /></div>
                   {formState === 'error' && <div role="alert" className="form-error">{formErrorMessage}</div>}
-
-                  <div className="form-grid">
-                    <label>
-                      <span>{dict.contactNameLabel} *</span>
-                      <input
-                        id="contact-name"
-                        type="text"
-                        required
-                        value={formName}
-                        onChange={(event) => {
-                          setFormName(event.target.value);
-                          if (formState === 'error') setFormState('idle');
-                        }}
-                        disabled={formState === 'sending'}
-                        maxLength={120}
-                        placeholder="Maria"
-                      />
-                    </label>
-                    <label>
-                      <span>{dict.contactEmailLabel} *</span>
-                      <input
-                        id="contact-email"
-                        type="email"
-                        required
-                        value={formEmail}
-                        onChange={(event) => {
-                          setFormEmail(event.target.value);
-                          if (formState === 'error') setFormState('idle');
-                        }}
-                        disabled={formState === 'sending'}
-                        maxLength={254}
-                        placeholder="maria@example.com"
-                      />
-                    </label>
-                  </div>
-
-                  <label>
-                    <span>{dict.contactTypeLabel}</span>
-                    <select
-                      id="contact-type"
-                      value={formInquiryType}
-                      onChange={(event) => setFormInquiryType(event.target.value)}
-                      disabled={formState === 'sending'}
-                    >
-                      <option value="packages">{dict.contactTypeOpt1}</option>
-                      <option value="single">{dict.contactTypeOpt2}</option>
-                      <option value="consultation">{dict.consultTitle}</option>
-                      <option value="b2b">{dict.contactTypeOpt3}</option>
-                      <option value="general">{dict.contactTypeOpt4}</option>
-                    </select>
-                  </label>
-
-                  <label>
-                    <span>{dict.contactMessageLabel} *</span>
-                    <textarea
-                      id="contact-message"
-                      rows={5}
-                      required
-                      value={formMessage}
-                      onChange={(event) => {
-                        setFormMessage(event.target.value);
-                        if (formState === 'error') setFormState('idle');
-                      }}
-                      disabled={formState === 'sending'}
-                      maxLength={5000}
-                      placeholder="..."
-                    />
-                  </label>
-
-                  <label className="consent-row">
-                    <input
-                      type="checkbox"
-                      id="privacy-consent"
-                      required
-                      checked={formConsent}
-                      onChange={(event) => setFormConsent(event.target.checked)}
-                      disabled={formState === 'sending'}
-                    />
-                    <span>{dict.contactConsent}</span>
-                  </label>
-
-                  <button
-                    type="submit"
-                    disabled={formState === 'sending' || !formConsent}
-                    aria-live="polite"
-                    className="btn-primary contact-submit"
-                  >
-                    {formState === 'sending' ? dict.contactSending : dict.contactSubmitBtn}
-                    {formState !== 'sending' && <ArrowRight className="w-4 h-4" />}
-                  </button>
-                </form>
-              )}
+                  <div className="form-grid"><label htmlFor="contact-name"><span>{dict.contactNameLabel} *</span><input id="contact-name" name="name" type="text" required value={formName} onChange={(event) => {setFormName(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={120} autoComplete="name" placeholder="Maria" /></label><label htmlFor="contact-email"><span>{dict.contactEmailLabel} *</span><input id="contact-email" name="email" type="email" required value={formEmail} onChange={(event) => {setFormEmail(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={254} autoComplete="email" placeholder="maria@example.com" /></label></div>
+                  <label htmlFor="contact-type"><span>{dict.contactTypeLabel}</span><select id="contact-type" name="inquiryType" value={formInquiryType} onChange={(event) => setFormInquiryType(event.target.value)} disabled={formState === 'sending'}><option value="packages">{dict.contactTypeOpt1}</option><option value="single">{dict.contactTypeOpt2}</option><option value="consultation">{dict.consultTitle}</option><option value="b2b">{dict.contactTypeOpt3}</option><option value="general">{dict.contactTypeOpt4}</option></select></label>
+                  <label htmlFor="contact-message"><span>{dict.contactMessageLabel} *</span><textarea id="contact-message" name="message" rows={5} required value={formMessage} onChange={(event) => {setFormMessage(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={5000} placeholder="..." /></label>
+                  <label className="consent-row" htmlFor="privacy-consent"><input type="checkbox" id="privacy-consent" name="consent" required checked={formConsent} onChange={(event) => setFormConsent(event.target.checked)} disabled={formState === 'sending'} /><span>{dict.contactConsent}</span></label>
+                  <button type="submit" disabled={formState === 'sending' || !formConsent} className="button button-primary contact-submit"><span aria-live="polite">{formState === 'sending' ? dict.contactSending : dict.contactSubmitBtn}</span>{formState !== 'sending' && <ArrowRight />}</button>
+                </form>}
             </div>
           </div>
-
-          <footer className="site-footer">
-            <div className="site-container footer-grid">
-              <div className="flex items-center gap-3">
-                <VantamLogo className="w-9 h-9" light />
-                <strong>VANTAM</strong>
-              </div>
-              <p>{dict.footerSub}</p>
-              <a href="mailto:vantam.nl@proton.me">vantam.nl@proton.me</a>
-            </div>
-          </footer>
+          <footer className="site-footer"><div className="site-container footer-layout"><a href="#top" className="footer-brand"><VantamLogo className="brand-mark" light /><strong>VANTAM</strong></a><p>{dict.footerSub}</p><div><a href="#consultations">{dict.consultTitle}</a><a href="#single-services">{dict.navSingleServices}</a><a href="#packages">{dict.navPackages}</a><a href="mailto:vantam.nl@proton.me">vantam.nl@proton.me</a></div></div></footer>
         </section>
       </main>
 
-      {showExportModal && (
-        <div id="print-modal-overlay" className="print-overlay" role="dialog" aria-modal="true" aria-labelledby="print-modal-title">
-          <div className="print-modal">
-            <div className="print-modal-header">
-              <div>
-                <h3 id="print-modal-title">{dict.modalTitle}</h3>
-                <p>{dict.modalDesc}</p>
-              </div>
-              <button id="close-print-modal-btn" onClick={() => setShowExportModal(false)} aria-label={dict.modalCloseBtn}>
-                <X className="w-5 h-5" />
-              </button>
-            </div>
+      {showExportModal && <div id="print-modal-overlay" className="print-overlay" onMouseDown={(event) => { if (event.target === event.currentTarget) setShowExportModal(false); }}><div ref={modalRef} className="print-modal" role="dialog" aria-modal="true" aria-labelledby="print-modal-title"><div className="print-modal-header"><div><h3 id="print-modal-title">{dict.modalTitle}</h3><p>{dict.modalDesc}</p></div><button ref={modalCloseRef} id="close-print-modal-btn" onClick={() => setShowExportModal(false)} aria-label={dict.modalCloseBtn}><X /></button></div><div id="vantam-printable-prospectus" className="print-sheet"><div className="print-brand-row"><div className="print-brand"><VantamLogo className="brand-mark" /><div><strong>VANTAM</strong><p>{dict.modalAdvisorDesc}</p></div></div><div><span>{dict.modalOfferNo}</span><strong>{currentSelectedPkgObj.id.toUpperCase()}-2026</strong></div></div><div className="print-package-summary"><div><span>{dict.modalTargetPlan}</span><h4>{currentSelectedPkgObj.name[lang]}</h4><p>{currentSelectedPkgObj.idealFor[lang]}</p></div><strong>{currentSelectedPkgObj.price}</strong></div><div className="print-list"><h5>{dict.pkgScopeTitle}</h5><ul>{currentSelectedPkgObj.scope[lang].map((item) => <li key={item}>{item}</li>)}</ul></div><div className="print-list"><h5>{dict.pkgLimitsTitle}</h5><ul>{currentSelectedPkgObj.limits[lang].map((item) => <li key={item}>{item}</li>)}</ul></div><p className="print-disclaimer">{dict.footerSub}</p><div className="print-footer">VANTAM / THE HAGUE / vantam.nl@proton.me</div></div><div className="print-actions"><button onClick={() => window.print()} className="button button-primary"><Download />{dict.modalPrintBtn}</button><button onClick={() => setShowExportModal(false)} className="button button-quiet">{dict.modalCloseBtn}</button></div></div></div>}
 
-            <div id="vantam-printable-prospectus" className="print-sheet">
-              <div className="print-brand-row">
-                <div className="flex items-center gap-3">
-                  <VantamLogo className="w-12 h-12" />
-                  <div>
-                    <strong>VANTAM</strong>
-                    <p>{dict.modalAdvisorDesc}</p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <span>{dict.modalOfferNo}</span>
-                  <strong>{currentSelectedPkgObj.id.toUpperCase()}-2026</strong>
-                </div>
-              </div>
-
-              <div className="print-package-summary">
-                <div>
-                  <span>{dict.modalTargetPlan}</span>
-                  <h4>{currentSelectedPkgObj.name[lang]}</h4>
-                  <p>{currentSelectedPkgObj.idealFor[lang]}</p>
-                </div>
-                <strong>{currentSelectedPkgObj.price}</strong>
-              </div>
-
-              <div className="print-list">
-                <h5>{dict.pkgScopeTitle}</h5>
-                <ul>{currentSelectedPkgObj.scope[lang].map((item) => <li key={item}>{item}</li>)}</ul>
-              </div>
-              <div className="print-list">
-                <h5>{dict.pkgLimitsTitle}</h5>
-                <ul>{currentSelectedPkgObj.limits[lang].map((item) => <li key={item}>{item}</li>)}</ul>
-              </div>
-              <p className="print-disclaimer">{dict.footerSub}</p>
-              <div className="print-footer">VANTAM · THE HAGUE · vantam.nl@proton.me</div>
-            </div>
-
-            <div className="print-actions">
-              <button onClick={() => window.print()} className="btn-primary">
-                <Download className="w-4 h-4" />
-                {dict.modalPrintBtn}
-              </button>
-              <button onClick={() => setShowExportModal(false)} className="btn-secondary">{dict.modalCloseBtn}</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <style jsx global>{`
-        @media print {
-          body * { visibility: hidden; }
-          #vantam-printable-prospectus, #vantam-printable-prospectus * { visibility: visible; }
-          #vantam-printable-prospectus {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            border: 0 !important;
-            box-shadow: none !important;
-          }
-        }
-      `}</style>
+      <style jsx global>{`@media print { body * { visibility: hidden; } #vantam-printable-prospectus, #vantam-printable-prospectus * { visibility: visible; } #vantam-printable-prospectus { position: absolute; inset: 0; width: 100%; border: 0 !important; box-shadow: none !important; } }`}</style>
     </div>
   );
+}
+
+function MessageIcon() {
+  return <MessageCircle aria-hidden="true" />;
 }
