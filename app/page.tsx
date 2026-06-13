@@ -43,18 +43,52 @@ import {
   TESTIMONIALS,
 } from '../data';
 
-const HERO_IMAGE = 'https://images.unsplash.com/photo-1780064214195-01dc4e54949c?auto=format&fit=crop&w=1600&q=84';
+const BrandLogo = ({className = ''}: {className?: string}) => (
+  <Image
+    src="/brand/vantam-logo-source.png"
+    alt=""
+    width={2023}
+    height={315}
+    priority
+    className={className}
+  />
+);
 
-const VantamLogo = ({className = 'w-8 h-8', light = false}: {className?: string; light?: boolean}) => {
-  const primaryColor = light ? '#f4f8f7' : 'currentColor';
-
-  return (
-    <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M15 25 L45 83 C47 87, 53 87, 55 83 L85 25" stroke={primaryColor} strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M38 18 L50 42 L62 18" stroke="#0f766e" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
+const HeroScene = () => (
+  <div className="hero-visual" aria-hidden="true">
+    <svg className="hero-route" viewBox="0 0 760 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M102 470C160 426 194 373 239 332C288 287 332 255 388 228C441 202 508 171 632 196" />
+      <circle cx="102" cy="470" r="11" />
+      <circle cx="388" cy="228" r="11" />
+      <circle cx="632" cy="196" r="11" />
     </svg>
-  );
-};
+    <div className="hero-scene-card hero-scene-card-left">
+      <span className="hero-scene-icon"><FileText /></span>
+      <div className="hero-scene-lines">
+        <span />
+        <span />
+        <span className="short" />
+      </div>
+    </div>
+    <div className="hero-scene-card hero-scene-card-center">
+      <span className="hero-scene-icon"><House /></span>
+      <div className="hero-scene-house" aria-hidden="true">
+        <span className="roof" />
+        <span className="window" />
+        <span className="door" />
+      </div>
+    </div>
+    <div className="hero-scene-card hero-scene-card-right">
+      <span className="hero-scene-icon"><Check /></span>
+      <div className="hero-scene-lines">
+        <span />
+        <span className="mid" />
+        <span className="short" />
+      </div>
+    </div>
+    <div className="hero-scene-chip">NL</div>
+  </div>
+);
 
 export default function VantamsHub() {
   const prefersReducedMotion = useReducedMotion();
@@ -159,8 +193,8 @@ export default function VantamsHub() {
       menu: 'Меню',
       darkTheme: 'Увімкнути темну тему',
       lightTheme: 'Увімкнути світлу тему',
-      heroTitle: 'Практична підтримка для міжнародних людей у Нідерландах',
-      heroText: 'До приїзду, під час пошуку житла та оренди, і після приїзду для практичного облаштування - з чіткими наступними кроками без зайвого шуму.',
+      heroTitle: 'Практична підтримка для тих, хто переїжджає до Нідерландів',
+      heroText: 'До приїзду, під час пошуку житла та оренди, і після приїзду для практичного облаштування. Чіткі наступні кроки без зайвого шуму.',
       heroImageAlt: 'Житлова вулиця з цегляними будинками в Амстердамі',
       photoCredit: 'Фото: Haberdoedas, Unsplash',
       localNote: 'Три мови. Три рівні підтримки. Один локальний контакт.',
@@ -172,7 +206,7 @@ export default function VantamsHub() {
       entrySingle: 'Потрібне практичне облаштування',
       from: 'від',
       trustTitle: 'Підтримка без інституційної дистанції',
-      trustText: 'VANTAM пояснює процеси простою мовою, допомагає підготуватися і тримає наступний крок у фокусі для житла, приїзду й практичного облаштування.',
+      trustText: 'VANTAM пояснює процеси простою мовою, допомагає підготуватися і тримає наступний крок у фокусі - для житла, приїзду й практичного облаштування.',
       boundary: 'Ми не замінюємо ліцензованих фахівців і не обіцяємо результатів, які залежать від банків, державних органів, страховиків або орендодавців.',
       consultLead: 'Найпростіший спосіб почати',
       servicesLead: 'Окремі послуги',
@@ -198,13 +232,13 @@ export default function VantamsHub() {
       result: 'Результат',
       details: 'Деталі',
       audienceLead: 'Хто отримує користь',
-      audienceTitle: 'Підтримка для людей, які рухаються до Нідерландів',
-      audienceText: 'Одна пропозиція для міжнародних людей до приїзду, під час житла та оренди, і після приїзду для практичного облаштування. Комусь потрібен один чіткий крок, комусь - ширший супровід.',
+      audienceTitle: 'Підтримка для людей, які переїжджають до Нідерландів',
+      audienceText: 'Одна пропозиція для людей до приїзду, під час житла та оренди, і після приїзду для практичного облаштування. Комусь потрібен один чіткий крок, комусь - ширший супровід.',
       audienceBefore: 'До приїзду',
       audienceAfter: 'Після приїзду',
       selectorLead: 'Почніть із вашої ситуації',
       selectorTitle: 'Вибір за ситуацією',
-      selectorText: 'Оберіть варіант, який швидше підведе вас до правильного розділу і підставить потрібний контекст у форму.',
+      selectorText: 'Оберіть варіант, який швидше підведе вас до потрібного розділу і підставить відповідний контекст у форму.',
       selectorServices: 'Потрібна допомога з житлом',
       selectorPackages: 'Після приїзду потрібне облаштування',
       selectorConsult: 'Планую переїзд',
@@ -218,18 +252,18 @@ export default function VantamsHub() {
       partnerCTA: 'Обговорити співпрацю',
       housingLead: 'Важлива житлова послуга',
       housingTitle: 'Housing Preparation & Application Support',
-      housingText: 'Підготовка документів для заявки, пояснення ситуації з гарантом, комунікація з агенцією або орендодавцем, подання заявки та підтримка з орендним договором.',
+      housingText: 'Підготовка документів для заявки, пояснення ситуації з гарантом, комунікація з агенцією або орендодавцем, подання заявки та підтримка з договором оренди.',
       housingNote: 'Без гарантії отримання житла і без юридичного представництва.',
       housingCta: 'Запитати цю послугу',
       housingPriceLabel: 'Після оцінки',
       formSectionTitle: 'Кваліфікація запиту',
-      formSectionSub: 'Дайте нам кілька практичних деталей. Це допоможе швидше зрозуміти, чи вам потрібна послуга, пакет або партнерська розмова.',
+      formSectionSub: 'Дайте нам кілька практичних деталей. Це допоможе швидше зрозуміти, чи вам потрібна окрема послуга, пакет або партнерська розмова.',
       formAudienceLabel: 'Контекст',
       formMovingDateLabel: 'Очікувана дата переїзду',
       formCityLabel: 'Переважне місто або регіон',
       formBudgetLabel: 'Орієнтовний бюджет на житло',
       formStatusLabel: 'Поточний стан',
-      formGuarantorLabel: 'Гарант / guarantor',
+      formGuarantorLabel: 'Гарант / поручитель',
       formHelpLabel: 'Яка допомога потрібна',
       formStatusBefore: 'Ще до приїзду',
       formStatusAfter: 'Вже в Нідерландах',
@@ -248,8 +282,8 @@ export default function VantamsHub() {
       menu: 'Меню',
       darkTheme: 'Включить темную тему',
       lightTheme: 'Включить светлую тему',
-      heroTitle: 'Практическая поддержка для международных людей в Нидерландах',
-      heroText: 'До приезда, во время поиска жилья и аренды, и после приезда для практического обустройства - с понятными следующими шагами без лишнего шума.',
+      heroTitle: 'Практическая поддержка для тех, кто переезжает в Нидерланды',
+      heroText: 'До приезда, во время поиска жилья и аренды, и после приезда для практического обустройства. Понятные следующие шаги без лишнего шума.',
       heroImageAlt: 'Жилая улица с кирпичными домами в Амстердаме',
       photoCredit: 'Фото: Haberdoedas, Unsplash',
       localNote: 'Три языка. Три уровня поддержки. Один локальный контакт.',
@@ -261,7 +295,7 @@ export default function VantamsHub() {
       entrySingle: 'Нужно практическое обустройство',
       from: 'от',
       trustTitle: 'Поддержка без институциональной дистанции',
-      trustText: 'VANTAM объясняет процессы простым языком, помогает подготовиться и держит следующий шаг в фокусе для жилья, приезда и практического обустройства.',
+      trustText: 'VANTAM объясняет процессы простым языком, помогает подготовиться и держит следующий шаг в фокусе - для жилья, приезда и практического обустройства.',
       boundary: 'Мы не заменяем лицензированных специалистов и не обещаем результатов, которые зависят от банков, государственных органов, страховщиков или арендодателей.',
       consultLead: 'Самый простой способ начать',
       servicesLead: 'Отдельные услуги',
@@ -287,13 +321,13 @@ export default function VantamsHub() {
       result: 'Результат',
       details: 'Детали',
       audienceLead: 'Кому это полезно',
-      audienceTitle: 'Поддержка для людей, которые едут в Нидерланды',
-      audienceText: 'Одно предложение для международных людей до приезда, во время жилья и аренды, и после приезда для практического обустройства. Кому-то нужен один чёткий шаг, кому-то - более широкий сопровождение.',
+      audienceTitle: 'Поддержка для людей, которые переезжают в Нидерланды',
+      audienceText: 'Одно предложение для людей до приезда, во время жилья и аренды, и после приезда для практического обустройства. Кому-то нужен один чёткий шаг, кому-то - более широкое сопровождение.',
       audienceBefore: 'До приезда',
       audienceAfter: 'После приезда',
       selectorLead: 'Начните со своей ситуации',
       selectorTitle: 'Выбор по ситуации',
-      selectorText: 'Выберите вариант, который быстрее приведёт вас к нужному разделу и подставит нужный контекст в форму.',
+      selectorText: 'Выберите вариант, который быстрее приведёт вас к нужному разделу и подставит в форму нужный контекст.',
       selectorServices: 'Нужна помощь с жильём',
       selectorPackages: 'После приезда нужно обустройство',
       selectorConsult: 'Планирую переезд',
@@ -312,13 +346,13 @@ export default function VantamsHub() {
       housingCta: 'Запросить эту услугу',
       housingPriceLabel: 'После оценки',
       formSectionTitle: 'Квалификация запроса',
-      formSectionSub: 'Дайте нам несколько практических деталей. Это поможет быстрее понять, нужна ли вам услуга, пакет или партнёрский разговор.',
+      formSectionSub: 'Дайте нам несколько практических деталей. Это поможет быстрее понять, нужна ли вам отдельная услуга, пакет или партнёрский разговор.',
       formAudienceLabel: 'Контекст',
       formMovingDateLabel: 'Ожидаемая дата переезда',
       formCityLabel: 'Предпочтительный город или регион',
       formBudgetLabel: 'Ориентировочный бюджет на жильё',
       formStatusLabel: 'Текущий статус',
-      formGuarantorLabel: 'Гарант / guarantor',
+      formGuarantorLabel: 'Гарант / поручитель',
       formHelpLabel: 'Какая помощь нужна',
       formStatusBefore: 'Ещё до приезда',
       formStatusAfter: 'Уже в Нидерландах',
@@ -337,7 +371,7 @@ export default function VantamsHub() {
       menu: 'Menu',
       darkTheme: 'Use dark theme',
       lightTheme: 'Use light theme',
-      heroTitle: 'Practical support for international people in the Netherlands',
+      heroTitle: 'Practical support for people moving to the Netherlands',
       heroText: 'Before arrival, during the housing and rental process, and after arrival for practical settlement - with clear next steps and no extra noise.',
       heroImageAlt: 'Residential brick street in Amsterdam',
       photoCredit: 'Photo: Haberdoedas, Unsplash',
@@ -350,7 +384,7 @@ export default function VantamsHub() {
       entrySingle: 'I need practical setup',
       from: 'from',
       trustTitle: 'Support without institutional distance',
-      trustText: 'VANTAM explains processes in plain language, helps you prepare and keeps the next step in focus for housing, arrival and practical settlement.',
+      trustText: 'VANTAM explains processes in plain language, helps you prepare and keeps the next step in focus - for housing, arrival and practical settlement.',
       boundary: 'We do not replace licensed professionals or promise outcomes that depend on banks, public bodies, insurers or landlords.',
       consultLead: 'The simplest place to start',
       servicesLead: 'Focused services',
@@ -377,7 +411,7 @@ export default function VantamsHub() {
       details: 'Details',
       audienceLead: 'Who we help',
       audienceTitle: 'Support for people moving to the Netherlands',
-      audienceText: 'One offer for international people before arrival, during housing and rental steps, and after arrival for practical settlement. Some need one clear step, others need broader support.',
+      audienceText: 'One offer for people before arrival, during housing and rental steps, and after arrival for practical settlement. Some need one clear step, others need broader support.',
       audienceBefore: 'Before arrival',
       audienceAfter: 'After arrival',
       selectorLead: 'Start with your situation',
@@ -426,7 +460,7 @@ export default function VantamsHub() {
   const serviceCategories = useMemo(() => [
     {
       id: 'housing', label: lang === 'uk' ? 'Житло та орендні заявки' : lang === 'ru' ? 'Жильё и арендные заявки' : 'Housing and rental applications',
-      description: lang === 'uk' ? 'Підготовка заявки, гарантія, договір і комунікація' : lang === 'ru' ? 'Подготовка заявки, guarantor, договор и коммуникация' : 'Application prep, guarantor, contract and communication',
+      description: lang === 'uk' ? 'Підготовка заявки, поручитель, договір і комунікація' : lang === 'ru' ? 'Подготовка заявки, поручитель, договор и коммуникация' : 'Application prep, guarantor, contract and communication',
       icon: House,
       ids: ['single_housing_application_support', 'single_rental_contract', 'single_housing_scam_check', 'single_deposit_return', 'single_landlord_communication'],
     },
@@ -689,8 +723,7 @@ export default function VantamsHub() {
       <header className="site-header">
         <div className="site-container header-inner">
           <a href="#top" className="brand-lockup" aria-label="VANTAM">
-            <VantamLogo className="brand-mark" />
-            <span><strong>VANTAM</strong><small>{dict.navSub}</small></span>
+            <BrandLogo className="brand-logo" />
           </a>
 
           <nav className="desktop-nav" aria-label={ui.menu}>
@@ -746,11 +779,7 @@ export default function VantamsHub() {
               <p className="hero-note"><ShieldCheck />{ui.localNote}</p>
             </div>
             <figure className="hero-media reveal-media">
-              <Image src={HERO_IMAGE} alt={ui.heroImageAlt} fill priority sizes="(max-width: 767px) 100vw, 48vw" />
-              <figcaption>
-                <span>Amsterdam Oost</span>
-                <a href="https://unsplash.com/photos/_vAGc7k6REg" target="_blank" rel="noreferrer">{ui.photoCredit}</a>
-              </figcaption>
+              <HeroScene />
             </figure>
           </div>
         </section>
@@ -1018,11 +1047,11 @@ export default function VantamsHub() {
                 </form>}
             </div>
           </div>
-          <footer className="site-footer"><div className="site-container footer-layout"><a href="#top" className="footer-brand"><VantamLogo className="brand-mark" light /><strong>VANTAM</strong></a><p>{dict.footerSub}</p><div><a href="#consultations">{dict.consultTitle}</a><a href="#single-services">{dict.navSingleServices}</a><a href="#packages">{dict.navPackages}</a><a href="#testimonials">{dict.navTestimonials}</a><a href="mailto:vantam.nl@proton.me">vantam.nl@proton.me</a></div></div></footer>
+          <footer className="site-footer"><div className="site-container footer-layout"><a href="#top" className="footer-brand" aria-label="VANTAM"><BrandLogo className="brand-logo brand-logo-footer" /></a><p>{dict.footerSub}</p><div><a href="#consultations">{dict.consultTitle}</a><a href="#single-services">{dict.navSingleServices}</a><a href="#packages">{dict.navPackages}</a><a href="#testimonials">{dict.navTestimonials}</a><a href="mailto:vantam.nl@proton.me">vantam.nl@proton.me</a></div></div></footer>
         </section>
       </main>
 
-      {showExportModal && <div id="print-modal-overlay" className="print-overlay" onMouseDown={(event) => { if (event.target === event.currentTarget) setShowExportModal(false); }}><div ref={modalRef} className="print-modal" role="dialog" aria-modal="true" aria-labelledby="print-modal-title"><div className="print-modal-header"><div><h3 id="print-modal-title">{dict.modalTitle}</h3><p>{dict.modalDesc}</p></div><button ref={modalCloseRef} id="close-print-modal-btn" onClick={() => setShowExportModal(false)} aria-label={dict.modalCloseBtn}><X /></button></div><div id="vantam-printable-prospectus" className="print-sheet"><div className="print-brand-row"><div className="print-brand"><VantamLogo className="brand-mark" /><div><strong>VANTAM</strong><p>{dict.modalAdvisorDesc}</p></div></div><div><span>{dict.modalOfferNo}</span><strong>{currentSelectedPkgObj.id.toUpperCase()}-2026</strong></div></div><div className="print-package-summary"><div><span>{dict.modalTargetPlan}</span><h4>{currentSelectedPkgObj.name[lang]}</h4><p>{currentSelectedPkgObj.idealFor[lang]}</p></div><strong>{currentSelectedPkgObj.price}</strong></div><div className="print-list"><h5>{dict.pkgScopeTitle}</h5><ul>{currentSelectedPkgObj.scope[lang].map((item) => <li key={item}>{item}</li>)}</ul></div><div className="print-list"><h5>{dict.pkgLimitsTitle}</h5><ul>{currentSelectedPkgObj.limits[lang].map((item) => <li key={item}>{item}</li>)}</ul></div><p className="print-disclaimer">{dict.footerSub}</p><div className="print-footer">VANTAM / THE HAGUE / vantam.nl@proton.me</div></div><div className="print-actions"><button onClick={() => window.print()} className="button button-primary"><Download />{dict.modalPrintBtn}</button><button onClick={() => setShowExportModal(false)} className="button button-quiet">{dict.modalCloseBtn}</button></div></div></div>}
+      {showExportModal && <div id="print-modal-overlay" className="print-overlay" onMouseDown={(event) => { if (event.target === event.currentTarget) setShowExportModal(false); }}><div ref={modalRef} className="print-modal" role="dialog" aria-modal="true" aria-labelledby="print-modal-title"><div className="print-modal-header"><div><h3 id="print-modal-title">{dict.modalTitle}</h3><p>{dict.modalDesc}</p></div><button ref={modalCloseRef} id="close-print-modal-btn" onClick={() => setShowExportModal(false)} aria-label={dict.modalCloseBtn}><X /></button></div><div id="vantam-printable-prospectus" className="print-sheet"><div className="print-brand-row"><div className="print-brand"><BrandLogo className="brand-logo brand-logo-print" /><div><strong>VANTAM</strong><p>{dict.modalAdvisorDesc}</p></div></div><div><span>{dict.modalOfferNo}</span><strong>{currentSelectedPkgObj.id.toUpperCase()}-2026</strong></div></div><div className="print-package-summary"><div><span>{dict.modalTargetPlan}</span><h4>{currentSelectedPkgObj.name[lang]}</h4><p>{currentSelectedPkgObj.idealFor[lang]}</p></div><strong>{currentSelectedPkgObj.price}</strong></div><div className="print-list"><h5>{dict.pkgScopeTitle}</h5><ul>{currentSelectedPkgObj.scope[lang].map((item) => <li key={item}>{item}</li>)}</ul></div><div className="print-list"><h5>{dict.pkgLimitsTitle}</h5><ul>{currentSelectedPkgObj.limits[lang].map((item) => <li key={item}>{item}</li>)}</ul></div><p className="print-disclaimer">{dict.footerSub}</p><div className="print-footer">VANTAM / THE HAGUE / vantam.nl@proton.me</div></div><div className="print-actions"><button onClick={() => window.print()} className="button button-primary"><Download />{dict.modalPrintBtn}</button><button onClick={() => setShowExportModal(false)} className="button button-quiet">{dict.modalCloseBtn}</button></div></div></div>}
 
       <style jsx global>{`@media print { body * { visibility: hidden; } #vantam-printable-prospectus, #vantam-printable-prospectus * { visibility: visible; } #vantam-printable-prospectus { position: absolute; inset: 0; width: 100%; border: 0 !important; box-shadow: none !important; } }`}</style>
     </div>
