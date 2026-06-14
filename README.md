@@ -11,6 +11,7 @@
 ## Contact form
 
 The form sends `POST /api/contact`. The server validates the request and sends an email through [Resend](https://resend.com) to the private `CONTACT_TO_EMAIL` recipient configured in the deployment environment. The visitor's email is used as Reply-To, so replying to the delivered message replies directly to the visitor.
+The form also includes a required privacy acknowledgement that links to the locale-specific Privacy Policy page.
 
 Environment variables:
 

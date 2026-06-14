@@ -1,15 +1,13 @@
 import type {MetadataRoute} from 'next';
+import {LOCALES, absoluteLocaleUrl} from '../lib/locales';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
+  return LOCALES.flatMap((lang) => [
     {
-      url: 'https://www.vantam.xyz/en',
+      url: absoluteLocaleUrl(lang),
     },
     {
-      url: 'https://www.vantam.xyz/uk',
+      url: absoluteLocaleUrl(lang, '/privacy'),
     },
-    {
-      url: 'https://www.vantam.xyz/ru',
-    },
-  ];
+  ]);
 }

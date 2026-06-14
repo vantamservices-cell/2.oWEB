@@ -43,6 +43,7 @@ import {
 } from '../../data';
 import { LOCALES, LOCALE_LABELS, type Locale, swapLocale } from '../../lib/locales';
 import { BUSINESS, BUSINESS_LOCATION, getBusinessFooterLine, getBusinessPrintFooterLine, getWhatsAppAriaLabel, getWhatsAppUrl } from '../../lib/business';
+import { PRIVACY_FORM_ACKNOWLEDGEMENT, PRIVACY_ROUTE_LABELS, privacyPath } from '../../lib/privacy';
 
 const BrandLogo = ({className = ''}: {className?: string}) => (
   <Image
@@ -202,6 +203,9 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
   const sList = useMemo(() => SERVICES_STORE[lang], [lang]);
   const whatsappHref = useMemo(() => getWhatsAppUrl(lang), [lang]);
   const whatsappAriaLabel = useMemo(() => getWhatsAppAriaLabel(lang), [lang]);
+  const privacyHref = useMemo(() => privacyPath(lang), [lang]);
+  const privacyLabel = PRIVACY_ROUTE_LABELS[lang];
+  const privacyAcknowledgement = PRIVACY_FORM_ACKNOWLEDGEMENT[lang];
   const footerBusinessLine = useMemo(() => getBusinessFooterLine(lang), [lang]);
   const footerPrintLine = useMemo(() => getBusinessPrintFooterLine(lang), [lang]);
   const businessLocation = BUSINESS_LOCATION[lang];
@@ -1117,12 +1121,19 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
                   <div className="form-grid"><label htmlFor="contact-name"><span>{dict.contactNameLabel} *</span><input id="contact-name" name="name" type="text" required value={formName} onChange={(event) => {setFormName(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={120} autoComplete="name" placeholder="Maria" /></label><label htmlFor="contact-email"><span>{dict.contactEmailLabel} *</span><input id="contact-email" name="email" type="email" required value={formEmail} onChange={(event) => {setFormEmail(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={254} autoComplete="email" placeholder="maria@example.com" /></label></div>
                   <label htmlFor="contact-type"><span>{dict.contactTypeLabel}</span><select id="contact-type" name="inquiryType" value={formInquiryType} onChange={(event) => setFormInquiryType(event.target.value)} disabled={formState === 'sending'}><option value="consultation">{dict.contactTypeOpt1}</option><option value="single">{dict.contactTypeOpt2}</option><option value="packages">{dict.contactTypeOpt3}</option><option value="b2b">{dict.contactTypeOpt4}</option></select></label>
                   <label htmlFor="contact-message"><span>{dict.contactMessageLabel} *</span><textarea id="contact-message" name="message" rows={5} required value={formMessage} onChange={(event) => {setFormMessage(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={5000} placeholder={lang === 'uk' ? 'Наприклад: потрібна допомога з BSN, житлом або пакетом.' : lang === 'ru' ? 'Например: нужна помощь с BSN, жильём или пакетом.' : 'For example: I need help with BSN, housing or a package.'} /></label>
-                  <label className="consent-row" htmlFor="privacy-consent"><input type="checkbox" id="privacy-consent" name="consent" required checked={formConsent} onChange={(event) => setFormConsent(event.target.checked)} disabled={formState === 'sending'} /><span>{dict.contactConsent}</span></label>
+                  <div className="consent-row">
+                    <input type="checkbox" id="privacy-consent" name="consent" required checked={formConsent} onChange={(event) => setFormConsent(event.target.checked)} disabled={formState === 'sending'} />
+                    <div className="consent-copy">
+                      <label htmlFor="privacy-consent"><span>{privacyAcknowledgement.prefix}</span></label>
+                      <Link href={privacyHref} className="consent-link">{privacyLabel}</Link>
+                      <label htmlFor="privacy-consent"><span>{privacyAcknowledgement.suffix}</span></label>
+                    </div>
+                  </div>
                   <button type="submit" disabled={formState === 'sending' || !formConsent} className="button button-primary contact-submit"><span aria-live="polite">{formState === 'sending' ? dict.contactSending : dict.contactSubmitBtn}</span>{formState !== 'sending' && <ArrowRight />}</button>
                 </form>}
             </div>
           </div>
-          <footer className="site-footer"><div className="site-container footer-layout"><a href="#top" className="footer-brand" aria-label="VANTAM"><BrandLogo className="brand-logo brand-logo-footer" /></a><div className="footer-copy"><p>{dict.footerSub}</p><p className="footer-business-meta">{footerBusinessLine}</p></div><div className="footer-contact-links"><a href={BUSINESS.publicEmailMailto}>{BUSINESS.publicEmail}</a><a href={BUSINESS.phoneTelHref}>{BUSINESS.phoneDisplayNumber}</a><a href={whatsappHref} target="_blank" rel="noreferrer noopener" aria-label={whatsappAriaLabel}>{ui.whatsappLabel}</a></div></div></footer>
+          <footer className="site-footer"><div className="site-container footer-layout"><a href="#top" className="footer-brand" aria-label="VANTAM"><BrandLogo className="brand-logo brand-logo-footer" /></a><div className="footer-copy"><p>{dict.footerSub}</p><p className="footer-business-meta">{footerBusinessLine}</p></div><div className="footer-contact-links"><a href={BUSINESS.publicEmailMailto}>{BUSINESS.publicEmail}</a><a href={BUSINESS.phoneTelHref}>{BUSINESS.phoneDisplayNumber}</a><a href={whatsappHref} target="_blank" rel="noreferrer noopener" aria-label={whatsappAriaLabel}>{ui.whatsappLabel}</a><Link href={privacyHref}>{privacyLabel}</Link></div></div></footer>
         </section>
       </main>
 

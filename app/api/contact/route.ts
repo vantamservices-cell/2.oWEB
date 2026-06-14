@@ -168,7 +168,7 @@ export async function POST(request: NextRequest) {
     'Message:',
     message,
     '',
-    'The visitor consented to the processing of their data for a response to this request.',
+    'The visitor acknowledged the Privacy Policy and understands how VANTAM processes this enquiry.',
   ].filter(Boolean).join('\n');
 
   const html = `
@@ -192,7 +192,7 @@ export async function POST(request: NextRequest) {
         </tbody>
       </table>
       <div style="padding:20px;background:#f1f5f9;border-radius:12px;white-space:pre-wrap">${escapeHtml(message)}</div>
-      <p style="margin-top:20px;font-size:12px;color:#64748b">The visitor consented to the processing of their data for a response to this request.</p>
+      <p style="margin-top:20px;font-size:12px;color:#64748b">The visitor acknowledged the Privacy Policy and understands how VANTAM processes this enquiry.</p>
     </div>
   `;
 

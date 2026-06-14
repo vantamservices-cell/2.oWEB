@@ -28,6 +28,8 @@ export const metadata: Metadata = {
   },
 };
 
+export const dynamic = 'force-dynamic';
+
 type RootLayoutProps = {
   children: React.ReactNode;
 };
@@ -47,7 +49,7 @@ function resolveHtmlLang(requestUrl: string | null) {
 
 export default async function RootLayout({children}: RootLayoutProps) {
   const headersList = await headers();
-  const lang = resolveHtmlLang(headersList.get('next-url'));
+  const lang = resolveHtmlLang(headersList.get('x-vantam-pathname') ?? headersList.get('next-url'));
 
   return (
     <html lang={lang} className={`${manrope.variable} antialiased`}>

@@ -44,16 +44,20 @@ export function resolveLocale(value: string | undefined | null): Locale {
 }
 
 export function absoluteLocaleUrl(locale: Locale, pathname = '') {
-  const suffix = pathname.startsWith('/') ? pathname : pathname ? `/${pathname}` : '';
-  return `${SITE_ORIGIN}/${locale}${suffix}`;
+  return `${SITE_ORIGIN}${localePath(locale, pathname)}`;
 }
 
-export function localeAlternates() {
+export function localePath(locale: Locale, pathname = '') {
+  const suffix = pathname.startsWith('/') ? pathname : pathname ? `/${pathname}` : '';
+  return `/${locale}${suffix}`;
+}
+
+export function localeAlternates(pathname = '') {
   return {
-    en: absoluteLocaleUrl('en'),
-    uk: absoluteLocaleUrl('uk'),
-    ru: absoluteLocaleUrl('ru'),
-    'x-default': absoluteLocaleUrl('en'),
+    en: absoluteLocaleUrl('en', pathname),
+    uk: absoluteLocaleUrl('uk', pathname),
+    ru: absoluteLocaleUrl('ru', pathname),
+    'x-default': absoluteLocaleUrl('en', pathname),
   } as const;
 }
 
@@ -67,4 +71,3 @@ export function swapLocale(pathname: string, nextLocale: Locale) {
   }
   return `/${nextLocale}${cleanedPath.startsWith('/') ? cleanedPath : `/${cleanedPath}`}`;
 }
-

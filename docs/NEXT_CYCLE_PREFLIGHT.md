@@ -215,12 +215,13 @@ This document is a working map for the next development cycle. It reflects the c
 ### Where the legal UI should connect
 
 - Footer links in `app/page.tsx`
-- A consent line in the contact form in `app/page.tsx`
+- A privacy acknowledgement line in the contact form in `app/page.tsx` that links to the matching locale policy
+- Locale privacy routes at `/en/privacy`, `/uk/privacy`, and `/ru/privacy`
 - Potential metadata links in `app/layout.tsx`
 
-### Consent needed for an enquiry
+### Acknowledgement needed for an enquiry
 
-- A consent statement for using the submitted data to reply to the enquiry
+- A privacy acknowledgement statement for using the submitted data to reply to the enquiry
 - Keep marketing consent separate if marketing ever becomes a separate action
 - Keep the current honeypot hidden from users
 
