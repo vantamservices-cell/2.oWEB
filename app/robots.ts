@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
     ],
-    sitemap: 'https://vantam.xyz/sitemap.xml',
+    sitemap: 'https://www.vantam.xyz/sitemap.xml',
   };
 }

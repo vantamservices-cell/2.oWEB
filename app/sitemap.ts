@@ -3,7 +3,7 @@ import type {MetadataRoute} from 'next';
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: 'https://vantam.xyz/',
+      url: 'https://www.vantam.xyz/',
     },
   ];
 }

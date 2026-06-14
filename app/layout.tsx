@@ -9,7 +9,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://vantam.xyz'),
+  metadataBase: new URL('https://www.vantam.xyz'),
   title: {
     default: 'VANTAM | Practical support before, during and after arrival',
     template: '%s | VANTAM',
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
-    url: 'https://vantam.xyz/',
+    url: 'https://www.vantam.xyz/',
     title: 'VANTAM | Practical support before, during and after arrival',
     description:
       'VANTAM supports international people in the Netherlands with housing and rental-application help, pre-arrival preparation, and practical settlement after arrival.',
@@ -40,18 +40,18 @@ export const metadata: Metadata = {
     title: 'VANTAM | Practical support before, during and after arrival',
     description:
       'VANTAM supports international people in the Netherlands with housing and rental-application help, pre-arrival preparation, and practical settlement after arrival.',
-    images: ['/brand/vantam-logo-source.png'],
+    images: ['https://www.vantam.xyz/brand/vantam-logo-source.png'],
   },
   icons: {
     icon: [
       {
-        url: '/brand/vantam-logo-source.png',
+        url: 'https://www.vantam.xyz/brand/vantam-logo-source.png',
         type: 'image/png',
       },
     ],
     apple: [
       {
-        url: '/brand/vantam-logo-source.png',
+        url: 'https://www.vantam.xyz/brand/vantam-logo-source.png',
         type: 'image/png',
       },
     ],
