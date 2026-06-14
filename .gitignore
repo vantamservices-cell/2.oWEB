@@ -8,3 +8,12 @@ out/
 
 *.log
 .DS_Store
+
+# Environment variables and secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*
+!.env.example
