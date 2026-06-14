@@ -9,8 +9,53 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: 'VANTAM | Practical support before, during and after arrival',
-  description: 'Multilingual practical support in the Netherlands across housing and rental help, pre-arrival preparation and practical settlement after arrival.',
+  metadataBase: new URL('https://vantam.xyz'),
+  title: {
+    default: 'VANTAM | Practical support before, during and after arrival',
+    template: '%s | VANTAM',
+  },
+  description:
+    'VANTAM supports international people in the Netherlands with housing and rental-application help, pre-arrival preparation, and practical settlement after arrival.',
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    url: 'https://vantam.xyz/',
+    title: 'VANTAM | Practical support before, during and after arrival',
+    description:
+      'VANTAM supports international people in the Netherlands with housing and rental-application help, pre-arrival preparation, and practical settlement after arrival.',
+    siteName: 'VANTAM',
+    images: [
+      {
+        url: '/brand/vantam-logo-source.png',
+        width: 2023,
+        height: 315,
+        alt: 'VANTAM',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'VANTAM | Practical support before, during and after arrival',
+    description:
+      'VANTAM supports international people in the Netherlands with housing and rental-application help, pre-arrival preparation, and practical settlement after arrival.',
+    images: ['/brand/vantam-logo-source.png'],
+  },
+  icons: {
+    icon: [
+      {
+        url: '/brand/vantam-logo-source.png',
+        type: 'image/png',
+      },
+    ],
+    apple: [
+      {
+        url: '/brand/vantam-logo-source.png',
+        type: 'image/png',
+      },
+    ],
+  },
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
