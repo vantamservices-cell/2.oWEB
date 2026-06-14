@@ -1,7 +1,8 @@
-export type Language = 'uk' | 'ru' | 'en';
+import {DEFAULT_LOCALE} from './lib/locales';
+import type {Locale} from './lib/locales';
+export {DEFAULT_LOCALE, LOCALES as SUPPORTED_LOCALES} from './lib/locales';
 
-export const SUPPORTED_LOCALES = ['uk', 'ru', 'en'] as const;
-export const DEFAULT_LOCALE: Language = 'uk';
+export type Language = Locale;
 
 export type RegionCode = 'nl';
 
