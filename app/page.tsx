@@ -720,6 +720,8 @@ export default function VantamsHub() {
         </div>
       </div>
 
+      <a href="#main" className="skip-link">Skip to main content</a>
+
       <header className="site-header">
         <div className="site-container header-inner">
           <a href="#top" className="brand-lockup" aria-label="VANTAM">
@@ -762,7 +764,7 @@ export default function VantamsHub() {
         </div>
       </header>
 
-      <main id="top">
+      <main id="main">
         <section className="hero-section">
           <div className="site-container hero-layout">
             <div className="hero-copy reveal-block">
@@ -922,18 +924,18 @@ export default function VantamsHub() {
                 <small><Info />{ui.housingNote}</small>
                 <button type="button" className="button button-secondary" onClick={() => handleSelectSingleService('single_housing_application_support')}>{ui.housingCta}<ArrowRight /></button>
               </div>
-              <div className="service-category-tabs" role="tablist" aria-label={ui.servicesLead}>
+              <div className="service-category-tabs" aria-label={ui.servicesLead}>
                 {serviceCategories.map((category) => {
                   const Icon = category.icon;
                   return (
-                    <button key={category.id} role="tab" aria-selected={activeServiceCategory === category.id} onClick={() => setActiveServiceCategory(category.id)}>
+                    <button key={category.id} type="button" aria-pressed={activeServiceCategory === category.id} onClick={() => setActiveServiceCategory(category.id)}>
                       <Icon /><span><strong>{category.label}</strong><small>{category.ids.length} {ui.categoryCount}</small></span><ChevronRight />
                     </button>
                   );
                 })}
               </div>
             </aside>
-            <div className="service-list-panel" role="tabpanel">
+            <div className="service-list-panel" aria-live="polite">
               <div className="service-panel-heading"><div><h3>{activeCategory.label}</h3><p>{activeCategory.description}</p></div><span>{activeServices.length}</span></div>
               <div className="service-rows">
                 {activeServices.map((service) => (

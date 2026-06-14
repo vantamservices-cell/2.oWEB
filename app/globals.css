@@ -67,6 +67,26 @@ svg { flex: none; }
 .site-container { width: min(calc(100% - 3rem), var(--container)); margin-inline: auto; }
 .section-anchor { scroll-margin-top: 5.5rem; }
 
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  transform: translateY(-180%);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: var(--type-ui);
+  font-weight: 780;
+  transition: transform 160ms var(--ease-out), background-color 160ms ease, color 160ms ease;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
 .service-strip {
   background: var(--ink);
   color: #dce8e6;
@@ -90,8 +110,7 @@ svg { flex: none; }
   top: 0;
   z-index: 40;
   border-bottom: 1px solid color-mix(in srgb, var(--line) 78%, transparent);
-  background: color-mix(in srgb, var(--page) 92%, transparent);
-  backdrop-filter: blur(18px) saturate(120%);
+  background: color-mix(in srgb, var(--page) 94%, white);
 }
 
 .header-inner { display: flex; min-height: 5.15rem; align-items: center; gap: 1.5rem; }
@@ -490,6 +509,19 @@ svg { flex: none; }
 @keyframes route-draw { from { stroke-dashoffset: 1300; opacity: 0.2; } to { stroke-dashoffset: 0; opacity: 0.9; } }
 @keyframes node-pop { from { transform: scale(0.86); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 @keyframes scene-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.trust-section,
+.consultations-section,
+.service-map-section,
+.single-services-section,
+.packages-section,
+.tools-section,
+.proof-section,
+.faq-section,
+.contact-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 60rem;
+}
 
 @media (max-width: 1120px) {
   .desktop-nav a { padding-inline: 0.55rem; font-size: 0.82rem; }
