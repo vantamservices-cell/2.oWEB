@@ -1,5 +1,6 @@
 import type {Metadata} from 'next';
 import {Manrope} from 'next/font/google';
+import {headers} from 'next/headers';
 import './globals.css'; // Global styles
 import {DEFAULT_LOCALE, isLocale} from '../lib/locales';
 
@@ -29,12 +30,24 @@ export const metadata: Metadata = {
 
 type RootLayoutProps = {
   children: React.ReactNode;
-  params?: Promise<{lang?: string}>;
 };
 
-export default async function RootLayout({children, params}: RootLayoutProps) {
-  const routeParams = params ? await params : undefined;
-  const lang = isLocale(routeParams?.lang) ? routeParams.lang : DEFAULT_LOCALE;
+function resolveHtmlLang(requestUrl: string | null) {
+  if (!requestUrl) {
+    return DEFAULT_LOCALE;
+  }
+
+  const pathname = requestUrl.startsWith('http')
+    ? new URL(requestUrl).pathname
+    : requestUrl.split('?')[0] ?? '/';
+  const locale = pathname.split('/')[1];
+
+  return isLocale(locale) ? locale : DEFAULT_LOCALE;
+}
+
+export default async function RootLayout({children}: RootLayoutProps) {
+  const headersList = await headers();
+  const lang = resolveHtmlLang(headersList.get('next-url'));
 
   return (
     <html lang={lang} className={`${manrope.variable} antialiased`}>
