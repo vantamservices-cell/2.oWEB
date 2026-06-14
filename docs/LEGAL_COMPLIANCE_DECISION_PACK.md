@@ -4,6 +4,8 @@ Date: 2026-06-14
 
 This is a working decision pack for the next implementation cycle. It is not legal advice, and it does not draft final policies or clauses. It separates confirmed requirements, official guidance, implementation recommendations, owner decisions, and legal-review items.
 
+Revision note: this document is now historical context only. The current launch specification lives in `docs/LEGAL_IMPLEMENTATION_SPEC.md`. The main corrections in that spec are the repeal of the ODR platform, the unresolved public legal-name and address position, and the launch-blocker status of the housing success-fee model.
+
 ## 0. Current Repo Evidence
 
 | Area | Current evidence in repository | What that means for tomorrow |
@@ -35,6 +37,7 @@ All sources below were accessed on 2026-06-14.
 | S10 | Belastingdienst, "Btw-identificatienummer vermelden op uw website" | [Link](https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/btw/administratie_bijhouden/btw_nummer_vermelden_op_website/) |
 | S11 | Belastingdienst, "Aan welke eisen moeten facturen voldoen voor uw btw-administratie?" | [Link](https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/zakelijk/btw/administratie_bijhouden/facturen_maken/factuureisen/factuureisen) |
 | S12 | Belastingdienst, "Alles over uw btw-identificatienummer (btw-id) en omzetbelastingnummer (ob-nummer)" | [Link](https://www.belastingdienst.nl/wps/wcm/connect/nl/btw/content/btw-identificatienummer-en-omzetbelastingnummer) |
+| S13 | EUR-Lex, Regulation (EU) 2024/3228 | [Link](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32024R3228) |
 
 ## 2. Business Identity Requirements
 
@@ -46,7 +49,7 @@ All sources below were accessed on 2026-06-14.
 | Legal physical and email address, plus telephone number | Confirmed legal requirement | The website must show a legal physical and email address and telephone number; if different, the legal address of the establishment. | S5 |
 | Legal status, legal form, public register name, and registration number | Confirmed legal requirement | If registered in a trade or similar public register, the website must show the register name and registration number. | S5 |
 | VAT identification number | Confirmed legal requirement if the activity charges VAT | If VAT applies to the service, the VAT ID must be shown on the website. | S5, S10 |
-| ODR platform link | Confirmed legal requirement for the website info set | The website must link to the EU Online Dispute Resolution platform. | S5 |
+| ODR platform link | Replaced conclusion | Do not add an ODR platform link. Regulation (EU) 2024/3228 repealed Regulation 524/2013 with effect from 20 July 2025 and discontinued the ODR platform. | S13 |
 | Privacy policy / cookie policy / other data-protection policies | Confirmed legal requirement for the website info set | The website must provide privacy policy, cookie policy, and related personal-data policies where applicable. | S5 |
 | Terms and sale conditions during ordering | Confirmed legal requirement for the website info set | Applicable terms of sale and other sales-transaction information must be provided during ordering. | S5 |
 | Supervisory authority details | Only if a professional authorisation scheme applies | Not currently evidenced for VANTAM. | S5 |
@@ -67,14 +70,14 @@ All sources below were accessed on 2026-06-14.
 | Telephone number | Required by the website-info source reviewed |  | Publish a business phone number or obtain legal review before omitting it | Footer legal block, contact page, quote signature | S5 |
 | Complaint contact | Owner decision required |  | Complaint email or complaint process | Terms, privacy notice, footer/support area | S4, S5 |
 | Founder or responsible-person name | Optional unless another rule applies |  | Whether to publish it | About/support area only if desired; not required in the reviewed general rules | S5 |
-| ODR link | Required for the website info set |  | None once final URL is chosen | Footer legal block, Terms or support footer | S5 |
+| ODR link | Replaced conclusion | Do not publish an ODR link. The repeal in Regulation (EU) 2024/3228 controls. | None | Remove from footer and Terms | S13 |
 
 ### Smallest clear placement architecture
 
 | Placement | What goes there | Why this is the smallest clear structure |
 |---|---|---|
 | Top contact strip | Public business email only, and a phone number only if confirmed | Keeps one visible contact channel on every page without overloading the homepage. |
-| Footer legal block | Trading name, legal name, legal form, KVK, VAT, address, ODR link, Privacy, Terms, Cookies, complaint contact | Satisfies the website-info set in one stable place. |
+| Footer legal block | Trading name, legal name, legal form, KVK, VAT, address, Privacy, Terms, Cookies, complaint contact | Satisfies the website-info set in one stable place. The ODR link has been removed from this recommendation. |
 | Contact page / contact section | Same public email, complaint contact, privacy notice link, and form-purpose notice | Keeps privacy and enquiry handling close to the form. |
 | Quote / invoice footer | Legal name, address, KVK, VAT, invoice-specific identity details | Matches invoicing rules and keeps transactional data together. |
 
@@ -82,7 +85,7 @@ All sources below were accessed on 2026-06-14.
 
 | Question | Decision status | Working conclusion |
 |---|---|---|
-| Can a shielded address replace the public address requirement? | Owner decision / legal-review item | The sources reviewed confirm a public physical address or establishment address on the website, but they do not resolve the exact shielded-address handling for this specific case. Treat this as unresolved until the owner confirms the registration setup. | S5 |
+| Can a shielded address replace the public address requirement? | Owner decision / legal-review item | The website identity duty still needs a lawful public-address answer for this exact setup. Do not invent an address. Treat the issue as unresolved until the owner confirms the registration setup with the relevant adviser or authority. | S5 |
 
 ## 3. Privacy Notice Requirements
 
@@ -154,7 +157,7 @@ All sources below were accessed on 2026-06-14.
 | Liability | Legal-review item | Terms can limit liability, but the reviewed source says liability cannot be refused in full. | S3 |
 | Force majeure | Legal-review item | Should be reviewed before publishing any broad force-majeure wording. | S3 |
 | Governing law | Legal-review item | Not yet confirmed in the repo. | S3 |
-| Dispute handling | Owner decision required and legal-review item | ODR link is required on the website; the exact internal handling flow still needs owner input. | S5 |
+| Dispute handling | Owner decision required and legal-review item | The obsolete ODR link is no longer part of the website requirement. The exact internal handling flow still needs owner input. | S13 |
 | Language and version precedence | Owner decision required | Important because the site is multilingual. | S3 |
 
 ### Terms structure recommendation
