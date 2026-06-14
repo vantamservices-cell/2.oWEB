@@ -156,39 +156,38 @@ This document is a working map for the next development cycle. It reflects the c
 ### Data that already exists in the repository
 
 - Brand name: `VANTAM`
-- Public contact email: `vantam.nl@proton.me`
+- Registered business name: `VANTAM Services`
+- KvK number: `42080058`
+- Operating location: `The Hague, Netherlands`
+- WhatsApp Business display number: `+31 6 42 28 81 70`
+- WhatsApp base URL: `https://wa.me/31642288170`
 - Contact form and enquiry path already exist
 - Public service pillars and pricing language already exist
-- A hardcoded `THE HAGUE` string exists in the package print footer, but it is not confirmed anywhere else and should not be treated as official business identity yet
+- The package print footer should reuse the confirmed public business identity instead of hardcoded fallback text
 
 ### Data that must be confirmed by the owner
 
 | Item | Needed for |
 |---|---|
-| WhatsApp number or no WhatsApp | contact point schema, footer, shared contact area |
-| Optional telephone number | contact point schema, footer, public identity |
-| Registered business name | legal pages, schema, footer, invoices |
-| KvK number | legal footer, schema, public identity |
-| VAT status and VAT number if applicable | invoices, legal footer, schema if published |
-| Operating city or region | contact page, footer, schema, localized metadata |
-| Founder or responsible-person name/title | public identity, schema, about/support copy |
+| WhatsApp number | contact point schema, footer, shared contact area |
+| Registered business name | legal pages, footer, invoices |
+| KvK number | legal footer, public identity |
+| Operating city or region | contact page, footer, localized metadata |
 | Response-time wording | contact form, footer, service pages |
 | Complaint contact | terms, privacy, footer or support page |
 
 ### Data that must not be invented
 
 - Legal entity name if the owner has not confirmed it
-- KvK or VAT numbers
-- Phone or WhatsApp numbers
+- VAT numbers
 - Office address
-- Founder/responsible-person identity
 - Complaint procedure details
 - Any claim of office presence, licensing, guarantees or partner status
 
 ### Safest reusable configuration location
 
-- Create one shared business identity source of truth later, not scattered constants
-- Best place: a dedicated config module such as `data.ts` split into a `business` object or a new shared file under `lib/`
+- Create one shared business identity source of truth, not scattered constants
+- Best place: a dedicated config module such as a new shared file under `lib/`
 - That source should feed:
   - metadata
   - footer
@@ -244,7 +243,7 @@ This document is a working map for the next development cycle. It reflects the c
 
 - `RESEND_API_KEY` is required server-side
 - `CONTACT_FROM_EMAIL` is required server-side
-- `CONTACT_TO_EMAIL` is optional and defaults to `vantam.nl@proton.me`
+- `CONTACT_TO_EMAIL` is required server-side
 - No secret should be moved to the client or prefixed with `NEXT_PUBLIC_`
 
 ### Validation and safety
@@ -267,7 +266,7 @@ This document is a working map for the next development cycle. It reflects the c
 
 ### Delivery and reply logic
 
-- Recipient: `CONTACT_TO_EMAIL` or the fallback mailbox
+- Recipient: `CONTACT_TO_EMAIL`
 - Reply-To: visitor email
 - Logging: errors only, not the full enquiry content
 
@@ -280,7 +279,7 @@ This document is a working map for the next development cycle. It reflects the c
 
 ### Known production failure points
 
-- Missing `RESEND_API_KEY` or `CONTACT_FROM_EMAIL`
+- Missing `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`, or `CONTACT_TO_EMAIL`
 - Invalid verified sender at Resend
 - Reverse-proxy origin mismatch
 - Rate limiting behind shared IPs
@@ -428,7 +427,7 @@ These items are high-confidence and visible in the current production render or 
 |---|---|---|---|---|---|
 | English | Print modal label | `OFFER PROSPECTUS NO` | Replace with a plain label such as `Offer no.` or `Proposal no.` | polish | `data.ts` |
 | English | Thrive scope / modal | `weekly parent updates x 8` | Change to a natural sentence or a cleaner label if the owner confirms this inclusion | important | `data.ts` |
-| English | Print footer | `VANTAM / THE HAGUE / vantam.nl@proton.me` | Confirm whether The Hague is official; otherwise remove the implied registered city | blocker for public identity consistency | `app/page.tsx` / `data.ts` |
+| English | Print footer | `VANTAM / THE HAGUE / +31 6 42 28 81 70` | Replace with the confirmed public identity and contact details | blocker for public identity consistency | `app/page.tsx` / `data.ts` |
 | Ukrainian / Russian / English | Contact and package boundary text | Limits and exclusions are visually styled like footnotes | Increase prominence of essential limit text so it reads as core service scope, not tiny legal fine print | important | `app/globals.css` |
 | Mobile | Header contact strip | Email link disappears below `767px` | Keep one visible contact affordance on mobile instead of hiding the only top-strip contact link | important | `app/globals.css` |
 | Mobile | Language switcher and theme toggle | Small touch targets at ~390px | Increase to a more comfortable tap size if the route switcher becomes the language path | important | `app/globals.css` |
@@ -496,4 +495,3 @@ These items are high-confidence and visible in the current production render or 
 - Validation required later: desktop and 390px review in all three languages
 - Explicitly out of scope: redesign, offer changes, new claims
 - Relative effort: small
-

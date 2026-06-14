@@ -10,10 +10,10 @@ This is a working decision pack for the next implementation cycle. It is not leg
 |---|---|---|
 | Contact form | `app/page.tsx:1023-1048` collects name, email, inquiry type, message, consent, language, source URL, audience, moving date, city, budget, status, guarantor, help, plus a hidden honeypot field. | Privacy notice must cover the actual form fields and the email delivery flow. |
 | Form backend | `app/api/contact/route.ts:89-240` sends data to Resend, replies to the visitor email, rate-limits by IP in memory, and rejects missing consent. | The privacy notice must name the email processor and describe the transfer path. |
-| Public contact info | `app/page.tsx:716-720`, `app/page.tsx:1023-1052` show only `vantam.nl@proton.me` as public contact. | No phone, address, KVK, or VAT details are currently published. |
+| Public contact info | `app/page.tsx:716-720`, `app/page.tsx:1023-1052` show the public brand and contact area, with WhatsApp as a secondary option. | No public email, address, KVK, or VAT details are currently published in the page evidence. |
 | Offer language | `data.ts:895-1134`, `data.ts:1149-1260` publish consultation prices, package prices, support windows, exclusions, and one consultation-credit note. | Terms, withdrawal, payment, cancellation, and refund wording are currently under-specified. |
 | FAQ statements | `data.ts:1500-1575` says payment is confirmed in the written offer and cancellation/refund terms are also confirmed there, with no universal website policy yet. | The website already states that policy details are still owner-confirmed. |
-| Footer and print view | `app/page.tsx:1052-1056` and `app/page.tsx:1056` show `VANTAM / THE HAGUE / vantam.nl@proton.me` in print, but the city is not confirmed anywhere else. | Do not publish The Hague as an official business city without owner confirmation. |
+| Footer and print view | `app/page.tsx:1052-1056` and `app/page.tsx:1056` should use the confirmed public business identity in print and footer. | Do not publish unconfirmed legal or address details. |
 | Metadata and routing | `app/layout.tsx:11-68`, `app/robots.ts:1-12`, `app/sitemap.ts:1-9` are single-route and do not expose legal pages. | Legal pages and policy links are still absent. |
 | Cookies and analytics | Repository scan found no `localStorage`, `sessionStorage`, analytics tags, pixels, embeds, or cookie banner code. | A cookie banner does not appear necessary under the current implementation. |
 
@@ -63,7 +63,7 @@ All sources below were accessed on 2026-06-14.
 | KVK number | Required if registered |  | KVK number | Footer legal block, invoices, quotes | S5, S11 |
 | VAT ID | Required if VAT is charged |  | VAT status and, if applicable, VAT ID | Footer legal block, invoices, quotes, website legal block | S5, S10, S12 |
 | Public physical or visiting address | Required |  | Address and whether it is shielded | Footer legal block, contact page, invoices, quotes | S5, S11 |
-| Email | Required | `vantam.nl@proton.me` | Confirm whether this remains the public business email | Top contact strip, contact page, footer, invoices/quotes | S5 |
+| Contact recipient | Required | private server-only mailbox | Confirm the deployment secret that receives contact forms | Top contact strip, contact page, footer, invoices/quotes | S5 |
 | Telephone number | Required by the website-info source reviewed |  | Publish a business phone number or obtain legal review before omitting it | Footer legal block, contact page, quote signature | S5 |
 | Complaint contact | Owner decision required |  | Complaint email or complaint process | Terms, privacy notice, footer/support area | S4, S5 |
 | Founder or responsible-person name | Optional unless another rule applies |  | Whether to publish it | About/support area only if desired; not required in the reviewed general rules | S5 |
@@ -315,7 +315,7 @@ Fill these in before tomorrow's implementation.
 | KVK | What is the KVK number? | Required if registered. | Publish / not yet registered / pending | Footer, invoices, quotes |
 | VAT status | Does VANTAM charge VAT, use a VAT ID, or qualify for a special VAT treatment? | Affects public VAT display and invoice wording. | VAT registered; not VAT registered; other | Footer, invoices, pricing copy |
 | Public address | What is the public physical or visiting address, and is it shielded? | Required on the website. | Full public address; shielded home address with alternative; other | Footer, contact page, quotes, invoices |
-| Business email | Is `vantam.nl@proton.me` the public business email? | Current primary contact channel. | Keep; replace; add alias | Header strip, footer, contact page, invoices |
+| Contact recipient | What server-side mailbox should receive website enquiries? | Current primary contact channel must stay private. | Keep private; rotate; add alias | Header strip, footer, contact page, invoices |
 | Privacy contact | What email or channel handles privacy requests? | Required in the privacy notice. | Dedicated privacy email; same mailbox; other | Privacy policy |
 | Complaint contact | What is the complaint contact or process? | Needed for service disputes and clarity. | Complaint email; support mailbox; form; other | Terms, footer, privacy notice |
 | WhatsApp | Will WhatsApp exist, and if so, what number/account type? | Third-party contact channel and privacy issue. | No WhatsApp; secondary; fallback | Contact page, privacy notice |
@@ -385,4 +385,3 @@ Fill these in before tomorrow's implementation.
 | Is a cookie banner necessary now? | No, not under the current implementation. |
 | What is the most important unresolved consumer-law question? | Whether any VANTAM service is a distance contract that starts before the withdrawal window ends, and if so what express-request and refund logic must be published. |
 | What must remain unpublished until the owner confirms it? | Legal name, address, KVK, VAT, complaint contact, phone or WhatsApp, payment timing, cancellation window, refund rules, service-start rule, retention periods, and analytics choice. |
-

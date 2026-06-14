@@ -271,7 +271,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     testimonialsVerified: "Приклад ситуації",
 
     contactTitle: "Розкажіть, що вам потрібно",
-    contactSub: "Надішліть короткий запит. Ми відповімо на електронну адресу, яку ви вкажете, і зможемо працювати від уже обраного контексту.",
+    contactSub: "Відповідаємо протягом одного робочого дня.",
     contactNameLabel: "Ваше ім'я",
     contactEmailLabel: "Адреса електронної пошти",
     contactTypeLabel: "З чим потрібна допомога?",
@@ -411,7 +411,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     testimonialsVerified: "Пример ситуации",
 
     contactTitle: "Расскажите, что вам нужно",
-    contactSub: "Отправьте короткий запрос. Мы ответим на указанный email и сможем работать от уже выбранного контекста.",
+    contactSub: "Отвечаем в течение одного рабочего дня.",
     contactNameLabel: "Ваше имя",
     contactEmailLabel: "Адрес электронной почты",
     contactTypeLabel: "С чем нужна помощь?",
@@ -551,7 +551,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     testimonialsVerified: "Example situation",
 
     contactTitle: "Tell us what you need",
-    contactSub: "Send a short enquiry. We will reply to the email address you provide and can work from the context already selected.",
+    contactSub: "We respond within one business day.",
     contactNameLabel: "Your name",
     contactEmailLabel: "Email address",
     contactTypeLabel: "What do you need help with?",

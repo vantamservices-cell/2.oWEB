@@ -441,7 +441,8 @@ svg { flex: none; }
 .contact-note > svg { width: 1.05rem; height: 1.05rem; margin-top: 0.2rem; color: #77cec3; }
 .contact-note strong { font-size: 0.86rem; }
 .contact-note p { margin: 0.3rem 0 0; color: #9fb5b8; font-size: 0.8rem; line-height: var(--type-line-support); text-wrap: pretty; }
-.contact-copy > a { display: inline-block; margin-top: 1.5rem; color: #82d6ca; font-size: 0.84rem; font-weight: 700; }
+.contact-whatsapp { align-self: flex-start; margin-top: 1.5rem; }
+.contact-whatsapp svg { width: 1rem; height: 1rem; }
 .contact-form-shell { border-radius: var(--radius); padding: clamp(1.4rem, 4vw, 2.6rem); background: #173b42; }
 .contact-form-shell form { display: grid; gap: 1rem; }
 .form-section-copy { display: grid; gap: 0.2rem; padding-top: 0.35rem; border-top: 1px solid #365159; }
@@ -473,6 +474,8 @@ svg { flex: none; }
 .footer-brand { display: flex; align-items: center; gap: 0.65rem; }
 .footer-brand strong { letter-spacing: -0.03em; }
 .footer-layout p { max-width: 48rem; margin: 0; color: #8fa9ad; font-size: var(--type-footnote); line-height: var(--type-line-support); text-wrap: pretty; }
+.footer-copy { display: grid; gap: 0.45rem; }
+.footer-business-meta { max-width: 32rem; color: #b7cdcd; font-size: var(--type-footnote); font-weight: 650; }
 .footer-layout > div { display: grid; gap: 0.35rem; justify-items: end; }
 .footer-layout > div a { color: #b7cdcd; font-size: 0.82rem; font-weight: 650; }
 .footer-layout > div a:last-child { color: #82d6ca; }

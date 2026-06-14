@@ -88,11 +88,11 @@ function isRateLimited(clientIp: string) {
 
 export async function POST(request: NextRequest) {
   const apiKey = process.env.RESEND_API_KEY;
-  const toEmail = process.env.CONTACT_TO_EMAIL || 'vantam.nl@proton.me';
+  const toEmail = process.env.CONTACT_TO_EMAIL;
   const fromEmail = process.env.CONTACT_FROM_EMAIL;
 
-  if (!apiKey || !fromEmail) {
-    console.error('Contact form is not configured. Set RESEND_API_KEY and CONTACT_FROM_EMAIL.');
+  if (!apiKey || !fromEmail || !toEmail) {
+    console.error('Contact form is not configured on the server.');
     return NextResponse.json(
       {error: 'Contact delivery is not configured.'},
       {status: 503},

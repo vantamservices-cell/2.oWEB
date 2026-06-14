@@ -42,6 +42,7 @@ import {
   TESTIMONIALS,
 } from '../../data';
 import { LOCALES, LOCALE_LABELS, type Locale, swapLocale } from '../../lib/locales';
+import { BUSINESS, getBusinessFooterLine, getBusinessPrintFooterLine, getWhatsAppAriaLabel, getWhatsAppUrl } from '../../lib/business';
 
 const BrandLogo = ({className = ''}: {className?: string}) => (
   <Image
@@ -199,6 +200,10 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
 
   const dict = useMemo(() => DICTIONARY[lang], [lang]);
   const sList = useMemo(() => SERVICES_STORE[lang], [lang]);
+  const whatsappHref = useMemo(() => getWhatsAppUrl(lang), [lang]);
+  const whatsappAriaLabel = useMemo(() => getWhatsAppAriaLabel(lang), [lang]);
+  const footerBusinessLine = useMemo(() => getBusinessFooterLine(lang), [lang]);
+  const footerPrintLine = useMemo(() => getBusinessPrintFooterLine(lang), [lang]);
   const localeSwitchHref = useMemo(() => {
     return (nextLocale: Locale) => {
       const path = swapLocale(pathname, nextLocale);
@@ -245,7 +250,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       contactLead: 'Розкажіть, що відбувається',
       contactAside: 'Можна почати без готового рішення',
       contactAsideText: 'Оберіть тип запиту або просто опишіть ситуацію. Контекст обраної послуги чи пакета вже буде у формі.',
-      emailLabel: 'Електронна пошта',
+      whatsappLabel: 'Написати у WhatsApp Business',
       scopeLabel: 'Включено',
       limitsLabel: 'Межі',
       result: 'Результат',
@@ -334,7 +339,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       contactLead: 'Расскажите, что происходит',
       contactAside: 'Можно начать без готового решения',
       contactAsideText: 'Выберите тип запроса или просто опишите ситуацию. Контекст выбранной услуги или пакета уже будет в форме.',
-      emailLabel: 'Электронная почта',
+      whatsappLabel: 'Написать в WhatsApp Business',
       scopeLabel: 'Включено',
       limitsLabel: 'Границы',
       result: 'Результат',
@@ -423,7 +428,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       contactLead: 'Tell us what is happening',
       contactAside: 'You can start without knowing the answer',
       contactAsideText: 'Choose a request type or describe the situation. Any selected service or package context is already included.',
-      emailLabel: 'Email',
+      whatsappLabel: 'Message VANTAM on WhatsApp Business',
       scopeLabel: 'Included',
       limitsLabel: 'Boundaries',
       result: 'Outcome',
@@ -690,7 +695,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
   };
 
   const closeNavigation = (event: React.MouseEvent<HTMLAnchorElement>) => event.currentTarget.closest('details')?.removeAttribute('open');
-  const formErrorMessage = lang === 'uk' ? 'Не вдалося надіслати запит. Спробуйте ще раз або напишіть на vantam.nl@proton.me.' : lang === 'ru' ? 'Не удалось отправить запрос. Попробуйте ещё раз или напишите на vantam.nl@proton.me.' : 'The enquiry could not be sent. Please try again or email vantam.nl@proton.me.';
+  const formErrorMessage = lang === 'uk' ? 'Не вдалося надіслати запит. Спробуйте ще раз або напишіть у WhatsApp Business.' : lang === 'ru' ? 'Не удалось отправить запрос. Попробуйте ещё раз или напишите в WhatsApp Business.' : 'The enquiry could not be sent. Please try again or use WhatsApp Business.';
   const plannerGroups = [
     {category: 'prep' as const, title: dict.checklistPrepTab, description: dict.checklistPrepDesc},
     {category: 'arrival' as const, title: dict.checklistArrivalTab, description: dict.checklistArrivalDesc},
@@ -734,8 +739,8 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
     <div className="vantam-site" data-theme={theme}>
       <div className="service-strip">
         <div className="site-container">
-          <span>{ui.notice}</span>
-          <a href="mailto:vantam.nl@proton.me">vantam.nl@proton.me</a>
+          <span>{dict.contactSub}</span>
+          <a href={whatsappHref} target="_blank" rel="noreferrer noopener" aria-label={whatsappAriaLabel}>{ui.whatsappLabel}</a>
         </div>
       </div>
 
@@ -1048,7 +1053,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
 
         <section id="contact" className="contact-section section-anchor">
           <div className="site-container contact-layout">
-            <div className="contact-copy"><p>{ui.contactLead}</p><h2>{dict.contactTitle}</h2><span>{dict.contactSub}</span><div className="contact-note"><MessageIcon /><div><strong>{ui.contactAside}</strong><p>{ui.contactAsideText}</p></div></div><a href="mailto:vantam.nl@proton.me">{ui.emailLabel}: vantam.nl@proton.me</a></div>
+            <div className="contact-copy"><p>{ui.contactLead}</p><h2>{dict.contactTitle}</h2><span>{dict.contactSub}</span><div className="contact-note"><MessageIcon /><div><strong>{ui.contactAside}</strong><p>{ui.contactAsideText}</p></div></div><a className="button button-secondary contact-whatsapp" href={whatsappHref} target="_blank" rel="noreferrer noopener" aria-label={whatsappAriaLabel}><MessageCircle />{ui.whatsappLabel}<ArrowUpRight /></a></div>
             <div className="contact-form-shell">
               {formState === 'success' ? <motion.div ref={successRef} tabIndex={-1} role="status" initial={{opacity: 0}} animate={{opacity: 1}} className="form-success"><span><Check /></span><h3>{dict.contactSuccessTitle}</h3><p>{dict.contactSuccessDesc}</p><button onClick={handleResetForm} className="button button-primary">{dict.contactFailBtn}</button></motion.div> :
                 <form onSubmit={handleFormSubmit}>
@@ -1075,11 +1080,11 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
                 </form>}
             </div>
           </div>
-          <footer className="site-footer"><div className="site-container footer-layout"><a href="#top" className="footer-brand" aria-label="VANTAM"><BrandLogo className="brand-logo brand-logo-footer" /></a><p>{dict.footerSub}</p><div><a href="#consultations">{dict.consultTitle}</a><a href="#single-services">{dict.navSingleServices}</a><a href="#packages">{dict.navPackages}</a><a href="#testimonials">{dict.navTestimonials}</a><a href="mailto:vantam.nl@proton.me">vantam.nl@proton.me</a></div></div></footer>
+          <footer className="site-footer"><div className="site-container footer-layout"><a href="#top" className="footer-brand" aria-label="VANTAM"><BrandLogo className="brand-logo brand-logo-footer" /></a><div className="footer-copy"><p>{dict.footerSub}</p><p className="footer-business-meta">{footerBusinessLine}</p></div><div><a href="#consultations">{dict.consultTitle}</a><a href="#single-services">{dict.navSingleServices}</a><a href="#packages">{dict.navPackages}</a><a href="#testimonials">{dict.navTestimonials}</a><a href={whatsappHref} target="_blank" rel="noreferrer noopener" aria-label={whatsappAriaLabel}>{ui.whatsappLabel}</a></div></div></footer>
         </section>
       </main>
 
-      {showExportModal && <div id="print-modal-overlay" className="print-overlay" onMouseDown={(event) => { if (event.target === event.currentTarget) setShowExportModal(false); }}><div ref={modalRef} className="print-modal" role="dialog" aria-modal="true" aria-labelledby="print-modal-title"><div className="print-modal-header"><div><h3 id="print-modal-title">{dict.modalTitle}</h3><p>{dict.modalDesc}</p></div><button ref={modalCloseRef} id="close-print-modal-btn" onClick={() => setShowExportModal(false)} aria-label={dict.modalCloseBtn}><X /></button></div><div id="vantam-printable-prospectus" className="print-sheet"><div className="print-brand-row"><div className="print-brand"><BrandLogo className="brand-logo brand-logo-print" /><div><strong>VANTAM</strong><p>{dict.modalAdvisorDesc}</p></div></div><div><span>{dict.modalOfferNo}</span><strong>{currentSelectedPkgObj.id.toUpperCase()}-2026</strong></div></div><div className="print-package-summary"><div><span>{dict.modalTargetPlan}</span><h4>{currentSelectedPkgObj.name[lang]}</h4><p>{currentSelectedPkgObj.idealFor[lang]}</p></div><strong>{currentSelectedPkgObj.price}</strong></div><div className="print-list"><h5>{dict.pkgScopeTitle}</h5><ul>{currentSelectedPkgObj.scope[lang].map((item) => <li key={item}>{item}</li>)}</ul></div><div className="print-list"><h5>{dict.pkgLimitsTitle}</h5><ul>{currentSelectedPkgObj.limits[lang].map((item) => <li key={item}>{item}</li>)}</ul></div><p className="print-disclaimer">{dict.footerSub}</p><div className="print-footer">VANTAM / THE HAGUE / vantam.nl@proton.me</div></div><div className="print-actions"><button onClick={() => window.print()} className="button button-primary"><Download />{dict.modalPrintBtn}</button><button onClick={() => setShowExportModal(false)} className="button button-quiet">{dict.modalCloseBtn}</button></div></div></div>}
+      {showExportModal && <div id="print-modal-overlay" className="print-overlay" onMouseDown={(event) => { if (event.target === event.currentTarget) setShowExportModal(false); }}><div ref={modalRef} className="print-modal" role="dialog" aria-modal="true" aria-labelledby="print-modal-title"><div className="print-modal-header"><div><h3 id="print-modal-title">{dict.modalTitle}</h3><p>{dict.modalDesc}</p></div><button ref={modalCloseRef} id="close-print-modal-btn" onClick={() => setShowExportModal(false)} aria-label={dict.modalCloseBtn}><X /></button></div><div id="vantam-printable-prospectus" className="print-sheet"><div className="print-brand-row"><div className="print-brand"><BrandLogo className="brand-logo brand-logo-print" /><div><strong>{BUSINESS.publicBrandName}</strong><p>{dict.modalAdvisorDesc}</p></div></div><div><span>{dict.modalOfferNo}</span><strong>{currentSelectedPkgObj.id.toUpperCase()}-2026</strong></div></div><div className="print-package-summary"><div><span>{dict.modalTargetPlan}</span><h4>{currentSelectedPkgObj.name[lang]}</h4><p>{currentSelectedPkgObj.idealFor[lang]}</p></div><strong>{currentSelectedPkgObj.price}</strong></div><div className="print-list"><h5>{dict.pkgScopeTitle}</h5><ul>{currentSelectedPkgObj.scope[lang].map((item) => <li key={item}>{item}</li>)}</ul></div><div className="print-list"><h5>{dict.pkgLimitsTitle}</h5><ul>{currentSelectedPkgObj.limits[lang].map((item) => <li key={item}>{item}</li>)}</ul></div><p className="print-disclaimer">{dict.footerSub}</p><div className="print-footer">{footerPrintLine}</div></div><div className="print-actions"><button onClick={() => window.print()} className="button button-primary"><Download />{dict.modalPrintBtn}</button><button onClick={() => setShowExportModal(false)} className="button button-quiet">{dict.modalCloseBtn}</button></div></div></div>}
 
       <style jsx global>{`@media print { body * { visibility: hidden; } #vantam-printable-prospectus, #vantam-printable-prospectus * { visibility: visible; } #vantam-printable-prospectus { position: absolute; inset: 0; width: 100%; border: 0 !important; box-shadow: none !important; } }`}</style>
     </div>
