@@ -42,7 +42,7 @@ import {
   TESTIMONIALS,
 } from '../../data';
 import { LOCALES, LOCALE_LABELS, type Locale, swapLocale } from '../../lib/locales';
-import { BUSINESS, getBusinessFooterLine, getBusinessPrintFooterLine, getWhatsAppAriaLabel, getWhatsAppUrl } from '../../lib/business';
+import { BUSINESS, BUSINESS_LOCATION, getBusinessFooterLine, getBusinessPrintFooterLine, getWhatsAppAriaLabel, getWhatsAppUrl } from '../../lib/business';
 
 const BrandLogo = ({className = ''}: {className?: string}) => (
   <Image
@@ -204,6 +204,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
   const whatsappAriaLabel = useMemo(() => getWhatsAppAriaLabel(lang), [lang]);
   const footerBusinessLine = useMemo(() => getBusinessFooterLine(lang), [lang]);
   const footerPrintLine = useMemo(() => getBusinessPrintFooterLine(lang), [lang]);
+  const businessLocation = BUSINESS_LOCATION[lang];
   const localeSwitchHref = useMemo(() => {
     return (nextLocale: Locale) => {
       const path = swapLocale(pathname, nextLocale);
@@ -250,7 +251,11 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       contactLead: 'Розкажіть, що відбувається',
       contactAside: 'Можна почати без готового рішення',
       contactAsideText: 'Оберіть тип запиту або просто опишіть ситуацію. Контекст обраної послуги чи пакета вже буде у формі.',
+      emailLabel: 'Електронна пошта',
+      phoneLabel: 'Телефон',
       whatsappLabel: 'Написати у WhatsApp Business',
+      businessDetailsLabel: 'Дані компанії',
+      responseTime: 'Відповідаємо протягом одного робочого дня.',
       scopeLabel: 'Включено',
       limitsLabel: 'Межі',
       result: 'Результат',
@@ -339,7 +344,11 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       contactLead: 'Расскажите, что происходит',
       contactAside: 'Можно начать без готового решения',
       contactAsideText: 'Выберите тип запроса или просто опишите ситуацию. Контекст выбранной услуги или пакета уже будет в форме.',
+      emailLabel: 'Электронная почта',
+      phoneLabel: 'Телефон',
       whatsappLabel: 'Написать в WhatsApp Business',
+      businessDetailsLabel: 'Данные компании',
+      responseTime: 'Отвечаем в течение одного рабочего дня.',
       scopeLabel: 'Включено',
       limitsLabel: 'Границы',
       result: 'Результат',
@@ -428,7 +437,11 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       contactLead: 'Tell us what is happening',
       contactAside: 'You can start without knowing the answer',
       contactAsideText: 'Choose a request type or describe the situation. Any selected service or package context is already included.',
+      emailLabel: 'Email',
+      phoneLabel: 'Phone',
       whatsappLabel: 'Message VANTAM on WhatsApp Business',
+      businessDetailsLabel: 'Business details',
+      responseTime: 'We respond within one business day.',
       scopeLabel: 'Included',
       limitsLabel: 'Boundaries',
       result: 'Outcome',
@@ -1053,7 +1066,36 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
 
         <section id="contact" className="contact-section section-anchor">
           <div className="site-container contact-layout">
-            <div className="contact-copy"><p>{ui.contactLead}</p><h2>{dict.contactTitle}</h2><span>{dict.contactSub}</span><div className="contact-note"><MessageIcon /><div><strong>{ui.contactAside}</strong><p>{ui.contactAsideText}</p></div></div><a className="button button-secondary contact-whatsapp" href={whatsappHref} target="_blank" rel="noreferrer noopener" aria-label={whatsappAriaLabel}><MessageCircle />{ui.whatsappLabel}<ArrowUpRight /></a></div>
+            <div className="contact-copy">
+              <p>{ui.contactLead}</p>
+              <h2>{dict.contactTitle}</h2>
+              <span>{dict.contactSub}</span>
+              <div className="contact-note"><MessageIcon /><div><strong>{ui.contactAside}</strong><p>{ui.contactAsideText}</p></div></div>
+              <div className="contact-details" aria-label={ui.businessDetailsLabel}>
+                <p className="contact-details-lead">{ui.businessDetailsLabel}</p>
+                <div className="contact-details-grid">
+                  <div className="contact-details-item">
+                    <span>{ui.emailLabel}</span>
+                    <a href={BUSINESS.publicEmailMailto}>{BUSINESS.publicEmail}</a>
+                  </div>
+                  <div className="contact-details-item">
+                    <span>{ui.phoneLabel}</span>
+                    <a href={BUSINESS.phoneTelHref}>{BUSINESS.phoneDisplayNumber}</a>
+                  </div>
+                  <div className="contact-details-item contact-details-item-whatsapp">
+                    <span>{ui.whatsappLabel}</span>
+                    <a className="button button-secondary contact-whatsapp" href={whatsappHref} target="_blank" rel="noreferrer noopener" aria-label={whatsappAriaLabel}><MessageCircle />{ui.whatsappLabel}<ArrowUpRight /></a>
+                    <small>{BUSINESS.whatsappDisplayNumber}</small>
+                  </div>
+                </div>
+                <p className="contact-response-time">{ui.responseTime}</p>
+                <div className="contact-business-meta">
+                  <strong>{BUSINESS.registeredBusinessName}</strong>
+                  <p>KvK {BUSINESS.kvkNumber}</p>
+                  <p>{businessLocation}</p>
+                </div>
+              </div>
+            </div>
             <div className="contact-form-shell">
               {formState === 'success' ? <motion.div ref={successRef} tabIndex={-1} role="status" initial={{opacity: 0}} animate={{opacity: 1}} className="form-success"><span><Check /></span><h3>{dict.contactSuccessTitle}</h3><p>{dict.contactSuccessDesc}</p><button onClick={handleResetForm} className="button button-primary">{dict.contactFailBtn}</button></motion.div> :
                 <form onSubmit={handleFormSubmit}>
@@ -1080,7 +1122,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
                 </form>}
             </div>
           </div>
-          <footer className="site-footer"><div className="site-container footer-layout"><a href="#top" className="footer-brand" aria-label="VANTAM"><BrandLogo className="brand-logo brand-logo-footer" /></a><div className="footer-copy"><p>{dict.footerSub}</p><p className="footer-business-meta">{footerBusinessLine}</p></div><div><a href="#consultations">{dict.consultTitle}</a><a href="#single-services">{dict.navSingleServices}</a><a href="#packages">{dict.navPackages}</a><a href="#testimonials">{dict.navTestimonials}</a><a href={whatsappHref} target="_blank" rel="noreferrer noopener" aria-label={whatsappAriaLabel}>{ui.whatsappLabel}</a></div></div></footer>
+          <footer className="site-footer"><div className="site-container footer-layout"><a href="#top" className="footer-brand" aria-label="VANTAM"><BrandLogo className="brand-logo brand-logo-footer" /></a><div className="footer-copy"><p>{dict.footerSub}</p><p className="footer-business-meta">{footerBusinessLine}</p></div><div className="footer-contact-links"><a href={BUSINESS.publicEmailMailto}>{BUSINESS.publicEmail}</a><a href={BUSINESS.phoneTelHref}>{BUSINESS.phoneDisplayNumber}</a><a href={whatsappHref} target="_blank" rel="noreferrer noopener" aria-label={whatsappAriaLabel}>{ui.whatsappLabel}</a></div></div></footer>
         </section>
       </main>
 

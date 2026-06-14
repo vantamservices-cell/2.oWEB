@@ -441,7 +441,19 @@ svg { flex: none; }
 .contact-note > svg { width: 1.05rem; height: 1.05rem; margin-top: 0.2rem; color: #77cec3; }
 .contact-note strong { font-size: 0.86rem; }
 .contact-note p { margin: 0.3rem 0 0; color: #9fb5b8; font-size: 0.8rem; line-height: var(--type-line-support); text-wrap: pretty; }
-.contact-whatsapp { align-self: flex-start; margin-top: 1.5rem; }
+.contact-details { display: grid; gap: 1rem; margin-top: 1.4rem; border-top: 1px solid #365159; padding-top: 1.2rem; }
+.contact-details-lead { margin: 0; color: #82cec3; font-size: var(--type-label); font-weight: 800; }
+.contact-details-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.85rem; }
+.contact-details-item { display: grid; gap: 0.3rem; border: 1px solid #365159; border-radius: 12px; padding: 0.9rem 1rem; background: #173b42; min-width: 0; }
+.contact-details-item span { color: #b7c9c9; font-size: var(--type-label); font-weight: 700; }
+.contact-details-item a { color: #f0f7f5; font-size: 0.94rem; font-weight: 700; word-break: break-word; }
+.contact-details-item-whatsapp { grid-column: 1 / -1; }
+.contact-details-item-whatsapp .contact-whatsapp { width: 100%; margin-top: 0; justify-content: center; }
+.contact-details-item-whatsapp small { color: #9fb5b8; font-size: 0.79rem; line-height: var(--type-line-support); }
+.contact-response-time { margin: 0; color: #d4e3e1; font-size: 0.95rem; font-weight: 750; }
+.contact-business-meta { display: grid; gap: 0.15rem; }
+.contact-business-meta strong { font-size: 0.92rem; }
+.contact-business-meta p { margin: 0; color: #9fb5b8; font-size: 0.82rem; line-height: var(--type-line-support); }
 .contact-whatsapp svg { width: 1rem; height: 1rem; }
 .contact-form-shell { border-radius: var(--radius); padding: clamp(1.4rem, 4vw, 2.6rem); background: #173b42; }
 .contact-form-shell form { display: grid; gap: 1rem; }
@@ -476,9 +488,9 @@ svg { flex: none; }
 .footer-layout p { max-width: 48rem; margin: 0; color: #8fa9ad; font-size: var(--type-footnote); line-height: var(--type-line-support); text-wrap: pretty; }
 .footer-copy { display: grid; gap: 0.45rem; }
 .footer-business-meta { max-width: 32rem; color: #b7cdcd; font-size: var(--type-footnote); font-weight: 650; }
-.footer-layout > div { display: grid; gap: 0.35rem; justify-items: end; }
-.footer-layout > div a { color: #b7cdcd; font-size: 0.82rem; font-weight: 650; }
-.footer-layout > div a:last-child { color: #82d6ca; }
+.footer-contact-links { display: grid; gap: 0.35rem; justify-items: end; }
+.footer-contact-links a { color: #b7cdcd; font-size: 0.82rem; font-weight: 650; word-break: break-word; }
+.footer-contact-links a:last-child { color: #82d6ca; }
 
 .print-overlay { position: fixed; inset: 0; z-index: 80; display: flex; align-items: center; justify-content: center; overflow-y: auto; padding: 1rem; background: color-mix(in srgb, var(--ink) 84%, transparent); }
 .print-modal { width: min(100%, 58rem); max-height: 92vh; overflow-y: auto; border-radius: var(--radius); padding: clamp(1.2rem, 3vw, 2rem); background: var(--surface); color: var(--ink); }
@@ -565,7 +577,7 @@ svg { flex: none; }
   .planner-columns > section, .planner-columns > section:first-child, .planner-columns > section:last-child { border-top: 1px solid var(--line); border-left: 0; padding: 1.4rem 0 0; }
   .planner-columns > section:first-child { border-top: 0; }
   .footer-layout { grid-template-columns: 1fr; gap: 1.4rem; }
-  .footer-layout > div { justify-items: start; }
+  .footer-contact-links { justify-items: start; }
 }
 
 @media (max-width: 767px) {
@@ -629,6 +641,8 @@ svg { flex: none; }
   .testimonial-stage blockquote { font-size: clamp(1.4rem, 7vw, 2rem); }
   .contact-layout { padding-block: 4rem; }
   .contact-copy h2 { font-size: clamp(2.6rem, 11vw, 4rem); }
+  .contact-details-grid { grid-template-columns: 1fr; }
+  .contact-details-item-whatsapp { grid-column: auto; }
   .form-grid, .print-list ul { grid-template-columns: 1fr; }
   .contact-form-shell { padding: 1.2rem; }
   .print-brand-row, .print-package-summary { display: grid; }

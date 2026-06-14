@@ -489,7 +489,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     navChecklist: "Planner",
     navTestimonials: "Situations",
     navFaq: "FAQ",
-    navContact: "Contact",
+    navContact: "Contacts",
 
     metric1Count: "3",
     metric1Text: "languages on the site: Ukrainian, Russian and English",
