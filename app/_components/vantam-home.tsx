@@ -123,14 +123,14 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
   const [activeTestimonialIdx, setActiveTestimonialIdx] = useState(0);
   const [formName, setFormName] = useState('');
   const [formEmail, setFormEmail] = useState('');
-  const [formInquiryType, setFormInquiryType] = useState('consultation');
   const [formAudience, setFormAudience] = useState('student');
   const [formMovingDate, setFormMovingDate] = useState('');
   const [formCity, setFormCity] = useState('');
   const [formBudget, setFormBudget] = useState('');
   const [formStatus, setFormStatus] = useState('before');
-  const [formGuarantor, setFormGuarantor] = useState('maybe');
-  const [formHelp, setFormHelp] = useState('');
+  const [formGuarantor, setFormGuarantor] = useState('');
+  const [formHelp, setFormHelp] = useState('consultation');
+  const [formHousingType, setFormHousingType] = useState('');
   const [formMessage, setFormMessage] = useState('');
   const [formConsent, setFormConsent] = useState(false);
   const [formWebsite, setFormWebsite] = useState('');
@@ -300,11 +300,13 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       formStatusLabel: 'Поточний стан',
       formGuarantorLabel: 'Гарант / поручитель',
       formHelpLabel: 'Яка допомога потрібна',
+      formHousingTypeLabel: 'Який тип житла ви шукаєте?',
       formSensitiveWarning: 'Не надсилайте через цю відкриту форму паспорти, банківські виписки, медичні дані, файли поручителя чи інші чутливі документи.',
       formStatusBefore: 'Ще до приїзду',
       formStatusAfter: 'Вже в Нідерландах',
       formStatusFoundHousing: 'Житло вже знайдено',
       formStatusNeedHousing: 'Потрібна житлова або практична підтримка',
+      formStatusOrganisation: 'Організація / партнерство',
       formAudienceStudent: 'Студент',
       formAudienceProfessional: 'Експат / професіонал',
       formAudienceFamily: 'Сім’я',
@@ -394,11 +396,13 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       formStatusLabel: 'Текущий статус',
       formGuarantorLabel: 'Гарант / поручитель',
       formHelpLabel: 'Какая помощь нужна',
+      formHousingTypeLabel: 'Какой тип жилья вы ищете?',
       formSensitiveWarning: 'Не отправляйте через эту открытую форму паспорта, банковские выписки, медицинские данные, файлы поручителя или другие чувствительные документы.',
       formStatusBefore: 'Ещё до приезда',
       formStatusAfter: 'Уже в Нидерландах',
       formStatusFoundHousing: 'Жильё уже найдено',
       formStatusNeedHousing: 'Нужна жилищная или практическая поддержка',
+      formStatusOrganisation: 'Организация / партнёрство',
       formAudienceStudent: 'Студент',
       formAudienceProfessional: 'Экспат / профессионал',
       formAudienceFamily: 'Семья',
@@ -488,11 +492,13 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       formStatusLabel: 'Current status',
       formGuarantorLabel: 'Guarantor situation',
       formHelpLabel: 'What help is needed',
+      formHousingTypeLabel: 'What type of housing are you looking for?',
       formSensitiveWarning: 'Do not submit passports, bank statements, medical information, guarantor files or other sensitive documents through this open form.',
       formStatusBefore: 'Before arrival',
       formStatusAfter: 'Already in the Netherlands',
       formStatusFoundHousing: 'Housing already found',
       formStatusNeedHousing: 'Need housing or practical setup support',
+      formStatusOrganisation: 'Organisation / partnership',
       formAudienceStudent: 'Student',
       formAudienceProfessional: 'Expat / professional',
       formAudienceFamily: 'Family',
@@ -535,7 +541,6 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
   const scrollToTarget = (target: 'consultation' | 'services' | 'packages' | 'contact') => document.getElementById(target === 'consultation' ? 'consultations' : target === 'services' ? 'single-services' : target === 'packages' ? 'packages' : 'contact')?.scrollIntoView({behavior: prefersReducedMotion ? 'auto' : 'smooth'});
 
   const applyQualificationContext = (overrides: Partial<{
-    inquiryType: string;
     audience: string;
     movingDate: string;
     city: string;
@@ -545,24 +550,31 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
     help: string;
     message: string;
   }>) => {
-    if (overrides.inquiryType) setFormInquiryType(overrides.inquiryType);
     if (overrides.audience) setFormAudience(overrides.audience);
     if (overrides.movingDate !== undefined) setFormMovingDate(overrides.movingDate);
     if (overrides.city !== undefined) setFormCity(overrides.city);
     if (overrides.budget !== undefined) setFormBudget(overrides.budget);
-    if (overrides.status !== undefined) setFormStatus(overrides.status);
+    if (overrides.status !== undefined) {
+      setFormStatus(overrides.status);
+      if (overrides.status !== 'before') setFormMovingDate('');
+    }
     if (overrides.guarantor !== undefined) setFormGuarantor(overrides.guarantor);
-    if (overrides.help !== undefined) setFormHelp(overrides.help);
+    if (overrides.help !== undefined) {
+      setFormHelp(overrides.help);
+      if (overrides.help !== 'housing_search') {
+        setFormHousingType('');
+        setFormBudget('');
+        setFormGuarantor('');
+      }
+    }
     if (overrides.message !== undefined) setFormMessage(overrides.message);
   };
 
   const handleSelectSingleService = (serviceId: string) => {
-    setFormInquiryType('single');
     const service = SINGLE_SERVICES.find((item) => item.id === serviceId);
     if (service) {
       applyQualificationContext({
-        inquiryType: 'single',
-        help: service.id,
+        help: service.id === 'single_housing_application_support' ? 'housing_search' : 'single',
         message: lang === 'uk'
           ? `Мені потрібна окрема послуга: ${service.name.uk}.`
           : lang === 'ru'
@@ -576,7 +588,6 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
   const handleSelectConsultation = (consultationId: string) => {
     const consultation = CONSULTATIONS_STORE.find((item) => item.id === consultationId);
     if (consultation) applyQualificationContext({
-      inquiryType: 'consultation',
       help: 'consultation',
       message: lang === 'uk'
         ? `Мені потрібна консультація: ${consultation.name.uk}.`
@@ -591,7 +602,6 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
     const item = PREMIUM_PACKAGES.find((pkg) => pkg.id === packageId);
     setSelectedPackage(packageId);
     if (item) applyQualificationContext({
-      inquiryType: 'packages',
       help: 'packages',
       message: lang === 'uk'
         ? `Мені потрібен пакет: ${item.name.uk} (${item.price}).`
@@ -607,7 +617,6 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
     setActiveSituation(option.id);
     if (option.target === 'consultation') {
       applyQualificationContext({
-        inquiryType: option.inquiryType,
         status: 'before',
         help: 'consultation',
         message: lang === 'uk'
@@ -623,9 +632,8 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
     if (option.target === 'services') {
       setActiveServiceCategory('housing');
       applyQualificationContext({
-        inquiryType: 'single',
         status: 'need_housing',
-        help: 'single',
+        help: 'housing_search',
         message: lang === 'uk'
           ? `Мені потрібна допомога з житлом або орендною заявкою.`
           : lang === 'ru'
@@ -639,7 +647,6 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
     if (option.target === 'packages') {
       setSelectedPackage('pkg_setup');
       applyQualificationContext({
-        inquiryType: 'packages',
         status: 'after',
         help: 'packages',
         message: lang === 'uk'
@@ -653,7 +660,6 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
     }
 
     applyQualificationContext({
-        inquiryType: 'b2b',
         audience: 'organisation',
         status: 'organisation',
         help: 'b2b',
@@ -677,19 +683,19 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
         body: JSON.stringify({
           name: formName,
           email: formEmail,
-          inquiryType: formInquiryType,
+          inquiryType: formHelp === 'consultation' ? 'consultation' : formHelp === 'packages' ? 'packages' : formHelp === 'b2b' ? 'b2b' : 'single',
           message: formMessage,
           consent: formConsent,
           language: lang,
           website: formWebsite,
           sourceUrl: window.location.pathname,
           audience: formAudience,
-          movingDate: formMovingDate,
+          movingDate: formStatus === 'before' ? formMovingDate : '',
           city: formCity,
-          budget: formBudget,
+          budget: formHelp === 'housing_search' ? formBudget : '',
           status: formStatus,
-          guarantor: formGuarantor,
-          help: formHelp,
+          guarantor: formHelp === 'housing_search' ? formGuarantor : '',
+          help: formHelp === 'housing_search' ? `housing_search:${formHousingType}` : formHelp,
           formStartedAt: formStartedAtRef.current,
         }),
       });
@@ -711,8 +717,9 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
     setFormCity('');
     setFormBudget('');
     setFormStatus('before');
-    setFormGuarantor('maybe');
-    setFormHelp('');
+    setFormGuarantor('');
+    setFormHelp('consultation');
+    setFormHousingType('');
     formStartedAtRef.current = Date.now();
     setActiveSituation('moving');
     setFormState('idle');
@@ -737,6 +744,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       { value: 'after', label: ui.formStatusAfter },
       { value: 'found_housing', label: ui.formStatusFoundHousing },
       { value: 'need_housing', label: ui.formStatusNeedHousing },
+      { value: 'organisation', label: ui.formStatusOrganisation },
     ],
     guarantor: [
       { value: 'yes', label: ui.formGuarantorYes },
@@ -744,11 +752,19 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       { value: 'no', label: ui.formGuarantorNo },
     ],
     help: [
-      { value: '', label: lang === 'uk' ? 'Оберіть потрібну допомогу' : lang === 'ru' ? 'Выберите нужную помощь' : 'Choose the required help' },
-      { value: 'consultation', label: ui.selectorConsult },
-      { value: 'single', label: ui.selectorServices },
-      { value: 'packages', label: ui.selectorPackages },
-      { value: 'b2b', label: ui.selectorPartner },
+      { value: 'consultation', label: lang === 'uk' ? 'Консультація / планування переїзду' : lang === 'ru' ? 'Консультация / планирование переезда' : 'Consultation / planning my move' },
+      { value: 'housing_search', label: lang === 'uk' ? 'Пошук житла та підтримка з орендною заявкою' : lang === 'ru' ? 'Поиск жилья и поддержка с арендной заявкой' : 'Housing search and rental application support' },
+      { value: 'single', label: lang === 'uk' ? 'Інша окрема послуга' : lang === 'ru' ? 'Другая отдельная услуга' : 'Another single service' },
+      { value: 'packages', label: lang === 'uk' ? 'Пакет після приїзду' : lang === 'ru' ? 'Пакет после приезда' : 'Post-arrival package' },
+      { value: 'b2b', label: lang === 'uk' ? 'Партнерство / організація' : lang === 'ru' ? 'Партнёрство / организация' : 'Partnership / organisation' },
+    ],
+    housingType: [
+      { value: 'room_student', label: lang === 'uk' ? 'Кімната / студентське житло' : lang === 'ru' ? 'Комната / студенческое жильё' : 'Room / student accommodation' },
+      { value: 'studio', label: lang === 'uk' ? 'Студія' : lang === 'ru' ? 'Студия' : 'Studio' },
+      { value: 'apartment', label: lang === 'uk' ? 'Квартира' : lang === 'ru' ? 'Квартира' : 'Apartment' },
+      { value: 'house', label: lang === 'uk' ? 'Будинок' : lang === 'ru' ? 'Дом' : 'House' },
+      { value: 'short_stay', label: lang === 'uk' ? 'Тимчасове / короткострокове житло' : lang === 'ru' ? 'Временное / краткосрочное жильё' : 'Temporary / short-stay housing' },
+      { value: 'not_sure', label: lang === 'uk' ? 'Ще не знаю' : lang === 'ru' ? 'Пока не знаю' : 'Not sure yet' },
     ],
     budget: [
       { value: 'under-700', label: lang === 'uk' ? 'До €700' : lang === 'ru' ? 'До €700' : 'Under €700' },
@@ -1119,15 +1135,17 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
                   <p role="note">{ui.formSensitiveWarning}</p>
                   <div className="qualification-grid">
                     <label htmlFor="contact-audience"><span>{ui.formAudienceLabel}</span><select id="contact-audience" name="audience" value={formAudience} onChange={(event) => setFormAudience(event.target.value)} disabled={formState === 'sending'}>{qualificationOptions.audience.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
-                    <label htmlFor="contact-status"><span>{ui.formStatusLabel}</span><select id="contact-status" name="status" value={formStatus} onChange={(event) => setFormStatus(event.target.value)} disabled={formState === 'sending'}>{qualificationOptions.status.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
-                    <label htmlFor="contact-moving-date"><span>{ui.formMovingDateLabel}</span><input id="contact-moving-date" name="movingDate" type="date" value={formMovingDate} onChange={(event) => setFormMovingDate(event.target.value)} disabled={formState === 'sending'} /></label>
+                    <label htmlFor="contact-status"><span>{ui.formStatusLabel}</span><select id="contact-status" name="status" value={formStatus} onChange={(event) => { const nextStatus = event.target.value; setFormStatus(nextStatus); if (nextStatus !== 'before') setFormMovingDate(''); }} disabled={formState === 'sending'}>{qualificationOptions.status.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
+                    {formStatus === 'before' && <label htmlFor="contact-moving-date"><span>{ui.formMovingDateLabel}</span><input id="contact-moving-date" name="movingDate" type="date" value={formMovingDate} onChange={(event) => setFormMovingDate(event.target.value)} disabled={formState === 'sending'} /></label>}
                     <label htmlFor="contact-city"><span>{ui.formCityLabel}</span><input id="contact-city" name="city" type="text" value={formCity} onChange={(event) => setFormCity(event.target.value)} disabled={formState === 'sending'} maxLength={80} placeholder={lang === 'uk' ? 'Амстердам, Гаага, Делфт...' : lang === 'ru' ? 'Амстердам, Гаага, Делфт...' : 'Amsterdam, The Hague, Delft...'} /></label>
-                    <label htmlFor="contact-budget"><span>{ui.formBudgetLabel}</span><select id="contact-budget" name="budget" value={formBudget} onChange={(event) => setFormBudget(event.target.value)} disabled={formState === 'sending'}><option value="">{lang === 'uk' ? 'Оберіть діапазон' : lang === 'ru' ? 'Выберите диапазон' : 'Choose a range'}</option>{qualificationOptions.budget.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
-                    <label htmlFor="contact-guarantor"><span>{ui.formGuarantorLabel}</span><select id="contact-guarantor" name="guarantor" value={formGuarantor} onChange={(event) => setFormGuarantor(event.target.value)} disabled={formState === 'sending'}>{qualificationOptions.guarantor.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
                   </div>
-                  <label htmlFor="contact-help"><span>{ui.formHelpLabel}</span><select id="contact-help" name="help" value={formHelp} onChange={(event) => setFormHelp(event.target.value)} disabled={formState === 'sending'}>{qualificationOptions.help.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
+                  <label htmlFor="contact-help"><span>{ui.formHelpLabel}</span><select id="contact-help" name="help" value={formHelp} onChange={(event) => { const nextHelp = event.target.value; setFormHelp(nextHelp); if (nextHelp !== 'housing_search') { setFormHousingType(''); setFormBudget(''); setFormGuarantor(''); } }} disabled={formState === 'sending'}>{qualificationOptions.help.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
+                  {formHelp === 'housing_search' && <div className="qualification-grid">
+                    <label htmlFor="contact-housing-type"><span>{ui.formHousingTypeLabel} *</span><select id="contact-housing-type" name="housingType" required value={formHousingType} onChange={(event) => setFormHousingType(event.target.value)} disabled={formState === 'sending'}><option value="">{lang === 'uk' ? 'Оберіть тип житла' : lang === 'ru' ? 'Выберите тип жилья' : 'Choose a housing type'}</option>{qualificationOptions.housingType.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
+                    <label htmlFor="contact-budget"><span>{ui.formBudgetLabel}</span><select id="contact-budget" name="budget" value={formBudget} onChange={(event) => setFormBudget(event.target.value)} disabled={formState === 'sending'}><option value="">{lang === 'uk' ? 'Оберіть діапазон' : lang === 'ru' ? 'Выберите диапазон' : 'Choose a range'}</option>{qualificationOptions.budget.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
+                    <label htmlFor="contact-guarantor"><span>{ui.formGuarantorLabel}</span><select id="contact-guarantor" name="guarantor" value={formGuarantor} onChange={(event) => setFormGuarantor(event.target.value)} disabled={formState === 'sending'}><option value="">{lang === 'uk' ? 'Оберіть ситуацію' : lang === 'ru' ? 'Выберите ситуацию' : 'Choose a situation'}</option>{qualificationOptions.guarantor.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
+                  </div>}
                   <div className="form-grid"><label htmlFor="contact-name"><span>{dict.contactNameLabel} *</span><input id="contact-name" name="name" type="text" required value={formName} onChange={(event) => {setFormName(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={120} autoComplete="name" placeholder="Maria" /></label><label htmlFor="contact-email"><span>{dict.contactEmailLabel} *</span><input id="contact-email" name="email" type="email" required value={formEmail} onChange={(event) => {setFormEmail(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={254} autoComplete="email" placeholder="maria@example.com" /></label></div>
-                  <label htmlFor="contact-type"><span>{dict.contactTypeLabel}</span><select id="contact-type" name="inquiryType" value={formInquiryType} onChange={(event) => setFormInquiryType(event.target.value)} disabled={formState === 'sending'}><option value="consultation">{dict.contactTypeOpt1}</option><option value="single">{dict.contactTypeOpt2}</option><option value="packages">{dict.contactTypeOpt3}</option><option value="b2b">{dict.contactTypeOpt4}</option></select></label>
                   <label htmlFor="contact-message"><span>{dict.contactMessageLabel} *</span><textarea id="contact-message" name="message" rows={5} required value={formMessage} onChange={(event) => {setFormMessage(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={5000} placeholder={lang === 'uk' ? 'Наприклад: потрібна допомога з BSN, житлом або пакетом.' : lang === 'ru' ? 'Например: нужна помощь с BSN, жильём или пакетом.' : 'For example: I need help with BSN, housing or a package.'} /></label>
                   <div className="consent-row">
                     <input type="checkbox" id="privacy-consent" name="consent" required checked={formConsent} onChange={(event) => setFormConsent(event.target.checked)} disabled={formState === 'sending'} />

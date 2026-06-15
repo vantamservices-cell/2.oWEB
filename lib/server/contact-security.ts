@@ -11,6 +11,8 @@ const AUDIENCES = ['student', 'professional', 'family', 'organisation'] as const
 const SITUATION_STATUSES = ['before', 'after', 'found_housing', 'need_housing', 'organisation'] as const;
 const GUARANTOR_CONTEXTS = ['yes', 'maybe', 'no'] as const;
 const HOUSING_BUDGETS = ['under-700', '700-1000', '1000-1500', '1500-plus', 'not-sure'] as const;
+const HOUSING_TYPES = ['room_student', 'studio', 'apartment', 'house', 'short_stay', 'not_sure'] as const;
+const NON_HOUSING_HELP = ['consultation', 'single', 'packages', 'b2b'] as const;
 
 const MIN_FORM_FILL_MS = 1_500;
 
@@ -101,6 +103,30 @@ function normaliseDate(value: unknown) {
   return Number.isNaN(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== value
     ? undefined
     : value;
+}
+
+function parseHelpNeeded(value: unknown) {
+  if (typeof value !== 'string') return undefined;
+  if (NON_HOUSING_HELP.includes(value as (typeof NON_HOUSING_HELP)[number])) {
+    return {
+      helpNeeded: value as (typeof NON_HOUSING_HELP)[number],
+      inquiryType: value as (typeof INQUIRY_TYPES)[number],
+      isHousingSearch: false,
+    };
+  }
+
+  const [prefix, housingType, extra] = value.split(':');
+  if (prefix !== 'housing_search'
+    || extra !== undefined
+    || !HOUSING_TYPES.includes(housingType as (typeof HOUSING_TYPES)[number])) {
+    return undefined;
+  }
+
+  return {
+    helpNeeded: `housing_search:${housingType}`,
+    inquiryType: 'single' as const,
+    isHousingSearch: true,
+  };
 }
 
 function normaliseSourcePath(value: unknown, allowedOrigins: Set<string>) {
@@ -225,21 +251,19 @@ export function parseContactSubmission(value: unknown, allowedOrigins: Set<strin
 
   const name = normaliseSingleLine(payload.name, 120);
   const email = normaliseSingleLine(payload.email, 254)?.toLowerCase();
-  const inquiryType = requiredEnum(payload.inquiryType, INQUIRY_TYPES);
   const message = normaliseMessage(payload.message, 5000);
   const locale = requiredEnum(payload.language, LOCALES);
   const audience = optionalEnum(payload.audience, AUDIENCES);
-  const movingDate = normaliseDate(payload.movingDate);
   const cityOrRegion = normaliseOptionalSingleLine(payload.city, 80);
-  const housingBudget = optionalEnum(payload.budget, HOUSING_BUDGETS);
   const situationStatus = optionalEnum(payload.status, SITUATION_STATUSES);
-  const guarantorContext = optionalEnum(payload.guarantor, GUARANTOR_CONTEXTS);
-  const helpNeeded = normaliseOptionalSingleLine(payload.help, 120);
+  const parsedHelp = parseHelpNeeded(payload.help);
+  const movingDate = situationStatus === 'before' ? normaliseDate(payload.movingDate) : null;
+  const housingBudget = parsedHelp?.isHousingSearch ? optionalEnum(payload.budget, HOUSING_BUDGETS) : null;
+  const guarantorContext = parsedHelp?.isHousingSearch ? optionalEnum(payload.guarantor, GUARANTOR_CONTEXTS) : null;
 
   if (!name
     || !email
     || !EMAIL_PATTERN.test(email)
-    || !inquiryType
     || !message
     || !locale
     || audience === undefined
@@ -247,8 +271,8 @@ export function parseContactSubmission(value: unknown, allowedOrigins: Set<strin
     || cityOrRegion === undefined
     || housingBudget === undefined
     || situationStatus === undefined
+    || !parsedHelp
     || guarantorContext === undefined
-    || helpNeeded === undefined
     || payload.consent !== true
     || !isValidFormTiming(payload.formStartedAt)) {
     return {status: 'invalid'};
@@ -259,7 +283,7 @@ export function parseContactSubmission(value: unknown, allowedOrigins: Set<strin
     submission: {
       name,
       email,
-      inquiryType,
+      inquiryType: parsedHelp.inquiryType,
       message,
       locale,
       sourcePath: normaliseSourcePath(payload.sourceUrl, allowedOrigins),
@@ -269,7 +293,7 @@ export function parseContactSubmission(value: unknown, allowedOrigins: Set<strin
       housingBudget,
       situationStatus,
       guarantorContext,
-      helpNeeded,
+      helpNeeded: parsedHelp.helpNeeded,
     },
   };
 }
