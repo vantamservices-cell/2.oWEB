@@ -221,17 +221,17 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     metric4Text: "контекст запиту підтягується у форму",
 
     servicesTitle: "Три рівні підтримки",
-    servicesSub: "Житло і оренда, підготовка до приїзду та практичне облаштування після приїзду - три зрозумілі напрями.",
+    servicesSub: "Житло і оренда, підготовка до приїзду та практичне облаштування після приїзду - загальні описи. Остаточний обсяг і ціна підтверджуються письмово.",
     servicesFooter: "Ціни та склад послуг показані у вибраній мові",
 
     singleTitle: "Окремі послуги",
-    singleSub: "Оберіть одну послугу, якщо потрібен лише один конкретний крок у межах житла, підготовки або практичного облаштування.",
+    singleSub: "Оберіть одну послугу, якщо потрібен лише один конкретний крок у межах житла, підготовки або практичного облаштування. Вибір на сайті не резервує доступність.",
     singlePriceTag: "Фіксована ціна",
     singleBadge: "Один крок",
     singleCta: "Обрати послугу",
 
     consultTitle: "Консультації",
-    consultSub: "Якщо ви ще плануєте переїзд, вже розбираєтесь із житлом або після приїзду хочете зрозуміти наступний крок, консультація допоможе швидко звузити вибір.",
+    consultSub: "Консультація зазвичай є першим кроком. Обсяг, тривалість, ціна і час підтверджуються письмово перед бронюванням.",
     consultBadge: "Початок тут",
     consultResultLabel: "Після дзвінка у вас буде:",
     consultNoteLabel: "Найкраще для:",
@@ -253,7 +253,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     calcRiskTextLabel: "Обрані сценарії:",
 
     pkgGridTitle: "Порівняйте пакети",
-    pkgGridSub: "Prepare, Arrival Setup і Thrive покривають різні обсяги допомоги до приїзду, під час переїзду та після нього.",
+    pkgGridSub: "Prepare, Arrival Setup і Thrive покривають різні обсяги допомоги. Остаточний обсяг, ціна, строки і погоджені зовнішні витрати підтверджуються письмово.",
     pkgIdealTitle: "Найкраще для:",
     pkgScopeTitle: "Що входить у пакет:",
     pkgLimitsTitle: "Що не входить:",
@@ -285,7 +285,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     contactSubmitBtn: "Надіслати запит",
     contactSending: "Надсилаємо ваш запит...",
     contactSuccessTitle: "Запит надіслано",
-    contactSuccessDesc: "Дякуємо. Ми отримали запит і відповімо на електронну адресу, яку ви вказали.",
+    contactSuccessDesc: "Дякуємо. Ми отримали ваш запит, переглянемо інформацію і відповімо на електронну адресу, яку ви вказали, щодо можливих наступних кроків.",
     contactFailBtn: "Надіслати ще один запит",
 
     modalTitle: "PDF обраного пакета",
@@ -361,17 +361,17 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     metric4Text: "контекст запроса подставляется в форму",
 
     servicesTitle: "Три уровня поддержки",
-    servicesSub: "Жильё и аренда, подготовка к приезду и практическое обустройство после приезда - три понятных направления.",
+    servicesSub: "Жильё и аренда, подготовка к приезду и практическое обустройство после приезда - общие описания. Итоговый объём и цена подтверждаются письменно.",
     servicesFooter: "Цены и состав услуг показаны на выбранном языке",
 
     singleTitle: "Отдельные услуги",
-    singleSub: "Выберите одну услугу, если нужен только один конкретный шаг в рамках жилья, подготовки или практического обустройства.",
+    singleSub: "Выберите одну услугу, если нужен только один конкретный шаг в рамках жилья, подготовки или практического обустройства. Выбор на сайте не резервирует доступность.",
     singlePriceTag: "Фиксированная цена",
     singleBadge: "Один шаг",
     singleCta: "Выбрать услугу",
 
     consultTitle: "Консультации",
-    consultSub: "Если вы ещё планируете переезд, уже разбираетесь с жильём или после приезда хотите понять следующий шаг, консультация поможет быстро сузить выбор.",
+    consultSub: "Консультация обычно является первым шагом. Объём, длительность, цена и время подтверждаются письменно до бронирования.",
     consultBadge: "Начать здесь",
     consultResultLabel: "После звонка у вас будет:",
     consultNoteLabel: "Лучше всего для:",
@@ -393,7 +393,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     calcRiskTextLabel: "Выбранные сценарии:",
 
     pkgGridTitle: "Сравните пакеты",
-    pkgGridSub: "Prepare, Arrival Setup и Thrive покрывают разный объём помощи до приезда, во время переезда и после него.",
+    pkgGridSub: "Prepare, Arrival Setup и Thrive покрывают разный объём помощи. Итоговый объём, цена, сроки и согласованные внешние расходы подтверждаются письменно.",
     pkgIdealTitle: "Лучше всего для:",
     pkgScopeTitle: "Что входит в пакет:",
     pkgLimitsTitle: "Что не входит:",
@@ -425,7 +425,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     contactSubmitBtn: "Отправить запрос",
     contactSending: "Отправляем ваш запрос...",
     contactSuccessTitle: "Запрос отправлен",
-    contactSuccessDesc: "Спасибо. Мы получили запрос и ответим на электронную почту, которую вы указали.",
+    contactSuccessDesc: "Спасибо. Мы получили ваш запрос, рассмотрим информацию и ответим на указанную электронную почту о возможных следующих шагах.",
     contactFailBtn: "Отправить ещё один запрос",
 
     modalTitle: "PDF выбранного пакета",
@@ -501,17 +501,17 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     metric4Text: "selected context is prefilled in the form",
 
     servicesTitle: "Three levels of support",
-    servicesSub: "Housing and rental support, pre-arrival preparation, and practical settlement after arrival.",
+    servicesSub: "Housing and rental support, pre-arrival preparation, and practical settlement after arrival are general descriptions. Final scope and price are confirmed in writing.",
     servicesFooter: "Prices and scope are shown in the selected language",
 
     singleTitle: "Single services",
-    singleSub: "Choose one service when you need help with one concrete step within housing, preparation or practical settlement.",
+    singleSub: "Choose one service when you need help with one concrete step within housing, preparation or practical settlement. Selecting an option on the site does not reserve availability.",
     singlePriceTag: "Fixed price",
     singleBadge: "One step",
     singleCta: "Choose service",
 
     consultTitle: "Consultations",
-    consultSub: "If you are still planning your move, already working through housing, or want to understand the next step after arrival, a consultation helps narrow the path quickly.",
+    consultSub: "A consultation is normally the first step. Scope, duration, price and timing are confirmed in writing before booking.",
     consultBadge: "Start here",
     consultResultLabel: "You leave with:",
     consultNoteLabel: "Best for:",
@@ -533,7 +533,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     calcRiskTextLabel: "Selected scenarios:",
 
     pkgGridTitle: "Compare the packages",
-    pkgGridSub: "Prepare, Arrival Setup and Thrive cover different levels of help before arrival, during the move and after arrival.",
+    pkgGridSub: "Prepare, Arrival Setup and Thrive cover different levels of help. Final scope, price, timing and approved external costs are confirmed in writing.",
     pkgIdealTitle: "Best for:",
     pkgScopeTitle: "Included in this package:",
     pkgLimitsTitle: "What is not included:",
@@ -565,7 +565,7 @@ export const DICTIONARY: Record<Language, TranslationMatrix> = {
     contactSubmitBtn: "Send enquiry",
     contactSending: "Sending your enquiry...",
     contactSuccessTitle: "Enquiry sent",
-    contactSuccessDesc: "Thanks. We received your enquiry and will reply to the email address you provided.",
+    contactSuccessDesc: "Thanks. We received your enquiry, will review the information and will reply to the email address you provided about possible next steps.",
     contactFailBtn: "Send another enquiry",
 
     modalTitle: "PDF for the selected package",
@@ -737,7 +737,7 @@ export const PROCESS_STEPS: ProcessStep[] = [
   {
     id: 'step_4',
     title: { uk: 'Починається підтримка', ru: 'Начинается поддержка', en: 'Support begins' },
-    description: { uk: 'Робота стартує після узгодження обсягу, умов і відповідного наступного кроку.', ru: 'Работа стартует после согласования объёма, условий и следующего шага.', en: 'Work starts after the scope, terms and next step have been agreed.' },
+    description: { uk: 'Робота стартує після письмового підтвердження обсягу, умов і відповідного наступного кроку.', ru: 'Работа стартует после письменного подтверждения объёма, условий и следующего шага.', en: 'Work starts after the scope, terms and next step are confirmed in writing.' },
   },
 ];
 
@@ -950,21 +950,21 @@ export const PREMIUM_PACKAGES: Package[] = [
     limits: {
       uk: [
         "дистанційно",
-        "30 днів з моменту покупки",
+        "30 днів з письмового прийняття",
         "не включено: координація після приїзду, налаштування банку/страхування, фізична присутність, комунікація з третіми сторонами"
       ],
       ru: [
         "удаленно",
-        "30 дней с момента покупки",
+        "30 дней с письменного принятия",
         "не включено: координация после приезда, настройка банка/страховки, физическое присутствие, коммуникация с третьими сторонами"
       ],
       en: [
         "remote only",
-        "30 days from purchase",
+        "30 days from written acceptance",
         "not included: post-arrival coordination, bank/insurance setup, physical presence, third-party communication"
       ]
     },
-    cta: { uk: "Почати з Prepare", ru: "Начать с Prepare", en: "Start with Prepare" }
+    cta: { uk: "Запитати про Prepare", ru: "Запросить Prepare", en: "Enquire about Prepare" }
   },
   {
     id: "pkg_setup",
@@ -1048,7 +1048,7 @@ export const PREMIUM_PACKAGES: Package[] = [
         "not included: physical appointment accompaniment, housing search, tax filing, legal disputes, third-party fees"
       ]
     },
-    cta: { uk: "Почати налаштування", ru: "Начать настройку", en: "Start your setup" }
+    cta: { uk: "Запитати про Arrival Setup", ru: "Запросить Arrival Setup", en: "Enquire about Arrival Setup" }
   },
   {
     id: "pkg_full",
@@ -1132,7 +1132,7 @@ export const PREMIUM_PACKAGES: Package[] = [
         "not included: housing search, legal representation, licensed financial advice, third-party fees"
       ]
     },
-    cta: { uk: "Активувати Thrive", ru: "Активировать Thrive", en: "Activate Thrive" }
+    cta: { uk: "Запитати про Thrive", ru: "Запросить Thrive", en: "Enquire about Thrive" }
   }
 ];
 
@@ -1159,8 +1159,8 @@ export const CONSULTATIONS_STORE: Consultation[] = [
       en: "For people who are still planning the move or have already arrived but want to understand the next practical step - housing, preparation or post-arrival setup."
     },
     result: { uk: "письмовий план дій", ru: "письменный план действий", en: "written action plan" },
-    note: { uk: "Можна зарахувати до будь-якого пакета протягом 14 днів.", ru: "Можно зачесть в любой пакет в течение 14 дней.", en: "Can be credited toward any package within 14 days." },
-    cta: { uk: "Записатися на дзвінок", ru: "Записаться на звонок", en: "Book a call" }
+    note: { uk: "Оплачену суму можна один раз зарахувати до відповідного пакета протягом 14 днів.", ru: "Оплаченную сумму можно один раз зачесть в подходящий пакет в течение 14 дней.", en: "The paid amount may be credited once toward an eligible package within 14 days." },
+    cta: { uk: "Запитати про дзвінок", ru: "Запросить звонок", en: "Ask about this call" }
   },
   {
     id: "consult_parent",
@@ -1173,8 +1173,8 @@ export const CONSULTATIONS_STORE: Consultation[] = [
       en: "For parents, partners or other close people who want to understand the three main support directions: pre-arrival preparation, housing, and practical settlement after arrival."
     },
     result: { uk: "зрозумілі перші кроки та можливий формат підтримки", ru: "понятные первые шаги и возможный формат поддержки", en: "clear understanding of the first steps and possible support format" },
-    note: { uk: "Можна зарахувати до будь-якого пакета протягом 14 днів.", ru: "Можно зачесть в любой пакет в течение 14 дней.", en: "Can be credited toward any package within 14 days." },
-    cta: { uk: "Записатися на дзвінок", ru: "Записаться на звонок", en: "Book a call" }
+    note: { uk: "Оплачену суму можна один раз зарахувати до відповідного пакета протягом 14 днів.", ru: "Оплаченную сумму можно один раз зачесть в подходящий пакет в течение 14 дней.", en: "The paid amount may be credited once toward an eligible package within 14 days." },
+    cta: { uk: "Запитати про дзвінок", ru: "Запросить звонок", en: "Ask about this call" }
   },
   {
     id: "consult_urgent",
@@ -1187,8 +1187,8 @@ export const CONSULTATIONS_STORE: Consultation[] = [
       en: "For situations where a problem has already appeared in any of the three areas: housing, pre-arrival preparation or practical settlement after arrival."
     },
     result: { uk: "швидка оцінка і чіткий план дій", ru: "быстрая оценка и четкий план действий", en: "quick assessment and clear action plan" },
-    note: { uk: "Окремий пріоритетний слот.", ru: "Отдельный приоритетный слот.", en: "Reserved priority slot." },
-    cta: { uk: "Записатися зараз", ru: "Записаться сейчас", en: "Book now" }
+    note: { uk: "Пріоритетний слот за наявності.", ru: "Приоритетный слот при наличии.", en: "Priority slot where available." },
+    cta: { uk: "Запитати про терміновий дзвінок", ru: "Запросить срочный звонок", en: "Ask about an urgent call" }
   }
 ];
 
@@ -1221,9 +1221,9 @@ export const SINGLE_SERVICES: SingleService[] = [
       en: "remote",
     },
     desc: {
-      uk: "Підготовка документів для орендної заявки, пояснення ситуації з поручителем, комунікація з агенцією або орендодавцем, подання заявки та практична підтримка з договором оренди.",
-      ru: "Подготовка документов для арендной заявки, объяснение ситуации с поручителем, коммуникация с агентством или арендодателем, подача заявки и практическая поддержка по договору аренды.",
-      en: "Preparing the rental-application file, explaining the guarantor situation, communicating with the agency or landlord, submitting the application and supporting rental-contract questions.",
+      uk: "Підготовка документів для орендної заявки, пояснення ситуації з поручителем, повідомлення для агенції або орендодавця та практична підтримка з договором оренди.",
+      ru: "Подготовка документов для арендной заявки, объяснение ситуации с поручителем, сообщения для агентства или арендодателя и практическая поддержка по договору аренды.",
+      en: "Preparing the rental-application file, explaining the guarantor situation, messages for the agency or landlord, and practical support with rental-contract questions.",
     },
     limit: {
       uk: "Ліміт: один кейс, без гарантії результату.",
@@ -1506,9 +1506,9 @@ export const FAQS_STORE: FaqItem[] = [
       en: "What is included in VANTAM services and packages?"
     },
     a: {
-      uk: "Консультації допомагають обрати правильний наступний крок між трьома напрямками: підготовкою до приїзду, житлом і практичним облаштуванням після приїзду. Окремі послуги покривають один конкретний крок, а Prepare, Arrival Setup і Thrive - різні рівні ширшого супроводу.",
-      ru: "Консультации помогают выбрать правильный следующий шаг между тремя направлениями: подготовкой к приезду, жильём и практическим обустройством после приезда. Отдельные услуги покрывают один конкретный шаг, а Prepare, Arrival Setup и Thrive - разные уровни более широкого сопровождения.",
-      en: "Consultations help you choose the right next step between the three directions: pre-arrival preparation, housing, and practical settlement after arrival. Single services cover one concrete step, while Prepare, Arrival Setup and Thrive are different levels of broader support."
+      uk: "Описи на сайті є орієнтовними. Остаточний обсяг, винятки, ціна, строки і погоджені зовнішні витрати підтверджуються письмово перед формальним прийняттям.",
+      ru: "Описания на сайте являются ориентировочными. Итоговый объём, исключения, цена, сроки и согласованные внешние расходы подтверждаются письменно до формального принятия.",
+      en: "Website descriptions are indicative. Final scope, exclusions, price, timing and approved external costs are confirmed in writing before formal acceptance."
     }
   },
   {
@@ -1519,61 +1519,113 @@ export const FAQS_STORE: FaqItem[] = [
       en: "What does VANTAM not guarantee?"
     },
     a: {
-      uk: "VANTAM не гарантує житло, схвалення заявки, рішення банку, страховика чи державного органу, а також не виступає агентством нерухомості, юридичною фірмою або страховим брокером.",
-      ru: "VANTAM не гарантирует жильё, одобрение заявки, решение банка, страховщика или государственного органа, а также не выступает агентством недвижимости, юридической фирмой или страховым брокером.",
-      en: "VANTAM does not guarantee housing, application approval, bank, insurer or public-authority decisions, and it does not act as a real-estate agency, law firm or insurance broker."
+      uk: "VANTAM не гарантує житло, схвалення заявки, рішення банку, страховика, муніципалітету, університету чи орендодавця. VANTAM не є агентством нерухомості, юридичною фірмою, страховим брокером або ліцензованим посередником.",
+      ru: "VANTAM не гарантирует жильё, одобрение заявки, решение банка, страховщика, муниципалитета, университета или арендодателя. VANTAM не является агентством недвижимости, юридической фирмой, страховым брокером или лицензированным посредником.",
+      en: "VANTAM does not guarantee housing, application approval, bank, insurer, municipality, university or landlord decisions. VANTAM is not a real-estate agency, law firm, insurance broker or licensed intermediary."
     }
   },
   {
     id: "f3",
     q: {
-      uk: "Скільки зазвичай триває підтримка?",
-      ru: "Сколько обычно длится поддержка?",
-      en: "How long does support usually take?"
+      uk: "Чи надсилання форми створює договір?",
+      ru: "Создаёт ли отправка формы договор?",
+      en: "Does submitting the form create a contract?"
     },
     a: {
-      uk: "Тривалість залежить від того, чи ви ще до приїзду, чи вже на місці, наскільки готові документи і чи потрібна комунікація з третьою стороною. VANTAM підтверджує реальний обсяг роботи після оцінки ситуації.",
-      ru: "Продолжительность зависит от того, до приезда вы или уже на месте, насколько готовы документы и нужна ли коммуникация с третьей стороной. VANTAM подтверждает реальный объём работы после оценки ситуации.",
-      en: "Timing depends on whether you are before or after arrival, how ready the documents are and whether third-party communication is needed. VANTAM confirms the real scope after assessing the situation."
+      uk: "Ні. Форма є лише каналом для запиту. Вона не створює договір, бронювання, платіжне зобов’язання, запит на початок роботи або відмову від прав.",
+      ru: "Нет. Форма является только каналом для запроса. Она не создаёт договор, бронирование, платёжное обязательство, запрос на начало работы или отказ от прав.",
+      en: "No. The form is an enquiry channel only. It does not create a contract, book a consultation, create a payment obligation, request work to start or waive any rights."
     }
   },
   {
     id: "f4",
     q: {
-      uk: "Як працює оплата?",
-      ru: "Как работает оплата?",
-      en: "How does payment work?"
+      uk: "Як підтверджується консультація?",
+      ru: "Как подтверждается консультация?",
+      en: "How is a consultation confirmed?"
     },
     a: {
-      uk: "Оплата узгоджується у письмовій пропозиції для вибраної послуги або пакета. Якщо обсяг ще уточнюється, VANTAM підтверджує умови до початку роботи.",
-      ru: "Оплата согласуется в письменном предложении для выбранной услуги или пакета. Если объём ещё уточняется, VANTAM подтверждает условия до начала работы.",
-      en: "Payment is agreed in the written offer for the selected service or package. If the scope is still being clarified, VANTAM confirms the terms before work starts."
+      uk: "Тип, обсяг, тривалість, ціна і час консультації підтверджуються письмово перед бронюванням. Якщо погоджено інвойс, він сплачується протягом 3 календарних днів, і консультація зазвичай проходить після оплати.",
+      ru: "Тип, объём, длительность, цена и время консультации подтверждаются письменно до бронирования. Если согласован счёт, он оплачивается в течение 3 календарных дней, и консультация обычно проходит после оплаты.",
+      en: "The consultation type, scope, duration, price and timing are confirmed in writing before booking. Where an invoice is agreed, it is due within 3 calendar days, and the consultation normally takes place after payment."
     }
   },
   {
     id: "f5",
     q: {
-      uk: "Які правила скасування або повернення коштів?",
-      ru: "Какие правила отмены или возврата средств?",
-      en: "What are the cancellation or refund rules?"
+      uk: "Чи можна перенести консультацію?",
+      ru: "Можно ли перенести консультацию?",
+      en: "Can I reschedule a consultation?"
     },
     a: {
-      uk: "Правила скасування або повернення коштів підтверджуються у письмовій пропозиції для конкретної послуги або пакета. Для сайту окрему універсальну політику поки не опубліковано.",
-      ru: "Правила отмены или возврата средств подтверждаются в письменном предложении для конкретной услуги или пакета. Для сайта отдельная универсальная политика пока не опубликована.",
-      en: "Cancellation or refund terms are confirmed in the written offer for the specific service or package. A separate universal website policy is not published yet."
+      uk: "Так. Одну консультацію можна перенести без додаткової плати, якщо повідомити щонайменше за 24 години до початку. Повторне перенесення не є автоматичним.",
+      ru: "Да. Одну консультацию можно перенести без дополнительной платы, если сообщить минимум за 24 часа до начала. Повторный перенос не является автоматическим.",
+      en: "Yes. One consultation can be rescheduled without an additional fee if you give at least 24 hours’ notice before the start time. Repeated rescheduling is not automatic."
     }
   },
   {
     id: "f6",
+    q: {
+      uk: "Як працює кредит за консультацію?",
+      ru: "Как работает зачёт консультации?",
+      en: "How does the consultation credit work?"
+    },
+    a: {
+      uk: "Оплачену суму консультації можна один раз зарахувати до відповідного опублікованого пакета, який той самий клієнт формально приймає протягом 14 календарних днів. Кредит не виплачується готівкою і не може перевищувати ціну пакета.",
+      ru: "Оплаченную сумму консультации можно один раз зачесть в подходящий опубликованный пакет, который тот же клиент формально принимает в течение 14 календарных дней. Зачёт не выплачивается деньгами и не может превышать цену пакета.",
+      en: "The paid consultation amount may be credited once against an eligible published package formally accepted by the same client within 14 calendar days. The credit is not paid out in cash and cannot exceed the package price."
+    }
+  },
+  {
+    id: "f7",
+    q: {
+      uk: "Як працює оплата за послуги або пакети?",
+      ru: "Как работает оплата услуг или пакетов?",
+      en: "How does payment for services or packages work?"
+    },
+    a: {
+      uk: "Оплата, строки та будь-які погоджені зовнішні витрати підтверджуються письмово для конкретної послуги або пакета. Матеріальна додаткова робота чи зовнішні витрати потребують письмового погодження.",
+      ru: "Оплата, сроки и любые согласованные внешние расходы подтверждаются письменно для конкретной услуги или пакета. Существенная дополнительная работа или внешние расходы требуют письменного согласования.",
+      en: "Payment, timing and any approved external costs are confirmed in writing for the specific service or package. Material extra work or external costs require written approval."
+    }
+  },
+  {
+    id: "f8",
+    q: {
+      uk: "Чи можна скасувати або скористатися правом на відмову?",
+      ru: "Можно ли отменить или воспользоваться правом на отказ?",
+      en: "Can I cancel or withdraw?"
+    },
+    a: {
+      uk: "Скасування до початку роботи, припинення після початку роботи і законне право споживача на відмову є різними питаннями. Відповідні правила пояснюються в письмовій угоді та документах, наданих перед формальним прийняттям.",
+      ru: "Отмена до начала работы, прекращение после начала работы и законное право потребителя на отказ являются разными вопросами. Соответствующие правила объясняются в письменном соглашении и документах, предоставленных до формального принятия.",
+      en: "Cancellation before work starts, termination after work starts and statutory consumer withdrawal are separate issues. The applicable rules are explained in the written agreement and documents supplied before formal acceptance."
+    }
+  },
+  {
+    id: "f9",
+    q: {
+      uk: "Чи може робота початися під час строку відмови?",
+      ru: "Может ли работа начаться в период отказа?",
+      en: "Can work start during a withdrawal period?"
+    },
+    a: {
+      uk: "Звернення через форму цього не просить. Якщо окремий запит на початок під час строку законної відмови потрібен, VANTAM обробляє його окремо після надання відповідної інформації.",
+      ru: "Обращение через форму этого не запрашивает. Если нужен отдельный запрос на начало в период законного отказа, VANTAM обрабатывает его отдельно после предоставления соответствующей информации.",
+      en: "The enquiry form does not request this. If a separate request to begin during a statutory withdrawal period is needed, VANTAM handles it separately after providing the relevant information."
+    }
+  },
+  {
+    id: "f10",
     q: {
       uk: "Чи можна почати дистанційно до приїзду?",
       ru: "Можно ли начать дистанционно до приезда?",
       en: "Can support start remotely before arrival?"
     },
     a: {
-      uk: "Так. Підтримка може початися до приїзду, якщо це потрібно для підготовки документів, пояснення кроків або планування житла, переїзду чи післяприїзних кроків.",
-      ru: "Да. Поддержка может начаться до приезда, если это нужно для подготовки документов, объяснения шагов или планирования жилья, переезда и послеприездных шагов.",
-      en: "Yes. Support can start before arrival when documents need preparing, steps need explaining or you want to plan housing, the move or the post-arrival steps."
+      uk: "Так, підготовку можна обговорити дистанційно до приїзду. Будь-яка фактична робота починається лише після письмового підтвердження обсягу, ціни, строків і потрібних умов.",
+      ru: "Да, подготовку можно обсудить дистанционно до приезда. Любая фактическая работа начинается только после письменного подтверждения объёма, цены, сроков и необходимых условий.",
+      en: "Yes, preparation can be discussed remotely before arrival. Any actual work starts only after scope, price, timing and required conditions are confirmed in writing."
     }
   }
 ];
