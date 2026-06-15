@@ -105,6 +105,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
   const modalRef = useRef<HTMLDivElement>(null);
   const modalCloseRef = useRef<HTMLButtonElement>(null);
   const successRef = useRef<HTMLDivElement>(null);
+  const formStartedAtRef = useRef(0);
   const [currentHash, setCurrentHash] = useState('');
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [selectedPackage, setSelectedPackage] = useState('pkg_setup');
@@ -136,6 +137,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
   const [formState, setFormState] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
   useEffect(() => {
+    formStartedAtRef.current = Date.now();
     const updateHash = () => setCurrentHash(window.location.hash);
     updateHash();
     window.addEventListener('hashchange', updateHash);
@@ -298,6 +300,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       formStatusLabel: 'Поточний стан',
       formGuarantorLabel: 'Гарант / поручитель',
       formHelpLabel: 'Яка допомога потрібна',
+      formSensitiveWarning: 'Не надсилайте через цю відкриту форму паспорти, банківські виписки, медичні дані, файли поручителя чи інші чутливі документи.',
       formStatusBefore: 'Ще до приїзду',
       formStatusAfter: 'Вже в Нідерландах',
       formStatusFoundHousing: 'Житло вже знайдено',
@@ -391,6 +394,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       formStatusLabel: 'Текущий статус',
       formGuarantorLabel: 'Гарант / поручитель',
       formHelpLabel: 'Какая помощь нужна',
+      formSensitiveWarning: 'Не отправляйте через эту открытую форму паспорта, банковские выписки, медицинские данные, файлы поручителя или другие чувствительные документы.',
       formStatusBefore: 'Ещё до приезда',
       formStatusAfter: 'Уже в Нидерландах',
       formStatusFoundHousing: 'Жильё уже найдено',
@@ -484,6 +488,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       formStatusLabel: 'Current status',
       formGuarantorLabel: 'Guarantor situation',
       formHelpLabel: 'What help is needed',
+      formSensitiveWarning: 'Do not submit passports, bank statements, medical information, guarantor files or other sensitive documents through this open form.',
       formStatusBefore: 'Before arrival',
       formStatusAfter: 'Already in the Netherlands',
       formStatusFoundHousing: 'Housing already found',
@@ -677,7 +682,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
           consent: formConsent,
           language: lang,
           website: formWebsite,
-          sourceUrl: window.location.href,
+          sourceUrl: window.location.pathname,
           audience: formAudience,
           movingDate: formMovingDate,
           city: formCity,
@@ -685,6 +690,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
           status: formStatus,
           guarantor: formGuarantor,
           help: formHelp,
+          formStartedAt: formStartedAtRef.current,
         }),
       });
       if (!response.ok) throw new Error('Contact request failed');
@@ -707,6 +713,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
     setFormStatus('before');
     setFormGuarantor('maybe');
     setFormHelp('');
+    formStartedAtRef.current = Date.now();
     setActiveSituation('moving');
     setFormState('idle');
   };
@@ -1109,6 +1116,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
                     <p>{ui.formSectionTitle}</p>
                     <span>{ui.formSectionSub}</span>
                   </div>
+                  <p role="note">{ui.formSensitiveWarning}</p>
                   <div className="qualification-grid">
                     <label htmlFor="contact-audience"><span>{ui.formAudienceLabel}</span><select id="contact-audience" name="audience" value={formAudience} onChange={(event) => setFormAudience(event.target.value)} disabled={formState === 'sending'}>{qualificationOptions.audience.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
                     <label htmlFor="contact-status"><span>{ui.formStatusLabel}</span><select id="contact-status" name="status" value={formStatus} onChange={(event) => setFormStatus(event.target.value)} disabled={formState === 'sending'}>{qualificationOptions.status.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>

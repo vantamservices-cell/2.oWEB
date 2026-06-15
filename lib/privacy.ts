@@ -1,8 +1,9 @@
 import {BUSINESS, BUSINESS_LOCATION, getWhatsAppAriaLabel, getWhatsAppUrl} from './business';
 import type {Locale} from './locales';
 import {localePath} from './locales';
+import {PRIVACY_POLICY_VERSION} from './privacy-version';
 
-export const PRIVACY_LAST_UPDATED_ISO = '2026-06-14';
+export const PRIVACY_LAST_UPDATED_ISO = PRIVACY_POLICY_VERSION;
 
 const PRIVACY_DATE_LOCALE: Record<Locale, string> = {
   en: 'en-GB',

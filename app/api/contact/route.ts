@@ -1,240 +1,114 @@
 import {randomUUID} from 'node:crypto';
 import {NextRequest, NextResponse} from 'next/server';
 
+import {
+  deriveClientIdentifier,
+  isAllowedRequestOrigin,
+  parseContactSubmission,
+  readContactConfiguration,
+} from '@/lib/server/contact-security';
+import {submitContactRequest} from '@/lib/server/supabase-contact';
+import {PRIVACY_POLICY_VERSION} from '@/lib/privacy-version';
+
 export const runtime = 'nodejs';
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
-const RATE_LIMIT_MAX_REQUESTS = 5;
+const MAX_REQUEST_BYTES = 16 * 1024;
 
-type ContactPayload = {
-  name?: unknown;
-  email?: unknown;
-  inquiryType?: unknown;
-  message?: unknown;
-  consent?: unknown;
-  language?: unknown;
-  website?: unknown;
-  sourceUrl?: unknown;
-  audience?: unknown;
-  movingDate?: unknown;
-  city?: unknown;
-  budget?: unknown;
-  status?: unknown;
-  guarantor?: unknown;
-  help?: unknown;
-};
-
-type RateLimitEntry = {
-  count: number;
-  resetAt: number;
-};
-
-const globalRateLimit = globalThis as typeof globalThis & {
-  contactRateLimit?: Map<string, RateLimitEntry>;
-};
-
-const rateLimitStore = globalRateLimit.contactRateLimit ?? new Map<string, RateLimitEntry>();
-globalRateLimit.contactRateLimit = rateLimitStore;
-
-function cleanText(value: unknown, maxLength: number) {
-  return typeof value === 'string' ? value.trim().slice(0, maxLength) : '';
-}
-
-function cleanSingleLine(value: unknown, maxLength: number) {
-  return cleanText(value, maxLength).replace(/[\r\n\t]+/g, ' ');
-}
-
-function escapeHtml(value: string) {
-  return value.replace(/[&<>'"]/g, (character) => {
-    const entities: Record<string, string> = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      "'": '&#39;',
-      '"': '&quot;',
-    };
-
-    return entities[character];
+function jsonResponse(body: {ok: true} | {error: string}, status = 200) {
+  return NextResponse.json(body, {
+    status,
+    headers: {'Cache-Control': 'no-store'},
   });
 }
 
-function getClientIp(request: NextRequest) {
-  return request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
-    || request.headers.get('x-real-ip')
-    || 'unknown';
+function logContactFailure(requestId: string, stage: string, code: string) {
+  console.error(JSON.stringify({requestId, stage, code}));
 }
 
-function isRateLimited(clientIp: string) {
-  if (clientIp === 'unknown') {
-    return false;
-  }
+function isJsonContentType(contentType: string | null) {
+  return contentType?.split(';', 1)[0]?.trim().toLowerCase() === 'application/json';
+}
 
-  const now = Date.now();
-  const current = rateLimitStore.get(clientIp);
+function exceedsDeclaredBodyLimit(contentLength: string | null) {
+  if (!contentLength) return false;
+  if (!/^\d+$/.test(contentLength)) return true;
 
-  if (!current || current.resetAt <= now) {
-    rateLimitStore.set(clientIp, {count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS});
-    return false;
-  }
-
-  if (current.count >= RATE_LIMIT_MAX_REQUESTS) {
-    return true;
-  }
-
-  current.count += 1;
-  return false;
+  const length = Number(contentLength);
+  return !Number.isSafeInteger(length) || length > MAX_REQUEST_BYTES;
 }
 
 export async function POST(request: NextRequest) {
-  const apiKey = process.env.RESEND_API_KEY;
-  const toEmail = process.env.CONTACT_TO_EMAIL;
-  const fromEmail = process.env.CONTACT_FROM_EMAIL;
+  const requestId = randomUUID();
+  const configuration = readContactConfiguration();
 
-  if (!apiKey || !fromEmail || !toEmail) {
-    console.error('Contact form is not configured on the server.');
-    return NextResponse.json(
-      {error: 'Contact delivery is not configured.'},
-      {status: 503},
-    );
+  if (!configuration) {
+    logContactFailure(requestId, 'configuration', 'CONTACT_CONFIG_INVALID');
+    return jsonResponse({error: 'The contact service is temporarily unavailable.'}, 503);
   }
 
-  const origin = request.headers.get('origin');
-  if (origin && origin !== request.nextUrl.origin) {
-    return NextResponse.json({error: 'Invalid request origin.'}, {status: 403});
+  if (!isAllowedRequestOrigin(request.headers.get('origin'), configuration.allowedOrigins)) {
+    return jsonResponse({error: 'Invalid request.'}, 403);
   }
 
-  if (isRateLimited(getClientIp(request))) {
-    return NextResponse.json(
-      {error: 'Too many contact requests. Please try again later.'},
-      {status: 429},
-    );
+  if (!isJsonContentType(request.headers.get('content-type'))) {
+    return jsonResponse({error: 'Invalid request.'}, 415);
   }
 
-  let payload: ContactPayload;
+  if (exceedsDeclaredBodyLimit(request.headers.get('content-length'))) {
+    return jsonResponse({error: 'The request is too large.'}, 413);
+  }
 
+  let rawBody: string;
   try {
-    payload = await request.json() as ContactPayload;
+    rawBody = await request.text();
   } catch {
-    return NextResponse.json({error: 'Invalid request.'}, {status: 400});
+    return jsonResponse({error: 'Invalid request.'}, 400);
   }
 
-  const name = cleanSingleLine(payload.name, 120);
-  const email = cleanText(payload.email, 254).toLowerCase();
-  const inquiryType = cleanSingleLine(payload.inquiryType, 80);
-  const message = cleanText(payload.message, 5000);
-  const language = cleanSingleLine(payload.language, 10) || 'unknown';
-  const sourceUrl = cleanSingleLine(payload.sourceUrl, 500);
-  const website = cleanText(payload.website, 200);
-  const audience = cleanSingleLine(payload.audience, 50);
-  const movingDate = cleanSingleLine(payload.movingDate, 20);
-  const city = cleanSingleLine(payload.city, 80);
-  const budget = cleanSingleLine(payload.budget, 40);
-  const status = cleanSingleLine(payload.status, 40);
-  const guarantor = cleanSingleLine(payload.guarantor, 40);
-  const help = cleanSingleLine(payload.help, 80);
-
-  // Bots frequently fill this hidden field. Return success without sending anything.
-  if (website) {
-    return NextResponse.json({ok: true});
+  if (Buffer.byteLength(rawBody, 'utf8') > MAX_REQUEST_BYTES) {
+    return jsonResponse({error: 'The request is too large.'}, 413);
   }
 
-  if (!name || !EMAIL_PATTERN.test(email) || !inquiryType || !message || payload.consent !== true) {
-    return NextResponse.json(
-      {error: 'Please complete all required fields.'},
-      {status: 400},
-    );
-  }
-
-  const submittedAt = new Date().toISOString();
-  const subject = `VANTAM website request: ${inquiryType} — ${name}`;
-  const text = [
-    'New VANTAM website request',
-    '',
-    `Name: ${name}`,
-    `Email: ${email}`,
-    `Request type: ${inquiryType}`,
-    `Language: ${language}`,
-    audience ? `Audience: ${audience}` : '',
-    movingDate ? `Moving date: ${movingDate}` : '',
-    city ? `City / region: ${city}` : '',
-    budget ? `Housing budget: ${budget}` : '',
-    status ? `Current status: ${status}` : '',
-    guarantor ? `Guarantor situation: ${guarantor}` : '',
-    help ? `Required help: ${help}` : '',
-    `Submitted: ${submittedAt}`,
-    sourceUrl ? `Page: ${sourceUrl}` : '',
-    '',
-    'Message:',
-    message,
-    '',
-    'The visitor acknowledged the Privacy Policy and understands how VANTAM processes this enquiry.',
-  ].filter(Boolean).join('\n');
-
-  const html = `
-    <div style="font-family:ui-sans-serif,system-ui,sans-serif;max-width:680px;margin:0 auto;color:#0f172a;line-height:1.6">
-      <h1 style="font-size:22px;margin-bottom:20px">New VANTAM website request</h1>
-      <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
-        <tbody>
-          <tr><td style="padding:8px 0;color:#64748b;width:150px">Name</td><td style="padding:8px 0;font-weight:700">${escapeHtml(name)}</td></tr>
-          <tr><td style="padding:8px 0;color:#64748b">Email</td><td style="padding:8px 0"><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></td></tr>
-          <tr><td style="padding:8px 0;color:#64748b">Request type</td><td style="padding:8px 0">${escapeHtml(inquiryType)}</td></tr>
-          <tr><td style="padding:8px 0;color:#64748b">Language</td><td style="padding:8px 0">${escapeHtml(language)}</td></tr>
-          ${audience ? `<tr><td style="padding:8px 0;color:#64748b">Audience</td><td style="padding:8px 0">${escapeHtml(audience)}</td></tr>` : ''}
-          ${movingDate ? `<tr><td style="padding:8px 0;color:#64748b">Moving date</td><td style="padding:8px 0">${escapeHtml(movingDate)}</td></tr>` : ''}
-          ${city ? `<tr><td style="padding:8px 0;color:#64748b">City / region</td><td style="padding:8px 0">${escapeHtml(city)}</td></tr>` : ''}
-          ${budget ? `<tr><td style="padding:8px 0;color:#64748b">Housing budget</td><td style="padding:8px 0">${escapeHtml(budget)}</td></tr>` : ''}
-          ${status ? `<tr><td style="padding:8px 0;color:#64748b">Current status</td><td style="padding:8px 0">${escapeHtml(status)}</td></tr>` : ''}
-          ${guarantor ? `<tr><td style="padding:8px 0;color:#64748b">Guarantor situation</td><td style="padding:8px 0">${escapeHtml(guarantor)}</td></tr>` : ''}
-          ${help ? `<tr><td style="padding:8px 0;color:#64748b">Required help</td><td style="padding:8px 0">${escapeHtml(help)}</td></tr>` : ''}
-          <tr><td style="padding:8px 0;color:#64748b">Submitted</td><td style="padding:8px 0">${escapeHtml(submittedAt)}</td></tr>
-          ${sourceUrl ? `<tr><td style="padding:8px 0;color:#64748b">Page</td><td style="padding:8px 0">${escapeHtml(sourceUrl)}</td></tr>` : ''}
-        </tbody>
-      </table>
-      <div style="padding:20px;background:#f1f5f9;border-radius:12px;white-space:pre-wrap">${escapeHtml(message)}</div>
-      <p style="margin-top:20px;font-size:12px;color:#64748b">The visitor acknowledged the Privacy Policy and understands how VANTAM processes this enquiry.</p>
-    </div>
-  `;
-
+  let payload: unknown;
   try {
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-        'Idempotency-Key': randomUUID(),
-      },
-      body: JSON.stringify({
-        from: fromEmail,
-        to: [toEmail],
-        reply_to: email,
-        subject,
-        html,
-        text,
-        tags: [
-          {name: 'source', value: 'website-contact'},
-          {name: 'language', value: language.replace(/[^a-zA-Z0-9_-]/g, '-').slice(0, 256)},
-        ],
-      }),
-      signal: AbortSignal.timeout(10_000),
-    });
+    payload = JSON.parse(rawBody);
+  } catch {
+    return jsonResponse({error: 'Invalid request.'}, 400);
+  }
 
-    if (!response.ok) {
-      const deliveryError = await response.text();
-      console.error('Resend rejected contact email:', response.status, deliveryError);
-      return NextResponse.json(
-        {error: 'The request could not be delivered.'},
-        {status: 502},
-      );
-    }
+  const parsed = parseContactSubmission(payload, configuration.allowedOrigins);
+  if (parsed.status === 'honeypot') return jsonResponse({ok: true});
+  if (parsed.status === 'invalid') {
+    return jsonResponse({error: 'Please complete all required fields.'}, 400);
+  }
 
-    const result = await response.json() as {id?: string};
-    return NextResponse.json({ok: true, id: result.id});
-  } catch (error) {
-    console.error('Contact email delivery failed:', error instanceof Error ? error.message : 'Unknown error');
-    return NextResponse.json(
-      {error: 'The request could not be delivered.'},
-      {status: 502},
+  const clientIdentifier = deriveClientIdentifier(request.headers, configuration.rateLimitSecret);
+  if (!clientIdentifier) {
+    logContactFailure(requestId, 'client_ip', 'CONTACT_CLIENT_IP_UNAVAILABLE');
+    return jsonResponse({error: 'The contact service is temporarily unavailable.'}, 503);
+  }
+
+  const storageResult = await submitContactRequest(
+    configuration.supabaseUrl,
+    configuration.supabaseSecretKey,
+    {
+      ...parsed.submission,
+      clientIdentifier,
+      privacyPolicyVersion: PRIVACY_POLICY_VERSION,
+    },
+  );
+
+  if (storageResult === 'rate_limited') {
+    return jsonResponse(
+      {error: 'Too many contact requests. Please try again later.'},
+      429,
     );
   }
+
+  if (storageResult === 'unavailable') {
+    logContactFailure(requestId, 'database', 'CONTACT_STORAGE_UNAVAILABLE');
+    return jsonResponse({error: 'The contact service is temporarily unavailable.'}, 503);
+  }
+
+  return jsonResponse({ok: true});
 }
