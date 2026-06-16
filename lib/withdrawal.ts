@@ -32,6 +32,7 @@ export type LegalPageCopy = {
   contactSummary: string;
   contactNote: string;
   footerNote: string;
+  ctaLabel: string;
   emailLabel: string;
   phoneLabel: string;
   whatsappLabel: string;
@@ -58,13 +59,14 @@ export const WITHDRAWAL_COPY: Record<Locale, LegalPageCopy> = {
     themeToggleLightLabel: 'Use light theme',
     themeToggleDarkLabel: 'Use dark theme',
     contactLead: 'Need to send a withdrawal notice?',
-    contactTitle: 'Withdrawal channel',
+    contactTitle: 'Dedicated online withdrawal function',
     contactSummary:
-      `Send written withdrawal notices to ${BUSINESS.publicEmail}. The model withdrawal form is included in the client contract pack supplied before acceptance.`,
+      `Use the dedicated online withdrawal page to submit a request, then keep the acknowledgement email for your records.`,
     contactNote:
-      'The online withdrawal function is being implemented. This page does not claim that it is already active. Phone and WhatsApp are for general questions only; withdrawal notices must be sent in writing.',
+      'Receipt of a withdrawal request does not itself determine whether the statutory withdrawal right applies. Phone and WhatsApp are for general questions only; use the dedicated online page or written notice for withdrawal requests.',
     footerNote:
-      'The withdrawal channel is written email. The model form is supplied in the contract pack before acceptance.',
+      'Use the dedicated online withdrawal page for the submission flow. This information page remains available for reference.',
+    ctaLabel: 'Withdraw from a contract',
     emailLabel: 'Email',
     phoneLabel: 'Phone',
     whatsappLabel: 'WhatsApp Business',
@@ -98,8 +100,9 @@ export const WITHDRAWAL_COPY: Record<Locale, LegalPageCopy> = {
         id: 'online-function',
         title: 'Online withdrawal function',
         paragraphs: [
-          'A separate online withdrawal function is being implemented. This page does not state that the function is already live.',
-          'When the function becomes available and the law requires it for a specific online contract flow, it will be an additional way to submit a withdrawal notice. The written channel and the model form remain available.',
+          'The dedicated online withdrawal function is available on the separate withdrawal page.',
+          'It is an additional way to submit a withdrawal notice. The written channel and the model withdrawal form remain available.',
+          'Receipt of the request does not itself decide whether the statutory withdrawal right applies.',
         ],
       },
       {
@@ -158,13 +161,14 @@ export const WITHDRAWAL_COPY: Record<Locale, LegalPageCopy> = {
     themeToggleLightLabel: 'Увімкнути світлу тему',
     themeToggleDarkLabel: 'Увімкнути темну тему',
     contactLead: 'Потрібно надіслати повідомлення про відмову?',
-    contactTitle: 'Канал для відмови',
+    contactTitle: 'Окрема онлайн-функція відмови',
     contactSummary:
-      `Надсилайте письмові повідомлення про відмову на ${BUSINESS.publicEmail}. Модельна форма відмови входить до контрактного пакета клієнта, який надається до прийняття.`,
+      `Скористайтеся окремою сторінкою відмови, щоб подати запит, а потім збережіть лист-підтвердження для своїх записів.`,
     contactNote:
-      'Онлайн-функція відмови ще впроваджується. Ця сторінка не стверджує, що вона вже активна. Телефон і WhatsApp призначені лише для загальних питань; повідомлення про відмову треба надсилати письмово.',
+      'Отримання запиту на відмову саме по собі не визначає, чи застосовується законне право на відмову. Телефон і WhatsApp призначені лише для загальних питань; для відмови використовуйте окрему онлайн-сторінку або письмове повідомлення.',
     footerNote:
-      'Канал відмови - письмова електронна пошта. Модельна форма надається в пакеті договору до прийняття.',
+      'Скористайтеся окремою сторінкою відмови для подання запиту. Ця інформаційна сторінка залишається доступною для довідки.',
+    ctaLabel: 'Відмовитися від договору',
     emailLabel: 'Електронна пошта',
     phoneLabel: 'Телефон',
     whatsappLabel: 'WhatsApp Business',
@@ -198,8 +202,9 @@ export const WITHDRAWAL_COPY: Record<Locale, LegalPageCopy> = {
         id: 'online-function',
         title: 'Онлайн-функція відмови',
         paragraphs: [
-          'Окрема онлайн-функція відмови ще впроваджується. Ця сторінка не стверджує, що функція вже працює.',
-          'Коли функція стане доступною і закон вимагатиме її для конкретного онлайн-потоку договору, вона буде додатковим способом подати повідомлення про відмову. Письмовий канал і модельна форма залишаться доступними.',
+          'Окрема онлайн-функція відмови доступна на спеціальній сторінці відмови.',
+          'Це додатковий спосіб подати повідомлення про відмову. Письмовий канал і модельна форма залишаються доступними.',
+          'Отримання запиту не вирішує саме по собі, чи застосовується законне право на відмову.',
         ],
       },
       {
@@ -258,13 +263,14 @@ export const WITHDRAWAL_COPY: Record<Locale, LegalPageCopy> = {
     themeToggleLightLabel: 'Включить светлую тему',
     themeToggleDarkLabel: 'Включить тёмную тему',
     contactLead: 'Нужно отправить уведомление об отказе?',
-    contactTitle: 'Канал для отказа',
+    contactTitle: 'Отдельная онлайн-функция отказа',
     contactSummary:
-      `Отправляйте письменные уведомления об отказе на ${BUSINESS.publicEmail}. Модельная форма отказа входит в контрактный пакет клиента, который предоставляется до принятия.`,
+      `Используйте отдельную страницу отказа, чтобы подать запрос, а затем сохраните письмо-подтверждение для своих записей.`,
     contactNote:
-      'Онлайн-функция отказа ещё внедряется. Эта страница не утверждает, что она уже активна. Телефон и WhatsApp предназначены только для общих вопросов; уведомления об отказе нужно отправлять письменно.',
+      'Получение запроса на отказ само по себе не определяет, применяется ли законное право на отказ. Телефон и WhatsApp предназначены только для общих вопросов; для отказа используйте отдельную онлайн-страницу или письменное уведомление.',
     footerNote:
-      'Канал отказа - письменная электронная почта. Модельная форма предоставляется в пакете договора до принятия.',
+      'Используйте отдельную страницу отказа для подачи запроса. Эта информационная страница остаётся доступной для справки.',
+    ctaLabel: 'Отказаться от договора',
     emailLabel: 'Электронная почта',
     phoneLabel: 'Телефон',
     whatsappLabel: 'WhatsApp Business',
@@ -298,8 +304,9 @@ export const WITHDRAWAL_COPY: Record<Locale, LegalPageCopy> = {
         id: 'online-function',
         title: 'Онлайн-функция отказа',
         paragraphs: [
-          'Отдельная онлайн-функция отказа ещё внедряется. Эта страница не утверждает, что функция уже работает.',
-          'Когда функция станет доступной и закон потребует её для конкретного онлайн-потока договора, она будет дополнительным способом подать уведомление об отказе. Письменный канал и модельная форма останутся доступными.',
+          'Отдельная онлайн-функция отказа доступна на специальной странице отказа.',
+          'Это дополнительный способ подать уведомление об отказе. Письменный канал и модельная форма остаются доступными.',
+          'Получение запроса само по себе не решает, применяется ли законное право на отказ.',
         ],
       },
       {

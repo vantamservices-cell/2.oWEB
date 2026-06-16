@@ -114,6 +114,16 @@ export const PRIVACY_COPY: Record<Locale, PrivacyCopy> = {
         ],
       },
       {
+        id: 'withdrawal-requests',
+        title: 'Withdrawal requests',
+        paragraphs: [
+          'When you use the withdrawal page, VANTAM processes your name, email, contract or service reference, short service identification, locale, explicit confirmation, submission timestamp, public reference, status, and acknowledgement timestamp if an acknowledgement is sent.',
+          'The purpose is to receive and process withdrawal requests, identify the relevant contract, send the acknowledgement through Gmail, and keep a controlled operational record in Supabase PostgreSQL. The browser cannot write directly to the database.',
+          'The legal basis depends on the situation and may include steps taken at your request before a possible contract, contractual performance where a contract exists, legal obligations, and VANTAM’s legitimate interests in security and administration. This policy does not claim one legal basis for every case.',
+          'Retention for withdrawal requests is unresolved until the applicable contract or claim category is established.',
+        ],
+      },
+      {
         id: 'purposes',
         title: 'Purposes and legal bases',
         paragraphs: [
@@ -170,6 +180,7 @@ export const PRIVACY_COPY: Record<Locale, PrivacyCopy> = {
         bullets: [
           'pseudonymous rate-limit records are kept only for a short operational period',
           'email, WhatsApp, and client records are kept only as reasonably necessary for communication, services, disputes, and applicable legal obligations',
+          'withdrawal requests are retained until the applicable contract or claim category retention decision is established',
           'records may be deleted earlier when they are no longer needed or retained longer where an applicable legal duty or justified dispute requires it',
         ],
       },
@@ -268,6 +279,16 @@ export const PRIVACY_COPY: Record<Locale, PrivacyCopy> = {
         ],
       },
       {
+        id: 'withdrawal-requests',
+        title: 'Запити на відмову',
+        paragraphs: [
+          'Коли ви використовуєте сторінку відмови, VANTAM обробляє ваше ім’я, електронну пошту, посилання на договір або послугу, коротку ідентифікацію послуги, мову, явне підтвердження, час подання, публічний номер, статус і час підтвердження, якщо підтвердження надіслано.',
+          'Мета полягає в тому, щоб отримати та обробити запити на відмову, ідентифікувати відповідний договір, надіслати підтвердження через Gmail і зберігати контрольований операційний запис у Supabase PostgreSQL. Браузер не може записувати дані безпосередньо до бази.',
+          'Правова підстава залежить від ситуації і може включати кроки, які ви просите виконати до можливого договору, виконання договору, якщо договір існує, юридичні обов’язки та законні інтереси VANTAM щодо безпеки й адміністрування. Ця політика не стверджує одну правову підставу для кожного випадку.',
+          'Строк зберігання для запитів на відмову ще не визначено і залежить від відповідної категорії договору або вимоги.',
+        ],
+      },
+      {
         id: 'purposes',
         title: 'Цілі та правові підстави',
         paragraphs: [
@@ -324,6 +345,7 @@ export const PRIVACY_COPY: Record<Locale, PrivacyCopy> = {
         bullets: [
           'псевдонімні записи обмеження частоти зберігаються лише протягом короткого операційного періоду',
           'електронні листи, повідомлення WhatsApp і клієнтські записи зберігаються лише стільки, скільки обґрунтовано потрібно для комунікації, послуг, спорів і застосовних юридичних обов’язків',
+          'запити на відмову зберігаються, доки не буде визначено строк зберігання для відповідної категорії договору або вимоги',
           'записи можуть бути видалені раніше, якщо вони більше не потрібні, або зберігатися довше, якщо цього вимагає застосовний закон чи обґрунтований спір',
         ],
       },
@@ -422,6 +444,16 @@ export const PRIVACY_COPY: Record<Locale, PrivacyCopy> = {
         ],
       },
       {
+        id: 'withdrawal-requests',
+        title: 'Запросы на отказ',
+        paragraphs: [
+          'Когда вы используете страницу отказа, VANTAM обрабатывает ваше имя, электронную почту, ссылку на договор или услугу, краткую идентификацию услуги, язык, явное подтверждение, время подачи, публичный номер, статус и время подтверждения, если подтверждение было отправлено.',
+          'Цель состоит в том, чтобы получать и обрабатывать запросы на отказ, идентифицировать соответствующий договор, отправлять подтверждение через Gmail и хранить контролируемую операционную запись в Supabase PostgreSQL. Браузер не может записывать данные напрямую в базу.',
+          'Правовое основание зависит от ситуации и может включать шаги, которые вы просите предпринять до возможного договора, исполнение договора, если договор существует, юридические обязанности и законные интересы VANTAM в безопасности и администрировании. Эта политика не утверждает одно правовое основание для каждого случая.',
+          'Срок хранения для запросов на отказ ещё не определён и зависит от соответствующей категории договора или требования.',
+        ],
+      },
+      {
         id: 'purposes',
         title: 'Цели и правовые основания',
         paragraphs: [
@@ -478,6 +510,7 @@ export const PRIVACY_COPY: Record<Locale, PrivacyCopy> = {
         bullets: [
           'псевдонимные записи ограничения частоты хранятся только в течение короткого операционного периода',
           'электронные письма, сообщения WhatsApp и клиентские записи хранятся только столько, сколько обоснованно необходимо для коммуникации, услуг, споров и применимых юридических обязанностей',
+          'запросы на отказ хранятся, пока не будет определён срок хранения для соответствующей категории договора или требования',
           'записи могут быть удалены раньше, если они больше не нужны, или храниться дольше, если этого требует применимый закон или обоснованный спор',
         ],
       },

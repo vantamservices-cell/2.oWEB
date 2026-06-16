@@ -1,4 +1,5 @@
 import type {Metadata} from 'next';
+import Link from 'next/link';
 import {notFound} from 'next/navigation';
 
 import {BUSINESS, BUSINESS_LOCATION, getWhatsAppAriaLabel, getWhatsAppUrl} from '../../../lib/business';
@@ -89,6 +90,12 @@ export default async function WithdrawalRoute({params}: WithdrawalRouteProps) {
             <div className="privacy-meta">
               <span>{copy.lastUpdatedLabel}</span>
               <strong>{updated}</strong>
+            </div>
+            <div className="privacy-return" style={{marginTop: '1.2rem'}}>
+              <Link href={`/${lang}/withdraw`} className="button button-primary">
+                {copy.ctaLabel}
+              </Link>
+              <p className="privacy-return-note">{copy.contactNote}</p>
             </div>
           </header>
 

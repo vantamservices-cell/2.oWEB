@@ -15,5 +15,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: absoluteLocaleUrl(lang, '/withdrawal'),
     },
+    {
+      url: absoluteLocaleUrl(lang, '/withdraw'),
+    },
   ]);
 }

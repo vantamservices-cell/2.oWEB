@@ -817,6 +817,73 @@ svg { flex: none; }
 }
 .privacy-footer .footer-contact-links a:last-child { color: var(--brand-strong); }
 
+.withdraw-layout { display: grid; gap: 1.1rem; }
+.withdraw-card {
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) + 2px);
+  padding: clamp(1.2rem, 3vw, 1.8rem);
+  background: var(--surface);
+  box-shadow: 0 14px 30px color-mix(in srgb, var(--ink) 6%, transparent);
+}
+.withdraw-hero-actions { margin-top: 1.2rem; }
+.withdraw-card-heading { display: grid; gap: 0.35rem; }
+.withdraw-card-heading p:first-child { margin: 0; color: var(--brand-strong); font-size: var(--type-label); font-weight: 800; }
+.withdraw-card-heading h2 { margin: 0; font-size: clamp(1.4rem, 2.6vw, 2.1rem); letter-spacing: var(--type-heading-tracking); line-height: 1.06; }
+.withdraw-card-heading p:last-child { margin: 0; color: var(--muted); }
+.withdraw-form { display: grid; gap: 1rem; }
+.withdraw-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.withdraw-field { display: grid; gap: 0.4rem; }
+.withdraw-field.full { grid-column: 1 / -1; }
+.withdraw-field span { color: var(--ink-soft); font-size: var(--type-label); font-weight: 700; }
+.withdraw-field input,
+.withdraw-field textarea {
+  width: 100%;
+  min-height: 3.1rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.8rem 0.9rem;
+  background: var(--page);
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+.withdraw-field textarea { min-height: 8rem; resize: vertical; }
+.withdraw-field input::placeholder,
+.withdraw-field textarea::placeholder { color: var(--muted); }
+.withdraw-field input:focus,
+.withdraw-field textarea:focus {
+  border-color: var(--brand);
+  outline: 2px solid color-mix(in srgb, var(--brand) 20%, transparent);
+  outline-offset: 0;
+}
+.withdraw-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: center; }
+.withdraw-note { margin: 0; color: var(--muted); font-size: var(--type-support); line-height: var(--type-line-support); }
+.withdraw-review { display: grid; gap: 1rem; }
+.withdraw-summary-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+.withdraw-summary-item {
+  display: grid;
+  gap: 0.35rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.85rem 0.95rem;
+  background: var(--surface-soft);
+}
+.withdraw-summary-item span { color: var(--brand-strong); font-size: var(--type-label); font-weight: 800; }
+.withdraw-summary-item strong { overflow-wrap: anywhere; }
+.withdraw-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  background: var(--surface-soft);
+}
+.withdraw-consent input { margin-top: 0.2rem; flex: none; }
+.withdraw-success { align-self: start; }
+.withdraw-success-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+.withdraw-error { margin: 0; color: var(--risk); font-size: var(--type-support); font-weight: 700; }
+
 .print-overlay { position: fixed; inset: 0; z-index: 80; display: flex; align-items: center; justify-content: center; overflow-y: auto; padding: 1rem; background: color-mix(in srgb, var(--ink) 84%, transparent); }
 .print-modal { width: min(100%, 58rem); max-height: 92vh; overflow-y: auto; border-radius: var(--radius); padding: clamp(1.2rem, 3vw, 2rem); background: var(--surface); color: var(--ink); }
 .print-modal-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; border-bottom: 1px solid var(--line); padding-bottom: 1rem; }
@@ -986,6 +1053,10 @@ svg { flex: none; }
   .privacy-contact-grid { grid-template-columns: 1fr; }
   .privacy-contact { padding: 1.2rem; }
   .privacy-footer-layout { padding-block: 1.8rem 2rem; }
+  .withdraw-form-grid,
+  .withdraw-summary-list,
+  .withdraw-success-grid { grid-template-columns: 1fr; }
+  .withdraw-actions .button { width: 100%; }
   .print-brand-row, .print-package-summary { display: grid; }
   .print-actions { display: grid; }
 }
@@ -1052,4 +1123,10 @@ svg { flex: none; }
 .vantam-site[data-theme="dark"] .contact-form-shell input,
 .vantam-site[data-theme="dark"] .contact-form-shell select,
 .vantam-site[data-theme="dark"] .contact-form-shell textarea { background: #0b252b; }
+.vantam-site[data-theme="dark"] .withdraw-card { background: #153139; border-color: #355259; }
+.vantam-site[data-theme="dark"] .withdraw-field input,
+.vantam-site[data-theme="dark"] .withdraw-field textarea { background: #0b252b; border-color: #355259; color: #e7f0ee; }
+.vantam-site[data-theme="dark"] .withdraw-summary-item,
+.vantam-site[data-theme="dark"] .withdraw-consent { background: #0b252b; border-color: #355259; }
+.vantam-site[data-theme="dark"] .withdraw-note { color: #b4c7c8; }
 .vantam-site[data-theme="dark"] .print-sheet { background: white; }
