@@ -1,6 +1,6 @@
 # VANTAM Service Offer / Appendix Template
 
-**DRAFT - English working template. Not ready for online B2C contracting until the required trader address is added and final legal review is completed.**
+**OWNER REVIEW REQUIRED — the owner must complete and record the final legal review before operational use.**
 
 ## 1. Reference
 
@@ -13,8 +13,9 @@ Language: English
 ## 2. Parties
 
 VANTAM: VANTAM Services, Dutch eenmanszaak, KvK 42080058
-Business address: [BUSINESS ADDRESS REQUIRED BEFORE ONLINE B2C CONTRACTING]
-Public VAT ID: [PUBLIC BTW-ID TO BE ADDED WHEN RECEIVED]
+Business address: BUSINESS ADDRESS REQUIRED BEFORE SENDING
+BTW ID: [EXACT COMPLETE BTW ID FROM BELASTINGDIENST DOCUMENT]
+HARD STOP — do not send or accept this document until the real business address has replaced the placeholder.
 Email: vantam.request@gmail.com
 
 Client name / organisation: [CLIENT]
@@ -83,7 +84,7 @@ VAT rate: [RATE TO BE CONFIRMED]
 VAT amount: EUR [AMOUNT]
 Total including VAT: EUR [AMOUNT]
 
-VANTAM is registered for VAT. The applicable VAT rate must be confirmed for the specific service. Until the public VAT ID is received, use: [PUBLIC BTW-ID TO BE ADDED WHEN RECEIVED].
+VANTAM is registered for VAT. The applicable VAT rate must be confirmed for the specific service. Where a trader-information block is legally necessary, use the exact BTW ID line shown above.
 
 Payment term, if agreed: [DUE WITHIN 3 CALENDAR DAYS / OTHER AGREED TERM]
 Payment details: [PAYMENT DETAILS]

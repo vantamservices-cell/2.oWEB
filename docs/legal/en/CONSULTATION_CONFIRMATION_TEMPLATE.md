@@ -1,6 +1,6 @@
 # VANTAM Consultation Confirmation Template
 
-**DRAFT - English working template. Not ready for online B2C contracting until the required trader address is added and final legal review is completed.**
+**OWNER REVIEW REQUIRED — the owner must complete and record the final legal review before operational use.**
 
 ## 1. Consultation Reference
 
@@ -12,8 +12,9 @@ Language: English
 ## 2. Parties
 
 VANTAM Services, Dutch eenmanszaak, KvK 42080058
-Business address: [BUSINESS ADDRESS REQUIRED BEFORE ONLINE B2C CONTRACTING]
-Public VAT ID: [PUBLIC BTW-ID TO BE ADDED WHEN RECEIVED]
+Business address: BUSINESS ADDRESS REQUIRED BEFORE SENDING
+BTW ID: [EXACT COMPLETE BTW ID FROM BELASTINGDIENST DOCUMENT]
+HARD STOP — do not send or accept this document until the real business address has replaced the placeholder.
 Email: vantam.request@gmail.com
 
 Client: [CLIENT NAME]
@@ -58,7 +59,7 @@ VAT rate: [RATE TO BE CONFIRMED]
 VAT amount: EUR [AMOUNT]
 Total including VAT: EUR [AMOUNT]
 
-VANTAM is registered for VAT. Until the public VAT ID is received, use: [PUBLIC BTW-ID TO BE ADDED WHEN RECEIVED].
+VANTAM is registered for VAT. Where a trader-information block is legally necessary, use the exact BTW ID line shown above.
 
 The consultation invoice is due within 3 calendar days. The consultation normally occurs after payment has been received.
 

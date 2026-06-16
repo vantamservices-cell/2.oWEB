@@ -4,9 +4,9 @@ Version: [GENERAL TERMS VERSION TO BE ASSIGNED]
 Effective date: [EFFECTIVE DATE TO BE ASSIGNED]
 Language: English contractual reference version
 
-**DRAFT - NOT READY FOR ONLINE B2C CONTRACTING UNTIL REQUIRED TRADER ADDRESS IS ADDED AND FINAL LEGAL REVIEW IS COMPLETED.**
+**OWNER REVIEW REQUIRED - the owner must complete and record the final legal review before operational use.**
 
-These General Terms are drafted for VANTAM's practical support services. They are not yet launch-ready because the trader address and final Dutch legal review remain unresolved.
+These General Terms are drafted for VANTAM's practical support services. They are not yet operational because the trader address and final owner review still need to be confirmed before use.
 
 ## 1. Identity and Contact Details
 
@@ -14,8 +14,9 @@ VANTAM is the public brand used by VANTAM Services, a Dutch eenmanszaak register
 
 Public contact email: vantam.request@gmail.com
 Telephone / WhatsApp Business: +31 6 42 28 81 70
-Business address: [BUSINESS ADDRESS REQUIRED BEFORE ONLINE B2C CONTRACTING]
-Public VAT identification number: [PUBLIC BTW-ID TO BE ADDED WHEN RECEIVED]
+Business address: BUSINESS ADDRESS REQUIRED BEFORE SENDING
+BTW ID: [EXACT COMPLETE BTW ID FROM BELASTINGDIENST DOCUMENT]
+HARD STOP — do not send or accept this document until the real business address has replaced the placeholder.
 
 VANTAM is registered for VAT, files VAT returns quarterly, and does not use the small businesses scheme (KOR). The private omzetbelastingnummer and any BSN must never be included in public or client documents.
 
@@ -107,7 +108,7 @@ After work begins, only pre-agreed work actually performed and pre-approved thir
 
 Where a 3-calendar-day payment term applies, the invoice or accepted Offer must state it clearly. Consumer late-payment enforcement must follow mandatory Dutch reminder, interest, and collection-cost rules. These Terms do not state statutory percentages or collection amounts.
 
-VAT must be handled according to the applicable law and the accepted Offer. Until the public VAT ID is received, documents must use the placeholder [PUBLIC BTW-ID TO BE ADDED WHEN RECEIVED] where the VAT ID is legally necessary.
+VAT must be handled according to the applicable law and the accepted Offer. Where a trader-information block is legally necessary, use the exact BTW ID line shown above.
 
 ## 10. Scope Changes and Third-Party Costs
 
@@ -251,7 +252,8 @@ Legal form: Dutch eenmanszaak
 KvK number: 42080058
 Email: vantam.request@gmail.com
 Telephone / WhatsApp Business: +31 6 42 28 81 70
-Address: [BUSINESS ADDRESS REQUIRED BEFORE ONLINE B2C CONTRACTING]
-Public VAT ID: [PUBLIC BTW-ID TO BE ADDED WHEN RECEIVED]
+Business address: BUSINESS ADDRESS REQUIRED BEFORE SENDING
+BTW ID: [EXACT COMPLETE BTW ID FROM BELASTINGDIENST DOCUMENT]
+HARD STOP — do not send or accept this document until the real business address has replaced the placeholder.
 
-These Terms must not be treated as launch-ready until the required trader address is resolved and final legal review is completed.
+These Terms must not be treated as operational until the required trader address is resolved and the owner has completed and recorded the final legal review.

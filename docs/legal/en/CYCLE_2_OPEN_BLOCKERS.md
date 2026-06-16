@@ -12,19 +12,19 @@ Why it matters: Consumer distance-contract information requires a trader address
 
 What may continue now: Internal drafting, document structure, source register, placeholder use, and non-public legal review preparation.
 
-What must remain disabled: Launch-ready public B2C Terms, online consumer booking / checkout, and any final public contract packet that omits the legally required address or publishes an invented address.
+What must remain disabled: Launch-ready public B2C Terms, online consumer booking / checkout, and any final contract packet that omits the legally required address or publishes an invented address.
 
-Closure evidence needed: Written owner approval and legal / accountant / KVK confirmation of the exact address treatment allowed for this Dutch eenmanszaak, plus the final address inserted in public and client-facing documents.
+Closure evidence needed: Written owner approval and legal / accountant / KVK confirmation of the exact address treatment allowed for this Dutch eenmanszaak, plus the final address inserted in every document sent to a client.
 
-### 2. Public VAT ID pending
+### 2. Public BTW ID available, exact format still needs copying
 
-Why it matters: VANTAM is registered for VAT, does not use KOR, and expects quarterly VAT returns. The public btw-identificatienummer has not yet been received. The private omzetbelastingnummer must not be exposed.
+Why it matters: VANTAM is registered for VAT, does not use KOR, and expects quarterly VAT returns. The public btw-identificatienummer is available from Belastingdienst, and the private omzetbelastingnummer must not be exposed.
 
-What may continue now: Internal templates can show [PUBLIC BTW-ID TO BE ADDED WHEN RECEIVED] and state that the applicable VAT rate must be confirmed for each service.
+What may continue now: Internal templates can show the exact BTW ID line copied from the official Belastingdienst document and state that the applicable VAT rate must be confirmed for each service.
 
-What must remain disabled: Launch-ready invoice wording, public legal identity blocks, and final client documents that legally require a VAT ID but still contain a placeholder.
+What must remain disabled: Final client documents that legally require the trader-information block until the exact official format has been copied into the relevant template.
 
-Closure evidence needed: The official public VAT ID from Belastingdienst, verified as the public btw-identificatienummer and not the private omzetbelastingnummer.
+Closure evidence needed: The official public BTW ID from Belastingdienst, verified as the public btw-identificatienummer and copied into the relevant templates in the exact official format, with the private omzetbelastingnummer not exposed.
 
 ### 3. Housing success fee and tenant-side remuneration pending specialist Dutch review
 
@@ -42,9 +42,9 @@ Why it matters: The documents are English drafts for a Dutch eenmanszaak and con
 
 What may continue now: Internal preparation, owner review, quote-packet workflow design, and non-public revision.
 
-What must remain disabled: Treating the Terms, withdrawal documents, early-start request, or templates as final public legal documents.
+What must remain disabled: Treating the Terms, withdrawal documents, early-start request, or templates as operational documents.
 
-Closure evidence needed: Written Dutch legal review sign-off or documented legal-review comments resolved in the final documents.
+Closure evidence needed: Written owner approval plus documented legal-review comments resolved in the final documents. OWNER REVIEW REQUIRED — the owner must complete and record the final legal review before operational use.
 
 ### 5. Consumer late-payment collection wording not final
 

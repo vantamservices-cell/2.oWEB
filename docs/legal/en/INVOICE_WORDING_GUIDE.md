@@ -8,8 +8,9 @@ Legal / trade name: VANTAM Services
 Public brand, if used: VANTAM
 Legal form: Dutch eenmanszaak
 KvK number: 42080058
-Business address: [BUSINESS ADDRESS REQUIRED BEFORE ONLINE B2C CONTRACTING]
-Public VAT ID: [PUBLIC BTW-ID TO BE ADDED WHEN RECEIVED]
+Business address: BUSINESS ADDRESS REQUIRED BEFORE SENDING
+BTW ID: [EXACT COMPLETE BTW ID FROM BELASTINGDIENST DOCUMENT]
+HARD STOP — do not send or accept this document until the real business address has replaced the placeholder.
 
 Never include the private omzetbelastingnummer, BSN, or any invented address or VAT ID.
 
@@ -35,7 +36,7 @@ Each invoice should include:
 
 VANTAM is registered for VAT and does not use KOR. The applicable VAT rate must be confirmed for the specific service before invoicing. Do not invent VAT rates for service categories.
 
-Until the public VAT ID is received, invoice drafts that legally require the VAT ID should show: [PUBLIC BTW-ID TO BE ADDED WHEN RECEIVED].
+Where an invoice draft legally requires the trader-information block, use the exact BTW ID line shown above.
 
 ## 4. Consultation Credit
 

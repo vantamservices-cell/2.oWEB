@@ -9,7 +9,9 @@ To:
 
 VANTAM Services
 Email: vantam.request@gmail.com
-Address: [BUSINESS ADDRESS REQUIRED BEFORE ONLINE B2C CONTRACTING]
+Business address: BUSINESS ADDRESS REQUIRED BEFORE SENDING
+BTW ID: [EXACT COMPLETE BTW ID FROM BELASTINGDIENST DOCUMENT]
+HARD STOP — do not send or accept this document until the real business address has replaced the placeholder.
 
 I / we hereby give notice that I / we withdraw from my / our contract for the following service:
 

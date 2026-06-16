@@ -7,6 +7,11 @@ Language: English
 
 ## 1. Service Reference
 
+VANTAM Services
+Business address: BUSINESS ADDRESS REQUIRED BEFORE SENDING
+BTW ID: [EXACT COMPLETE BTW ID FROM BELASTINGDIENST DOCUMENT]
+HARD STOP — do not send or accept this document until the real business address has replaced the placeholder.
+
 Offer / service / consultation reference: [REFERENCE]
 Offer / appendix version: [VERSION]
 General Terms version: [VERSION]
