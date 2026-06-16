@@ -44,6 +44,7 @@ import {
 import { LOCALES, LOCALE_LABELS, type Locale, swapLocale } from '../../lib/locales';
 import { BUSINESS, BUSINESS_LOCATION, getBusinessFooterLine, getBusinessPrintFooterLine, getWhatsAppAriaLabel, getWhatsAppUrl } from '../../lib/business';
 import { PRIVACY_FORM_ACKNOWLEDGEMENT, PRIVACY_ROUTE_LABELS, privacyPath } from '../../lib/privacy';
+import { legalFooterLinks } from '../../lib/legal-navigation';
 
 const BrandLogo = ({className = ''}: {className?: string}) => (
   <Image
@@ -207,6 +208,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
   const whatsappAriaLabel = useMemo(() => getWhatsAppAriaLabel(lang), [lang]);
   const privacyHref = useMemo(() => privacyPath(lang), [lang]);
   const privacyLabel = PRIVACY_ROUTE_LABELS[lang];
+  const legalLinks = useMemo(() => legalFooterLinks(lang), [lang]);
   const privacyAcknowledgement = PRIVACY_FORM_ACKNOWLEDGEMENT[lang];
   const footerBusinessLine = useMemo(() => getBusinessFooterLine(lang), [lang]);
   const footerPrintLine = useMemo(() => getBusinessPrintFooterLine(lang), [lang]);
@@ -1163,7 +1165,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
                 </form>}
             </div>
           </div>
-          <footer className="site-footer"><div className="site-container footer-layout"><a href="#top" className="footer-brand" aria-label="VANTAM"><BrandLogo className="brand-logo brand-logo-footer" /></a><div className="footer-copy"><p>{dict.footerSub}</p><p className="footer-business-meta">{footerBusinessLine}</p></div><div className="footer-contact-links"><a href={BUSINESS.publicEmailMailto}>{BUSINESS.publicEmail}</a><a href={BUSINESS.phoneTelHref}>{BUSINESS.phoneDisplayNumber}</a><a href={whatsappHref} target="_blank" rel="noreferrer noopener" aria-label={whatsappAriaLabel}>{ui.whatsappLabel}</a><Link href={privacyHref}>{privacyLabel}</Link></div></div></footer>
+          <footer className="site-footer"><div className="site-container footer-layout"><a href="#top" className="footer-brand" aria-label="VANTAM"><BrandLogo className="brand-logo brand-logo-footer" /></a><div className="footer-copy"><p>{dict.footerSub}</p><p className="footer-business-meta">{footerBusinessLine}</p></div><div className="footer-contact-links"><a href={BUSINESS.publicEmailMailto}>{BUSINESS.publicEmail}</a><a href={BUSINESS.phoneTelHref}>{BUSINESS.phoneDisplayNumber}</a><a href={whatsappHref} target="_blank" rel="noreferrer noopener" aria-label={whatsappAriaLabel}>{ui.whatsappLabel}</a>{legalLinks.map((link) => (<Link key={link.href} href={link.href}>{link.label}</Link>))}</div></div></footer>
         </section>
       </main>
 

@@ -1,13 +1,14 @@
 import Link from 'next/link';
 
 import {BUSINESS, BUSINESS_LOCATION} from '../../lib/business';
+import {legalFooterLinks} from '../../lib/legal-navigation';
 import {
   formatPrivacyLastUpdated,
-  PRIVACY_COPY,
   getPrivacyContactLinks,
+  PRIVACY_COPY,
 } from '../../lib/privacy';
 import type {Locale} from '../../lib/locales';
-import PrivacyPageFrame from './privacy-page-frame';
+import LegalPageFrame from './legal-page-frame';
 
 type PrivacyPolicyPageProps = {
   lang: Locale;
@@ -20,11 +21,18 @@ export default function PrivacyPolicyPage({lang}: PrivacyPolicyPageProps) {
   const homeHref = `/${lang}`;
 
   return (
-    <PrivacyPageFrame
+    <LegalPageFrame
       homeHref={homeHref}
       backHomeLabel={copy.backHomeLabel}
       themeToggleLightLabel={copy.themeToggleLightLabel}
       themeToggleDarkLabel={copy.themeToggleDarkLabel}
+      footerNote={copy.footerNote}
+      footerBusinessMeta={
+        <>
+          <strong translate="no">{BUSINESS.registeredBusinessName}</strong> • <span translate="no">KvK {BUSINESS.kvkNumber}</span> • {BUSINESS_LOCATION[lang]}
+        </>
+      }
+      footerLinks={legalFooterLinks(lang)}
     >
       <main id="main" className="privacy-main">
         <div className="site-container privacy-shell">
@@ -101,31 +109,10 @@ export default function PrivacyPolicyPage({lang}: PrivacyPolicyPageProps) {
             <Link href={homeHref} className="button button-secondary">
               {copy.backHomeLabel}
             </Link>
-            <p className="privacy-return-note">
-              {copy.footerNote}
-            </p>
+            <p className="privacy-return-note">{copy.footerNote}</p>
           </div>
-
-          <footer className="site-footer privacy-footer">
-            <div className="site-container privacy-footer-layout">
-              <div className="footer-copy">
-                <p>{copy.footerNote}</p>
-                <p className="footer-business-meta">
-                  <strong translate="no">{BUSINESS.registeredBusinessName}</strong> • <span translate="no">KvK {BUSINESS.kvkNumber}</span> • {BUSINESS_LOCATION[lang]}
-                </p>
-              </div>
-              <div className="footer-contact-links">
-                <a href={contact.emailHref} translate="no">{contact.email}</a>
-                <a href={contact.phoneHref} translate="no">{contact.phone}</a>
-                <a href={contact.whatsappHref} target="_blank" rel="noreferrer noopener" aria-label={contact.whatsappAriaLabel}>
-                  {contact.whatsapp}
-                </a>
-                <Link href={homeHref}>{copy.backHomeLabel}</Link>
-              </div>
-            </div>
-          </footer>
         </div>
       </main>
-    </PrivacyPageFrame>
+    </LegalPageFrame>
   );
 }

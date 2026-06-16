@@ -4,6 +4,7 @@ export const BUSINESS = {
   publicBrandName: 'VANTAM',
   registeredBusinessName: 'VANTAM Services',
   kvkNumber: '42080058',
+  publicBtwId: 'NL005478454B57',
   operatingCity: 'The Hague',
   operatingCountry: 'Netherlands',
   publicEmail: 'vantam.request@gmail.com',

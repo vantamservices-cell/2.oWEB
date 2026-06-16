@@ -5,21 +5,29 @@ import {Moon, Sun} from 'lucide-react';
 import type {ReactNode} from 'react';
 import {useEffect, useState} from 'react';
 
-type PrivacyPageFrameProps = {
+import type {LegalFooterLink} from '../../lib/legal-navigation';
+
+type LegalPageFrameProps = {
   homeHref: string;
   backHomeLabel: string;
   themeToggleLightLabel: string;
   themeToggleDarkLabel: string;
+  footerNote: string;
+  footerBusinessMeta: ReactNode;
+  footerLinks: LegalFooterLink[];
   children: ReactNode;
 };
 
-export default function PrivacyPageFrame({
+export default function LegalPageFrame({
   homeHref,
   backHomeLabel,
   themeToggleLightLabel,
   themeToggleDarkLabel,
+  footerNote,
+  footerBusinessMeta,
+  footerLinks,
   children,
-}: PrivacyPageFrameProps) {
+}: LegalPageFrameProps) {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
@@ -54,6 +62,21 @@ export default function PrivacyPageFrame({
         </div>
       </header>
       {children}
+      <footer className="site-footer privacy-footer">
+        <div className="site-container privacy-footer-layout">
+          <div className="footer-copy">
+            <p>{footerNote}</p>
+            <p className="footer-business-meta">{footerBusinessMeta}</p>
+          </div>
+          <div className="footer-contact-links">
+            {footerLinks.map((link) => (
+              <Link key={link.href} href={link.href}>
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

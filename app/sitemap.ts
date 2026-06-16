@@ -9,5 +9,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: absoluteLocaleUrl(lang, '/privacy'),
     },
+    {
+      url: absoluteLocaleUrl(lang, '/terms'),
+    },
+    {
+      url: absoluteLocaleUrl(lang, '/withdrawal'),
+    },
   ]);
 }
