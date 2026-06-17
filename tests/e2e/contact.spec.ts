@@ -77,9 +77,9 @@ test.describe('contact validation and error handling', () => {
 
     const submitButton = page.getByRole('button', {name: copy.contactSubmitBtn});
     await submitButton.click();
-    await expect(page.locator('#contact-name')).toBeInvalid();
-    await expect(page.locator('#contact-email')).toBeInvalid();
-    await expect(page.locator('#contact-message')).toBeInvalid();
+    await expect(page.locator('#contact-name').evaluate((element) => element.checkValidity())).resolves.toBe(false);
+    await expect(page.locator('#contact-email').evaluate((element) => element.checkValidity())).resolves.toBe(false);
+    await expect(page.locator('#contact-message').evaluate((element) => element.checkValidity())).resolves.toBe(false);
 
     await page.route('**/api/contact', async (route) => {
       await route.fulfill({
@@ -91,6 +91,6 @@ test.describe('contact validation and error handling', () => {
 
     await fillContactForm(page, 'en');
     await submitButton.click();
-    await expect(page.getByRole('alert')).toContainText(errorSnippet.en);
+    await expect(page.getByRole('alert').filter({hasText: errorSnippet.en})).toContainText(errorSnippet.en);
   });
 });
