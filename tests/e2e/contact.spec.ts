@@ -5,8 +5,8 @@ import {LOCALES, type Locale} from '../../lib/locales';
 import {PRIVACY_ROUTE_LABELS} from '../../lib/privacy';
 
 const warningText: Record<Locale, string> = {
-  en: 'Do not submit passports, bank statements, medical information, guarantor files or other sensitive documents through this open form.',
-  uk: 'Не надсилайте через цю відкриту форму паспорти, банківські виписки, медичні дані, файли поручителя чи інші чутливі документи.',
+  en: 'Do not submit passports, bank statements, medical information, guarantor files, or other sensitive documents through this open form.',
+  uk: 'Не надсилайте через цю відкриту форму паспорти, банківські виписки, медичні дані, файли гаранта чи інші чутливі документи.',
   ru: 'Не отправляйте через эту открытую форму паспорта, банковские выписки, медицинские данные, файлы поручителя или другие чувствительные документы.',
 };
 
@@ -54,7 +54,7 @@ for (const viewport of viewports) {
         await expect(page.getByText(warningText[lang])).toBeVisible();
         await page.getByRole('button', {name: /VANTAM First Year/}).click();
         await expect(page.locator('#contact-help')).toHaveValue('vantam_first_year');
-        await page.locator('.housing-highlight button').first().click();
+        await page.getByRole('button', {name: /Housing Ready/}).first().click();
         await expect(page.locator('#contact-help')).toHaveValue('housing_ready:not_sure');
         await expect(page.locator('#contact-housing-type')).toBeVisible();
         await page.locator('#contact-housing-type').selectOption('room_student');

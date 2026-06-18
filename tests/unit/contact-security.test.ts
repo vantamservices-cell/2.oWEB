@@ -86,6 +86,8 @@ describe('contact security helpers', () => {
     ['language', {language: 'de'}],
     ['status', {status: 'elsewhere'}],
     ['help', {help: 'invalid'}],
+    ['coarse individual service', {help: 'individual_service'}],
+    ['legacy urgent consultation', {help: 'urgent_situation'}],
   ])('rejects invalid %s enum', (_label, overrides) => {
     const parsed = parseContactSubmission(validContactPayload(overrides), allowedOrigins);
     expect(parsed.status).toBe('invalid');
@@ -95,12 +97,24 @@ describe('contact security helpers', () => {
     ['housing_ready', {help: 'housing_ready:room_student'}],
     ['housing_campaign', {help: 'housing_campaign:studio'}],
     ['packages', {help: 'vantam_first_year'}],
+    ['individual service', {help: 'individual_service:official_letter_action'}],
     ['partner', {help: 'partnership'}],
   ])('accepts the %s help context', (_label, overrides) => {
     const parsed = parseContactSubmission(validContactPayload(overrides), allowedOrigins);
     expect(parsed.status).toBe('valid');
     if (parsed.status !== 'valid') return;
     expect(parsed.submission.helpNeeded).toBe(overrides.help);
+  });
+
+  it('classifies housing contexts under the packages inquiry bucket', () => {
+    const parsed = parseContactSubmission(
+      validContactPayload({help: 'housing_campaign:studio'}),
+      allowedOrigins,
+    );
+
+    expect(parsed.status).toBe('valid');
+    if (parsed.status !== 'valid') return;
+    expect(parsed.submission.inquiryType).toBe('packages');
   });
 
   it('rejects an invalid date when the status requires one', () => {

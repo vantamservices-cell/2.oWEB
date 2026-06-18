@@ -2,20 +2,17 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
+import {motion, useReducedMotion} from 'motion/react';
 import {
   AlertCircle,
   ArrowRight,
   ArrowUpRight,
   Check,
   ChevronDown,
-  ChevronLeft,
-  ChevronRight,
   Clock,
   Download,
   FileText,
-  HeartPulse,
   House,
   Info,
   Menu,
@@ -28,23 +25,32 @@ import {
 
 import {
   AUDIENCE_FOCUS,
-  BLUEPRINT_CHECKLIST,
+  APPROVED_INDIVIDUAL_SERVICE_SLUGS,
   CONSULTATIONS_STORE,
   DICTIONARY,
   FAQS_STORE,
+  HOUSING_PRODUCTS,
+  INDIVIDUAL_SERVICE_GROUPS,
   PARTNER_AUDIENCES,
-  PROCESS_STEPS,
-  PITFALLS,
   PREMIUM_PACKAGES,
+  PROCESS_STEPS,
+  RETURNING_CLIENT_NOTE,
   SITUATION_OPTIONS,
-  SERVICES_STORE,
-  SINGLE_SERVICES,
-  TESTIMONIALS,
+  STUDENT_LIFE_MAP_PREVIEW,
+  STUDENT_LIFE_STATUSES,
+  TYPICAL_SITUATIONS,
 } from '../../data';
-import { LOCALES, LOCALE_LABELS, type Locale, swapLocale } from '../../lib/locales';
-import { BUSINESS, BUSINESS_LOCATION, getBusinessFooterLine, getBusinessPrintFooterLine, getWhatsAppAriaLabel, getWhatsAppUrl } from '../../lib/business';
-import { PRIVACY_FORM_ACKNOWLEDGEMENT, PRIVACY_ROUTE_LABELS, privacyPath } from '../../lib/privacy';
-import { legalFooterLinks } from '../../lib/legal-navigation';
+import {LOCALES, LOCALE_LABELS, type Locale, swapLocale} from '../../lib/locales';
+import {
+  BUSINESS,
+  BUSINESS_LOCATION,
+  getBusinessFooterLine,
+  getBusinessPrintFooterLine,
+  getWhatsAppAriaLabel,
+  getWhatsAppUrl,
+} from '../../lib/business';
+import {legalFooterLinks} from '../../lib/legal-navigation';
+import {PRIVACY_FORM_ACKNOWLEDGEMENT, PRIVACY_ROUTE_LABELS, privacyPath} from '../../lib/privacy';
 
 const BrandLogo = ({className = ''}: {className?: string}) => (
   <Image
@@ -99,7 +105,46 @@ type VantamHomeProps = {
   searchString: string;
 };
 
+type FormStatus = 'idle' | 'sending' | 'success' | 'error';
+
+type HelpValue =
+  | 'relocation_orientation'
+  | 'vantam_start'
+  | 'vantam_first_year'
+  | 'vantam_continue'
+  | 'partnership'
+  | `housing_ready:${string}`
+  | `housing_campaign:${string}`
+  | `individual_service:${string}`;
+
+function isHousingHelp(value: string) {
+  return value.startsWith('housing_ready:') || value.startsWith('housing_campaign:');
+}
+
+function isIndividualServiceHelp(value: string) {
+  return value.startsWith('individual_service:');
+}
+
+function getInquiryTypeForHelp(help: string) {
+  if (help === 'relocation_orientation') return 'consultation';
+  if (help === 'partnership') return 'b2b';
+  if (
+    help === 'vantam_start'
+    || help === 'vantam_first_year'
+    || help === 'vantam_continue'
+    || isHousingHelp(help)
+  ) {
+    return 'packages';
+  }
+  return 'single';
+}
+
+function getIndividualServiceSlug(help: string) {
+  return isIndividualServiceHelp(help) ? help.split(':', 2)[1] ?? '' : '';
+}
+
 export default function VantamHome({lang, pathname, searchString}: VantamHomeProps) {
+  const dict = DICTIONARY[lang];
   const prefersReducedMotion = useReducedMotion();
   const mobileNavigationRef = useRef<HTMLDetailsElement>(null);
   const pdfTriggerRef = useRef<HTMLButtonElement>(null);
@@ -109,33 +154,323 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
   const formStartedAtRef = useRef(0);
   const [currentHash, setCurrentHash] = useState('');
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
-  const [selectedPackage, setSelectedPackage] = useState('pkg_setup');
-  const [activeServiceCategory, setActiveServiceCategory] = useState('housing');
+  const [selectedPackage, setSelectedPackage] = useState<'vantam_start' | 'vantam_first_year'>('vantam_first_year');
+  const [selectedHousing, setSelectedHousing] = useState<'housing_ready' | 'housing_campaign'>('housing_ready');
+  const [activeServiceGroup, setActiveServiceGroup] = useState<'a' | 'b' | 'c' | 'd'>('a');
   const [activeSituation, setActiveSituation] = useState('moving');
-  const [calculatorToggles, setCalculatorToggles] = useState<Record<string, boolean>>({
-    scam: true,
-    fine: false,
-    insurance: true,
-    hostel: false,
-  });
-  const [completedTasks, setCompletedTasks] = useState<Record<string, boolean>>({c1: true, c2: false, c3: false});
   const [faqOpen, setFaqOpen] = useState<Record<string, boolean>>({f1: true});
   const [showExportModal, setShowExportModal] = useState(false);
-  const [activeTestimonialIdx, setActiveTestimonialIdx] = useState(0);
   const [formName, setFormName] = useState('');
   const [formEmail, setFormEmail] = useState('');
   const [formAudience, setFormAudience] = useState('student');
   const [formMovingDate, setFormMovingDate] = useState('');
   const [formCity, setFormCity] = useState('');
   const [formBudget, setFormBudget] = useState('');
-  const [formStatus, setFormStatus] = useState('before');
+  const [formStatusField, setFormStatusField] = useState('before');
   const [formGuarantor, setFormGuarantor] = useState('');
-  const [formHelp, setFormHelp] = useState('relocation_orientation');
+  const [formHelp, setFormHelp] = useState<HelpValue>('relocation_orientation');
   const [formHousingType, setFormHousingType] = useState('');
   const [formMessage, setFormMessage] = useState('');
   const [formConsent, setFormConsent] = useState(false);
   const [formWebsite, setFormWebsite] = useState('');
-  const [formState, setFormState] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [formState, setFormState] = useState<FormStatus>('idle');
+
+  const copy = useMemo(() => ({
+    en: {
+      sectionLead: 'Who VANTAM helps',
+      sectionTitle: 'Practical support for students before arrival, after arrival, and through defined first-year situations.',
+      sectionText: 'Use the public ladder when you need a clear route, visible deliverables, and honest boundaries instead of a generic relocation promise.',
+      situationLead: 'Start with your situation',
+      situationTitle: 'Choose the route that fits what is happening now',
+      situationText: 'Each route takes you to the right section and, where the choice is specific enough, pre-fills the contact form with the matching product context.',
+      processLead: 'How VANTAM works',
+      processTitle: 'Four public stages, with defined scope and visible outputs',
+      processText: 'VANTAM starts by clarifying the situation, then maps the next actions, works through the defined practical scope, and documents what is completed, pending, or waiting.',
+      packageLead: 'Start versus First Year',
+      packageTitle: 'Choose between first-month execution and defined first-year support',
+      packageText: 'The main package comparison contains only VANTAM Start and VANTAM First Year.',
+      packageSummary: 'Selected package',
+      packageDownload: 'Download / save package overview',
+      packageDownloadHint: 'Browser print only. Final written scope is confirmed before work begins.',
+      consultationLead: 'Single consultation entry',
+      consultationTitle: 'Relocation Orientation',
+      consultationText: 'One public consultation for the first practical assessment and product recommendation.',
+      housingLead: 'Housing path',
+      housingTitle: 'Housing Ready versus Housing Search Campaign',
+      housingText: 'Preparation and campaign execution are separate from the main packages and use fixed public limits.',
+      servicesLead: 'Individual Student Services',
+      servicesTitle: 'Defined practical cases for students already living in the Netherlands',
+      servicesText: 'These are specific public services with fixed prices only where scope is predictable. Everything else uses Request a price.',
+      studentLifeLead: 'Student Life Map Preview',
+      studentLifeTitle: 'An illustrative working-document preview, not a portal',
+      studentLifeText: 'The preview shows the kinds of areas and statuses VANTAM may organise during support. It does not imply an account, saved progress, or a client area.',
+      situationsLead: 'Typical situations',
+      situationsTitle: 'Typical situations VANTAM can take into work',
+      situationsText: 'These are scenario types, not testimonials.',
+      faqText: 'Clear answers about scope, limits, public pricing logic, returning clients, and the Student Life Map Preview.',
+      partnerLead: 'Partner entry',
+      partnerTitle: 'A clean route for organisations referring practical student cases',
+      partnerText: 'For universities, education consultants, agencies, and family-supported routes that need one practical handoff instead of scattered messages.',
+      partnerCta: 'Discuss a partner enquiry',
+      contactLead: 'Contact',
+      contactAside: 'You can contact VANTAM without knowing the final answer yet.',
+      contactAsideText: 'Choose a product, housing path, or individual service when you know it. Otherwise describe the situation and VANTAM can respond with possible next steps.',
+      responseTime: 'VANTAM reviews enquiries and replies by email with possible next steps.',
+      businessDetailsLabel: 'Business details',
+      emailLabel: 'Email',
+      phoneLabel: 'Phone',
+      whatsappLabel: 'Message VANTAM on WhatsApp Business',
+      boundaryTitle: 'Boundaries',
+      boundaryText: 'VANTAM does not present itself as a law firm, immigration service, insurance broker, financial advisor, medical provider, real-estate agency, or client portal.',
+      formSectionTitle: 'Enquiry details',
+      formSectionSub: 'These fields help VANTAM understand the situation and preserve the right product context.',
+      formAudienceLabel: 'Context',
+      formStatusLabel: 'Current status',
+      formMovingDateLabel: 'Expected move date',
+      formCityLabel: 'Preferred city or region',
+      formBudgetLabel: 'Approximate housing budget',
+      formGuarantorLabel: 'Guarantor situation',
+      formHelpLabel: 'What help is needed',
+      formHousingTypeLabel: 'What type of housing are you looking for?',
+      formSensitiveWarning: 'Do not submit passports, bank statements, medical information, guarantor files, or other sensitive documents through this open form.',
+      formEnquiryNotice: 'This is an enquiry only. Submitting the form does not create a contract, book a consultation, start work, or waive any rights.',
+      formStatusBefore: 'Before arrival',
+      formStatusAfter: 'Already in the Netherlands',
+      formStatusFoundHousing: 'Housing already found',
+      formStatusNeedHousing: 'Need housing now or later',
+      formStatusOrganisation: 'Organisation / partnership',
+      formAudienceStudent: 'Student',
+      formAudienceProfessional: 'Expat / professional',
+      formAudienceFamily: 'Family',
+      formAudienceOrganisation: 'Organisation',
+      formGuarantorYes: 'Yes, guarantor available',
+      formGuarantorMaybe: 'May be needed',
+      formGuarantorNo: 'No / not sure',
+      chooseHousingType: 'Choose a housing type',
+      chooseRange: 'Choose a range',
+      chooseSituation: 'Choose a situation',
+      printTitle: 'Download / save package overview',
+      printDesc: 'Review the package overview, then use the browser print dialog to print or save it as PDF.',
+      printButton: 'Print or save as PDF',
+      close: 'Close',
+      printComparison: 'Short package comparison',
+      printGenerated: 'Generated',
+      printVersion: 'Package version',
+      printDisclaimer: 'Final written scope, deliverables, exclusions, and price are confirmed before work begins.',
+      printClientResponsibilities: 'Client responsibilities',
+      printExclusions: 'Exclusions',
+      printOptional: 'Optional additions',
+      printNoGuarantee: 'No-third-party-outcome notice',
+      printNextStep: 'Next step',
+      returningClientCta: 'Returning client? Ask about Continue',
+      individualServiceIntro: 'Choose a defined individual service',
+      packageDifference: 'How it differs',
+      packagePeriod: 'Active period',
+      packageOutcome: 'Outcome',
+      requestPriceNote: 'Request a price means written scope, deliverables, exclusions, and price before work begins.',
+      serviceBoundary: 'Boundary',
+      recommendedProduct: 'Recommended product',
+      whatRisk: 'What is at risk',
+      whatVantamDoes: 'What VANTAM does',
+      trigger: 'Trigger',
+    },
+    uk: {
+      sectionLead: 'Кому допомагає VANTAM',
+      sectionTitle: 'Практична підтримка для студентів до приїзду, після приїзду та в межах визначених ситуацій першого року.',
+      sectionText: 'Використовуйте публічну архітектуру, коли вам потрібні чіткий маршрут, видимі результати та чесні межі замість загальної обіцянки релокації.',
+      situationLead: 'Почніть зі своєї ситуації',
+      situationTitle: 'Оберіть маршрут, який відповідає тому, що відбувається зараз',
+      situationText: 'Кожен маршрут веде до правильного розділу і, коли вибір достатньо конкретний, підставляє у форму відповідний контекст продукту.',
+      processLead: 'Як працює VANTAM',
+      processTitle: 'Чотири публічні етапи з визначеним обсягом і видимими результатами',
+      processText: 'VANTAM спочатку прояснює ситуацію, потім складає карту наступних дій, далі опрацьовує визначений практичний обсяг і фіксує, що завершено, що очікує та що ще потребує руху.',
+      packageLead: 'Start versus First Year',
+      packageTitle: 'Оберіть між виконанням першого місяця та визначеною підтримкою на перший рік',
+      packageText: 'Основне порівняння пакетів містить лише VANTAM Start і VANTAM First Year.',
+      packageSummary: 'Обраний пакет',
+      packageDownload: 'Завантажити / зберегти огляд пакета',
+      packageDownloadHint: 'Лише друк браузера. Фінальний письмовий обсяг підтверджується до початку роботи.',
+      consultationLead: 'Один вхід через консультацію',
+      consultationTitle: 'Relocation Orientation',
+      consultationText: 'Одна публічна консультація для першої практичної оцінки та рекомендації продукту.',
+      housingLead: 'Житловий шлях',
+      housingTitle: 'Housing Ready versus Housing Search Campaign',
+      housingText: 'Підготовка і виконання кампанії відокремлені від основних пакетів і мають фіксовані публічні межі.',
+      servicesLead: 'Індивідуальні студентські послуги',
+      servicesTitle: 'Визначені практичні кейси для студентів, які вже живуть у Нідерландах',
+      servicesText: 'Це конкретні публічні послуги з фіксованими цінами лише там, де обсяг передбачуваний. Усе інше використовує Запитати ціну.',
+      studentLifeLead: 'Student Life Map Preview',
+      studentLifeTitle: 'Ілюстративний попередній перегляд робочого документа, а не портал',
+      studentLifeText: 'Попередній перегляд показує типи зон і статусів, які VANTAM може впорядковувати під час підтримки. Це не означає акаунт, збережений прогрес або клієнтський кабінет.',
+      situationsLead: 'Типові ситуації',
+      situationsTitle: 'Типові ситуації, які VANTAM може взяти в роботу',
+      situationsText: 'Це типи сценаріїв, а не відгуки.',
+      faqText: 'Чіткі відповіді про обсяг, межі, публічну логіку цін, клієнтів, що повертаються, і Student Life Map Preview.',
+      partnerLead: 'Партнерський вхід',
+      partnerTitle: 'Окремий маршрут для організацій, які передають практичні студентські кейси',
+      partnerText: 'Для університетів, освітніх консультантів, агенцій і маршрутів за підтримки родини, яким потрібна одна практична передача замість розрізнених повідомлень.',
+      partnerCta: 'Обговорити партнерський запит',
+      contactLead: 'Контакт',
+      contactAside: 'До VANTAM можна звернутися навіть без готової остаточної відповіді.',
+      contactAsideText: 'Оберіть продукт, житловий шлях або індивідуальну послугу, якщо вже знаєте її. Інакше опишіть ситуацію, і VANTAM відповість щодо можливих наступних кроків.',
+      responseTime: 'VANTAM переглядає запити та відповідає електронною поштою щодо можливих наступних кроків.',
+      businessDetailsLabel: 'Дані бізнесу',
+      emailLabel: 'Електронна пошта',
+      phoneLabel: 'Телефон',
+      whatsappLabel: 'Написати VANTAM у WhatsApp Business',
+      boundaryTitle: 'Межі',
+      boundaryText: 'VANTAM не позиціонує себе як юридичну фірму, імміграційний сервіс, страхового брокера, фінансового радника, медичного провайдера, агенцію нерухомості чи клієнтський портал.',
+      formSectionTitle: 'Деталі запиту',
+      formSectionSub: 'Ці поля допомагають VANTAM зрозуміти ситуацію та зберегти правильний контекст продукту.',
+      formAudienceLabel: 'Контекст',
+      formStatusLabel: 'Поточний статус',
+      formMovingDateLabel: 'Очікувана дата переїзду',
+      formCityLabel: 'Бажане місто або регіон',
+      formBudgetLabel: 'Орієнтовний бюджет на житло',
+      formGuarantorLabel: 'Ситуація з гарантом',
+      formHelpLabel: 'Яка допомога потрібна',
+      formHousingTypeLabel: 'Який тип житла ви шукаєте?',
+      formSensitiveWarning: 'Не надсилайте через цю відкриту форму паспорти, банківські виписки, медичні дані, файли гаранта чи інші чутливі документи.',
+      formEnquiryNotice: 'Це лише запит. Надсилання форми не створює договір, не бронює консультацію, не запускає роботу й не означає відмову від прав.',
+      formStatusBefore: 'До приїзду',
+      formStatusAfter: 'Вже в Нідерландах',
+      formStatusFoundHousing: 'Житло вже знайдено',
+      formStatusNeedHousing: 'Житло потрібне зараз або пізніше',
+      formStatusOrganisation: 'Організація / партнерство',
+      formAudienceStudent: 'Студент',
+      formAudienceProfessional: 'Експат / професіонал',
+      formAudienceFamily: 'Родина',
+      formAudienceOrganisation: 'Організація',
+      formGuarantorYes: 'Так, гарант є',
+      formGuarantorMaybe: 'Може знадобитися',
+      formGuarantorNo: 'Немає / не впевнений(-а)',
+      chooseHousingType: 'Оберіть тип житла',
+      chooseRange: 'Оберіть діапазон',
+      chooseSituation: 'Оберіть ситуацію',
+      printTitle: 'Завантажити / зберегти огляд пакета',
+      printDesc: 'Перегляньте огляд пакета, а потім скористайтеся друком браузера, щоб роздрукувати або зберегти його як PDF.',
+      printButton: 'Роздрукувати або зберегти як PDF',
+      close: 'Закрити',
+      printComparison: 'Коротке порівняння пакетів',
+      printGenerated: 'Згенеровано',
+      printVersion: 'Версія пакета',
+      printDisclaimer: 'Фінальний письмовий обсяг, результати, виключення та ціна підтверджуються до початку роботи.',
+      printClientResponsibilities: 'Обов’язки клієнта',
+      printExclusions: 'Виключення',
+      printOptional: 'Необов’язкові додатки',
+      printNoGuarantee: 'Примітка про відсутність гарантій результату третіх сторін',
+      printNextStep: 'Наступний крок',
+      returningClientCta: 'Клієнт, що повертається? Запитайте про Continue',
+      individualServiceIntro: 'Оберіть визначену індивідуальну послугу',
+      packageDifference: 'Чим відрізняється',
+      packagePeriod: 'Активний період',
+      packageOutcome: 'Результат',
+      requestPriceNote: 'Запитати ціну означає письмовий обсяг, результати, виключення та ціну до початку роботи.',
+      serviceBoundary: 'Межа',
+      recommendedProduct: 'Рекомендований продукт',
+      whatRisk: 'Що під ризиком',
+      whatVantamDoes: 'Що робить VANTAM',
+      trigger: 'Тригер',
+    },
+    ru: {
+      sectionLead: 'Кому помогает VANTAM',
+      sectionTitle: 'Практическая поддержка для студентов до приезда, после приезда и в рамках определённых ситуаций первого года.',
+      sectionText: 'Используйте публичную архитектуру, когда вам нужны ясный маршрут, видимые результаты и честные границы вместо общей обещанной релокации.',
+      situationLead: 'Начните со своей ситуации',
+      situationTitle: 'Выберите маршрут, который соответствует тому, что происходит сейчас',
+      situationText: 'Каждый маршрут ведёт к правильному разделу и, когда выбор достаточно конкретен, подставляет в форму нужный контекст продукта.',
+      processLead: 'Как работает VANTAM',
+      processTitle: 'Четыре публичных этапа с определённым объёмом и видимыми результатами',
+      processText: 'VANTAM сначала проясняет ситуацию, затем выстраивает карту следующих действий, дальше отрабатывает определённый практический объём и фиксирует, что завершено, что ждёт и что ещё требует движения.',
+      packageLead: 'Start versus First Year',
+      packageTitle: 'Выберите между выполнением первого месяца и определённой поддержкой на первый год',
+      packageText: 'Основное сравнение пакетов содержит только VANTAM Start и VANTAM First Year.',
+      packageSummary: 'Выбранный пакет',
+      packageDownload: 'Скачать / сохранить обзор пакета',
+      packageDownloadHint: 'Только печать браузера. Финальный письменный объём подтверждается до начала работы.',
+      consultationLead: 'Один вход через консультацию',
+      consultationTitle: 'Relocation Orientation',
+      consultationText: 'Одна публичная консультация для первой практической оценки и рекомендации продукта.',
+      housingLead: 'Жилищный маршрут',
+      housingTitle: 'Housing Ready versus Housing Search Campaign',
+      housingText: 'Подготовка и выполнение кампании отделены от основных пакетов и используют фиксированные публичные пределы.',
+      servicesLead: 'Индивидуальные студенческие услуги',
+      servicesTitle: 'Определённые практические кейсы для студентов, которые уже живут в Нидерландах',
+      servicesText: 'Это конкретные публичные услуги с фиксированными ценами только там, где объём предсказуем. Всё остальное использует Запросить цену.',
+      studentLifeLead: 'Student Life Map Preview',
+      studentLifeTitle: 'Иллюстративный предварительный просмотр рабочего документа, а не портал',
+      studentLifeText: 'Предварительный просмотр показывает типы зон и статусов, которые VANTAM может упорядочивать во время поддержки. Это не означает аккаунт, сохранённый прогресс или клиентский кабинет.',
+      situationsLead: 'Типичные ситуации',
+      situationsTitle: 'Типичные ситуации, которые VANTAM может взять в работу',
+      situationsText: 'Это типы сценариев, а не отзывы.',
+      faqText: 'Понятные ответы об объёме, границах, публичной логике цен, возвращающихся клиентах и Student Life Map Preview.',
+      partnerLead: 'Партнёрский вход',
+      partnerTitle: 'Отдельный маршрут для организаций, которые передают практические студенческие кейсы',
+      partnerText: 'Для университетов, образовательных консультантов, агентств и маршрутов при поддержке семьи, которым нужен один практический хенд-офф вместо разрозненных сообщений.',
+      partnerCta: 'Обсудить партнёрский запрос',
+      contactLead: 'Контакт',
+      contactAside: 'В VANTAM можно обратиться даже без готового окончательного ответа.',
+      contactAsideText: 'Выберите продукт, жилищный маршрут или индивидуальную услугу, если уже знаете её. Иначе опишите ситуацию, и VANTAM ответит о возможных следующих шагах.',
+      responseTime: 'VANTAM рассматривает запросы и отвечает по электронной почте о возможных следующих шагах.',
+      businessDetailsLabel: 'Данные бизнеса',
+      emailLabel: 'Электронная почта',
+      phoneLabel: 'Телефон',
+      whatsappLabel: 'Написать VANTAM в WhatsApp Business',
+      boundaryTitle: 'Границы',
+      boundaryText: 'VANTAM не позиционирует себя как юридическую фирму, иммиграционный сервис, страхового брокера, финансового советника, медицинского провайдера, агентство недвижимости или клиентский портал.',
+      formSectionTitle: 'Детали запроса',
+      formSectionSub: 'Эти поля помогают VANTAM понять ситуацию и сохранить правильный контекст продукта.',
+      formAudienceLabel: 'Контекст',
+      formStatusLabel: 'Текущий статус',
+      formMovingDateLabel: 'Ожидаемая дата переезда',
+      formCityLabel: 'Предпочтительный город или регион',
+      formBudgetLabel: 'Ориентировочный бюджет на жильё',
+      formGuarantorLabel: 'Ситуация с гарантом',
+      formHelpLabel: 'Какая помощь нужна',
+      formHousingTypeLabel: 'Какой тип жилья вы ищете?',
+      formSensitiveWarning: 'Не отправляйте через эту открытую форму паспорта, банковские выписки, медицинские данные, файлы гаранта или другие чувствительные документы.',
+      formEnquiryNotice: 'Это только запрос. Отправка формы не создаёт договор, не бронирует консультацию, не запускает работу и не означает отказ от прав.',
+      formStatusBefore: 'До приезда',
+      formStatusAfter: 'Уже в Нидерландах',
+      formStatusFoundHousing: 'Жильё уже найдено',
+      formStatusNeedHousing: 'Жильё нужно сейчас или позже',
+      formStatusOrganisation: 'Организация / партнёрство',
+      formAudienceStudent: 'Студент',
+      formAudienceProfessional: 'Экспат / профессионал',
+      formAudienceFamily: 'Семья',
+      formAudienceOrganisation: 'Организация',
+      formGuarantorYes: 'Да, гарант есть',
+      formGuarantorMaybe: 'Может понадобиться',
+      formGuarantorNo: 'Нет / не уверен(-а)',
+      chooseHousingType: 'Выберите тип жилья',
+      chooseRange: 'Выберите диапазон',
+      chooseSituation: 'Выберите ситуацию',
+      printTitle: 'Скачать / сохранить обзор пакета',
+      printDesc: 'Просмотрите обзор пакета, затем используйте печать браузера, чтобы распечатать или сохранить его как PDF.',
+      printButton: 'Распечатать или сохранить как PDF',
+      close: 'Закрыть',
+      printComparison: 'Краткое сравнение пакетов',
+      printGenerated: 'Сформировано',
+      printVersion: 'Версия пакета',
+      printDisclaimer: 'Финальный письменный объём, результаты, исключения и цена подтверждаются до начала работы.',
+      printClientResponsibilities: 'Обязанности клиента',
+      printExclusions: 'Исключения',
+      printOptional: 'Необязательные добавления',
+      printNoGuarantee: 'Примечание об отсутствии гарантии результата третьих сторон',
+      printNextStep: 'Следующий шаг',
+      returningClientCta: 'Возвращающийся клиент? Спросите о Continue',
+      individualServiceIntro: 'Выберите определённую индивидуальную услугу',
+      packageDifference: 'Чем отличается',
+      packagePeriod: 'Активный период',
+      packageOutcome: 'Результат',
+      requestPriceNote: 'Запросить цену означает письменный объём, результаты, исключения и цену до начала работы.',
+      serviceBoundary: 'Граница',
+      recommendedProduct: 'Рекомендуемый продукт',
+      whatRisk: 'Что под риском',
+      whatVantamDoes: 'Что делает VANTAM',
+      trigger: 'Триггер',
+    },
+  })[lang], [lang]);
 
   useEffect(() => {
     formStartedAtRef.current = Date.now();
@@ -177,7 +512,8 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
         return;
       }
       if (event.key !== 'Tab' || !modalRef.current) return;
-      const focusable = Array.from(modalRef.current.querySelectorAll<HTMLElement>('button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])')).filter((element) => !element.hasAttribute('disabled'));
+      const focusable = Array.from(modalRef.current.querySelectorAll<HTMLElement>('button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])'))
+        .filter((element) => !element.hasAttribute('disabled'));
       if (!focusable.length) return;
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
@@ -202,348 +538,34 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
     if (formState === 'success') successRef.current?.focus();
   }, [formState]);
 
-  const dict = useMemo(() => DICTIONARY[lang], [lang]);
-  const sList = useMemo(() => SERVICES_STORE[lang], [lang]);
-  const whatsappHref = useMemo(() => getWhatsAppUrl(lang), [lang]);
-  const whatsappAriaLabel = useMemo(() => getWhatsAppAriaLabel(lang), [lang]);
-  const privacyHref = useMemo(() => privacyPath(lang), [lang]);
+  const whatsappHref = getWhatsAppUrl(lang);
+  const whatsappAriaLabel = getWhatsAppAriaLabel(lang);
+  const privacyHref = privacyPath(lang);
   const privacyLabel = PRIVACY_ROUTE_LABELS[lang];
-  const legalLinks = useMemo(() => legalFooterLinks(lang), [lang]);
+  const legalLinks = legalFooterLinks(lang);
   const privacyAcknowledgement = PRIVACY_FORM_ACKNOWLEDGEMENT[lang];
-  const footerBusinessLine = useMemo(() => getBusinessFooterLine(lang), [lang]);
-  const footerPrintLine = useMemo(() => getBusinessPrintFooterLine(lang), [lang]);
+  const footerBusinessLine = getBusinessFooterLine(lang);
+  const footerPrintLine = getBusinessPrintFooterLine(lang);
   const businessLocation = BUSINESS_LOCATION[lang];
-  const localeSwitchHref = useMemo(() => {
-    return (nextLocale: Locale) => {
-      const path = swapLocale(pathname, nextLocale);
-      return `${path}${searchString ? `?${searchString}` : ''}${currentHash}`;
-    };
-  }, [currentHash, pathname, searchString]);
+  const localeSwitchHref = (nextLocale: Locale) => {
+    const path = swapLocale(pathname, nextLocale);
+    return `${path}${searchString ? `?${searchString}` : ''}${currentHash}`;
+  };
 
-  const ui = useMemo(() => ({
-    uk: {
-      notice: 'Підтримка до, під час і після приїзду',
-      menu: 'Меню',
-      darkTheme: 'Увімкнути темну тему',
-      lightTheme: 'Увімкнути світлу тему',
-      heroTitle: 'Практична підтримка для студентів, які переїжджають до Нідерландів',
-      heroText: 'До приїзду, під час пошуку житла та оренди, і після приїзду для практичного облаштування. Чіткі наступні кроки без зайвого шуму.',
-      heroImageAlt: 'Житлова вулиця з цегляними будинками в Амстердамі',
-      photoCredit: 'Фото: Haberdoedas, Unsplash',
-      localNote: 'Три мови. Один студентський шлях. Один локальний контакт.',
-      heroPrimary: 'Оберіть свій шлях',
-      heroSecondary: 'Подивитися послуги',
-      entryTitle: 'Оберіть формат, який відповідає вашій ситуації',
-      entryConsult: 'Потрібна орієнтація',
-      entryPackage: 'Потрібен основний пакет',
-      entrySingle: 'Потрібна житлова активація',
-      from: 'від',
-      trustTitle: 'Підтримка без інституційної дистанції',
-      trustText: 'VANTAM пояснює процеси простою мовою, допомагає підготуватися і тримає наступний крок у фокусі - для орієнтації, житлової активації та першого року.',
-      boundary: 'Ми не замінюємо ліцензованих фахівців і не обіцяємо результатів, які залежать від банків, державних органів, страховиків або орендодавців.',
-      consultLead: 'Найпростіший спосіб почати',
-      servicesLead: 'Окремий запит',
-      categoryCount: 'послуг',
-      packageLead: 'Основний пакет і житлова активація',
-      packageCompare: 'Порівняйте варіанти поруч',
-      packageDetails: 'Склад обраної пропозиції',
-      selected: 'Обрано',
-      choose: 'Переглянути',
-      toolsLead: 'Корисні інструменти до розмови',
-      toolsText: 'Оцініть типові витрати та відмітьте, що вже готово. Інструменти допомагають спланувати розмову, а не замінюють консультацію.',
-      estimate: 'Сума вибраних сценаріїв',
-      maximum: 'Максимум у калькуляторі: €4,575',
-      difference: 'Різниця з VANTAM First Year',
-      progress: 'готово',
-      testimonialLead: 'Приклади',
-      contactLead: 'Розкажіть, що відбувається',
-      contactAside: 'Можна почати без готового рішення',
-      contactAsideText: 'Оберіть тип запиту або просто опишіть ситуацію. Це запит на можливі наступні кроки, а не бронювання чи договір.',
-      emailLabel: 'Електронна пошта',
-      phoneLabel: 'Телефон',
-      whatsappLabel: 'Написати у WhatsApp Business',
-      businessDetailsLabel: 'Дані компанії',
-      responseTime: 'Ми переглядаємо звернення і відповідаємо на вказану пошту з наступними кроками.',
-      scopeLabel: 'Включено',
-      limitsLabel: 'Межі',
-      result: 'Результат',
-      details: 'Деталі',
-      audienceLead: 'Хто отримує користь',
-      audienceTitle: 'Підтримка для студентів, які переїжджають до Нідерландів',
-      audienceText: 'Одна пропозиція для студентів до приїзду, під час житла та оренди, і після приїзду для практичного облаштування. Комусь потрібен один чіткий крок, комусь - ширший супровід.',
-      audienceBefore: 'До приїзду',
-      audienceAfter: 'Після приїзду',
-      selectorLead: 'Почніть із вашої ситуації',
-      selectorTitle: 'Вибір за ситуацією',
-      selectorText: 'Оберіть варіант, який швидше підведе вас до потрібного розділу і підставить відповідний контекст у форму.',
-      selectorServices: 'Потрібна житлова активація',
-      selectorPackages: 'Потрібен основний пакет',
-      selectorConsult: 'Потрібна орієнтація',
-      selectorPartner: 'Партнерський запит',
-      processLead: 'Як працюємо',
-      processTitle: 'Оцінити, спланувати, діяти та продовжити',
-      processText: 'Спершу ми оцінюємо ситуацію, потім будуємо карту кроків, далі діємо і координуємо, а після цього перевіряємо і продовжуємо.',
-      partnerLead: 'Партнерство',
-      partnerTitle: 'Партнер з VANTAM',
-      partnerText: 'Для житлових агенцій, HR-команд, університетів та освітніх консультантів, які хочуть акуратно передавати практичні студентські запити.',
-      partnerCTA: 'Обговорити співпрацю',
-      housingLead: 'Житлова активація',
-      housingTitle: 'Housing Ready',
-      housingText: 'Підготовка до житлового шляху, пояснення ситуації з гарантом і перші практичні кроки перед пошуком житла.',
-      housingNote: 'Без гарантії отримання житла і без юридичного представництва.',
-      housingCta: 'Запитати житлову активацію',
-      housingPriceLabel: 'Після оцінки',
-      formSectionTitle: 'Кваліфікація запиту',
-      formSectionSub: 'Дайте нам кілька практичних деталей. Це допоможе швидше зрозуміти, чи вам потрібна орієнтація, основний пакет, житлова активація або партнерська розмова.',
-      formEnquiryNotice: 'Це лише початковий запит. Надсилання форми не створює договір, бронювання, платіжне зобов’язання, запит на початок роботи або відмову від прав. VANTAM перегляне інформацію і зв’яжеться з вами щодо можливих наступних кроків.',
-      formAudienceLabel: 'Контекст',
-      formMovingDateLabel: 'Очікувана дата переїзду',
-      formCityLabel: 'Переважне місто або регіон',
-      formBudgetLabel: 'Орієнтовний бюджет на житло',
-      formStatusLabel: 'Поточний стан',
-      formGuarantorLabel: 'Гарант / поручитель',
-      formHelpLabel: 'Яка допомога потрібна',
-      formHousingTypeLabel: 'Який тип житла ви шукаєте?',
-      formSensitiveWarning: 'Не надсилайте через цю відкриту форму паспорти, банківські виписки, медичні дані, файли поручителя чи інші чутливі документи.',
-      formStatusBefore: 'Ще до приїзду',
-      formStatusAfter: 'Вже в Нідерландах',
-      formStatusFoundHousing: 'Житло вже знайдено',
-      formStatusNeedHousing: 'Потрібна житлова або практична підтримка',
-      formStatusOrganisation: 'Організація / партнерство',
-      formAudienceStudent: 'Студент',
-      formAudienceProfessional: 'Експат / професіонал',
-      formAudienceFamily: 'Сім’я',
-      formAudienceOrganisation: 'Організація',
-      formGuarantorYes: 'Так, гарант є',
-      formGuarantorMaybe: 'Може знадобитися',
-      formGuarantorNo: 'Немає / не впевнений(-а)',
-    },
-    ru: {
-      notice: 'Поддержка до, во время и после приезда',
-      menu: 'Меню',
-      darkTheme: 'Включить темную тему',
-      lightTheme: 'Включить светлую тему',
-      heroTitle: 'Практическая поддержка для студентов, которые переезжают в Нидерланды',
-      heroText: 'До приезда, во время поиска жилья и аренды, и после приезда для практического обустройства. Понятные следующие шаги без лишнего шума.',
-      heroImageAlt: 'Жилая улица с кирпичными домами в Амстердаме',
-      photoCredit: 'Фото: Haberdoedas, Unsplash',
-      localNote: 'Три языка. Один студенческий путь. Один локальный контакт.',
-      heroPrimary: 'Выберите свой путь',
-      heroSecondary: 'Посмотреть услуги',
-      entryTitle: 'Выберите формат, который подходит вашей ситуации',
-      entryConsult: 'Нужна ориентация',
-      entryPackage: 'Нужен основной пакет',
-      entrySingle: 'Нужна жилищная активация',
-      from: 'от',
-      trustTitle: 'Поддержка без институциональной дистанции',
-      trustText: 'VANTAM объясняет процессы простым языком, помогает подготовиться и держит следующий шаг в фокусе - для ориентации, жилищной активации и первого года.',
-      boundary: 'Мы не заменяем лицензированных специалистов и не обещаем результатов, которые зависят от банков, государственных органов, страховщиков или арендодателей.',
-      consultLead: 'Самый простой способ начать',
-      servicesLead: 'Отдельный запрос',
-      categoryCount: 'услуг',
-      packageLead: 'Основной пакет и жилищная активация',
-      packageCompare: 'Сравните варианты рядом',
-      packageDetails: 'Состав выбранного предложения',
-      selected: 'Выбрано',
-      choose: 'Посмотреть',
-      toolsLead: 'Полезные инструменты до разговора',
-      toolsText: 'Оцените типичные расходы и отметьте, что уже готово. Инструменты помогают спланировать разговор, а не заменяют консультацию.',
-      estimate: 'Сумма выбранных сценариев',
-      maximum: 'Максимум в калькуляторе: €4,575',
-      difference: 'Разница с VANTAM First Year',
-      progress: 'готово',
-      testimonialLead: 'Примеры',
-      contactLead: 'Расскажите, что происходит',
-      contactAside: 'Можно начать без готового решения',
-      contactAsideText: 'Выберите тип запроса или просто опишите ситуацию. Это запрос о возможных следующих шагах, а не бронирование или договор.',
-      emailLabel: 'Электронная почта',
-      phoneLabel: 'Телефон',
-      whatsappLabel: 'Написать в WhatsApp Business',
-      businessDetailsLabel: 'Данные компании',
-      responseTime: 'Мы просматриваем обращения и отвечаем на указанную почту с следующими шагами.',
-      scopeLabel: 'Включено',
-      limitsLabel: 'Границы',
-      result: 'Результат',
-      details: 'Детали',
-      audienceLead: 'Кому это полезно',
-      audienceTitle: 'Поддержка для студентов, которые переезжают в Нидерланды',
-      audienceText: 'Одно предложение для студентов до приезда, во время жилья и аренды, и после приезда для практического обустройства. Кому-то нужен один чёткий шаг, кому-то - более широкое сопровождение.',
-      audienceBefore: 'До приезда',
-      audienceAfter: 'После приезда',
-      selectorLead: 'Начните со своей ситуации',
-      selectorTitle: 'Выбор по ситуации',
-      selectorText: 'Выберите вариант, который быстрее приведёт вас к нужному разделу и подставит в форму нужный контекст.',
-      selectorServices: 'Нужна жилищная активация',
-      selectorPackages: 'Нужен основной пакет',
-      selectorConsult: 'Нужна ориентация',
-      selectorPartner: 'Партнёрский запрос',
-      processLead: 'Как работаем',
-      processTitle: 'Оценить, спланировать, действовать и продолжить',
-      processText: 'Сначала мы оцениваем ситуацию, затем строим карту шагов, дальше действуем и координируем, а после этого проверяем и продолжаем.',
-      partnerLead: 'Партнёрство',
-      partnerTitle: 'Партнёр с VANTAM',
-      partnerText: 'Для жилищных агентств, HR-команд, университетов и образовательных консультантов, которые хотят аккуратно передавать практические студенческие запросы.',
-      partnerCTA: 'Обсудить сотрудничество',
-      housingLead: 'Жилищная активация',
-      housingTitle: 'Housing Ready',
-      housingText: 'Подготовка к жилищному пути, объяснение ситуации с гарантом и первые практические шаги перед поиском жилья.',
-      housingNote: 'Без гарантии получения жилья и без юридического представительства.',
-      housingCta: 'Запросить жилищную активацию',
-      housingPriceLabel: 'После оценки',
-      formSectionTitle: 'Квалификация запроса',
-      formSectionSub: 'Дайте нам несколько практических деталей. Это поможет быстрее понять, нужна ли вам ориентация, основной пакет, жилищная активация или партнёрский разговор.',
-      formEnquiryNotice: 'Это только первоначальный запрос. Отправка формы не создаёт договор, бронирование, платёжное обязательство, запрос на начало работы или отказ от прав. VANTAM рассмотрит информацию и свяжется с вами о возможных следующих шагах.',
-      formAudienceLabel: 'Контекст',
-      formMovingDateLabel: 'Ожидаемая дата переезда',
-      formCityLabel: 'Предпочтительный город или регион',
-      formBudgetLabel: 'Ориентировочный бюджет на жильё',
-      formStatusLabel: 'Текущий статус',
-      formGuarantorLabel: 'Гарант / поручитель',
-      formHelpLabel: 'Какая помощь нужна',
-      formHousingTypeLabel: 'Какой тип жилья вы ищете?',
-      formSensitiveWarning: 'Не отправляйте через эту открытую форму паспорта, банковские выписки, медицинские данные, файлы поручителя или другие чувствительные документы.',
-      formStatusBefore: 'Ещё до приезда',
-      formStatusAfter: 'Уже в Нидерландах',
-      formStatusFoundHousing: 'Жильё уже найдено',
-      formStatusNeedHousing: 'Нужна жилищная или практическая поддержка',
-      formStatusOrganisation: 'Организация / партнёрство',
-      formAudienceStudent: 'Студент',
-      formAudienceProfessional: 'Экспат / профессионал',
-      formAudienceFamily: 'Семья',
-      formAudienceOrganisation: 'Организация',
-      formGuarantorYes: 'Да, гарант есть',
-      formGuarantorMaybe: 'Может понадобиться',
-      formGuarantorNo: 'Нет / не уверен(-а)',
-    },
-    en: {
-      notice: 'Support before, during and after arrival',
-      menu: 'Menu',
-      darkTheme: 'Use dark theme',
-      lightTheme: 'Use light theme',
-      heroTitle: 'Practical support for students moving to the Netherlands',
-      heroText: 'Before arrival, during the housing and rental process, and after arrival for practical settlement - with clear next steps and no extra noise.',
-      heroImageAlt: 'Residential brick street in Amsterdam',
-      photoCredit: 'Photo: Haberdoedas, Unsplash',
-      localNote: 'Three languages. One student path. One local contact.',
-      heroPrimary: 'Choose your path',
-      heroSecondary: 'See the services',
-      entryTitle: 'Choose the format that fits your situation',
-      entryConsult: 'Need orientation',
-      entryPackage: 'Need the main package',
-      entrySingle: 'Need housing activation',
-      from: 'from',
-      trustTitle: 'Support without institutional distance',
-      trustText: 'VANTAM explains processes in plain language, helps you prepare and keeps the next step in focus - for orientation, housing activation and the first year.',
-      boundary: 'We do not replace licensed professionals or promise outcomes that depend on banks, public bodies, insurers or landlords.',
-      consultLead: 'The simplest place to start',
-      servicesLead: 'One-off tasks',
-      categoryCount: 'services',
-      packageLead: 'Main package and housing activation',
-      packageCompare: 'Compare the options side by side',
-      packageDetails: 'Contents of the selected offer',
-      selected: 'Selected',
-      choose: 'View details',
-      toolsLead: 'Useful tools before we talk',
-      toolsText: 'Review common costs and mark what is already prepared. The tools help you plan the conversation; they do not replace a consultation.',
-      estimate: 'Selected scenario total',
-      maximum: 'Maximum in the calculator: €4,575',
-      difference: 'Difference from VANTAM First Year',
-      progress: 'ready',
-      testimonialLead: 'Representative examples',
-      contactLead: 'Tell us what is happening',
-      contactAside: 'You can start without knowing the answer',
-      contactAsideText: 'Choose a request type or describe the situation. This is an enquiry about possible next steps, not a booking or contract.',
-      emailLabel: 'Email',
-      phoneLabel: 'Phone',
-      whatsappLabel: 'Message VANTAM on WhatsApp Business',
-      businessDetailsLabel: 'Business details',
-      responseTime: 'We review enquiries and reply with next steps.',
-      scopeLabel: 'Included',
-      limitsLabel: 'Boundaries',
-      result: 'Outcome',
-      details: 'Details',
-      audienceLead: 'Who we help',
-      audienceTitle: 'Support for students moving to the Netherlands',
-      audienceText: 'One offer for students before arrival, during housing and rental steps, and after arrival for practical settlement. Some need one clear step, others need broader support.',
-      audienceBefore: 'Before arrival',
-      audienceAfter: 'After arrival',
-      selectorLead: 'Start with your situation',
-      selectorTitle: 'Select by situation',
-      selectorText: 'Choose the path that gets you to the right section and pre-fills the form with the matching context.',
-      selectorServices: 'Need housing activation',
-      selectorPackages: 'Need the main package',
-      selectorConsult: 'Need orientation',
-      selectorPartner: 'Partnership enquiry',
-      processLead: 'How it works',
-      processTitle: 'Assess, map, act and continue',
-      processText: 'We first assess the situation, then map the steps, then act and coordinate, and after that verify and continue.',
-      partnerLead: 'Partnership',
-      partnerTitle: 'Partner with VANTAM',
-      partnerText: 'For rental agencies, HR teams, universities and education consultants who want a clean handoff for practical student requests.',
-      partnerCTA: 'Discuss cooperation',
-      housingLead: 'Housing activation',
-      housingTitle: 'Housing Ready',
-      housingText: 'Preparation for the housing path, explaining the guarantor situation and the first practical steps before the search.',
-      housingNote: 'No housing guarantee and no legal representation.',
-      housingCta: 'Request housing activation',
-      housingPriceLabel: 'After assessment',
-      formSectionTitle: 'Qualification form',
-      formSectionSub: 'Share a few practical details. It helps us see faster whether you need orientation, the main package, housing activation or a partnership conversation.',
-      formEnquiryNotice: 'This is an initial enquiry only. Submitting the form does not create a contract, book a consultation, create a payment obligation, request work to start or waive any rights. VANTAM will review the information and contact you about possible next steps.',
-      formAudienceLabel: 'Context',
-      formMovingDateLabel: 'Expected move date',
-      formCityLabel: 'Preferred city or region',
-      formBudgetLabel: 'Approximate housing budget',
-      formStatusLabel: 'Current status',
-      formGuarantorLabel: 'Guarantor situation',
-      formHelpLabel: 'What help is needed',
-      formHousingTypeLabel: 'What type of housing are you looking for?',
-      formSensitiveWarning: 'Do not submit passports, bank statements, medical information, guarantor files or other sensitive documents through this open form.',
-      formStatusBefore: 'Before arrival',
-      formStatusAfter: 'Already in the Netherlands',
-      formStatusFoundHousing: 'Housing already found',
-      formStatusNeedHousing: 'Need housing activation',
-      formStatusOrganisation: 'Organisation / partnership',
-      formAudienceStudent: 'Student',
-      formAudienceProfessional: 'Expat / professional',
-      formAudienceFamily: 'Family',
-      formAudienceOrganisation: 'Organisation',
-      formGuarantorYes: 'Yes, guarantor available',
-      formGuarantorMaybe: 'May be needed',
-      formGuarantorNo: 'No / not sure',
-    },
-  }[lang]), [lang]);
+  const selectedPackageData = PREMIUM_PACKAGES.find((item) => item.id === selectedPackage) ?? PREMIUM_PACKAGES[1];
+  const selectedHousingData = HOUSING_PRODUCTS.find((item) => item.id === selectedHousing) ?? HOUSING_PRODUCTS[0];
+  const activeServiceGroupData = INDIVIDUAL_SERVICE_GROUPS.find((item) => item.id === activeServiceGroup) ?? INDIVIDUAL_SERVICE_GROUPS[0];
+  const activeSituationData = SITUATION_OPTIONS.find((item) => item.id === activeSituation) ?? SITUATION_OPTIONS[0];
 
-  const serviceCategories = useMemo(() => [
-    {
-      id: 'housing', label: lang === 'uk' ? 'Житлова активація' : lang === 'ru' ? 'Жилищная активация' : 'Housing activation',
-      description: lang === 'uk' ? 'Житловий шлях, поручитель і перші практичні кроки' : lang === 'ru' ? 'Жилищный путь, поручитель и первые практические шаги' : 'Housing path, guarantor and first practical steps',
-      icon: House,
-      ids: ['housing_ready', 'housing_campaign', 'single_rental_contract', 'single_housing_scam_check', 'single_deposit_return', 'single_landlord_communication'],
-    },
-    {
-      id: 'arrival', label: lang === 'uk' ? 'Орієнтація до приїзду' : lang === 'ru' ? 'Ориентация до приезда' : 'Pre-arrival orientation',
-      description: lang === 'uk' ? 'План, документи, орієнтація та інші кроки до виїзду' : lang === 'ru' ? 'План, документы, ориентация и другие шаги до выезда' : 'Plan, documents, orientation and other pre-departure steps',
-      icon: FileText,
-      ids: ['single_official_letter', 'single_university_admin', 'single_registration_bsn', 'single_digid_activation', 'single_bank_setup'],
-    },
-    {
-      id: 'settlement', label: lang === 'uk' ? 'Практичне облаштування' : lang === 'ru' ? 'Практическое обустройство' : 'Practical settlement',
-      description: lang === 'uk' ? 'Реєстрація, DigiD, банк, страхування, GP' : lang === 'ru' ? 'Регистрация, DigiD, банк, страховка, GP' : 'Registration, DigiD, banking, insurance, GP',
-      icon: HeartPulse,
-      ids: ['single_insurance_setup', 'single_insurance_claim', 'single_healthcare_registration'],
-    },
-  ], [lang]);
+  const scrollToId = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({behavior: prefersReducedMotion ? 'auto' : 'smooth'});
+  };
 
-  const activeCategory = serviceCategories.find((category) => category.id === activeServiceCategory) || serviceCategories[0];
-  const activeServices = SINGLE_SERVICES.filter((service) => activeCategory.ids.includes(service.id));
-  const calculatorTotal = useMemo(() => PITFALLS.reduce((sum, item) => calculatorToggles[item.id] ? sum + item.cost : sum, 0), [calculatorToggles]);
-  const progressPercent = useMemo(() => Math.round((BLUEPRINT_CHECKLIST.filter((item) => completedTasks[item.id]).length / BLUEPRINT_CHECKLIST.length) * 100), [completedTasks]);
-  const currentSelectedPkgObj = useMemo(() => PREMIUM_PACKAGES.find((item) => item.id === selectedPackage) || PREMIUM_PACKAGES[1], [selectedPackage]);
-  const activeSituationObj = useMemo(() => SITUATION_OPTIONS.find((item) => item.id === activeSituation) || SITUATION_OPTIONS[0], [activeSituation]);
-
-  const scrollToContact = () => document.getElementById('contact')?.scrollIntoView({behavior: prefersReducedMotion ? 'auto' : 'smooth'});
-  const scrollToTarget = (target: 'consultation' | 'services' | 'packages' | 'contact') => document.getElementById(target === 'consultation' ? 'consultations' : target === 'services' ? 'single-services' : target === 'packages' ? 'packages' : 'contact')?.scrollIntoView({behavior: prefersReducedMotion ? 'auto' : 'smooth'});
+  const resetHousingFields = () => {
+    setFormHousingType('');
+    setFormBudget('');
+    setFormGuarantor('');
+  };
 
   const applyQualificationContext = (overrides: Partial<{
     audience: string;
@@ -552,129 +574,151 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
     budget: string;
     status: string;
     guarantor: string;
-    help: string;
+    help: HelpValue;
     message: string;
   }>) => {
-    if (overrides.audience) setFormAudience(overrides.audience);
+    if (overrides.audience !== undefined) setFormAudience(overrides.audience);
     if (overrides.movingDate !== undefined) setFormMovingDate(overrides.movingDate);
     if (overrides.city !== undefined) setFormCity(overrides.city);
-    if (overrides.budget !== undefined) setFormBudget(overrides.budget);
     if (overrides.status !== undefined) {
-      setFormStatus(overrides.status);
+      setFormStatusField(overrides.status);
       if (overrides.status !== 'before') setFormMovingDate('');
     }
+    if (overrides.budget !== undefined) setFormBudget(overrides.budget);
     if (overrides.guarantor !== undefined) setFormGuarantor(overrides.guarantor);
     if (overrides.help !== undefined) {
       setFormHelp(overrides.help);
-      if (!overrides.help?.startsWith('housing_')) {
-        setFormHousingType('');
-        setFormBudget('');
-        setFormGuarantor('');
-      }
+      if (!isHousingHelp(overrides.help)) resetHousingFields();
     }
     if (overrides.message !== undefined) setFormMessage(overrides.message);
   };
 
-  const handleSelectSingleService = (serviceId: string) => {
-    const service = SINGLE_SERVICES.find((item) => item.id === serviceId);
-    if (service) {
-      applyQualificationContext({
-        help: service.id === 'housing_ready' ? 'housing_ready:not_sure' : service.id === 'housing_campaign' ? 'housing_campaign:not_sure' : 'individual_service',
-        message: lang === 'uk'
-          ? `Мені потрібна окрема послуга: ${service.name.uk}.`
-          : lang === 'ru'
-            ? `Мне нужна отдельная услуга: ${service.name.ru}.`
-            : `I need a single service: ${service.name.en}.`,
-      });
-    }
-    scrollToContact();
-  };
-
-  const handleSelectConsultation = (consultationId: string) => {
-    const consultation = CONSULTATIONS_STORE.find((item) => item.id === consultationId);
-    if (consultation) applyQualificationContext({
-      help: 'relocation_orientation',
-      message: lang === 'uk'
-        ? `Мені потрібна консультація: ${consultation.name.uk}.`
-        : lang === 'ru'
-          ? `Мне нужна консультация: ${consultation.name.ru}.`
-          : `I need a consultation: ${consultation.name.en}.`,
-    });
-    scrollToContact();
-  };
-
-  const handleSelectPackage = (packageId: string) => {
-    const item = PREMIUM_PACKAGES.find((pkg) => pkg.id === packageId);
-    setSelectedPackage(packageId);
-    if (item) applyQualificationContext({
-      help: packageId === 'pkg_start' ? 'vantam_start' : packageId === 'pkg_full' ? 'vantam_continue' : 'vantam_first_year',
-      message: lang === 'uk'
-        ? `Мені потрібен пакет: ${item.name.uk} (${item.price}).`
-        : lang === 'ru'
-          ? `Мне нужен пакет: ${item.name.ru} (${item.price}).`
-          : `I need the package: ${item.name.en} (${item.price}).`,
-    });
-    scrollToContact();
-  };
-
   const handleSelectSituation = (situationId: string) => {
-    const option = SITUATION_OPTIONS.find((item) => item.id === situationId) || SITUATION_OPTIONS[0];
+    const option = SITUATION_OPTIONS.find((item) => item.id === situationId) ?? SITUATION_OPTIONS[0];
     setActiveSituation(option.id);
-    if (option.target === 'consultation') {
+
+    if (option.id === 'moving') {
+      setSelectedPackage('vantam_first_year');
       applyQualificationContext({
+        audience: 'student',
         status: 'before',
-        help: 'relocation_orientation',
-        message: lang === 'uk'
-          ? `Я планую переїзд до Нідерландів і хочу почати з орієнтації.`
-          : lang === 'ru'
-            ? `Я планирую переезд в Нидерланды и хочу начать с ориентации.`
-            : `I am planning my move to the Netherlands and want to start with orientation.`,
+        help: 'vantam_first_year',
+        message: lang === 'en'
+          ? 'I am moving or have just arrived and want to compare VANTAM Start with VANTAM First Year.'
+          : lang === 'uk'
+            ? 'Я переїжджаю або щойно приїхав(-ла) і хочу порівняти VANTAM Start та VANTAM First Year.'
+            : 'Я переезжаю или только что приехал(-а) и хочу сравнить VANTAM Start и VANTAM First Year.',
       });
-      scrollToTarget(option.target);
-      return;
     }
 
-    if (option.target === 'services') {
-      setActiveServiceCategory('housing');
+    if (option.id === 'housing') {
+      setSelectedHousing('housing_ready');
       applyQualificationContext({
+        audience: 'student',
         status: 'need_housing',
         help: 'housing_ready:not_sure',
-        message: lang === 'uk'
-          ? `Мені потрібна житлова активація.`
-          : lang === 'ru'
-            ? `Мне нужна жилищная активация.`
-            : `I need housing activation.`,
+        message: lang === 'en'
+          ? 'I need housing support and want to compare Housing Ready with Housing Search Campaign.'
+          : lang === 'uk'
+            ? 'Мені потрібна житлова підтримка, і я хочу порівняти Housing Ready та Housing Search Campaign.'
+            : 'Мне нужна жилищная поддержка, и я хочу сравнить Housing Ready и Housing Search Campaign.',
       });
-      scrollToTarget(option.target);
-      return;
     }
 
-    if (option.target === 'packages') {
-      setSelectedPackage('pkg_setup');
+    if (option.id === 'problem') {
       applyQualificationContext({
+        audience: 'student',
         status: 'after',
-        help: 'vantam_first_year',
-        message: lang === 'uk'
-          ? `Я вже приїхав(-ла) і мені потрібен основний пакет.`
-          : lang === 'ru'
-            ? `Я уже приехал(-а) и мне нужен основной пакет.`
-            : `I have arrived and need the main package.`,
+        message: lang === 'en'
+          ? 'I already live in the Netherlands and need help with a practical problem.'
+          : lang === 'uk'
+            ? 'Я вже живу в Нідерландах і потребую допомоги з практичною проблемою.'
+            : 'Я уже живу в Нидерландах и нуждаюсь в помощи с практической проблемой.',
       });
-      scrollToTarget(option.target);
-      return;
     }
 
-    applyQualificationContext({
+    if (option.id === 'organisation') {
+      applyQualificationContext({
         audience: 'organisation',
         status: 'organisation',
         help: 'partnership',
-        message: lang === 'uk'
-          ? `Я представляю організацію і хочу обговорити співпрацю.`
-        : lang === 'ru'
-          ? `Я представляю организацию и хочу обсудить сотрудничество.`
-          : `I represent an organisation and would like to discuss cooperation.`,
+        message: lang === 'en'
+          ? 'I represent an organisation and would like to discuss a practical student referral.'
+          : lang === 'uk'
+            ? 'Я представляю організацію і хотів(-ла) б обговорити практичну передачу студентського кейсу.'
+            : 'Я представляю организацию и хотел(-а) бы обсудить практическую передачу студенческого кейса.',
+      });
+    }
+
+    scrollToId(option.targetId);
+  };
+
+  const handleSelectPackage = (packageId: 'vantam_start' | 'vantam_first_year') => {
+    const item = PREMIUM_PACKAGES.find((entry) => entry.id === packageId);
+    setSelectedPackage(packageId);
+    if (!item) return;
+    const nextStatus = packageId === 'vantam_start'
+      ? 'before'
+      : formStatusField === 'organisation'
+        ? 'before'
+        : formStatusField;
+    applyQualificationContext({
+      audience: 'student',
+      status: nextStatus,
+      help: packageId,
+      message: lang === 'en'
+        ? `I want ${item.name.en} (${item.price}).`
+        : lang === 'uk'
+          ? `Мені потрібен ${item.name.uk} (${item.price}).`
+          : `Мне нужен ${item.name.ru} (${item.price}).`,
     });
-    scrollToTarget(option.target);
+    scrollToId('contact');
+  };
+
+  const handleSelectHousing = (housingId: 'housing_ready' | 'housing_campaign') => {
+    const item = HOUSING_PRODUCTS.find((entry) => entry.id === housingId);
+    setSelectedHousing(housingId);
+    if (!item) return;
+    applyQualificationContext({
+      audience: 'student',
+      status: 'need_housing',
+      help: `${housingId}:not_sure`,
+      message: lang === 'en'
+        ? `I want ${item.name.en} (${item.price}).`
+        : lang === 'uk'
+          ? `Мені потрібен ${item.name.uk} (${item.price}).`
+          : `Мне нужен ${item.name.ru} (${item.price}).`,
+    });
+    scrollToId('contact');
+  };
+
+  const handleSelectService = (slug: string, name: string) => {
+    if (!APPROVED_INDIVIDUAL_SERVICE_SLUGS.includes(slug)) return;
+    applyQualificationContext({
+      audience: 'student',
+      status: 'after',
+      help: `individual_service:${slug}`,
+      message: lang === 'en'
+        ? `I need help with ${name}.`
+        : lang === 'uk'
+          ? `Мені потрібна допомога з: ${name}.`
+          : `Мне нужна помощь по теме: ${name}.`,
+    });
+    scrollToId('contact');
+  };
+
+  const handleReturningClient = () => {
+    applyQualificationContext({
+      audience: 'student',
+      status: 'after',
+      help: 'vantam_continue',
+      message: lang === 'en'
+        ? 'I am a returning client and want to ask about Continue for an already-open case.'
+        : lang === 'uk'
+          ? 'Я клієнт, що повертається, і хочу запитати про Continue для вже відкритого кейсу.'
+          : 'Я возвращающийся клиент и хочу спросить о Continue для уже открытого кейса.',
+    });
+    scrollToId('contact');
   };
 
   const handleFormSubmit = async (event: React.FormEvent) => {
@@ -682,25 +726,28 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
     if (!formName.trim() || !formEmail.trim() || !formMessage.trim() || !formConsent) return;
     setFormState('sending');
     try {
+      const helpValue = isHousingHelp(formHelp)
+        ? `${formHelp.split(':')[0]}:${formHousingType || formHelp.split(':')[1] || 'not_sure'}`
+        : formHelp;
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
           name: formName,
           email: formEmail,
-          inquiryType: formHelp === 'partnership' ? 'b2b' : formHelp === 'relocation_orientation' || formHelp === 'urgent_situation' ? 'consultation' : formHelp === 'vantam_start' || formHelp === 'vantam_first_year' || formHelp === 'vantam_continue' ? 'packages' : 'single',
+          inquiryType: getInquiryTypeForHelp(helpValue),
           message: formMessage,
           consent: formConsent,
           language: lang,
           website: formWebsite,
           sourceUrl: window.location.pathname,
           audience: formAudience,
-          movingDate: formStatus === 'before' ? formMovingDate : '',
+          movingDate: formStatusField === 'before' ? formMovingDate : '',
           city: formCity,
-          budget: formHelp.startsWith('housing_') ? formBudget : '',
-          status: formStatus,
-          guarantor: formHelp.startsWith('housing_') ? formGuarantor : '',
-          help: formHelp.startsWith('housing_') ? `${formHelp.split(':')[0]}:${formHousingType || formHelp.split(':')[1] || 'not_sure'}` : formHelp,
+          budget: isHousingHelp(helpValue) ? formBudget : '',
+          status: formStatusField,
+          guarantor: isHousingHelp(helpValue) ? formGuarantor : '',
+          help: helpValue,
           formStartedAt: formStartedAtRef.current,
         }),
       });
@@ -721,7 +768,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
     setFormMovingDate('');
     setFormCity('');
     setFormBudget('');
-    setFormStatus('before');
+    setFormStatusField('before');
     setFormGuarantor('');
     setFormHelp('relocation_orientation');
     setFormHousingType('');
@@ -731,70 +778,38 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
   };
 
   const closeNavigation = (event: React.MouseEvent<HTMLAnchorElement>) => event.currentTarget.closest('details')?.removeAttribute('open');
-  const formErrorMessage = lang === 'uk' ? 'Не вдалося надіслати запит. Спробуйте ще раз або напишіть у WhatsApp Business.' : lang === 'ru' ? 'Не удалось отправить запрос. Попробуйте ещё раз или напишите в WhatsApp Business.' : 'The enquiry could not be sent. Please try again or use WhatsApp Business.';
-  const plannerGroups = [
-    {category: 'assess' as const, title: dict.checklistPrepTab, description: dict.checklistPrepDesc},
-    {category: 'map' as const, title: dict.checklistArrivalTab, description: dict.checklistArrivalDesc},
-    {category: 'act' as const, title: dict.checklistSettleTab, description: dict.checklistSettleDesc},
-    {category: 'verify' as const, title: dict.checklistVerifyTab, description: dict.checklistVerifyDesc},
+  const formErrorMessage = lang === 'en'
+    ? 'The enquiry could not be sent. Please try again or use WhatsApp Business.'
+    : lang === 'uk'
+      ? 'Не вдалося надіслати запит. Спробуйте ще раз або напишіть у WhatsApp Business.'
+      : 'Не удалось отправить запрос. Попробуйте ещё раз или напишите в WhatsApp Business.';
+
+  const helpOptions = [
+    {value: 'relocation_orientation', label: CONSULTATIONS_STORE[0].name[lang]},
+    ...PREMIUM_PACKAGES.map((item) => ({value: item.id, label: item.name[lang]})),
+    ...HOUSING_PRODUCTS.map((item) => ({value: `${item.id}:not_sure`, label: item.name[lang]})),
+    ...INDIVIDUAL_SERVICE_GROUPS.flatMap((group) =>
+      group.services.map((service) => ({
+        value: `individual_service:${service.slug}`,
+        label: service.name[lang],
+      })),
+    ),
+    {value: 'partnership', label: lang === 'en' ? 'Partnership enquiry' : lang === 'uk' ? 'Партнерський запит' : 'Партнёрский запрос'},
   ];
-  const firstYearPackagePrice = useMemo(() => {
-    const firstYearPackage = PREMIUM_PACKAGES.find((item) => item.id === 'pkg_setup') || PREMIUM_PACKAGES[1];
-    return Number(firstYearPackage.price.replace(/[^\d]/g, ''));
-  }, []);
-  const qualificationOptions = useMemo(() => ({
-    audience: [
-      { value: 'student', label: ui.formAudienceStudent },
-      { value: 'professional', label: ui.formAudienceProfessional },
-      { value: 'family', label: ui.formAudienceFamily },
-      { value: 'organisation', label: ui.formAudienceOrganisation },
-    ],
-    status: [
-      { value: 'before', label: ui.formStatusBefore },
-      { value: 'after', label: ui.formStatusAfter },
-      { value: 'found_housing', label: ui.formStatusFoundHousing },
-      { value: 'need_housing', label: ui.formStatusNeedHousing },
-      { value: 'organisation', label: ui.formStatusOrganisation },
-    ],
-    guarantor: [
-      { value: 'yes', label: ui.formGuarantorYes },
-      { value: 'maybe', label: ui.formGuarantorMaybe },
-      { value: 'no', label: ui.formGuarantorNo },
-    ],
-    help: [
-      { value: 'relocation_orientation', label: lang === 'uk' ? 'Орієнтація з переїзду' : lang === 'ru' ? 'Ориентация по переезду' : 'Relocation Orientation' },
-      { value: 'vantam_start', label: lang === 'uk' ? 'VANTAM Start' : lang === 'ru' ? 'VANTAM Start' : 'VANTAM Start' },
-      { value: 'vantam_first_year', label: lang === 'uk' ? 'VANTAM First Year' : lang === 'ru' ? 'VANTAM First Year' : 'VANTAM First Year' },
-      { value: 'vantam_continue', label: lang === 'uk' ? 'VANTAM Continue' : lang === 'ru' ? 'VANTAM Continue' : 'VANTAM Continue' },
-      { value: 'housing_ready:not_sure', label: lang === 'uk' ? 'Housing Ready' : lang === 'ru' ? 'Housing Ready' : 'Housing Ready' },
-      { value: 'housing_campaign:not_sure', label: lang === 'uk' ? 'Housing Search Campaign' : lang === 'ru' ? 'Housing Search Campaign' : 'Housing Search Campaign' },
-      { value: 'individual_service', label: lang === 'uk' ? 'Окрема послуга' : lang === 'ru' ? 'Отдельная услуга' : 'Single service' },
-      { value: 'urgent_situation', label: lang === 'uk' ? 'Пріоритетний дзвінок' : lang === 'ru' ? 'Приоритетный звонок' : 'Priority call' },
-      { value: 'partnership', label: lang === 'uk' ? 'Партнерський запит' : lang === 'ru' ? 'Партнёрский запрос' : 'Partnership enquiry' },
-    ],
-    housingType: [
-      { value: 'room_student', label: lang === 'uk' ? 'Кімната / студентське житло' : lang === 'ru' ? 'Комната / студенческое жильё' : 'Room / student accommodation' },
-      { value: 'studio', label: lang === 'uk' ? 'Студія' : lang === 'ru' ? 'Студия' : 'Studio' },
-      { value: 'apartment', label: lang === 'uk' ? 'Квартира' : lang === 'ru' ? 'Квартира' : 'Apartment' },
-      { value: 'house', label: lang === 'uk' ? 'Будинок' : lang === 'ru' ? 'Дом' : 'House' },
-      { value: 'short_stay', label: lang === 'uk' ? 'Тимчасове / короткострокове житло' : lang === 'ru' ? 'Временное / краткосрочное жильё' : 'Temporary / short-stay housing' },
-      { value: 'not_sure', label: lang === 'uk' ? 'Ще не знаю' : lang === 'ru' ? 'Пока не знаю' : 'Not sure yet' },
-    ],
-    budget: [
-      { value: 'under-700', label: lang === 'uk' ? 'До €700' : lang === 'ru' ? 'До €700' : 'Under €700' },
-      { value: '700-1000', label: '€700–€1,000' },
-      { value: '1000-1500', label: '€1,000–€1,500' },
-      { value: '1500-plus', label: lang === 'uk' ? 'Понад €1,500' : lang === 'ru' ? 'Свыше €1,500' : '€1,500+' },
-      { value: 'not-sure', label: lang === 'uk' ? 'Ще не знаю' : lang === 'ru' ? 'Пока не знаю' : 'Not sure yet' },
-    ],
-  }), [lang, ui]);
+
+  if (formHelp === 'vantam_continue') {
+    helpOptions.splice(3, 0, {
+      value: 'vantam_continue',
+      label: 'VANTAM Continue',
+    });
+  }
 
   return (
     <div className="vantam-site" data-theme={theme}>
       <div className="service-strip">
         <div className="site-container">
-          <span>{dict.contactSub}</span>
-          <a href={whatsappHref} target="_blank" rel="noreferrer noopener" aria-label={whatsappAriaLabel}>{ui.whatsappLabel}</a>
+          <span>{copy.responseTime}</span>
+          <a href={whatsappHref} target="_blank" rel="noreferrer noopener" aria-label={whatsappAriaLabel}>{copy.whatsappLabel}</a>
         </div>
       </div>
 
@@ -806,11 +821,11 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
             <BrandLogo className="brand-logo" />
           </a>
 
-          <nav className="desktop-nav" aria-label={ui.menu}>
-            <a href="#consultations">{dict.consultTitle}</a>
-            <a href="#single-services">{dict.navSingleServices}</a>
-            <a href="#packages">{dict.navPackages}</a>
-            <a href="#tools">{dict.navCalculator}</a>
+          <nav className="desktop-nav" aria-label={dict.menu}>
+            <a href="#packages">{copy.packageLead}</a>
+            <a href="#consultation">{copy.consultationTitle}</a>
+            <a href="#housing">{copy.housingLead}</a>
+            <a href="#individual-services">{copy.servicesLead}</a>
             <a href="#contact" className="nav-cta">{dict.navContact}</a>
           </nav>
 
@@ -818,11 +833,11 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
             <button
               className="theme-toggle"
               onClick={() => setTheme((current) => current === 'light' ? 'dark' : 'light')}
-              aria-label={theme === 'light' ? ui.darkTheme : ui.lightTheme}
+              aria-label={theme === 'light' ? dict.darkTheme : dict.lightTheme}
             >
               {theme === 'light' ? <Moon /> : <Sun />}
             </button>
-            <div className="language-switcher" aria-label={dict.langLabel}>
+            <div className="language-switcher" aria-label="Language switcher">
               {LOCALES.map((code) => (
                 <Link
                   key={code}
@@ -835,13 +850,13 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
               ))}
             </div>
             <details ref={mobileNavigationRef} className="mobile-navigation">
-              <summary aria-label={ui.menu}><Menu /></summary>
+              <summary aria-label={dict.menu}><Menu /></summary>
               <nav>
-                <a href="#consultations" onClick={closeNavigation}>{dict.consultTitle}</a>
-                <a href="#single-services" onClick={closeNavigation}>{dict.navSingleServices}</a>
-                <a href="#packages" onClick={closeNavigation}>{dict.navPackages}</a>
-                <a href="#tools" onClick={closeNavigation}>{dict.navCalculator}</a>
-                <a href="#faq" onClick={closeNavigation}>{dict.navFaq}</a>
+                <a href="#packages" onClick={closeNavigation}>{copy.packageLead}</a>
+                <a href="#consultation" onClick={closeNavigation}>{copy.consultationTitle}</a>
+                <a href="#housing" onClick={closeNavigation}>{copy.housingLead}</a>
+                <a href="#individual-services" onClick={closeNavigation}>{copy.servicesLead}</a>
+                <a href="#faq" onClick={closeNavigation}>FAQ</a>
                 <a href="#contact" onClick={closeNavigation}>{dict.navContact}</a>
               </nav>
             </details>
@@ -854,16 +869,16 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
           <div className="site-container hero-layout">
             <div className="hero-copy reveal-block">
               <p className="hero-kicker">VANTAM Netherlands</p>
-              <h1>{ui.heroTitle}</h1>
-              <p className="hero-lede">{ui.heroText}</p>
+              <h1>{dict.heroHeadline}</h1>
+              <p className="hero-lede">{dict.heroSub}</p>
               <div className="hero-actions">
-                <a href="#start-here" className="button button-primary">{ui.heroPrimary}<ArrowRight /></a>
-                <a href="#single-services" className="text-link">{ui.heroSecondary}<ArrowUpRight /></a>
+                <a href="#start-here" className="button button-primary">{dict.heroPrimary}<ArrowRight /></a>
+                <a href="#packages" className="text-link">{dict.heroSecondary}<ArrowUpRight /></a>
               </div>
-              <div className="hero-tags" aria-label={ui.audienceLead}>
+              <div className="hero-tags" aria-label={copy.sectionLead}>
                 {AUDIENCE_FOCUS.map((audience) => <span key={audience.id}>{audience.title[lang]}</span>)}
               </div>
-              <p className="hero-note"><ShieldCheck />{ui.localNote}</p>
+              <p className="hero-note"><ShieldCheck />{dict.localNote}</p>
             </div>
             <figure className="hero-media reveal-media">
               <HeroScene />
@@ -871,12 +886,12 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
           </div>
         </section>
 
-        <section className="entry-section section-anchor" aria-labelledby="start-here-title" id="start-here">
+        <section className="entry-section section-anchor" id="start-here">
           <div className="site-container start-hub">
             <div className="start-hub-copy">
-              <p>{ui.audienceLead}</p>
-              <h2 id="start-here-title">{ui.audienceTitle}</h2>
-              <p className="large-copy">{ui.audienceText}</p>
+              <p>{copy.sectionLead}</p>
+              <h2>{copy.sectionTitle}</h2>
+              <p className="large-copy">{copy.sectionText}</p>
               <div className="audience-grid">
                 {AUDIENCE_FOCUS.map((audience) => (
                   <article key={audience.id} className="audience-item">
@@ -886,48 +901,41 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
                   </article>
                 ))}
               </div>
-              <div className="arrival-contrast" aria-label={lang === 'uk' ? 'До і після приїзду' : lang === 'ru' ? 'До и после приезда' : 'Before and after arrival'}>
-                <div>
-                  <span>{ui.audienceBefore}</span>
-                  <strong>{lang === 'uk' ? 'Планування, документи, вибір формату' : lang === 'ru' ? 'Планирование, документы, выбор формата' : 'Planning, documents, format choice'}</strong>
-                </div>
-                <div>
-                  <span>{ui.audienceAfter}</span>
-                  <strong>{lang === 'uk' ? 'Заселення, комунікація, налаштування' : lang === 'ru' ? 'Заселение, коммуникация, настройка' : 'Move-in, communication, setup'}</strong>
-                </div>
-              </div>
             </div>
 
             <div className="situation-selector-shell">
-              <p>{ui.selectorLead}</p>
-              <h2>{ui.selectorTitle}</h2>
-              <p className="selector-text">{ui.selectorText}</p>
+              <p>{copy.situationLead}</p>
+              <h2>{copy.situationTitle}</h2>
+              <p className="selector-text">{copy.situationText}</p>
               <div className="situation-selector">
                 {SITUATION_OPTIONS.map((option) => (
-                  <button key={option.id} type="button" className={activeSituation === option.id ? 'is-selected' : ''} aria-pressed={activeSituation === option.id} onClick={() => handleSelectSituation(option.id)}>
+                  <button
+                    key={option.id}
+                    type="button"
+                    className={activeSituation === option.id ? 'is-selected' : ''}
+                    aria-pressed={activeSituation === option.id}
+                    onClick={() => handleSelectSituation(option.id)}
+                  >
                     <strong>{option.title[lang]}</strong>
                     <span>{option.description[lang]}</span>
-                    <small>{option.target === 'consultation' ? ui.selectorConsult : option.target === 'services' ? ui.selectorServices : option.target === 'packages' ? ui.selectorPackages : ui.selectorPartner}</small>
+                    <small>{option.label[lang]}</small>
                   </button>
                 ))}
               </div>
-              <div className="selector-links">
-                <a href="#consultations">{ui.selectorConsult}</a>
-                <a href="#single-services">{ui.selectorServices}</a>
-                <a href="#packages">{ui.selectorPackages}</a>
-                <a href="#contact">{ui.selectorPartner}</a>
-              </div>
-              <p className="selector-current"><strong>{activeSituationObj.title[lang]}</strong><span>{activeSituationObj.description[lang]}</span></p>
+              <p className="selector-current">
+                <strong>{activeSituationData.title[lang]}</strong>
+                <span>{activeSituationData.description[lang]}</span>
+              </p>
             </div>
           </div>
         </section>
 
-        <section id="why" className="trust-section section-anchor">
+        <section id="how-it-works" className="trust-section section-anchor">
           <div className="site-container trust-layout">
             <div className="process-panel">
-              <p>{ui.processLead}</p>
-              <h2>{ui.processTitle}</h2>
-              <p className="large-copy">{ui.processText}</p>
+              <p>{copy.processLead}</p>
+              <h2>{copy.processTitle}</h2>
+              <p className="large-copy">{copy.processText}</p>
               <div className="process-list">
                 {PROCESS_STEPS.map((step, index) => (
                   <article key={step.id}>
@@ -941,9 +949,362 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
               </div>
             </div>
             <div className="partner-panel">
-              <p>{ui.partnerLead}</p>
-              <h2>{ui.partnerTitle}</h2>
-              <p className="large-copy">{ui.partnerText}</p>
+              <p>{copy.boundaryTitle}</p>
+              <h2>{lang === 'en' ? 'Practical help, not regulated representation' : lang === 'uk' ? 'Практична допомога, а не регульоване представництво' : 'Практическая помощь, а не регулируемое представительство'}</h2>
+              <p className="large-copy">{copy.boundaryText}</p>
+              <div className="boundary-note">
+                <Info />
+                <p>
+                  <strong>{lang === 'en' ? 'Public boundary note' : lang === 'uk' ? 'Публічна примітка про межі' : 'Публичная заметка о границах'}</strong>
+                  {lang === 'en'
+                    ? ' VANTAM uses practical review, sequence, preparation, communication, and specialist handoff language where regulated topics appear.'
+                    : lang === 'uk'
+                      ? ' VANTAM використовує мову практичного перегляду, послідовності, підготовки, комунікації та handoff до спеціаліста там, де виникають регульовані теми.'
+                      : ' VANTAM использует язык практического обзора, последовательности, подготовки, коммуникации и handoff к специалисту там, где появляются регулируемые темы.'}
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="packages" className="packages-section section-anchor">
+          <div className="site-container">
+            <div className="section-intro">
+              <p>{copy.packageLead}</p>
+              <h2>{copy.packageTitle}</h2>
+              <span>{copy.packageText}</span>
+            </div>
+            <div className="package-comparison">
+              {PREMIUM_PACKAGES.map((item) => {
+                const isSelected = item.id === selectedPackage;
+                return (
+                  <article
+                    key={item.id}
+                    className={[
+                      'package-option',
+                      item.id === 'vantam_first_year' ? 'is-featured' : '',
+                      isSelected ? 'is-selected' : '',
+                    ].filter(Boolean).join(' ')}
+                  >
+                    <div className="package-heading">
+                      <span>{item.badge ? item.badge[lang] : item.shortTitle[lang]}</span>
+                      <strong>{item.price}</strong>
+                    </div>
+                    <h3>{item.name[lang]}</h3>
+                    <p>{item.subtitle[lang]}</p>
+                    <small><Clock />{item.activePeriod[lang]}</small>
+                    <ul>
+                      {item.reasons[lang].slice(0, 4).map((reason) => (
+                        <li key={reason}><Check />{reason}</li>
+                      ))}
+                    </ul>
+                    <button onClick={() => setSelectedPackage(item.id)} aria-pressed={isSelected}>
+                      {isSelected ? (lang === 'en' ? 'Selected' : lang === 'uk' ? 'Обрано' : 'Выбрано') : (lang === 'en' ? 'View details' : lang === 'uk' ? 'Деталі' : 'Детали')}
+                      <ArrowRight />
+                    </button>
+                  </article>
+                );
+              })}
+            </div>
+            <div className="package-detail" aria-live="polite">
+              <div className="package-summary">
+                <p>{copy.packageSummary}</p>
+                <h3>{selectedPackageData.name[lang]}</h3>
+                <strong>{selectedPackageData.price}</strong>
+                <span>{selectedPackageData.audience[lang]}</span>
+                <div className="package-actions">
+                  <button onClick={() => handleSelectPackage(selectedPackageData.id)} className="button button-primary">
+                    {selectedPackageData.cta[lang]}<ArrowRight />
+                  </button>
+                  <button ref={pdfTriggerRef} id="pdf-download-btn" onClick={() => setShowExportModal(true)} className="button button-quiet">
+                    <Download />{copy.packageDownload}
+                  </button>
+                </div>
+                <p className="package-download-note">{copy.packageDownloadHint}</p>
+              </div>
+              <div className="package-list">
+                <h4><ShieldCheck />{copy.packageOutcome}</h4>
+                <ul>
+                  <li><Check />{selectedPackageData.outcome[lang]}</li>
+                  <li><Check />{selectedPackageData.activePeriod[lang]}</li>
+                  <li><Check />{selectedPackageData.difference[lang]}</li>
+                </ul>
+              </div>
+              <div className="package-list package-limits">
+                <h4><AlertCircle />{copy.packageDifference}</h4>
+                <ul>
+                  {selectedPackageData.reasons[lang].map((reason) => (
+                    <li key={reason}><AlertCircle />{reason}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="structured-details-grid">
+              {selectedPackageData.detailSections.map((section) => (
+                <article key={section.title.en} className="structured-detail-card">
+                  <h4>{section.title[lang]}</h4>
+                  <ul>
+                    {section.items[lang].map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+            <div className="boundary-note">
+              <Info />
+              <p><strong>{lang === 'en' ? 'Returning clients' : lang === 'uk' ? 'Клієнти, що повертаються' : 'Возвращающиеся клиенты'}</strong>{RETURNING_CLIENT_NOTE[lang]}</p>
+            </div>
+            <div className="returning-client-row">
+              <button type="button" className="button button-secondary" onClick={handleReturningClient}>{copy.returningClientCta}<ArrowRight /></button>
+            </div>
+          </div>
+        </section>
+
+        <section id="consultation" className="consultations-section section-anchor">
+          <div className="site-container">
+            <div className="section-intro">
+              <p>{copy.consultationLead}</p>
+              <h2>{copy.consultationTitle}</h2>
+              <span>{copy.consultationText}</span>
+            </div>
+            <div className="consultation-composition consultation-composition-single">
+              {CONSULTATIONS_STORE.map((consultation) => (
+                <article key={consultation.id} className="consultation consultation-featured">
+                  <div className="consultation-top">
+                    <span><Clock />{consultation.duration[lang]}</span>
+                    <strong>{consultation.price}</strong>
+                  </div>
+                  <h3>{consultation.name[lang]}</h3>
+                  <p>{consultation.summary[lang]}</p>
+                  <dl>
+                    <div>
+                      <dt>{lang === 'en' ? 'Includes' : lang === 'uk' ? 'Включає' : 'Включает'}</dt>
+                      <dd>{consultation.deliverables[lang].join(', ')}</dd>
+                    </div>
+                    <div>
+                      <dt>{lang === 'en' ? 'Note' : lang === 'uk' ? 'Примітка' : 'Примечание'}</dt>
+                      <dd>{consultation.note[lang]}</dd>
+                    </div>
+                  </dl>
+                  <button onClick={() => {
+                    applyQualificationContext({
+                      audience: 'student',
+                      status: 'before',
+                      help: 'relocation_orientation',
+                      message: lang === 'en'
+                        ? 'I want Relocation Orientation before choosing a package.'
+                        : lang === 'uk'
+                          ? 'Мені потрібна Relocation Orientation перед вибором пакета.'
+                          : 'Мне нужна Relocation Orientation перед выбором пакета.',
+                    });
+                    scrollToId('contact');
+                  }} className="button button-secondary">{consultation.cta[lang]}<ArrowRight /></button>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="housing" className="single-services-section section-anchor">
+          <div className="site-container services-layout">
+            <aside>
+              <p>{copy.housingLead}</p>
+              <h2>{copy.housingTitle}</h2>
+              <span>{copy.housingText}</span>
+              <div className="service-category-tabs" aria-label={copy.housingLead}>
+                {HOUSING_PRODUCTS.map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    aria-pressed={selectedHousing === item.id}
+                    onClick={() => setSelectedHousing(item.id)}
+                  >
+                    <House />
+                    <span>
+                      <strong>{item.name[lang]}</strong>
+                      <small>{item.period[lang]}</small>
+                    </span>
+                    <ChevronDown />
+                  </button>
+                ))}
+              </div>
+            </aside>
+            <div className="service-list-panel">
+              <div className="service-panel-heading">
+                <div>
+                  <h3>{selectedHousingData.name[lang]}</h3>
+                  <p>{selectedHousingData.outcome[lang]}</p>
+                </div>
+                <span>{selectedHousingData.price}</span>
+              </div>
+              <div className="service-rows">
+                {selectedHousingData.limits[lang].map((item) => (
+                  <article key={item}>
+                    <div className="service-name"><h4>{selectedHousingData.name[lang]}</h4><span>{selectedHousingData.period[lang]}</span></div>
+                    <div className="service-description"><p>{item}</p></div>
+                    <div className="service-action"><strong>{selectedHousingData.price}</strong></div>
+                  </article>
+                ))}
+              </div>
+              <div className="boundary-note">
+                <Info />
+                <p><strong>{lang === 'en' ? 'Optional additions' : lang === 'uk' ? 'Необов’язкові додатки' : 'Необязательные добавления'}</strong>{selectedHousingData.optionalAdditions[lang].join(' ')}</p>
+              </div>
+              <div className="service-action-row">
+                <button type="button" className="button button-secondary" onClick={() => handleSelectHousing(selectedHousingData.id)}>{selectedHousingData.cta[lang]}<ArrowRight /></button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="individual-services" className="single-services-section section-anchor">
+          <div className="site-container services-layout">
+            <aside>
+              <p>{copy.servicesLead}</p>
+              <h2>{copy.servicesTitle}</h2>
+              <span>{copy.servicesText}</span>
+              <div className="service-category-tabs" aria-label={copy.servicesLead}>
+                {INDIVIDUAL_SERVICE_GROUPS.map((group) => (
+                  <button
+                    key={group.id}
+                    type="button"
+                    aria-pressed={activeServiceGroup === group.id}
+                    onClick={() => setActiveServiceGroup(group.id)}
+                  >
+                    <FileText />
+                    <span>
+                      <strong>{group.title[lang]}</strong>
+                      <small>{group.services.length} {lang === 'en' ? 'services' : lang === 'uk' ? 'послуг' : 'услуг'}</small>
+                    </span>
+                    <ChevronDown />
+                  </button>
+                ))}
+              </div>
+              <div className="boundary-note">
+                <Info />
+                <p><strong>{lang === 'en' ? 'Pricing logic' : lang === 'uk' ? 'Логіка цін' : 'Логика цен'}</strong>{copy.requestPriceNote}</p>
+              </div>
+            </aside>
+            <div className="service-list-panel" aria-live="polite">
+              <div className="service-panel-heading">
+                <div>
+                  <h3>{activeServiceGroupData.title[lang]}</h3>
+                  <p>{activeServiceGroupData.description[lang]}</p>
+                </div>
+                <span>{activeServiceGroupData.services.length}</span>
+              </div>
+              <div className="service-rows">
+                {activeServiceGroupData.services.map((service) => (
+                  <article key={service.slug}>
+                    <div className="service-name">
+                      <h4>{service.name[lang]}</h4>
+                      <span>{service.price === 'Request a price' ? dict.requestPrice : service.price}</span>
+                    </div>
+                    <div className="service-description">
+                      <p>{service.summary[lang]}</p>
+                      <small className="service-exclusion"><Info />{copy.serviceBoundary}: {service.boundary[lang]}</small>
+                    </div>
+                    <div className="service-action">
+                      <strong>{service.price === 'Request a price' ? dict.requestPrice : service.price}</strong>
+                      <button onClick={() => handleSelectService(service.slug, service.name[lang])} aria-label={`${copy.individualServiceIntro}: ${service.name[lang]}`}><ArrowUpRight /></button>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="student-life-map" className="tools-section section-anchor">
+          <div className="site-container">
+            <div className="section-intro section-intro-wide">
+              <p>{copy.studentLifeLead}</p>
+              <h2>{copy.studentLifeTitle}</h2>
+              <span>{copy.studentLifeText}</span>
+            </div>
+            <div className="life-map-shell">
+              <div className="life-map-grid">
+                {STUDENT_LIFE_MAP_PREVIEW.map((item) => (
+                  <article key={item.area.en} className="life-map-card">
+                    <strong>{item.area[lang]}</strong>
+                    <span>{STUDENT_LIFE_STATUSES[item.status][lang]}</span>
+                  </article>
+                ))}
+              </div>
+              <div className="status-legend">
+                {Object.entries(STUDENT_LIFE_STATUSES).map(([status, label]) => (
+                  <span key={status}>{label[lang]}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="typical-situations" className="proof-section section-anchor">
+          <div className="site-container">
+            <div className="proof-heading">
+              <p>{copy.situationsLead}</p>
+              <h2>{copy.situationsTitle}</h2>
+              <span>{copy.situationsText}</span>
+            </div>
+            <div className="scenario-grid">
+              {TYPICAL_SITUATIONS.map((item) => (
+                <article key={item.id} className="scenario-card">
+                  <h3>{item.title[lang]}</h3>
+                  <dl>
+                    <div><dt>{copy.trigger}</dt><dd>{item.trigger[lang]}</dd></div>
+                    <div><dt>{copy.whatRisk}</dt><dd>{item.risk[lang]}</dd></div>
+                    <div><dt>{copy.whatVantamDoes}</dt><dd>{item.action[lang]}</dd></div>
+                    <div><dt>{copy.recommendedProduct}</dt><dd>{item.recommendedProduct[lang]}</dd></div>
+                    <div><dt>{copy.boundaryTitle}</dt><dd>{item.boundary[lang]}</dd></div>
+                  </dl>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="faq" className="faq-section section-anchor">
+          <div className="site-container faq-layout">
+            <div>
+              <h2>FAQ</h2>
+              <p>{copy.faqText}</p>
+            </div>
+            <div className="faq-list">
+              {FAQS_STORE.map((faq) => {
+                const open = !!faqOpen[faq.id];
+                const answerId = `faq-answer-${faq.id}`;
+                return (
+                  <div key={faq.id} className="faq-item">
+                    <button onClick={() => setFaqOpen((previous) => ({...previous, [faq.id]: !previous[faq.id]}))} aria-expanded={open} aria-controls={answerId}>
+                      <span>{faq.q[lang]}</span>
+                      <ChevronDown className={open ? 'is-open' : ''} />
+                    </button>
+                    <div id={answerId} aria-hidden={!open} className={open ? 'faq-answer is-open' : 'faq-answer'}>
+                      <div>
+                        <p>{faq.a[lang]}</p>
+                        {faq.id === 'f4' && (
+                          <div className="faq-inline-action">
+                            <button type="button" className="button button-secondary" onClick={handleReturningClient}>{copy.returningClientCta}<ArrowRight /></button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section id="partner-entry" className="trust-section section-anchor">
+          <div className="site-container trust-layout">
+            <div className="process-panel">
+              <p>{copy.partnerLead}</p>
+              <h2>{copy.partnerTitle}</h2>
+              <p className="large-copy">{copy.partnerText}</p>
               <div className="partner-grid">
                 {PARTNER_AUDIENCES.map((partner) => (
                   <article key={partner.id}>
@@ -952,193 +1313,50 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
                   </article>
                 ))}
               </div>
-              <button
-                type="button"
-                className="button button-secondary"
-                onClick={() => {
-                  handleSelectSituation('organisation');
-                  scrollToContact();
-                }}
-              >
-                {ui.partnerCTA}<ArrowRight />
-              </button>
-              <div className="boundary-note">
-                <Info />
-                <p><strong>{dict.antiRoleTitle}</strong>{ui.boundary}</p>
-              </div>
             </div>
-          </div>
-        </section>
-
-        <section id="consultations" className="consultations-section section-anchor">
-          <div className="site-container">
-            <div className="section-intro"><p>{ui.consultLead}</p><h2>{dict.consultTitle}</h2><span>{dict.consultSub}</span></div>
-            <div className="consultation-composition">
-              {CONSULTATIONS_STORE.map((consultation, index) => (
-                <article key={consultation.id} className={index === 0 ? 'consultation consultation-featured' : 'consultation'}>
-                  <div className="consultation-top"><span><Clock />{consultation.duration[lang]}</span><strong>{consultation.price}</strong></div>
-                  <h3>{consultation.name[lang]}</h3>
-                  <p>{consultation.desc[lang]}</p>
-                  <dl><div><dt>{ui.result}</dt><dd>{consultation.result[lang]}</dd></div><div><dt>{ui.details}</dt><dd>{consultation.note[lang]}</dd></div></dl>
-                  <button onClick={() => handleSelectConsultation(consultation.id)} className="button button-secondary">{consultation.cta[lang]}<ArrowRight /></button>
-                </article>
-              ))}
+            <div className="partner-panel">
+              <p>{lang === 'en' ? 'Partner route' : lang === 'uk' ? 'Партнерський маршрут' : 'Партнёрский маршрут'}</p>
+              <h2>{lang === 'en' ? 'Use the existing contact form with partnership context' : lang === 'uk' ? 'Використовуйте наявну контактну форму з контекстом партнерства' : 'Используйте существующую контактную форму с контекстом партнёрства'}</h2>
+              <p className="large-copy">{lang === 'en' ? 'No new organisation fields or special database path are introduced. Partnership enquiries stay inside the existing contact architecture.' : lang === 'uk' ? 'Жодних нових полів для організацій або спеціального шляху в базі не додається. Партнерські запити залишаються в межах наявної контактної архітектури.' : 'Никаких новых полей для организаций или специального пути в базе не добавляется. Партнёрские запросы остаются в рамках существующей контактной архитектуры.'}</p>
+              <button type="button" className="button button-secondary" onClick={() => {
+                handleSelectSituation('organisation');
+                scrollToId('contact');
+              }}>{copy.partnerCta}<ArrowRight /></button>
             </div>
-          </div>
-        </section>
-
-        <section id="services" className="service-map-section section-anchor">
-          <div className="site-container">
-            <div className="section-intro section-intro-wide"><p>{dict.servicesTitle}</p><h2>{dict.servicesSub}</h2></div>
-            <div className="pillar-band">
-              {sList.map((column) => <div key={column.pillar}><strong>{column.pillar}</strong><span>{column.sub}</span></div>)}
-            </div>
-          </div>
-        </section>
-
-        <section id="single-services" className="single-services-section section-anchor">
-          <div className="site-container services-layout">
-            <aside>
-              <p>{ui.servicesLead}</p>
-              <h2>{dict.singleTitle}</h2>
-              <span>{dict.singleSub}</span>
-              <div className="housing-highlight">
-                <p>{ui.housingLead}</p>
-                <h3>{ui.housingTitle}</h3>
-                <p>{ui.housingText}</p>
-                <small><Info />{ui.housingNote}</small>
-                <button type="button" className="button button-secondary" onClick={() => handleSelectSingleService('housing_ready')}>{ui.housingCta}<ArrowRight /></button>
-                <button type="button" className="button button-secondary" onClick={() => handleSelectSingleService('housing_campaign')}>{lang === 'uk' ? 'Запитати кампанію пошуку' : lang === 'ru' ? 'Запросить кампанию поиска' : 'Request the search campaign'}<ArrowRight /></button>
-              </div>
-              <div className="service-category-tabs" aria-label={ui.servicesLead}>
-                {serviceCategories.map((category) => {
-                  const Icon = category.icon;
-                  return (
-                    <button key={category.id} type="button" aria-pressed={activeServiceCategory === category.id} onClick={() => setActiveServiceCategory(category.id)}>
-                      <Icon /><span><strong>{category.label}</strong><small>{category.ids.length} {ui.categoryCount}</small></span><ChevronRight />
-                    </button>
-                  );
-                })}
-              </div>
-            </aside>
-            <div className="service-list-panel" aria-live="polite">
-              <div className="service-panel-heading"><div><h3>{activeCategory.label}</h3><p>{activeCategory.description}</p></div><span>{activeServices.length}</span></div>
-              <div className="service-rows">
-                {activeServices.map((service) => (
-                  <article key={service.id}>
-                    <div className="service-name"><h4>{service.name[lang]}</h4><span>{service.mode[lang]}</span></div>
-                    <div className="service-description"><p>{service.desc[lang]}</p><small><Check />{service.limit[lang]}</small>{service.notIncluded && <small className="service-exclusion">{service.notIncluded[lang]}</small>}</div>
-                    <div className="service-action"><strong>{service.id === 'housing_ready' || service.id === 'housing_campaign' ? service.price : service.price}</strong><button onClick={() => handleSelectSingleService(service.id)} aria-label={`${dict.singleCta}: ${service.name[lang]}`}><ArrowUpRight /></button></div>
-                  </article>
-                ))}
-              </div>
-              <div className="boundary-note"><Info /><p><strong>{dict.housingDisclaimerTitle}</strong>{dict.housingDisclaimerText}</p></div>
-            </div>
-          </div>
-        </section>
-
-        <section id="packages" className="packages-section section-anchor">
-          <div className="site-container">
-            <div className="section-intro"><p>{ui.packageLead}</p><h2>{dict.pkgGridTitle}</h2><span>{ui.packageCompare}</span></div>
-            <div className="package-comparison">
-              {PREMIUM_PACKAGES.map((item) => {
-                const isSelected = item.id === selectedPackage;
-                return (
-                <article
-                  key={item.id}
-                  className={[
-                    'package-option',
-                    item.id === 'pkg_setup' ? 'is-featured' : '',
-                    item.id === 'pkg_full' ? 'is-subordinate' : '',
-                    isSelected ? 'is-selected' : '',
-                  ].filter(Boolean).join(' ')}
-                >
-                    <div className="package-heading"><span>{item.subtitle[lang]}</span><strong>{item.price}</strong></div>
-                    <h3>{item.name[lang]}</h3>
-                    <p>{item.tagline[lang]}</p>
-                    <small><Clock />{item.workload[lang]}</small>
-                    <ul>{item.scope[lang].slice(0, 4).map((scope) => <li key={scope}><Check />{scope}</li>)}</ul>
-                    <button onClick={() => setSelectedPackage(item.id)} aria-pressed={isSelected}>{isSelected ? ui.selected : ui.choose}<ArrowRight /></button>
-                  </article>
-                );
-              })}
-            </div>
-            <div className="package-detail" aria-live="polite">
-              <div className="package-summary">
-                <p>{ui.packageDetails}</p>
-                <h3>{currentSelectedPkgObj.name[lang]}</h3>
-                <strong>{currentSelectedPkgObj.price}</strong>
-                <span>{currentSelectedPkgObj.idealFor[lang]}</span>
-                <div className="package-actions"><button onClick={() => handleSelectPackage(currentSelectedPkgObj.id)} className="button button-primary">{currentSelectedPkgObj.cta[lang]}<ArrowRight /></button><button ref={pdfTriggerRef} id="pdf-download-btn" onClick={() => setShowExportModal(true)} className="button button-quiet"><Download />{dict.pdfBtn}</button></div>
-              </div>
-              <div className="package-list"><h4><ShieldCheck />{ui.scopeLabel}</h4><ul>{currentSelectedPkgObj.scope[lang].map((item) => <li key={item}><Check />{item}</li>)}</ul></div>
-              <div className="package-list package-limits"><h4><AlertCircle />{ui.limitsLabel}</h4><ul>{currentSelectedPkgObj.limits[lang].map((item) => <li key={item}><AlertCircle />{item}</li>)}</ul></div>
-            </div>
-          </div>
-        </section>
-
-        <section id="tools" className="tools-section section-anchor">
-          <div className="site-container">
-            <div className="section-intro section-intro-wide"><p>{ui.toolsLead}</p><h2>{ui.toolsText}</h2></div>
-            <div id="calculator" className="calculator-shell section-anchor">
-              <div className="calculator-copy"><h3>{dict.calculatorTitle}</h3><p>{dict.calculatorInfo}</p><div className="risk-list">{PITFALLS.map((item) => { const checked = !!calculatorToggles[item.id]; return <button key={item.id} onClick={() => setCalculatorToggles((previous) => ({...previous, [item.id]: !previous[item.id]}))} aria-pressed={checked} className={checked ? 'is-selected' : ''}><span className="check-box">{checked && <Check />}</span><span><strong>{item.label[lang]}</strong><small>{item.explanation[lang]}</small></span><b>+€{item.cost}</b></button>; })}</div></div>
-              <aside className="calculator-result"><span>{ui.estimate}</span><strong>€{calculatorTotal}</strong><small>{ui.maximum}</small><div><span>{dict.calcPackageLabel}</span><b>€{firstYearPackagePrice}</b>{calculatorTotal > firstYearPackagePrice && <p>{ui.difference}: €{calculatorTotal - firstYearPackagePrice}</p>}</div><p><AlertCircle />{dict.calcFooterNotice}</p></aside>
-            </div>
-
-            <div id="checklist" className="planner-shell section-anchor">
-              <div className="planner-heading"><div><h3>{dict.checklistTitle}</h3><p>{dict.checklistSub}</p></div><div className="planner-progress"><strong>{progressPercent}%</strong><span>{ui.progress}</span></div></div>
-              <div className="planner-columns">{plannerGroups.map((group) => <section key={group.category}><header><h4>{group.title}</h4><span>{group.description}</span></header>{BLUEPRINT_CHECKLIST.filter((item) => item.category === group.category).map((task) => { const done = !!completedTasks[task.id]; return <button key={task.id} onClick={() => setCompletedTasks((previous) => ({...previous, [task.id]: !previous[task.id]}))} aria-pressed={done} className={done ? 'is-complete' : ''}><span className="check-box">{done && <Check />}</span><span>{task.title[lang]}</span></button>; })}</section>)}</div>
-            </div>
-          </div>
-        </section>
-
-        <section id="testimonials" className="proof-section section-anchor">
-          <div className="site-container proof-layout">
-            <div className="proof-heading"><p>{ui.testimonialLead}</p><h2>{dict.testimonialsTitle}</h2><span>{dict.testimonialsSub}</span></div>
-            <div className="testimonial-stage">
-              <AnimatePresence initial={false}>
-                <motion.figure key={activeTestimonialIdx} initial={{opacity: 0, transform: prefersReducedMotion ? 'none' : 'translateY(4px)'}} animate={{opacity: 1, transform: 'none'}} exit={{opacity: 0}} transition={{duration: prefersReducedMotion ? 0 : 0.18}}>
-                  <p>{TESTIMONIALS[activeTestimonialIdx].story[lang]}</p>
-                  <figcaption><strong>{TESTIMONIALS[activeTestimonialIdx].name[lang]}</strong><span>{TESTIMONIALS[activeTestimonialIdx].role[lang]}</span><span>{TESTIMONIALS[activeTestimonialIdx].city[lang]} / {TESTIMONIALS[activeTestimonialIdx].university[lang]}</span></figcaption>
-                </motion.figure>
-              </AnimatePresence>
-              <div className="testimonial-controls"><span>{activeTestimonialIdx + 1} / {TESTIMONIALS.length}</span><div><button onClick={() => setActiveTestimonialIdx((previous) => previous === 0 ? TESTIMONIALS.length - 1 : previous - 1)} aria-label={lang === 'uk' ? 'Попередня ситуація' : lang === 'ru' ? 'Предыдущая ситуация' : 'Previous situation'}><ChevronLeft /></button><button onClick={() => setActiveTestimonialIdx((previous) => previous === TESTIMONIALS.length - 1 ? 0 : previous + 1)} aria-label={lang === 'uk' ? 'Наступна ситуація' : lang === 'ru' ? 'Следующая ситуация' : 'Next situation'}><ChevronRight /></button></div></div>
-            </div>
-          </div>
-        </section>
-
-        <section id="faq" className="faq-section section-anchor">
-          <div className="site-container faq-layout">
-            <div><h2>{dict.faqTitle}</h2><p>{dict.faqSub}</p></div>
-            <div className="faq-list">{FAQS_STORE.map((faq) => { const open = !!faqOpen[faq.id]; const answerId = `faq-answer-${faq.id}`; return <div key={faq.id} className="faq-item"><button onClick={() => setFaqOpen((previous) => ({...previous, [faq.id]: !previous[faq.id]}))} aria-expanded={open} aria-controls={answerId}><span>{faq.q[lang]}</span><ChevronDown className={open ? 'is-open' : ''} /></button><div id={answerId} aria-hidden={!open} className={open ? 'faq-answer is-open' : 'faq-answer'}><p>{faq.a[lang]}</p></div></div>; })}</div>
           </div>
         </section>
 
         <section id="contact" className="contact-section section-anchor">
           <div className="site-container contact-layout">
             <div className="contact-copy">
-              <p>{ui.contactLead}</p>
-              <h2>{dict.contactTitle}</h2>
-              <span>{dict.contactSub}</span>
-              <div className="contact-note"><MessageIcon /><div><strong>{ui.contactAside}</strong><p>{ui.contactAsideText}</p></div></div>
-              <div className="contact-details" aria-label={ui.businessDetailsLabel}>
-                <p className="contact-details-lead">{ui.businessDetailsLabel}</p>
+              <p>{copy.contactLead}</p>
+              <h2>{dict.navContact}</h2>
+              <span>{copy.responseTime}</span>
+              <div className="contact-note">
+                <MessageIcon />
+                <div>
+                  <strong>{copy.contactAside}</strong>
+                  <p>{copy.contactAsideText}</p>
+                </div>
+              </div>
+              <div className="contact-details" aria-label={copy.businessDetailsLabel}>
+                <p className="contact-details-lead">{copy.businessDetailsLabel}</p>
                 <div className="contact-details-grid">
                   <div className="contact-details-item">
-                    <span>{ui.emailLabel}</span>
+                    <span>{copy.emailLabel}</span>
                     <a href={BUSINESS.publicEmailMailto}>{BUSINESS.publicEmail}</a>
                   </div>
                   <div className="contact-details-item">
-                    <span>{ui.phoneLabel}</span>
+                    <span>{copy.phoneLabel}</span>
                     <a href={BUSINESS.phoneTelHref}>{BUSINESS.phoneDisplayNumber}</a>
                   </div>
                   <div className="contact-details-item contact-details-item-whatsapp">
-                    <span>{ui.whatsappLabel}</span>
-                    <a className="button button-secondary contact-whatsapp" href={whatsappHref} target="_blank" rel="noreferrer noopener" aria-label={whatsappAriaLabel}><MessageCircle />{ui.whatsappLabel}<ArrowUpRight /></a>
+                    <span>{copy.whatsappLabel}</span>
+                    <a className="button button-secondary contact-whatsapp" href={whatsappHref} target="_blank" rel="noreferrer noopener" aria-label={whatsappAriaLabel}><MessageCircle />{copy.whatsappLabel}<ArrowUpRight /></a>
                     <small>{BUSINESS.whatsappDisplayNumber}</small>
                   </div>
                 </div>
-                <p className="contact-response-time">{ui.responseTime}</p>
+                <p className="contact-response-time">{copy.responseTime}</p>
                 <div className="contact-business-meta">
                   <strong>{BUSINESS.registeredBusinessName}</strong>
                   <p>KvK {BUSINESS.kvkNumber}</p>
@@ -1147,30 +1365,123 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
               </div>
             </div>
             <div className="contact-form-shell">
-              {formState === 'success' ? <motion.div ref={successRef} tabIndex={-1} role="status" initial={{opacity: 0}} animate={{opacity: 1}} className="form-success"><span><Check /></span><h3>{dict.contactSuccessTitle}</h3><p>{dict.contactSuccessDesc}</p><button onClick={handleResetForm} className="button button-primary">{dict.contactFailBtn}</button></motion.div> :
+              {formState === 'success' ? (
+                <motion.div ref={successRef} tabIndex={-1} role="status" initial={{opacity: 0}} animate={{opacity: 1}} className="form-success">
+                  <span><Check /></span>
+                  <h3>{dict.contactSuccessTitle}</h3>
+                  <p>{dict.contactSuccessDesc}</p>
+                  <button onClick={handleResetForm} className="button button-primary">{dict.contactFailBtn}</button>
+                </motion.div>
+              ) : (
                 <form onSubmit={handleFormSubmit}>
-                  <div className="sr-only" aria-hidden="true"><label htmlFor="contact-website">Website</label><input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" value={formWebsite} onChange={(event) => setFormWebsite(event.target.value)} /></div>
+                  <div className="sr-only" aria-hidden="true">
+                    <label htmlFor="contact-website">Website</label>
+                    <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" value={formWebsite} onChange={(event) => setFormWebsite(event.target.value)} />
+                  </div>
                   {formState === 'error' && <div role="alert" className="form-error">{formErrorMessage}</div>}
                   <div className="form-section-copy">
-                    <p>{ui.formSectionTitle}</p>
-                    <span>{ui.formSectionSub}</span>
+                    <p>{copy.formSectionTitle}</p>
+                    <span>{copy.formSectionSub}</span>
                   </div>
-                  <p role="note">{ui.formSensitiveWarning}</p>
-                  <p role="note">{ui.formEnquiryNotice}</p>
+                  <p role="note">{copy.formSensitiveWarning}</p>
+                  <p role="note">{copy.formEnquiryNotice}</p>
                   <div className="qualification-grid">
-                    <label htmlFor="contact-audience"><span>{ui.formAudienceLabel}</span><select id="contact-audience" name="audience" value={formAudience} onChange={(event) => setFormAudience(event.target.value)} disabled={formState === 'sending'}>{qualificationOptions.audience.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
-                    <label htmlFor="contact-status"><span>{ui.formStatusLabel}</span><select id="contact-status" name="status" value={formStatus} onChange={(event) => { const nextStatus = event.target.value; setFormStatus(nextStatus); if (nextStatus !== 'before') setFormMovingDate(''); }} disabled={formState === 'sending'}>{qualificationOptions.status.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
-                    {formStatus === 'before' && <label htmlFor="contact-moving-date"><span>{ui.formMovingDateLabel}</span><input id="contact-moving-date" name="movingDate" type="date" value={formMovingDate} onChange={(event) => setFormMovingDate(event.target.value)} disabled={formState === 'sending'} /></label>}
-                    <label htmlFor="contact-city"><span>{ui.formCityLabel}</span><input id="contact-city" name="city" type="text" value={formCity} onChange={(event) => setFormCity(event.target.value)} disabled={formState === 'sending'} maxLength={80} placeholder={lang === 'uk' ? 'Амстердам, Гаага, Делфт...' : lang === 'ru' ? 'Амстердам, Гаага, Делфт...' : 'Amsterdam, The Hague, Delft...'} /></label>
+                    <label htmlFor="contact-audience">
+                      <span>{copy.formAudienceLabel}</span>
+                      <select id="contact-audience" name="audience" value={formAudience} onChange={(event) => setFormAudience(event.target.value)} disabled={formState === 'sending'}>
+                        <option value="student">{copy.formAudienceStudent}</option>
+                        <option value="professional">{copy.formAudienceProfessional}</option>
+                        <option value="family">{copy.formAudienceFamily}</option>
+                        <option value="organisation">{copy.formAudienceOrganisation}</option>
+                      </select>
+                    </label>
+                    <label htmlFor="contact-status">
+                      <span>{copy.formStatusLabel}</span>
+                      <select id="contact-status" name="status" value={formStatusField} onChange={(event) => {
+                        const nextStatus = event.target.value;
+                        setFormStatusField(nextStatus);
+                        if (nextStatus !== 'before') setFormMovingDate('');
+                      }} disabled={formState === 'sending'}>
+                        <option value="before">{copy.formStatusBefore}</option>
+                        <option value="after">{copy.formStatusAfter}</option>
+                        <option value="found_housing">{copy.formStatusFoundHousing}</option>
+                        <option value="need_housing">{copy.formStatusNeedHousing}</option>
+                        <option value="organisation">{copy.formStatusOrganisation}</option>
+                      </select>
+                    </label>
+                    {formStatusField === 'before' && (
+                      <label htmlFor="contact-moving-date">
+                        <span>{copy.formMovingDateLabel}</span>
+                        <input id="contact-moving-date" name="movingDate" type="date" value={formMovingDate} onChange={(event) => setFormMovingDate(event.target.value)} disabled={formState === 'sending'} />
+                      </label>
+                    )}
+                    <label htmlFor="contact-city">
+                      <span>{copy.formCityLabel}</span>
+                      <input id="contact-city" name="city" type="text" value={formCity} onChange={(event) => setFormCity(event.target.value)} disabled={formState === 'sending'} maxLength={80} placeholder={lang === 'en' ? 'Amsterdam, The Hague, Delft...' : lang === 'uk' ? 'Амстердам, Гаага, Делфт...' : 'Амстердам, Гаага, Делфт...'} />
+                    </label>
                   </div>
-                  <label htmlFor="contact-help"><span>{ui.formHelpLabel}</span><select id="contact-help" name="help" value={formHelp} onChange={(event) => { const nextHelp = event.target.value; setFormHelp(nextHelp); if (!nextHelp.startsWith('housing_')) { setFormHousingType(''); setFormBudget(''); setFormGuarantor(''); } }} disabled={formState === 'sending'}>{qualificationOptions.help.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
-                  {formHelp.startsWith('housing_') && <div className="qualification-grid">
-                    <label htmlFor="contact-housing-type"><span>{ui.formHousingTypeLabel} *</span><select id="contact-housing-type" name="housingType" required value={formHousingType} onChange={(event) => setFormHousingType(event.target.value)} disabled={formState === 'sending'}><option value="">{lang === 'uk' ? 'Оберіть тип житла' : lang === 'ru' ? 'Выберите тип жилья' : 'Choose a housing type'}</option>{qualificationOptions.housingType.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
-                    <label htmlFor="contact-budget"><span>{ui.formBudgetLabel}</span><select id="contact-budget" name="budget" value={formBudget} onChange={(event) => setFormBudget(event.target.value)} disabled={formState === 'sending'}><option value="">{lang === 'uk' ? 'Оберіть діапазон' : lang === 'ru' ? 'Выберите диапазон' : 'Choose a range'}</option>{qualificationOptions.budget.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
-                    <label htmlFor="contact-guarantor"><span>{ui.formGuarantorLabel}</span><select id="contact-guarantor" name="guarantor" value={formGuarantor} onChange={(event) => setFormGuarantor(event.target.value)} disabled={formState === 'sending'}><option value="">{lang === 'uk' ? 'Оберіть ситуацію' : lang === 'ru' ? 'Выберите ситуацию' : 'Choose a situation'}</option>{qualificationOptions.guarantor.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
-                  </div>}
-                  <div className="form-grid"><label htmlFor="contact-name"><span>{dict.contactNameLabel} *</span><input id="contact-name" name="name" type="text" required value={formName} onChange={(event) => {setFormName(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={120} autoComplete="name" placeholder="Maria" /></label><label htmlFor="contact-email"><span>{dict.contactEmailLabel} *</span><input id="contact-email" name="email" type="email" required value={formEmail} onChange={(event) => {setFormEmail(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={254} autoComplete="email" placeholder="maria@example.com" /></label></div>
-                  <label htmlFor="contact-message"><span>{dict.contactMessageLabel} *</span><textarea id="contact-message" name="message" rows={5} required value={formMessage} onChange={(event) => {setFormMessage(event.target.value); if (formState === 'error') setFormState('idle');}} disabled={formState === 'sending'} maxLength={5000} placeholder={lang === 'uk' ? 'Наприклад: потрібна допомога з BSN, житлом або пакетом.' : lang === 'ru' ? 'Например: нужна помощь с BSN, жильём или пакетом.' : 'For example: I need help with BSN, housing or a package.'} /></label>
+                  <label htmlFor="contact-help">
+                    <span>{copy.formHelpLabel}</span>
+                    <select id="contact-help" name="help" value={formHelp} onChange={(event) => {
+                      const nextHelp = event.target.value as HelpValue;
+                      setFormHelp(nextHelp);
+                      if (!isHousingHelp(nextHelp)) resetHousingFields();
+                    }} disabled={formState === 'sending'}>
+                      {helpOptions.map((option) => (
+                        <option key={option.value} value={option.value}>{option.label}</option>
+                      ))}
+                    </select>
+                  </label>
+                  {isHousingHelp(formHelp) && (
+                    <div className="qualification-grid">
+                      <label htmlFor="contact-housing-type">
+                        <span>{copy.formHousingTypeLabel} *</span>
+                        <select id="contact-housing-type" name="housingType" required value={formHousingType} onChange={(event) => setFormHousingType(event.target.value)} disabled={formState === 'sending'}>
+                          <option value="">{copy.chooseHousingType}</option>
+                          <option value="room_student">{lang === 'en' ? 'Room / student accommodation' : lang === 'uk' ? 'Кімната / студентське житло' : 'Комната / студенческое жильё'}</option>
+                          <option value="studio">{lang === 'en' ? 'Studio' : lang === 'uk' ? 'Студія' : 'Студия'}</option>
+                          <option value="apartment">{lang === 'en' ? 'Apartment' : lang === 'uk' ? 'Квартира' : 'Квартира'}</option>
+                          <option value="house">{lang === 'en' ? 'House' : lang === 'uk' ? 'Будинок' : 'Дом'}</option>
+                          <option value="short_stay">{lang === 'en' ? 'Temporary / short-stay housing' : lang === 'uk' ? 'Тимчасове / короткострокове житло' : 'Временное / краткосрочное жильё'}</option>
+                          <option value="not_sure">{lang === 'en' ? 'Not sure yet' : lang === 'uk' ? 'Ще не знаю' : 'Пока не знаю'}</option>
+                        </select>
+                      </label>
+                      <label htmlFor="contact-budget">
+                        <span>{copy.formBudgetLabel}</span>
+                        <select id="contact-budget" name="budget" value={formBudget} onChange={(event) => setFormBudget(event.target.value)} disabled={formState === 'sending'}>
+                          <option value="">{copy.chooseRange}</option>
+                          <option value="under-700">{lang === 'en' ? 'Under €700' : lang === 'uk' ? 'До €700' : 'До €700'}</option>
+                          <option value="700-1000">€700–€1,000</option>
+                          <option value="1000-1500">€1,000–€1,500</option>
+                          <option value="1500-plus">{lang === 'en' ? '€1,500+' : lang === 'uk' ? 'Понад €1,500' : 'Свыше €1,500'}</option>
+                          <option value="not-sure">{lang === 'en' ? 'Not sure yet' : lang === 'uk' ? 'Ще не знаю' : 'Пока не знаю'}</option>
+                        </select>
+                      </label>
+                      <label htmlFor="contact-guarantor">
+                        <span>{copy.formGuarantorLabel}</span>
+                        <select id="contact-guarantor" name="guarantor" value={formGuarantor} onChange={(event) => setFormGuarantor(event.target.value)} disabled={formState === 'sending'}>
+                          <option value="">{copy.chooseSituation}</option>
+                          <option value="yes">{copy.formGuarantorYes}</option>
+                          <option value="maybe">{copy.formGuarantorMaybe}</option>
+                          <option value="no">{copy.formGuarantorNo}</option>
+                        </select>
+                      </label>
+                    </div>
+                  )}
+                  <div className="form-grid">
+                    <label htmlFor="contact-name">
+                      <span>{dict.contactNameLabel} *</span>
+                      <input id="contact-name" name="name" type="text" required value={formName} onChange={(event) => { setFormName(event.target.value); if (formState === 'error') setFormState('idle'); }} disabled={formState === 'sending'} maxLength={120} autoComplete="name" placeholder="Maria" />
+                    </label>
+                    <label htmlFor="contact-email">
+                      <span>{dict.contactEmailLabel} *</span>
+                      <input id="contact-email" name="email" type="email" required value={formEmail} onChange={(event) => { setFormEmail(event.target.value); if (formState === 'error') setFormState('idle'); }} disabled={formState === 'sending'} maxLength={254} autoComplete="email" placeholder="maria@example.com" />
+                    </label>
+                  </div>
+                  <label htmlFor="contact-message">
+                    <span>{dict.contactMessageLabel} *</span>
+                    <textarea id="contact-message" name="message" rows={5} required value={formMessage} onChange={(event) => { setFormMessage(event.target.value); if (formState === 'error') setFormState('idle'); }} disabled={formState === 'sending'} maxLength={5000} placeholder={lang === 'en' ? 'For example: I need help with housing, a letter, university administration, or the right package.' : lang === 'uk' ? 'Наприклад: мені потрібна допомога з житлом, листом, університетською адміністрацією або правильним пакетом.' : 'Например: мне нужна помощь с жильём, письмом, университетской администрацией или правильным пакетом.'} />
+                  </label>
                   <div className="consent-row">
                     <input type="checkbox" id="privacy-consent" name="consent" required checked={formConsent} onChange={(event) => setFormConsent(event.target.checked)} disabled={formState === 'sending'} />
                     <div className="consent-copy">
@@ -1179,17 +1490,152 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
                       <label htmlFor="privacy-consent"><span>{privacyAcknowledgement.suffix}</span></label>
                     </div>
                   </div>
-                  <button type="submit" disabled={formState === 'sending' || !formConsent} className="button button-primary contact-submit"><span aria-live="polite">{formState === 'sending' ? dict.contactSending : dict.contactSubmitBtn}</span>{formState !== 'sending' && <ArrowRight />}</button>
-                </form>}
+                  <button type="submit" disabled={formState === 'sending' || !formConsent} className="button button-primary contact-submit">
+                    <span aria-live="polite">{formState === 'sending' ? dict.contactSending : dict.contactSubmitBtn}</span>
+                    {formState !== 'sending' && <ArrowRight />}
+                  </button>
+                </form>
+              )}
             </div>
           </div>
-          <footer className="site-footer"><div className="site-container footer-layout"><a href="#top" className="footer-brand" aria-label="VANTAM"><BrandLogo className="brand-logo brand-logo-footer" /></a><div className="footer-copy"><p>{dict.footerSub}</p><p className="footer-business-meta">{footerBusinessLine}</p></div><div className="footer-contact-links"><a href={BUSINESS.publicEmailMailto}>{BUSINESS.publicEmail}</a><a href={BUSINESS.phoneTelHref}>{BUSINESS.phoneDisplayNumber}</a><a href={whatsappHref} target="_blank" rel="noreferrer noopener" aria-label={whatsappAriaLabel}>{ui.whatsappLabel}</a>{legalLinks.map((link) => (<Link key={link.href} href={link.href}>{link.label}</Link>))}</div></div></footer>
+          <footer className="site-footer">
+            <div className="site-container footer-layout">
+              <a href="#top" className="footer-brand" aria-label="VANTAM"><BrandLogo className="brand-logo brand-logo-footer" /></a>
+              <div className="footer-copy">
+                <p>{copy.boundaryText}</p>
+                <p className="footer-business-meta">{footerBusinessLine}</p>
+              </div>
+              <div className="footer-contact-links">
+                <a href={BUSINESS.publicEmailMailto}>{BUSINESS.publicEmail}</a>
+                <a href={BUSINESS.phoneTelHref}>{BUSINESS.phoneDisplayNumber}</a>
+                <a href={whatsappHref} target="_blank" rel="noreferrer noopener" aria-label={whatsappAriaLabel}>{copy.whatsappLabel}</a>
+                {legalLinks.map((link) => (<Link key={link.href} href={link.href}>{link.label}</Link>))}
+              </div>
+            </div>
+          </footer>
         </section>
       </main>
 
-      {showExportModal && <div id="print-modal-overlay" className="print-overlay" onMouseDown={(event) => { if (event.target === event.currentTarget) setShowExportModal(false); }}><div ref={modalRef} className="print-modal" role="dialog" aria-modal="true" aria-labelledby="print-modal-title"><div className="print-modal-header"><div><h3 id="print-modal-title">{dict.modalTitle}</h3><p>{dict.modalDesc}</p></div><button ref={modalCloseRef} id="close-print-modal-btn" onClick={() => setShowExportModal(false)} aria-label={dict.modalCloseBtn}><X /></button></div><div id="vantam-printable-prospectus" className="print-sheet"><div className="print-brand-row"><div className="print-brand"><BrandLogo className="brand-logo brand-logo-print" /><div><strong>{BUSINESS.publicBrandName}</strong><p>{dict.modalAdvisorDesc}</p></div></div><div><span>{dict.modalOfferNo}</span><strong>{currentSelectedPkgObj.id.toUpperCase()}-2026</strong></div></div><div className="print-package-summary"><div><span>{dict.modalTargetPlan}</span><h4>{currentSelectedPkgObj.name[lang]}</h4><p>{currentSelectedPkgObj.idealFor[lang]}</p></div><strong>{currentSelectedPkgObj.price}</strong></div><div className="print-list"><h5>{dict.pkgScopeTitle}</h5><ul>{currentSelectedPkgObj.scope[lang].map((item) => <li key={item}>{item}</li>)}</ul></div><div className="print-list"><h5>{dict.pkgLimitsTitle}</h5><ul>{currentSelectedPkgObj.limits[lang].map((item) => <li key={item}>{item}</li>)}</ul></div><p className="print-disclaimer">{dict.footerSub}</p><div className="print-footer">{footerPrintLine}</div></div><div className="print-actions"><button onClick={() => window.print()} className="button button-primary"><Download />{dict.modalPrintBtn}</button><button onClick={() => setShowExportModal(false)} className="button button-quiet">{dict.modalCloseBtn}</button></div></div></div>}
+      {showExportModal && (
+        <div id="print-modal-overlay" className="print-overlay" onMouseDown={(event) => { if (event.target === event.currentTarget) setShowExportModal(false); }}>
+          <div ref={modalRef} className="print-modal" role="dialog" aria-modal="true" aria-labelledby="print-modal-title">
+            <div className="print-modal-header">
+              <div>
+                <h3 id="print-modal-title">{copy.printTitle}</h3>
+                <p>{copy.printDesc}</p>
+              </div>
+              <button ref={modalCloseRef} id="close-print-modal-btn" onClick={() => setShowExportModal(false)} aria-label={copy.close}><X /></button>
+            </div>
+            <div id="vantam-printable-prospectus" className="print-sheet">
+              <div className="print-brand-row">
+                <div className="print-brand">
+                  <BrandLogo className="brand-logo brand-logo-print" />
+                  <div>
+                    <strong>{BUSINESS.publicBrandName}</strong>
+                    <p>{selectedPackageData.printValue[lang]}</p>
+                  </div>
+                </div>
+                <div>
+                  <span>{copy.printVersion}</span>
+                  <strong>{selectedPackageData.id.toUpperCase()}-V3</strong>
+                </div>
+              </div>
+              <div className="print-package-summary">
+                <div>
+                  <span>{copy.packageSummary}</span>
+                  <h4>{selectedPackageData.name[lang]}</h4>
+                  <p>{selectedPackageData.outcome[lang]}</p>
+                </div>
+                <strong>{selectedPackageData.price}</strong>
+              </div>
+              <div className="print-list">
+                <h5>{copy.printComparison}</h5>
+                <ul>
+                  {PREMIUM_PACKAGES.map((item) => (
+                    <li key={item.id}>{item.name[lang]}: {item.shortTitle[lang]} · {item.price}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="print-list">
+                <h5>{lang === 'en' ? 'Delivery phases' : lang === 'uk' ? 'Фази виконання' : 'Фазы выполнения'}</h5>
+                <ul>
+                  {selectedPackageData.detailSections.slice(0, 4).flatMap((section) => section.items[lang]).map((item) => <li key={item}>{item}</li>)}
+                </ul>
+              </div>
+              <div className="print-list">
+                <h5>{lang === 'en' ? 'Deliverables' : lang === 'uk' ? 'Результати' : 'Результаты'}</h5>
+                <ul>
+                  {selectedPackageData.detailSections.find((section) => section.title.en === 'What you receive')?.items[lang].map((item) => <li key={item}>{item}</li>)}
+                </ul>
+              </div>
+              {selectedPackageData.id === 'vantam_first_year' && (
+                <>
+                  <div className="print-list">
+                    <h5>{lang === 'en' ? 'Action Credit' : lang === 'uk' ? 'Action Credit' : 'Action Credit'}</h5>
+                    <ul>
+                      {selectedPackageData.detailSections.find((section) => section.title.en === 'Action Credit definition')?.items[lang].map((item) => <li key={item}>{item}</li>)}
+                    </ul>
+                  </div>
+                  <div className="print-list">
+                    <h5>{lang === 'en' ? 'Quick Review' : lang === 'uk' ? 'Quick Review' : 'Quick Review'}</h5>
+                    <ul>
+                      {selectedPackageData.detailSections.find((section) => section.title.en === 'Quick Review definition')?.items[lang].map((item) => <li key={item}>{item}</li>)}
+                    </ul>
+                  </div>
+                </>
+              )}
+              <div className="print-list">
+                <h5>{copy.printClientResponsibilities}</h5>
+                <ul>
+                  <li>{lang === 'en' ? 'Provide requested information and documents in the agreed sequence.' : lang === 'uk' ? 'Надати запитану інформацію та документи у погодженій послідовності.' : 'Предоставить запрошенную информацию и документы в согласованной последовательности.'}</li>
+                  <li>{lang === 'en' ? 'Check dates, bookings, and third-party messages promptly.' : lang === 'uk' ? 'Вчасно перевіряти дати, записи та повідомлення від третіх сторін.' : 'Своевременно проверять даты, записи и сообщения от третьих сторон.'}</li>
+                </ul>
+              </div>
+              <div className="print-list">
+                <h5>{copy.printExclusions}</h5>
+                <ul>
+                  {selectedPackageData.detailSections.find((section) => section.title.en === 'What is not included')?.items[lang].map((item) => <li key={item}>{item}</li>)}
+                </ul>
+              </div>
+              <div className="print-list">
+                <h5>{copy.printOptional}</h5>
+                <ul>
+                  <li>{lang === 'en' ? 'Relocation Orientation may be credited within 14 days when eligible.' : lang === 'uk' ? 'Relocation Orientation може бути зарахована протягом 14 днів, якщо це доречно.' : 'Relocation Orientation может быть зачтена в течение 14 дней, если это уместно.'}</li>
+                  <li>{lang === 'en' ? 'Parent Update applies only with separate written consent from the adult student.' : lang === 'uk' ? 'Parent Update застосовується лише за окремою письмовою згодою повнолітнього студента.' : 'Parent Update применяется только по отдельному письменному согласию совершеннолетнего студента.'}</li>
+                </ul>
+              </div>
+              <div className="print-list">
+                <h5>{copy.printNoGuarantee}</h5>
+                <ul>
+                  <li>{lang === 'en' ? 'VANTAM does not guarantee housing, approvals, response times, or other third-party outcomes.' : lang === 'uk' ? 'VANTAM не гарантує житло, погодження, час відповіді чи інші результати третіх сторін.' : 'VANTAM не гарантирует жильё, одобрения, время ответа или другие результаты третьих сторон.'}</li>
+                </ul>
+              </div>
+              <div className="print-list">
+                <h5>{copy.printNextStep}</h5>
+                <ul>
+                  <li>{selectedPackageData.cta[lang]}</li>
+                  <li>{copy.printDisclaimer}</li>
+                </ul>
+              </div>
+              <p className="print-disclaimer">{copy.printDisclaimer}</p>
+              <div className="print-footer">{copy.printGenerated}: {new Date().toISOString().slice(0, 10)} · {footerPrintLine}</div>
+            </div>
+            <div className="print-actions">
+              <button onClick={() => window.print()} className="button button-primary"><Download />{copy.printButton}</button>
+              <button onClick={() => setShowExportModal(false)} className="button button-quiet">{copy.close}</button>
+            </div>
+          </div>
+        </div>
+      )}
 
-      <style jsx global>{`@media print { body * { visibility: hidden; } #vantam-printable-prospectus, #vantam-printable-prospectus * { visibility: visible; } #vantam-printable-prospectus { position: absolute; inset: 0; width: 100%; border: 0 !important; box-shadow: none !important; } }`}</style>
+      <style jsx global>{`
+        @media print {
+          body * { visibility: hidden; }
+          #vantam-printable-prospectus, #vantam-printable-prospectus * { visibility: visible; }
+          #vantam-printable-prospectus { position: absolute; inset: 0; width: 100%; border: 0 !important; box-shadow: none !important; }
+          .print-list { break-inside: avoid; }
+        }
+      `}</style>
     </div>
   );
 }

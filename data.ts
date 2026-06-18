@@ -4,1632 +4,1254 @@ export {DEFAULT_LOCALE, LOCALES as SUPPORTED_LOCALES} from './lib/locales';
 
 export type Language = Locale;
 
-export type RegionCode = 'nl';
-
-export interface RegionalProfile {
-  code: RegionCode;
-  name: Record<Language, string>;
-  defaultLocale: Language;
-}
-
-export const REGION_PROFILES: RegionalProfile[] = [
-  {
-    code: 'nl',
-    name: {
-      uk: 'Нідерланди',
-      ru: 'Нидерланды',
-      en: 'The Netherlands',
-    },
-    defaultLocale: 'en',
-  },
-];
+type LocalizedText = Record<Language, string>;
+type LocalizedList = Record<Language, string[]>;
 
 export function localize<T>(values: Record<Language, T>, language: Language) {
   return values[language];
 }
 
 export interface TranslationMatrix {
-  navTitle: string;
-  navSub: string;
-  langLabel: string;
-  heroBadge: string;
+  navContact: string;
+  menu: string;
+  darkTheme: string;
+  lightTheme: string;
   heroHeadline: string;
   heroSub: string;
-  heroCtaPrimary: string;
-  heroCtaSecondary: string;
-  whyTitle: string;
-  whySub: string;
-  roleTitle: string;
-  roleDesc: string;
-  antiRoleTitle: string;
-  antiRoleDesc: string;
-  calculatorTitle: string;
-  calculatorSub: string;
-  calculatorInfo: string;
-  checklistTitle: string;
-  checklistSub: string;
-  faqTitle: string;
-  faqSub: string;
-  pdfExportTitle: string;
-  pdfExportDesc: string;
-  pdfBtn: string;
-
-  // New localized labels & controls
-  statusBanner: string;
-  statusScope: string;
-  navWhy: string;
-  navServices: string;
-  navSingleServices: string;
-  navPackages: string;
-  navCalculator: string;
-  navChecklist: string;
-  navTestimonials: string;
-  navFaq: string;
-  navContact: string;
-
-  metric1Count: string;
-  metric1Text: string;
-  metric2Count: string;
-  metric2Text: string;
-  metric3Count: string;
-  metric3Text: string;
-  metric4Count: string;
-  metric4Text: string;
-
-  servicesTitle: string;
-  servicesSub: string;
-  servicesFooter: string;
-
-  singleTitle: string;
-  singleSub: string;
-  singlePriceTag: string;
-  singleBadge: string;
-  singleCta: string;
-
-  consultTitle: string;
-  consultSub: string;
-  consultBadge: string;
-  consultResultLabel: string;
-  consultNoteLabel: string;
-
-  calcSidebarTitle: string;
-  calcAlternative: string;
-  calcPackageLabel: string;
-  calcPackageDesc: string;
-  calcSavingTag: string;
-  calcNoRiskSelected: string;
-  calcFooterNotice: string;
-
-  calcRiskLow: string;
-  calcRiskMedium: string;
-  calcRiskHigh: string;
-  calcRiskLowDesc: string;
-  calcRiskMediumDesc: string;
-  calcRiskHighDesc: string;
-  calcRiskTextLabel: string;
-
-  pkgGridTitle: string;
-  pkgGridSub: string;
-  pkgIdealTitle: string;
-  pkgScopeTitle: string;
-  pkgLimitsTitle: string;
-
-  checklistProgressLabel: string;
-  checklistPrepTab: string;
-  checklistPrepDesc: string;
-  checklistArrivalTab: string;
-  checklistArrivalDesc: string;
-  checklistSettleTab: string;
-  checklistSettleDesc: string;
-  checklistVerifyTab: string;
-  checklistVerifyDesc: string;
-
-  testimonialsTitle: string;
-  testimonialsSub: string;
-  testimonialsVerified: string;
-
-  contactTitle: string;
-  contactSub: string;
+  heroPrimary: string;
+  heroSecondary: string;
+  localNote: string;
   contactNameLabel: string;
   contactEmailLabel: string;
-  contactTypeLabel: string;
-  contactTypePlaceholder: string;
-  contactTypeOpt1: string;
-  contactTypeOpt2: string;
-  contactTypeOpt3: string;
-  contactTypeOpt4: string;
   contactMessageLabel: string;
-  contactConsent: string;
   contactSubmitBtn: string;
   contactSending: string;
   contactSuccessTitle: string;
   contactSuccessDesc: string;
   contactFailBtn: string;
-
-  modalTitle: string;
-  modalDesc: string;
-  modalOfferNo: string;
-  modalValidity: string;
-  modalClientProfile: string;
-  modalAdvisorDesc: string;
-  modalTargetPlan: string;
-  modalPrintBtn: string;
-  modalCloseBtn: string;
-
-  footerSub: string;
-  footerContact: string;
-
-  // Additional helper UI strings
-  housingDisclaimerTitle: string;
-  housingDisclaimerText: string;
-
-  // Selector block
-  selectorTitle: string;
-  selectorSub: string;
-  selectorSingleTitle: string;
-  selectorSingleDesc: string;
-  selectorPackageTitle: string;
-  selectorPackageDesc: string;
-  selectorConsultTitle: string;
-  selectorConsultDesc: string;
+  requestPrice: string;
+  recommended: string;
 }
 
 export const DICTIONARY: Record<Language, TranslationMatrix> = {
+  en: {
+    navContact: 'Contact',
+    menu: 'Menu',
+    darkTheme: 'Use dark theme',
+    lightTheme: 'Use light theme',
+    heroHeadline: 'Practical support for international students from arrival to everyday student life in the Netherlands',
+    heroSub: 'Support with relocation steps, housing preparation, first-month setup, and defined first-year situations, with clear scope and no invented guarantees.',
+    heroPrimary: 'Choose your situation',
+    heroSecondary: 'See the support options',
+    localNote: 'Three languages. One practical route. One local contact.',
+    contactNameLabel: 'Your name',
+    contactEmailLabel: 'Email address',
+    contactMessageLabel: 'Briefly describe your situation',
+    contactSubmitBtn: 'Send enquiry',
+    contactSending: 'Sending your enquiry...',
+    contactSuccessTitle: 'Enquiry sent',
+    contactSuccessDesc: 'Thanks. We received your enquiry and will reply to the email address you provided with possible next steps.',
+    contactFailBtn: 'Send another enquiry',
+    requestPrice: 'Request a price',
+    recommended: 'Recommended',
+  },
   uk: {
-    navTitle: "VANTAM",
-    navSub: "Практична підтримка до, під час і після приїзду",
-    langLabel: "Мова",
-    heroBadge: "Підтримка до, під час і після приїзду",
-    heroHeadline: "Практична підтримка для тих, хто переїжджає до Нідерландів",
-    heroSub: "До приїзду, під час пошуку житла та оренди, і після приїзду для практичного облаштування. Чіткі наступні кроки без зайвого шуму.",
-    heroCtaPrimary: "Планую переїзд",
-    heroCtaSecondary: "Подивитися послуги",
-    whyTitle: "Чому до VANTAM звертаються",
-    whySub: "Ви отримуєте один локальний контакт, пояснення простою мовою та зрозумілий наступний крок до, під час або після приїзду без перебільшень і тиску.",
-    roleTitle: "Локальний координатор практичних кроків",
-    roleDesc: "Ми готуємо документи, пояснюємо листи й допомагаємо пройти житлові, доїздові та післяприїзні практичні кроки без зайвої плутанини.",
-    antiRoleTitle: "Що VANTAM не робить",
-    antiRoleDesc: "VANTAM не є юридичною фірмою, фінансовим консультантом, страховим брокером, агентством нерухомості чи державним органом. Ми пояснюємо процес, готуємо документи та допомагаємо з комунікацією.",
-    calculatorTitle: "Скільки може коштувати затримка",
-    calculatorSub: "Порівняйте типові витрати переїзду й облаштування з вартістю підтримки VANTAM і побачте, де виникає ризик зайвих витрат.",
-    calculatorInfo: "Оберіть сценарії, які стосуються вашої ситуації, щоб побачити орієнтовну суму.",
-    checklistTitle: "Ваш план переїзду",
-    checklistSub: "Перевірте, що вже зроблено, і що ще потребує уваги.",
-    faqTitle: "Поширені запитання",
-    faqSub: "Чіткі відповіді про обсяг роботи, строки, оплату, повернення коштів, підтримку до, під час і після приїзду та що відбувається після звернення.",
-    pdfExportTitle: "Зберегти обрану пропозицію як PDF",
-    pdfExportDesc: "Створіть зрозумілий PDF з обраною пропозицією, її складом та межами роботи.",
-    pdfBtn: "Експортувати PDF",
-
-    statusBanner: "Підтримка до, під час і після приїзду",
-    statusScope: "Житло, переїзд і практичне облаштування",
-    navWhy: "Чому ми",
-    navServices: "Послуги",
-    navSingleServices: "Окремі послуги",
-    navPackages: "Пакети",
-    navCalculator: "Калькулятор",
-    navChecklist: "Планер",
-    navTestimonials: "Ситуації",
-    navFaq: "FAQ",
-    navContact: "Контакти",
-
-    metric1Count: "3",
-    metric1Text: "мови на сайті: українська, російська та англійська",
-    metric2Count: "3",
-    metric2Text: "способи почати: консультація, окрема послуга або пакет",
-    metric3Count: "1",
-    metric3Text: "форма для всіх звернень",
-    metric4Count: "1",
-    metric4Text: "контекст запиту підтягується у форму",
-
-    servicesTitle: "Підтримка для студентського переїзду",
-    servicesSub: "Публічна пропозиція розділена на орієнтацію, основний пакет і окрему житлову активацію. Остаточний обсяг і ціна підтверджуються письмово.",
-    servicesFooter: "Ціни та склад послуг показані у вибраній мові",
-
-    singleTitle: "Житлова активація та окремі послуги",
-    singleSub: "Оберіть окрему послугу, якщо потрібен один конкретний крок. Житлові варіанти відокремлені від основного пакета.",
-    singlePriceTag: "Фіксована ціна",
-    singleBadge: "Один крок",
-    singleCta: "Обрати послугу",
-
-    consultTitle: "Консультації",
-    consultSub: "Консультація зазвичай є першим кроком. Обсяг, тривалість, ціна і час підтверджуються письмово перед бронюванням.",
-    consultBadge: "Початок тут",
-    consultResultLabel: "Після дзвінка у вас буде:",
-    consultNoteLabel: "Найкраще для:",
-
-    calcSidebarTitle: "Що може коштувати затримка",
-    calcAlternative: "Що допомога може зменшити",
-    calcPackageLabel: "Пакет VANTAM First Year",
-    calcPackageDesc: "Покриває головні кроки першого року: реєстрацію, BSN, DigiD, банк, страхування, GP і листи.",
-    calcSavingTag: "Порівняння для планування",
-    calcNoRiskSelected: "Оберіть сценарії, щоб порівняти можливі витрати з підтримкою",
-    calcFooterNotice: "Це приклад для планування, а не офіційний кошторис.",
-
-    calcRiskLow: "Невелика сума обраних сценаріїв",
-    calcRiskMedium: "Помітна сума обраних сценаріїв",
-    calcRiskHigh: "Висока сума обраних сценаріїв",
-    calcRiskLowDesc: "Сценарії мають нижчу орієнтовну вартість, але кожен крок усе одно варто перевірити.",
-    calcRiskMediumDesc: "Кілька сценаріїв уже можуть помітно вплинути на бюджет. Краще звірити строки й документи заздалегідь.",
-    calcRiskHighDesc: "Разом ці сценарії можуть стати дорогими. Корисно розібрати їх окремо і скласти план дій.",
-    calcRiskTextLabel: "Обрані сценарії:",
-
-    pkgGridTitle: "Порівняйте пакети",
-    pkgGridSub: "VANTAM Start, VANTAM First Year і VANTAM Continue покривають різні рівні допомоги. Остаточний обсяг, ціна, строки і погоджені зовнішні витрати підтверджуються письмово.",
-    pkgIdealTitle: "Найкраще для:",
-    pkgScopeTitle: "Що входить у пакет:",
-    pkgLimitsTitle: "Що не входить:",
-
-    checklistProgressLabel: "Ваш прогрес:",
-    checklistPrepTab: "1. Оцінити",
-    checklistPrepDesc: "Оцінка",
-    checklistArrivalTab: "2. Скласти карту",
-    checklistArrivalDesc: "Карта",
-    checklistSettleTab: "3. Дія і координація",
-    checklistSettleDesc: "Дія",
-    checklistVerifyTab: "4. Перевірити і продовжити",
-    checklistVerifyDesc: "Продовження",
-
-    testimonialsTitle: "Типові ситуації",
-    testimonialsSub: "Короткі приклади звернень, з якими люди приходять до VANTAM.",
-    testimonialsVerified: "Приклад ситуації",
-
-    contactTitle: "Розкажіть, що вам потрібно",
-    contactSub: "Ми переглядаємо звернення і відповідаємо на вказану пошту з наступними кроками.",
+    navContact: 'Контакт',
+    menu: 'Меню',
+    darkTheme: 'Увімкнути темну тему',
+    lightTheme: 'Увімкнути світлу тему',
+    heroHeadline: 'Практична підтримка для міжнародних студентів від підготовки до приїзду до повсякденного студентського життя в Нідерландах',
+    heroSub: 'Підтримка з кроками переїзду, підготовкою до житла, першим місяцем після приїзду та визначеними ситуаціями першого року, з чіткими межами без вигаданих гарантій.',
+    heroPrimary: 'Оберіть свою ситуацію',
+    heroSecondary: 'Подивитися варіанти підтримки',
+    localNote: 'Три мови. Один практичний маршрут. Один локальний контакт.',
     contactNameLabel: "Ваше ім'я",
-    contactEmailLabel: "Адреса електронної пошти",
-    contactTypeLabel: "З чим потрібна допомога?",
-    contactTypePlaceholder: "Оберіть потрібний шлях...",
-    contactTypeOpt1: "Потрібна орієнтація",
-    contactTypeOpt2: "Потрібен основний пакет",
-    contactTypeOpt3: "Потрібна житлова активація",
-    contactTypeOpt4: "Партнерський запит",
-    contactMessageLabel: "Коротко опишіть ситуацію",
-    contactConsent: "Я ознайомився(-лася) з Політикою конфіденційності та розумію, як VANTAM обробляє мій запит.",
-    contactSubmitBtn: "Надіслати запит",
-    contactSending: "Надсилаємо ваш запит...",
-    contactSuccessTitle: "Запит надіслано",
-    contactSuccessDesc: "Дякуємо. Ми отримали ваш запит і відповімо на електронну адресу, яку ви вказали, щодо можливих наступних кроків.",
-    contactFailBtn: "Надіслати ще один запит",
-
-    modalTitle: "PDF обраної пропозиції",
-    modalDesc: "Перевірте склад і межі пропозиції, а потім збережіть сторінку як PDF.",
-    modalOfferNo: "OFFER NO",
-    modalValidity: "VALIDITY",
-    modalClientProfile: "Для кого:",
-    modalAdvisorDesc: "Короткий огляд обраної пропозиції VANTAM.",
-    modalTargetPlan: "Обрана пропозиція:",
-    modalPrintBtn: "Роздрукувати PDF",
-    modalCloseBtn: "Закрити",
-
-    footerSub: "VANTAM надає практичну підтримку для студентів, які переїжджають до Нідерландів, пояснює процеси та допомагає з комунікацією. Ми не замінюємо ліцензовані юридичні, фінансові, страхові чи ріелторські послуги.",
-    footerContact: "Контакти:",
-
-    housingDisclaimerTitle: "Межі роботи VANTAM",
-    housingDisclaimerText: "VANTAM не надає юридичних, фінансових, страхових чи ріелторських послуг. Ми допомагаємо з поясненням, підготовкою, плануванням кроків і професійною комунікацією.",
-
-    selectorTitle: "Оберіть свій шлях",
-    selectorSub: "Кожен варіант веде до відповідного розділу і підставляє потрібний контекст у форму.",
-    selectorSingleTitle: "Оцінюю наступний крок",
-    selectorSingleDesc: "Перейдіть до орієнтації й зафіксуйте поточну ситуацію.",
-    selectorPackageTitle: "Потрібна житлова активація",
-    selectorPackageDesc: "Перейдіть до житлового шляху і підставте відповідний контекст у форму.",
-    selectorConsultTitle: "Потрібен основний пакет",
-    selectorConsultDesc: "Перейдіть до VANTAM Start або VANTAM First Year.",
+    contactEmailLabel: 'Електронна пошта',
+    contactMessageLabel: 'Коротко опишіть свою ситуацію',
+    contactSubmitBtn: 'Надіслати запит',
+    contactSending: 'Надсилаємо ваш запит...',
+    contactSuccessTitle: 'Запит надіслано',
+    contactSuccessDesc: 'Дякуємо. Ми отримали ваш запит і відповімо на вказану адресу електронної пошти щодо можливих наступних кроків.',
+    contactFailBtn: 'Надіслати ще один запит',
+    requestPrice: 'Запитати ціну',
+    recommended: 'Рекомендовано',
   },
   ru: {
-    navTitle: "VANTAM",
-    navSub: "Практическая поддержка до, во время и после приезда",
-    langLabel: "Язык",
-    heroBadge: "Поддержка до, во время и после приезда",
-    heroHeadline: "Практическая поддержка для тех, кто переезжает в Нидерланды",
-    heroSub: "До приезда, во время поиска жилья и аренды, и после приезда для практического обустройства. Понятные следующие шаги без лишнего шума.",
-    heroCtaPrimary: "Планирую переезд",
-    heroCtaSecondary: "Посмотреть услуги",
-    whyTitle: "Почему обращаются в VANTAM",
-    whySub: "Вы получаете один локальный контакт, объяснения простым языком и понятный следующий шаг до, во время или после приезда без давления и громких обещаний.",
-    roleTitle: "Локальный координатор практических шагов",
-    roleDesc: "Мы готовим документы, объясняем письма и помогаем пройти жилищные, до-переездные и после-приездные практические шаги без лишней путаницы.",
-    antiRoleTitle: "Чего VANTAM не делает",
-    antiRoleDesc: "VANTAM не является юридической фирмой, финансовым консультантом, страховым брокером, агентством недвижимости или государственным органом. Мы объясняем процесс, готовим документы и помогаем с коммуникацией.",
-    calculatorTitle: "Сколько может стоить задержка",
-    calculatorSub: "Сравните типичные расходы при переезде и обустройстве со стоимостью поддержки VANTAM и увидьте, где возникает риск лишних затрат.",
-    calculatorInfo: "Выберите сценарии, которые относятся к вашей ситуации, чтобы увидеть ориентировочную сумму.",
-    checklistTitle: "Ваш план переезда",
-    checklistSub: "Проверьте, что уже сделано, и что ещё требует внимания.",
-    faqTitle: "Часто задаваемые вопросы",
-    faqSub: "Понятные ответы об объёме работы, сроках, оплате, возвратах, поддержке до, во время и после приезда и том, что происходит после обращения.",
-    pdfExportTitle: "Сохранить выбранное предложение в PDF",
-    pdfExportDesc: "Создайте понятный PDF с выбранным предложением, его составом и границами работы.",
-    pdfBtn: "Экспортировать PDF",
-
-    statusBanner: "Поддержка до, во время и после приезда",
-    statusScope: "Жильё, переезд и практическое обустройство",
-    navWhy: "Почему мы",
-    navServices: "Услуги",
-    navSingleServices: "Отдельные услуги",
-    navPackages: "Пакеты",
-    navCalculator: "Калькулятор",
-    navChecklist: "Планер",
-    navTestimonials: "Ситуации",
-    navFaq: "FAQ",
-    navContact: "Контакты",
-
-    metric1Count: "3",
-    metric1Text: "языка на сайте: украинский, русский и английский",
-    metric2Count: "3",
-    metric2Text: "способа начать: консультация, отдельная услуга или пакет",
-    metric3Count: "1",
-    metric3Text: "форма для всех обращений",
-    metric4Count: "1",
-    metric4Text: "контекст запроса подставляется в форму",
-
-    servicesTitle: "Поддержка студенческого переезда",
-    servicesSub: "Публичная линейка разделена на ориентацию, основной пакет и отдельную жилищную активацию. Итоговый объём и цена подтверждаются письменно.",
-    servicesFooter: "Цены и состав услуг показаны на выбранном языке",
-
-    singleTitle: "Жилищная активация и отдельные услуги",
-    singleSub: "Выберите отдельную услугу, если нужен один конкретный шаг. Жилищные варианты отделены от основного пакета.",
-    singlePriceTag: "Фиксированная цена",
-    singleBadge: "Один шаг",
-    singleCta: "Выбрать услугу",
-
-    consultTitle: "Консультации",
-    consultSub: "Консультация обычно является первым шагом. Объём, длительность, цена и время подтверждаются письменно до бронирования.",
-    consultBadge: "Начать здесь",
-    consultResultLabel: "После звонка у вас будет:",
-    consultNoteLabel: "Лучше всего для:",
-
-    calcSidebarTitle: "Что может стоить задержка",
-    calcAlternative: "Что может снизить поддержка",
-    calcPackageLabel: "Пакет VANTAM First Year",
-    calcPackageDesc: "Покрывает главные шаги первого года: регистрацию, BSN, DigiD, банк, страховку, GP и письма.",
-    calcSavingTag: "Сравнение для планирования",
-    calcNoRiskSelected: "Выберите сценарии, чтобы сравнить возможные расходы с поддержкой",
-    calcFooterNotice: "Это пример для планирования, а не официальный расчёт.",
-
-    calcRiskLow: "Небольшая сумма выбранных сценариев",
-    calcRiskMedium: "Заметная сумма выбранных сценариев",
-    calcRiskHigh: "Высокая сумма выбранных сценариев",
-    calcRiskLowDesc: "Сценарии имеют более низкую ориентировочную стоимость, но каждый шаг всё равно стоит проверить.",
-    calcRiskMediumDesc: "Несколько сценариев уже могут заметно повлиять на бюджет. Лучше сверить сроки и документы заранее.",
-    calcRiskHighDesc: "В сумме эти сценарии могут оказаться дорогими. Полезно разобрать их по отдельности и составить план действий.",
-    calcRiskTextLabel: "Выбранные сценарии:",
-
-    pkgGridTitle: "Сравните пакеты",
-    pkgGridSub: "VANTAM Start, VANTAM First Year и VANTAM Continue покрывают разные уровни помощи. Итоговый объём, цена, сроки и согласованные внешние расходы подтверждаются письменно.",
-    pkgIdealTitle: "Лучше всего для:",
-    pkgScopeTitle: "Что входит в пакет:",
-    pkgLimitsTitle: "Что не входит:",
-
-    checklistProgressLabel: "Ваш прогресс:",
-    checklistPrepTab: "1. Оценить",
-    checklistPrepDesc: "Оценка",
-    checklistArrivalTab: "2. Составить карту",
-    checklistArrivalDesc: "Карта",
-    checklistSettleTab: "3. Действовать и координировать",
-    checklistSettleDesc: "Действие",
-    checklistVerifyTab: "4. Проверить и продолжить",
-    checklistVerifyDesc: "Продолжение",
-
-    testimonialsTitle: "Типичные ситуации",
-    testimonialsSub: "Короткие примеры обращений, с которыми люди приходят в VANTAM.",
-    testimonialsVerified: "Пример ситуации",
-
-    contactTitle: "Расскажите, что вам нужно",
-    contactSub: "Мы просматриваем обращения и отвечаем на указанную почту с следующими шагами.",
-    contactNameLabel: "Ваше имя",
-    contactEmailLabel: "Адрес электронной почты",
-    contactTypeLabel: "С чем нужна помощь?",
-    contactTypePlaceholder: "Выберите нужный путь...",
-    contactTypeOpt1: "Нужна ориентация",
-    contactTypeOpt2: "Нужен основной пакет",
-    contactTypeOpt3: "Нужна жилищная активация",
-    contactTypeOpt4: "Партнёрский запрос",
-    contactMessageLabel: "Кратко опишите ситуацию",
-    contactConsent: "Я ознакомился(-лась) с Политикой конфиденциальности и понимаю, как VANTAM обрабатывает мой запрос.",
-    contactSubmitBtn: "Отправить запрос",
-    contactSending: "Отправляем ваш запрос...",
-    contactSuccessTitle: "Запрос отправлен",
-    contactSuccessDesc: "Спасибо. Мы получили ваш запрос и ответим на указанную электронную почту о возможных следующих шагах.",
-    contactFailBtn: "Отправить ещё один запрос",
-
-    modalTitle: "PDF выбранного предложения",
-    modalDesc: "Проверьте состав и границы предложения, затем сохраните страницу как PDF.",
-    modalOfferNo: "OFFER NO",
-    modalValidity: "VALIDITY",
-    modalClientProfile: "Для кого:",
-    modalAdvisorDesc: "Краткий обзор выбранного предложения VANTAM.",
-    modalTargetPlan: "Выбранное предложение:",
-    modalPrintBtn: "Распечатать PDF",
-    modalCloseBtn: "Закрыть",
-
-    footerSub: "VANTAM даёт практическую поддержку для студентов, которые переезжают в Нидерланды, объясняет процессы и помогает с коммуникацией. Мы не заменяем лицензированные юридические, финансовые, страховые или риелторские услуги.",
-    footerContact: "Контакты:",
-
-    housingDisclaimerTitle: "Границы работы VANTAM",
-    housingDisclaimerText: "VANTAM не оказывает юридических, финансовых, страховых или риелторских услуг. Мы помогаем с объяснением, подготовкой, планированием шагов и профессиональной коммуникацией.",
-
-    selectorTitle: "Выберите свой путь",
-    selectorSub: "Каждый вариант ведёт к нужному разделу и подставляет правильный контекст в форму.",
-    selectorSingleTitle: "Оцениваю следующий шаг",
-    selectorSingleDesc: "Перейдите к ориентации и зафиксируйте текущую ситуацию.",
-    selectorPackageTitle: "Нужна жилищная активация",
-    selectorPackageDesc: "Перейдите к жилищному пути и подставьте нужный контекст в форму.",
-    selectorConsultTitle: "Нужен основной пакет",
-    selectorConsultDesc: "Перейдите к VANTAM Start или VANTAM First Year.",
+    navContact: 'Контакт',
+    menu: 'Меню',
+    darkTheme: 'Включить тёмную тему',
+    lightTheme: 'Включить светлую тему',
+    heroHeadline: 'Практическая поддержка для международных студентов от подготовки к приезду до повседневной студенческой жизни в Нидерландах',
+    heroSub: 'Поддержка с шагами переезда, подготовкой к жилью, первым месяцем после приезда и определёнными ситуациями первого года, с ясными границами без вымышленных гарантий.',
+    heroPrimary: 'Выберите свою ситуацию',
+    heroSecondary: 'Посмотреть варианты поддержки',
+    localNote: 'Три языка. Один практический маршрут. Один локальный контакт.',
+    contactNameLabel: 'Ваше имя',
+    contactEmailLabel: 'Электронная почта',
+    contactMessageLabel: 'Кратко опишите свою ситуацию',
+    contactSubmitBtn: 'Отправить запрос',
+    contactSending: 'Отправляем ваш запрос...',
+    contactSuccessTitle: 'Запрос отправлен',
+    contactSuccessDesc: 'Спасибо. Мы получили ваш запрос и ответим на указанный адрес электронной почты о возможных следующих шагах.',
+    contactFailBtn: 'Отправить ещё один запрос',
+    requestPrice: 'Запросить цену',
+    recommended: 'Рекомендуется',
   },
-  en: {
-    navTitle: "VANTAM",
-    navSub: "Practical support before, during and after arrival",
-    langLabel: "Language",
-    heroBadge: "Support before, during and after arrival",
-    heroHeadline: "Practical support for students moving to the Netherlands",
-    heroSub: "Before arrival, during the housing and rental process, and after arrival for practical settlement - with clear next steps and no extra noise.",
-    heroCtaPrimary: "Need orientation",
-    heroCtaSecondary: "See the services",
-    whyTitle: "Why people come to VANTAM",
-    whySub: "You get one local contact, plain-language explanations and a clear next step before, during or after arrival, without pressure or exaggerated promises.",
-    roleTitle: "Local coordinator for practical steps",
-    roleDesc: "We prepare documents, explain letters and help you work through housing, pre-arrival and post-arrival practical steps without unnecessary confusion.",
-    antiRoleTitle: "What VANTAM does not do",
-    antiRoleDesc: "VANTAM is not a law firm, financial advisor, insurance broker, real estate agency or government office. We explain the process, prepare documents and help with communication.",
-    calculatorTitle: "What a delay can cost",
-    calculatorSub: "Compare common relocation and setup costs with the price of support and see where extra expenses may appear.",
-    calculatorInfo: "Select the scenarios that fit your situation to see an illustrative total.",
-    checklistTitle: "Your relocation plan",
-    checklistSub: "Check what is already done and what still needs attention.",
-    faqTitle: "Frequently asked questions",
-    faqSub: "Clear answers about scope, timing, payment, refunds, support before, during and after arrival, and what happens after you contact VANTAM.",
-    pdfExportTitle: "Save the selected offer as PDF",
-    pdfExportDesc: "Create a clear PDF with the selected offer, its scope and its limits.",
-    pdfBtn: "Export PDF",
-
-    statusBanner: "Support before, during and after arrival",
-    statusScope: "Housing, moving and practical settlement",
-    navWhy: "Why VANTAM",
-    navServices: "Services",
-    navSingleServices: "Single Services",
-    navPackages: "Packages",
-    navCalculator: "Calculator",
-    navChecklist: "Planner",
-    navTestimonials: "Situations",
-    navFaq: "FAQ",
-    navContact: "Contacts",
-
-    metric1Count: "3",
-    metric1Text: "languages on the site: Ukrainian, Russian and English",
-    metric2Count: "3",
-    metric2Text: "ways to start: consultation, single service or package",
-    metric3Count: "1",
-    metric3Text: "form for every enquiry",
-    metric4Count: "1",
-    metric4Text: "selected context is prefilled in the form",
-
-    servicesTitle: "Student move support",
-    servicesSub: "The public line is split into orientation, the main package and a separate housing activation path. Final scope and price are confirmed in writing.",
-    servicesFooter: "Prices and scope are shown in the selected language",
-
-    singleTitle: "Housing activation and single services",
-    singleSub: "Choose one service when you need help with one concrete step. Housing options are separated from the main package.",
-    singlePriceTag: "Fixed price",
-    singleBadge: "One step",
-    singleCta: "Choose service",
-
-    consultTitle: "Consultations",
-    consultSub: "A consultation is normally the first step. Scope, duration, price and timing are confirmed in writing before booking.",
-    consultBadge: "Start here",
-    consultResultLabel: "You leave with:",
-    consultNoteLabel: "Best for:",
-
-    calcSidebarTitle: "What a delay can cost",
-    calcAlternative: "What support can reduce",
-    calcPackageLabel: "VANTAM First Year package",
-    calcPackageDesc: "Covers the main first-year steps: registration, BSN, DigiD, banking, insurance, GP and letters.",
-    calcSavingTag: "Planning comparison",
-    calcNoRiskSelected: "Select scenarios to compare possible extra costs with support",
-    calcFooterNotice: "This is a planning example, not an official estimate.",
-
-    calcRiskLow: "Low total across the selected scenarios",
-    calcRiskMedium: "Notable total across the selected scenarios",
-    calcRiskHigh: "High total across the selected scenarios",
-    calcRiskLowDesc: "The scenarios have a relatively low illustrative cost, but each step is still worth checking.",
-    calcRiskMediumDesc: "Several scenarios could already affect your budget. It helps to check timelines and documents in advance.",
-    calcRiskHighDesc: "Taken together, these scenarios could become expensive. It helps to review them one by one and plan ahead.",
-    calcRiskTextLabel: "Selected scenarios:",
-
-    pkgGridTitle: "Compare the packages",
-    pkgGridSub: "VANTAM Start, VANTAM First Year and VANTAM Continue cover different levels of help. Final scope, price, timing and approved external costs are confirmed in writing.",
-    pkgIdealTitle: "Best for:",
-    pkgScopeTitle: "Included in this package:",
-    pkgLimitsTitle: "What is not included:",
-
-    checklistProgressLabel: "Your progress:",
-    checklistPrepTab: "1. Assess",
-    checklistPrepDesc: "Assess",
-    checklistArrivalTab: "2. Map",
-    checklistArrivalDesc: "Map",
-    checklistSettleTab: "3. Act & coordinate",
-    checklistSettleDesc: "Act",
-    checklistVerifyTab: "4. Verify & continue",
-    checklistVerifyDesc: "Continue",
-
-    testimonialsTitle: "Typical situations",
-    testimonialsSub: "Short examples of the kinds of requests people bring to VANTAM.",
-    testimonialsVerified: "Example situation",
-
-    contactTitle: "Tell us what you need",
-    contactSub: "We review enquiries and reply to the email address you provided with next steps.",
-    contactNameLabel: "Your name",
-    contactEmailLabel: "Email address",
-    contactTypeLabel: "What do you need help with?",
-    contactTypePlaceholder: "Select the right path...",
-    contactTypeOpt1: "I need orientation",
-    contactTypeOpt2: "I need the main package",
-    contactTypeOpt3: "I need housing activation",
-    contactTypeOpt4: "Partnership enquiry",
-    contactMessageLabel: "Briefly describe your situation",
-    contactConsent: "I have read the Privacy Policy and understand how VANTAM processes my enquiry.",
-    contactSubmitBtn: "Send enquiry",
-    contactSending: "Sending your enquiry...",
-    contactSuccessTitle: "Enquiry sent",
-    contactSuccessDesc: "Thanks. We received your enquiry and will reply to the email address you provided about possible next steps.",
-    contactFailBtn: "Send another enquiry",
-
-    modalTitle: "PDF for the selected offer",
-    modalDesc: "Review the scope and limits, then save the page as PDF.",
-    modalOfferNo: "OFFER PROSPECTUS NO",
-    modalValidity: "VALID UNTIL",
-    modalClientProfile: "For:",
-    modalAdvisorDesc: "Short overview of the selected VANTAM offer.",
-    modalTargetPlan: "Selected offer:",
-    modalPrintBtn: "Print PDF",
-    modalCloseBtn: "Close",
-
-    footerSub: "VANTAM provides practical support for students moving to the Netherlands, explains the process and helps with communication. We do not replace licensed legal, financial, insurance or real-estate services.",
-    footerContact: "Contact:",
-
-    housingDisclaimerTitle: "VANTAM working boundaries",
-    housingDisclaimerText: "VANTAM does not provide legal, financial, insurance or real-estate services. We help with explanations, preparation, step planning and professional communication.",
-
-    selectorTitle: "Choose your path",
-    selectorSub: "Each option leads to the right section and pre-fills the form with the matching context.",
-    selectorSingleTitle: "I am assessing the next step",
-    selectorSingleDesc: "Go to orientation and prefill the current situation.",
-    selectorPackageTitle: "I need housing activation",
-    selectorPackageDesc: "Go to the housing path and prefill the matching context.",
-    selectorConsultTitle: "I need the main package",
-    selectorConsultDesc: "Go to VANTAM Start or VANTAM First Year.",
-  }
 };
 
 export interface AudienceFocus {
   id: string;
-  title: Record<Language, string>;
-  note: Record<Language, string>;
-  timing: Record<Language, string>;
+  title: LocalizedText;
+  note: LocalizedText;
+  timing: LocalizedText;
 }
 
 export const AUDIENCE_FOCUS: AudienceFocus[] = [
   {
-    id: 'students',
-    title: { uk: 'Студенти-мігранти', ru: 'Студенты-мигранты', en: 'International students' },
+    id: 'pre_arrival',
+    title: {
+      en: 'Before arrival',
+      uk: 'До приїзду',
+      ru: 'До приезда',
+    },
     note: {
-      uk: 'Переїзд, житло, перші адміністративні кроки й студентські листи.',
-      ru: 'Переезд, жильё, первые административные шаги и студенческие письма.',
-      en: 'Move, housing, first admin steps and student letters.',
+      en: 'Plan the order, prepare documents, understand housing timing, and avoid preventable mistakes before the move.',
+      uk: 'Сплануйте послідовність, підготуйте документи, зрозумійте таймінг житла й уникайте помилок до переїзду.',
+      ru: 'Спланируйте последовательность, подготовьте документы, поймите сроки по жилью и избегайте предотвратимых ошибок до переезда.',
     },
     timing: {
-      uk: 'Найчастіше до приїзду та в перший рік навчання.',
-      ru: 'Чаще всего до приезда и в первый год учёбы.',
-      en: 'Often before arrival and through the first year of study.',
+      en: 'Orientation, Start, Housing Ready',
+      uk: 'Орієнтація, Start, Housing Ready',
+      ru: 'Ориентация, Start, Housing Ready',
     },
   },
   {
-    id: 'professionals',
-    title: { uk: 'Батьки та родина', ru: 'Родители и семья', en: 'Parents and family' },
+    id: 'first_year',
+    title: {
+      en: 'Already here',
+      uk: 'Вже тут',
+      ru: 'Уже здесь',
+    },
     note: {
-      uk: 'Більше бачення, менше сюрпризів і зрозумілий план підтримки.',
-      ru: 'Больше ясности, меньше сюрпризов и понятный план поддержки.',
-      en: 'More visibility, fewer surprises and a clear support plan.',
+      en: 'Work through registration, letters, university administration, insurance, and defined first-year problems with visible deliverables.',
+      uk: 'Опрацьовуйте реєстрацію, листи, університетську адміністрацію, страхування та визначені проблеми першого року з видимими результатами.',
+      ru: 'Решайте регистрацию, письма, университетскую администрацию, страховку и определённые проблемы первого года с видимыми результатами.',
     },
     timing: {
-      uk: 'До приїзду, під час заселення або в перші тижні.',
-      ru: 'До приезда, во время заселения или в первые недели.',
-      en: 'Before arrival, during move-in or in the first weeks.',
+      en: 'Start, First Year, Individual Student Services',
+      uk: 'Start, First Year, Індивідуальні студентські послуги',
+      ru: 'Start, First Year, Индивидуальные студенческие услуги',
     },
   },
   {
-    id: 'families',
-    title: { uk: 'Партнерські запити', ru: 'Партнёрские запросы', en: 'Referral partners' },
+    id: 'partner',
+    title: {
+      en: 'Referrals and partners',
+      uk: 'Реферали та партнери',
+      ru: 'Рефералы и партнёры',
+    },
     note: {
-      uk: 'Швидкий і акуратний спосіб передати практичний запит.',
-      ru: 'Быстрый и аккуратный способ передать практический запрос.',
-      en: 'A clean way to hand over a practical request.',
+      en: 'Use one clean route when a university, consultant, agency, or family needs to hand over a practical student case.',
+      uk: 'Використовуйте один чистий маршрут, коли університет, консультант, агенція або родина хоче передати практичний студентський кейс.',
+      ru: 'Используйте один понятный маршрут, когда университет, консультант, агентство или семья хотят передать практический студенческий кейс.',
     },
     timing: {
-      uk: 'Коли потрібне ясне направлення запиту.',
-      ru: 'Когда нужен ясный маршрут запроса.',
-      en: 'When a clear referral route is needed.',
+      en: 'Partner entry and contact route',
+      uk: 'Партнерський вхід і контактний маршрут',
+      ru: 'Партнёрский вход и контактный маршрут',
     },
   },
 ];
 
 export interface SituationOption {
   id: string;
-  title: Record<Language, string>;
-  description: Record<Language, string>;
-  target: 'consultation' | 'services' | 'packages' | 'contact';
-  inquiryType: 'consultation' | 'single' | 'packages' | 'b2b';
-  audienceHint: Record<Language, string>;
-  statusHint: Record<Language, string>;
+  title: LocalizedText;
+  description: LocalizedText;
+  label: LocalizedText;
+  targetId: 'packages' | 'housing' | 'individual-services' | 'partner-entry';
 }
 
 export const SITUATION_OPTIONS: SituationOption[] = [
   {
     id: 'moving',
-    title: { uk: 'Я оцінюю свої наступні кроки', ru: 'Я оцениваю свои следующие шаги', en: 'I am assessing my next steps' },
-    description: {
-      uk: 'Почніть з орієнтації, щоб оцінити ситуацію і вибрати правильний шлях.',
-      ru: 'Начните с ориентации, чтобы оценить ситуацию и выбрать правильный путь.',
-      en: 'Start with an orientation to assess the situation and choose the right path.',
+    title: {
+      en: 'I am moving or have just arrived',
+      uk: 'Я переїжджаю або щойно приїхав(-ла)',
+      ru: 'Я переезжаю или только что приехал(-а)',
     },
-    target: 'consultation',
-    inquiryType: 'consultation',
-    audienceHint: { uk: 'Переїзд ще попереду', ru: 'Переезд ещё впереди', en: 'Before arrival' },
-    statusHint: { uk: 'До приїзду', ru: 'До приезда', en: 'Before arrival' },
+    description: {
+      en: 'Go to Start versus First Year to choose between first-month setup and defined first-year support.',
+      uk: 'Перейдіть до Start versus First Year, щоб обрати між запуском першого місяця та визначеною підтримкою на перший рік.',
+      ru: 'Перейдите к Start versus First Year, чтобы выбрать между запуском первого месяца и определённой поддержкой на первый год.',
+    },
+    label: {
+      en: 'Start versus First Year',
+      uk: 'Start versus First Year',
+      ru: 'Start versus First Year',
+    },
+    targetId: 'packages',
   },
   {
-    id: 'found_housing',
-    title: { uk: 'Я шукаю житлову активацію', ru: 'Мне нужна жилищная активация', en: 'I need a housing activation path' },
-    description: {
-      uk: 'Перейдіть до житла, щоб відкрити Housing Ready або Housing Search Campaign.',
-      ru: 'Перейдите к жилью, чтобы открыть Housing Ready или Housing Search Campaign.',
-      en: 'Go to housing to open Housing Ready or Housing Search Campaign.',
+    id: 'housing',
+    title: {
+      en: 'I need housing now or later',
+      uk: 'Мені потрібне житло зараз або пізніше',
+      ru: 'Мне нужно жильё сейчас или позже',
     },
-    target: 'services',
-    inquiryType: 'single',
-    audienceHint: { uk: 'Житловий запит', ru: 'Жилищный запрос', en: 'Housing request' },
-    statusHint: { uk: 'Потрібна житлова допомога', ru: 'Нужна жилищная помощь', en: 'Housing help needed' },
+    description: {
+      en: 'Go to Housing Ready versus Housing Search Campaign for preparation, applications, and campaign limits.',
+      uk: 'Перейдіть до Housing Ready versus Housing Search Campaign для підготовки, заявок і меж кампанії.',
+      ru: 'Перейдите к Housing Ready versus Housing Search Campaign для подготовки, заявок и ограничений кампании.',
+    },
+    label: {
+      en: 'Housing path',
+      uk: 'Житловий шлях',
+      ru: 'Жилищный путь',
+    },
+    targetId: 'housing',
   },
   {
-    id: 'need_housing',
-    title: { uk: 'Мені потрібна підтримка першого року', ru: 'Мне нужна поддержка первого года', en: 'I need first-year support' },
-    description: {
-      uk: 'Перейдіть до пакетів, щоб побачити VANTAM Start і VANTAM First Year.',
-      ru: 'Перейдите к пакетам, чтобы посмотреть VANTAM Start и VANTAM First Year.',
-      en: 'Go to packages to review VANTAM Start and VANTAM First Year.',
+    id: 'problem',
+    title: {
+      en: 'I already live here and have a practical problem',
+      uk: 'Я вже живу тут і маю практичну проблему',
+      ru: 'Я уже живу здесь и у меня есть практическая проблема',
     },
-    target: 'packages',
-    inquiryType: 'packages',
-    audienceHint: { uk: 'Після приїзду', ru: 'После приезда', en: 'After arrival' },
-    statusHint: { uk: 'Вже в Нідерландах', ru: 'Уже в Нидерландах', en: 'Already in the Netherlands' },
+    description: {
+      en: 'Go to Individual Student Services for official letters, university cases, housing problems, or urgent changes.',
+      uk: 'Перейдіть до Індивідуальних студентських послуг для офіційних листів, університетських кейсів, житлових проблем або термінових змін.',
+      ru: 'Перейдите к Индивидуальным студенческим услугам для официальных писем, университетских кейсов, жилищных проблем или срочных изменений.',
+    },
+    label: {
+      en: 'Individual Student Services',
+      uk: 'Індивідуальні студентські послуги',
+      ru: 'Индивидуальные студенческие услуги',
+    },
+    targetId: 'individual-services',
   },
   {
     id: 'organisation',
-    title: { uk: 'Я представляю партнера', ru: 'Я представляю партнёра', en: 'I represent a partner' },
-    description: {
-      uk: 'Перейдіть до контакту, щоб обговорити передавання звернень і співпрацю.',
-      ru: 'Перейдите к контакту, чтобы обсудить передачу обращений и сотрудничество.',
-      en: 'Go to contact to discuss referrals and cooperation.',
+    title: {
+      en: 'I represent an organisation',
+      uk: 'Я представляю організацію',
+      ru: 'Я представляю организацию',
     },
-    target: 'contact',
-    inquiryType: 'b2b',
-    audienceHint: { uk: 'Партнерський запит', ru: 'Партнёрский запрос', en: 'Partnership enquiry' },
-    statusHint: { uk: 'Організаційний контакт', ru: 'Организационный контакт', en: 'Organisation contact' },
+    description: {
+      en: 'Go to the partner route to discuss practical student referrals and cooperation.',
+      uk: 'Перейдіть до партнерського маршруту, щоб обговорити практичні студентські передачі та співпрацю.',
+      ru: 'Перейдите к партнёрскому маршруту, чтобы обсудить практические студенческие передачи и сотрудничество.',
+    },
+    label: {
+      en: 'Partner entry',
+      uk: 'Партнерський вхід',
+      ru: 'Партнёрский вход',
+    },
+    targetId: 'partner-entry',
   },
 ];
 
 export interface ProcessStep {
   id: string;
-  title: Record<Language, string>;
-  description: Record<Language, string>;
+  title: LocalizedText;
+  description: LocalizedText;
 }
 
 export const PROCESS_STEPS: ProcessStep[] = [
   {
-    id: 'step_1',
-    title: { uk: 'Оцініть', ru: 'Оцените', en: 'Assess' },
-    description: { uk: 'Коротко опишіть ситуацію, щоб зрозуміти, який шлях потрібен.', ru: 'Кратко опишите ситуацию, чтобы понять, какой путь нужен.', en: 'Briefly describe the situation so the right path is clear.' },
+    id: 'assess',
+    title: {en: 'Assess', uk: 'Оцінити', ru: 'Оценить'},
+    description: {
+      en: 'Clarify the situation, what is urgent, and which support route actually fits.',
+      uk: 'Уточнити ситуацію, що є терміновим і який маршрут підтримки справді підходить.',
+      ru: 'Уточнить ситуацию, что срочно и какой маршрут поддержки действительно подходит.',
+    },
   },
   {
-    id: 'step_2',
-    title: { uk: 'Побудуйте карту', ru: 'Составьте карту', en: 'Map' },
-    description: { uk: 'Ми допомагаємо побачити послідовність кроків і що саме потрібно підготувати.', ru: 'Мы помогаем увидеть последовательность шагов и что именно нужно подготовить.', en: 'We help map the sequence of steps and what needs preparing.' },
+    id: 'map',
+    title: {en: 'Map', uk: 'Скласти карту', ru: 'Составить карту'},
+    description: {
+      en: 'Turn the next actions into a practical sequence with documents, deadlines, and boundaries.',
+      uk: 'Перетворити наступні дії на практичну послідовність із документами, дедлайнами та межами.',
+      ru: 'Превратить следующие действия в практическую последовательность с документами, сроками и границами.',
+    },
   },
   {
-    id: 'step_3',
-    title: { uk: 'Дійте і координуйте', ru: 'Действуйте и координируйте', en: 'Act & coordinate' },
-    description: { uk: 'Ми координуємо практичні кроки у вибраному форматі підтримки.', ru: 'Мы координируем практические шаги в выбранном формате поддержки.', en: 'We coordinate the practical steps in the chosen support format.' },
+    id: 'act',
+    title: {en: 'Act & coordinate', uk: 'Діяти й координувати', ru: 'Действовать и координировать'},
+    description: {
+      en: 'Work through the agreed steps with defined execution limits and visible outputs.',
+      uk: 'Опрацювати погоджені кроки з визначеними межами виконання та видимими результатами.',
+      ru: 'Пройти согласованные шаги с определёнными пределами выполнения и видимыми результатами.',
+    },
   },
   {
-    id: 'step_4',
-    title: { uk: 'Перевірте і продовжуйте', ru: 'Проверьте и продолжайте', en: 'Verify & continue' },
-    description: { uk: 'Після першого етапу ми перевіряємо прогрес і погоджуємо подальший рух.', ru: 'После первого этапа мы проверяем прогресс и согласуем дальнейшее движение.', en: 'After the first stage, we review progress and agree the next move.' },
+    id: 'verify',
+    title: {en: 'Verify & continue', uk: 'Перевірити й продовжити', ru: 'Проверить и продолжить'},
+    description: {
+      en: 'Document what is completed, what is waiting, and whether a next route is needed.',
+      uk: 'Зафіксувати, що завершено, що очікує, і чи потрібен наступний маршрут.',
+      ru: 'Зафиксировать, что завершено, что ожидает, и нужен ли следующий маршрут.',
+    },
   },
 ];
 
 export interface PartnerAudience {
   id: string;
-  title: Record<Language, string>;
-  description: Record<Language, string>;
+  title: LocalizedText;
+  description: LocalizedText;
 }
 
 export const PARTNER_AUDIENCES: PartnerAudience[] = [
   {
-    id: 'agencies',
-    title: { uk: 'Житлові агенції', ru: 'Жилищные агентства', en: 'Rental agencies' },
-    description: { uk: 'Спокійний спосіб узгодити запит і очікування клієнта.', ru: 'Спокойный способ согласовать запрос и ожидания клиента.', en: 'A calm way to align the request and the client expectation.' },
-  },
-  {
-    id: 'hr',
-    title: { uk: 'HR-команди', ru: 'HR-команды', en: 'HR teams' },
-    description: { uk: 'Для співробітників, які релокуються і потребують практичної координації.', ru: 'Для сотрудников, которые релокируются и нуждаются в практической координации.', en: 'For relocating employees who need practical coordination.' },
-  },
-  {
     id: 'universities',
-    title: { uk: 'Університети', ru: 'Университеты', en: 'Universities' },
-    description: { uk: 'Для студентів, які потребують ясного першого кроку та подальшого супроводу.', ru: 'Для студентов, которым нужен ясный первый шаг и дальнейшее сопровождение.', en: 'For students who need a clear first step and follow-up support.' },
+    title: {en: 'Universities', uk: 'Університети', ru: 'Университеты'},
+    description: {
+      en: 'A practical referral route for students who need help beyond general information.',
+      uk: 'Практичний маршрут передачі для студентів, яким потрібна допомога понад загальну інформацію.',
+      ru: 'Практический маршрут передачи для студентов, которым нужна помощь сверх общей информации.',
+    },
   },
   {
     id: 'consultants',
-    title: { uk: 'Освітні консультанти', ru: 'Образовательные консультанты', en: 'Education consultants' },
-    description: { uk: 'Зручний вхід для рекомендацій і акуратного передавання клієнта.', ru: 'Удобный вход для рекомендаций и аккуратной передачи клиента.', en: 'A practical entry point for referrals and clean handoffs.' },
+    title: {en: 'Education consultants', uk: 'Освітні консультанти', ru: 'Образовательные консультанты'},
+    description: {
+      en: 'A clean handoff when a student needs local practical follow-through in the Netherlands.',
+      uk: 'Чиста передача, коли студенту потрібне локальне практичне продовження в Нідерландах.',
+      ru: 'Понятная передача, когда студенту нужно локальное практическое сопровождение в Нидерландах.',
+    },
+  },
+  {
+    id: 'agencies',
+    title: {en: 'Agencies and housing partners', uk: 'Агенції та житлові партнери', ru: 'Агентства и жилищные партнёры'},
+    description: {
+      en: 'Use one contact route instead of informal back-and-forth when a practical case needs context.',
+      uk: 'Використовуйте один контактний маршрут замість неформального листування, коли практичному кейсу потрібен контекст.',
+      ru: 'Используйте один контактный маршрут вместо неформальной переписки, когда практическому кейсу нужен контекст.',
+    },
+  },
+  {
+    id: 'family',
+    title: {en: 'Family-supported cases', uk: 'Кейси за підтримки родини', ru: 'Кейсы при поддержке семьи'},
+    description: {
+      en: 'Families can open the conversation without turning the service into a parent-facing public product.',
+      uk: 'Родини можуть відкрити розмову, не перетворюючи послугу на окремий батьківський публічний продукт.',
+      ru: 'Семьи могут начать разговор, не превращая услугу в отдельный публичный продукт для родителей.',
+    },
   },
 ];
 
-export interface ServiceItem {
-  name: string;
-  desc: string;
+export interface OfferSection {
+  title: LocalizedText;
+  items: LocalizedList;
 }
-
-export interface ServiceColumn {
-  pillar: string;
-  sub: string;
-  items: ServiceItem[];
-}
-
-export const SERVICES_STORE: Record<Language, ServiceColumn[]> = {
-  uk: [
-    {
-      pillar: "Житлова активація",
-      sub: "Підготовка, запит, комунікація",
-      items: [
-        { name: "Підготовка заявки", desc: "Підготовка документів, пояснення ситуації з гарантом і практична допомога з поданням заявки." },
-        { name: "Пояснення договору", desc: "Зрозуміле пояснення умов оренди, ключових ризиків і запитань перед підписанням." },
-        { name: "Комунікація з орендодавцем", desc: "Підготовка професійних повідомлень до орендодавця або агенції." },
-        { name: "Перевірка оголошення", desc: "Оцінка однієї житлової пропозиції на ризикові сигнали та підозрілі деталі." }
-      ]
-    },
-    {
-      pillar: "Орієнтація до приїзду",
-      sub: "План, документи, орієнтація",
-      items: [
-        { name: "Орієнтація з переїзду", desc: "Консультація для побудови таймлайну до приїзду та вибору потрібного формату підтримки." },
-        { name: "Офіційні листи", desc: "Пояснення змісту листів і підготовка зрозумілого наступного кроку або відповіді." },
-        { name: "Університетська адміністрація", desc: "Допомога з питаннями до відділів університету, листами або запитами документів." },
-        { name: "Перевірка документів", desc: "Підготовка до муніципальної реєстрації, BSN та інших кроків, які краще впорядкувати до приїзду." }
-      ]
-    },
-    {
-      pillar: "Практичне облаштування",
-      sub: "Реєстрація, банк, страхування, медицина",
-      items: [
-        { name: "Реєстрація та BSN", desc: "Підготовка документів, планування запису та пояснення процесу муніципальної реєстрації." },
-        { name: "Активація DigiD", desc: "Покрокова підтримка після отримання BSN, щоб користуватися державними порталами." },
-        { name: "Банківський рахунок", desc: "Допомога з вибором відповідного варіанта і відкриттям одного рахунку." },
-        { name: "Страхування та GP", desc: "Підтримка з налаштуванням страхування та реєстрацією у GP / huisarts." }
-      ]
-    }
-  ],
-  ru: [
-    {
-      pillar: "Жилищная активация",
-      sub: "Подготовка, запрос, коммуникация",
-      items: [
-        { name: "Подготовка заявки", desc: "Подготовка документов, объяснение ситуации с поручителем и практическая помощь с подачей заявки." },
-        { name: "Объяснение договора", desc: "Понятное объяснение условий аренды, ключевых рисков и вопросов до подписания." },
-        { name: "Коммуникация с арендодателем", desc: "Подготовка профессиональных сообщений арендодателю или агентству." },
-        { name: "Проверка объявления", desc: "Оценка одного жилищного предложения на рисковые сигналы и подозрительные детали." }
-      ]
-    },
-    {
-      pillar: "Ориентация до приезда",
-      sub: "План, документы, ориентация",
-      items: [
-        { name: "Ориентация по переезду", desc: "Консультация для построения таймлайна до приезда и выбора нужного формата поддержки." },
-        { name: "Официальные письма", desc: "Объяснение содержания писем и подготовка понятного следующего шага или ответа." },
-        { name: "Университетская администрация", desc: "Помощь с вопросами к отделам университета, письмами или запросами документов." },
-        { name: "Проверка документов", desc: "Подготовка к муниципальной регистрации, BSN и другим шагам, которые лучше упорядочить до приезда." }
-      ]
-    },
-    {
-      pillar: "Практическое обустройство",
-      sub: "Регистрация, банк, страховка, медицина",
-      items: [
-        { name: "Регистрация и BSN", desc: "Подготовка документов, планирование записи и объяснение процесса муниципальной регистрации." },
-        { name: "Активация DigiD", desc: "Пошаговая поддержка после получения BSN, чтобы пользоваться государственными порталами." },
-        { name: "Банковский счет", desc: "Помощь с выбором подходящего варианта и открытием одного счета." },
-        { name: "Страховка и GP", desc: "Поддержка с настройкой страховки и регистрацией у GP / huisarts." }
-      ]
-    }
-  ],
-  en: [
-    {
-      pillar: "Housing activation",
-      sub: "Preparation, request, communication",
-      items: [
-        { name: "Application preparation", desc: "Document readiness, guarantor context and practical help with the application itself." },
-        { name: "Contract explanation", desc: "Plain-language explanation of rental terms, key risks and questions before signing." },
-        { name: "Landlord communication", desc: "Help preparing professional messages to a landlord or housing agency." },
-        { name: "Listing review", desc: "Review of one housing offer for risk signals and suspicious details." }
-      ]
-    },
-    {
-      pillar: "Pre-arrival orientation",
-      sub: "Plan, documents, orientation",
-      items: [
-        { name: "Relocation orientation", desc: "A consultation to map the timeline before arrival and choose the right support format." },
-        { name: "Official letters", desc: "Explanation of official correspondence and help preparing a clear response or next step." },
-        { name: "University admin", desc: "Support with department communication, administrative questions and document requests." },
-        { name: "Document review", desc: "Preparation for municipality registration, BSN and the other steps best organised before arrival." }
-      ]
-    },
-    {
-      pillar: "Practical settlement",
-      sub: "Registration, banking, insurance, healthcare",
-      items: [
-        { name: "Registration & BSN", desc: "Document readiness, appointment planning and plain-language guidance through municipal registration." },
-        { name: "DigiD activation", desc: "Step-by-step support after BSN so you can access Dutch public-service portals." },
-        { name: "Bank account", desc: "Guidance on choosing a suitable bank option and opening one account for your situation." },
-        { name: "Insurance and GP", desc: "Support with insurance setup and registering with a GP / huisarts." }
-      ]
-    }
-  ]
-};
 
 export interface Package {
-  id: string;
-  name: Record<Language, string>;
-  subtitle: Record<Language, string>;
+  id: 'vantam_start' | 'vantam_first_year';
+  name: LocalizedText;
+  shortTitle: LocalizedText;
+  subtitle: LocalizedText;
   price: string;
-  tagline: Record<Language, string>;
-  workload: Record<Language, string>;
-  scope: Record<Language, string[]>;
-  limits: Record<Language, string[]>;
-  idealFor: Record<Language, string>;
-  cta: Record<Language, string>;
+  badge?: LocalizedText;
+  audience: LocalizedText;
+  outcome: LocalizedText;
+  activePeriod: LocalizedText;
+  reasons: LocalizedList;
+  difference: LocalizedText;
+  cta: LocalizedText;
+  printValue: LocalizedText;
+  detailSections: OfferSection[];
 }
 
 export const PREMIUM_PACKAGES: Package[] = [
   {
-    id: "pkg_start",
-    name: { uk: "VANTAM Start", ru: "VANTAM Start", en: "VANTAM Start" },
+    id: 'vantam_start',
+    name: {en: 'VANTAM Start', uk: 'VANTAM Start', ru: 'VANTAM Start'},
+    shortTitle: {
+      en: 'First-month execution',
+      uk: 'Запуск першого місяця',
+      ru: 'Запуск первого месяца',
+    },
     subtitle: {
-      uk: "Перший платний крок після орієнтації",
-      ru: "Первый платный шаг после ориентации",
-      en: "The first paid step after orientation"
+      en: 'For students who need essential setup organised and brought to a clear completion point.',
+      uk: 'Для студентів, яким потрібно організувати базове налаштування й довести його до чіткої точки завершення.',
+      ru: 'Для студентов, которым нужно организовать базовую настройку и довести её до понятной точки завершения.',
     },
-    price: "€449",
-    tagline: {
-      uk: "Практична підтримка для тих, кому потрібен чіткий старт без зайвого масштабу.",
-      ru: "Практическая поддержка для тех, кому нужен ясный старт без лишнего объёма.",
-      en: "Practical support for people who need a clear start without extra scope."
+    price: '€449',
+    audience: {
+      en: 'Moving soon or newly arrived students who need a defined first-month route.',
+      uk: 'Студенти, які скоро переїжджають або щойно приїхали й потребують визначеного маршруту на перший місяць.',
+      ru: 'Студенты, которые скоро переезжают или только что приехали и нуждаются в определённом маршруте на первый месяц.',
     },
-    workload: {
-      uk: "~16 годин роботи VANTAM",
-      ru: "~16 часов работы VANTAM",
-      en: "~16 hours of VANTAM work"
+    outcome: {
+      en: 'Essential first-month setup organised and brought to a clear completion point.',
+      uk: 'Базове налаштування першого місяця організоване й доведене до чіткої точки завершення.',
+      ru: 'Базовая настройка первого месяца организована и доведена до понятной точки завершения.',
     },
-    idealFor: {
-      uk: "Студенти, яким потрібен чіткий старт після орієнтації.",
-      ru: "Студенты, которым нужен чёткий старт после ориентации.",
-      en: "Students who need a clear start after orientation."
+    activePeriod: {
+      en: 'Up to 35 days after arrival, including defined pre-arrival preparation.',
+      uk: 'До 35 днів після приїзду, включно з визначеною підготовкою до приїзду.',
+      ru: 'До 35 дней после приезда, включая определённую подготовку до приезда.',
     },
-    scope: {
+    reasons: {
+      en: [
+        'You need one ordered setup route instead of scattered tasks.',
+        'You want registration, BSN, DigiD, bank, insurance, GP, and one defined case kept in sequence.',
+        'You want visible outputs such as a Student Life Map, status overview, and next 90-day plan.',
+        'You need defined support without buying a broader first-year package yet.',
+      ],
       uk: [
-        "1 орієнтаційний дзвінок, 60 хв",
-        "персональна карта наступних кроків",
-        "чеклист документів і контактів",
-        "підбір відповідного формату підтримки",
-        "короткий письмовий підсумок"
+        'Вам потрібен один впорядкований маршрут налаштування замість розрізнених завдань.',
+        'Ви хочете тримати в послідовності реєстрацію, BSN, DigiD, банк, страхування, GP і один визначений кейс.',
+        'Вам потрібні видимі результати: Student Life Map, огляд статусів і план на наступні 90 днів.',
+        'Вам потрібна визначена підтримка без ширшого пакета на весь перший рік.',
       ],
       ru: [
-        "1 ориентационный звонок, 60 мин",
-        "персональная карта следующих шагов",
-        "чеклист документов и контактов",
-        "подбор подходящего формата поддержки",
-        "краткий письменный итог"
+        'Вам нужен один упорядоченный маршрут настройки вместо разрозненных задач.',
+        'Вы хотите держать в последовательности регистрацию, BSN, DigiD, банк, страховку, GP и один определённый кейс.',
+        'Вам нужны видимые результаты: Student Life Map, обзор статусов и план на следующие 90 дней.',
+        'Вам нужна определённая поддержка без более широкого пакета на весь первый год.',
       ],
-      en: [
-        "1 orientation call, 60 min",
-        "personal next-step map",
-        "document and contact checklist",
-        "matching support format selection",
-        "short written summary"
-      ]
     },
-    limits: {
-      uk: [
-        "дистанційно",
-        "30 днів з письмового прийняття",
-        "не включено: довгострокова координація, фізична присутність, юридичні або регульовані послуги"
-      ],
-      ru: [
-        "удаленно",
-        "30 дней с письменного принятия",
-        "не включено: долгосрочная координация, физическое присутствие, юридические или регулируемые услуги"
-      ],
-      en: [
-        "remote only",
-        "30 days from written acceptance",
-        "not included: long-term coordination, physical presence, legal or regulated services"
-      ]
+    difference: {
+      en: 'Choose Start when you need first-month execution, not the full first-year structure.',
+      uk: 'Обирайте Start, коли вам потрібне виконання першого місяця, а не повна структура на перший рік.',
+      ru: 'Выбирайте Start, когда вам нужно выполнение первого месяца, а не полная структура на первый год.',
     },
-    cta: { uk: "Запитати про VANTAM Start", ru: "Запросить VANTAM Start", en: "Enquire about VANTAM Start" }
+    cta: {
+      en: 'Choose VANTAM Start',
+      uk: 'Обрати VANTAM Start',
+      ru: 'Выбрать VANTAM Start',
+    },
+    printValue: {
+      en: 'First-month setup with defined pre-arrival preparation and completion deliverables.',
+      uk: 'Запуск першого місяця з визначеною підготовкою до приїзду та підсумковими результатами.',
+      ru: 'Запуск первого месяца с определённой подготовкой до приезда и итоговыми результатами.',
+    },
+    detailSections: [
+      {
+        title: {en: 'Your situation', uk: 'Ваша ситуація', ru: 'Ваша ситуация'},
+        items: {
+          en: ['You are moving soon or have just arrived.', 'You need one practical setup route with clear completion points.'],
+          uk: ['Ви скоро переїжджаєте або щойно приїхали.', 'Вам потрібен один практичний маршрут налаштування з чіткими точками завершення.'],
+          ru: ['Вы скоро переезжаете или только что приехали.', 'Вам нужен один практический маршрут настройки с понятными точками завершения.'],
+        },
+      },
+      {
+        title: {en: 'Before arrival', uk: 'До приїзду', ru: 'До приезда'},
+        items: {
+          en: ['Full intake', 'Personalised Student Life Map', 'Pre-arrival roadmap', 'Essential-document readiness review', 'Ordered before/after-arrival sequence'],
+          uk: ['Повний початковий збір інформації', 'Персоналізована Student Life Map', 'Дорожня карта до приїзду', 'Перевірка готовності базових документів', 'Впорядкована послідовність до та після приїзду'],
+          ru: ['Полный первичный сбор информации', 'Персонализированная Student Life Map', 'Дорожная карта до приезда', 'Проверка готовности базовых документов', 'Упорядоченная последовательность до и после приезда'],
+        },
+      },
+      {
+        title: {en: 'First-month execution', uk: 'Виконання першого місяця', ru: 'Выполнение первого месяца'},
+        items: {
+          en: ['Municipality registration and BSN process', 'DigiD', 'One bank-account process', 'Appropriate insurance route', 'GP registration', 'One university or general-administration case', 'One Official Letter Action', 'One progress check', 'Business-day support within the active period'],
+          uk: ['Муніципальна реєстрація та процес BSN', 'DigiD', 'Один банківський процес', 'Відповідний страховий маршрут', 'Реєстрація у GP', 'Один університетський або загальноадміністративний кейс', 'Одна Official Letter Action', 'Одна перевірка прогресу', 'Підтримка в робочі дні протягом активного періоду'],
+          ru: ['Муниципальная регистрация и процесс BSN', 'DigiD', 'Один банковский процесс', 'Подходящий страховой маршрут', 'Регистрация у GP', 'Один университетский или общий административный кейс', 'Одна Official Letter Action', 'Одна проверка прогресса', 'Поддержка в рабочие дни в течение активного периода'],
+        },
+      },
+      {
+        title: {en: 'What you receive', uk: 'Що ви отримуєте', ru: 'Что вы получаете'},
+        items: {
+          en: ['Updated Student Life Map', 'Completed / Pending / Waiting overview', 'Documents-to-retain list', 'Next 90-day plan', 'Completion Pack'],
+          uk: ['Оновлену Student Life Map', 'Огляд статусів Завершено / У процесі / Очікує', 'Список документів, які треба зберегти', 'План на наступні 90 днів', 'Підсумковий пакет матеріалів'],
+          ru: ['Обновлённую Student Life Map', 'Обзор статусов Завершено / В процессе / Ожидает', 'Список документов для сохранения', 'План на следующие 90 дней', 'Итоговый пакет материалов'],
+        },
+      },
+      {
+        title: {en: 'Scope limits', uk: 'Межі обсягу', ru: 'Границы объёма'},
+        items: {
+          en: ['Up to 35 days after arrival', 'Defined execution only', 'Use status language when a provider or authority is still processing'],
+          uk: ['До 35 днів після приїзду', 'Лише визначене виконання', 'Використовуємо статусне формулювання, коли провайдер або орган ще обробляє справу'],
+          ru: ['До 35 дней после приезда', 'Только определённое выполнение', 'Используем статусные формулировки, когда провайдер или орган ещё обрабатывает дело'],
+        },
+      },
+      {
+        title: {en: 'What is not included', uk: 'Що не входить', ru: 'Что не входит'},
+        items: {
+          en: ['Guaranteed third-party completion', 'Unlimited support', 'Legal, financial, insurance, immigration, or medical advice'],
+          uk: ['Гарантоване завершення з боку третіх сторін', 'Необмежена підтримка', 'Юридичні, фінансові, страхові, імміграційні або медичні поради'],
+          ru: ['Гарантированное завершение со стороны третьих лиц', 'Неограниченная поддержка', 'Юридические, финансовые, страховые, иммиграционные или медицинские советы'],
+        },
+      },
+      {
+        title: {en: 'Next step', uk: 'Наступний крок', ru: 'Следующий шаг'},
+        items: {
+          en: ['Use Relocation Orientation if you need the first recommendation before choosing Start.'],
+          uk: ['Скористайтеся Relocation Orientation, якщо вам потрібна перша рекомендація перед вибором Start.'],
+          ru: ['Используйте Relocation Orientation, если вам нужна первая рекомендация перед выбором Start.'],
+        },
+      },
+    ],
   },
   {
-    id: "pkg_setup",
-    name: { uk: "VANTAM First Year", ru: "VANTAM First Year", en: "VANTAM First Year" },
+    id: 'vantam_first_year',
+    name: {en: 'VANTAM First Year', uk: 'VANTAM First Year', ru: 'VANTAM First Year'},
+    shortTitle: {
+      en: 'Structured first-year support',
+      uk: 'Структурована підтримка першого року',
+      ru: 'Структурированная поддержка первого года',
+    },
     subtitle: {
-      uk: "Рекомендований основний пакет",
-      ru: "Рекомендуемый основной пакет",
-      en: "Recommended main package"
+      en: 'For students who want first-month setup plus defined support through key practical moments of the first academic year.',
+      uk: 'Для студентів, які хочуть запуск першого місяця плюс визначену підтримку через ключові практичні моменти першого академічного року.',
+      ru: 'Для студентов, которые хотят запуск первого месяца плюс определённую поддержку через ключевые практические моменты первого академического года.',
     },
-    price: "€899",
-    tagline: {
-      uk: "Найбільш зрозумілий пакет для першого року після переїзду.",
-      ru: "Самый понятный пакет для первого года после переезда.",
-      en: "The clearest option for the first year after the move."
+    price: '€899',
+    badge: {en: 'Recommended', uk: 'Рекомендовано', ru: 'Рекомендуется'},
+    audience: {
+      en: 'Students who need the Start execution plus defined first-year follow-through.',
+      uk: 'Студенти, яким потрібне виконання Start плюс визначене продовження на перший рік.',
+      ru: 'Студенты, которым нужно выполнение Start плюс определённое продолжение на первый год.',
     },
-    workload: {
-      uk: "~28 годин роботи VANTAM",
-      ru: "~28 часов работы VANTAM",
-      en: "~28 hours of VANTAM work"
+    outcome: {
+      en: 'Get established during the first month and stay supported through the key practical moments of the first academic year.',
+      uk: 'Закріпитися протягом першого місяця та залишатися з підтримкою під час ключових практичних моментів першого академічного року.',
+      ru: 'Закрепиться в течение первого месяца и оставаться с поддержкой в ключевые практические моменты первого академического года.',
     },
-    idealFor: {
-      uk: "Студенти, яким потрібна основна координація на перший рік навчання.",
-      ru: "Студенты, которым нужна основная координация на первый год учёбы.",
-      en: "Students who need the main coordination package for the first year of study."
+    activePeriod: {
+      en: 'Start execution plus defined support across the first academic year.',
+      uk: 'Виконання Start плюс визначена підтримка протягом першого академічного року.',
+      ru: 'Выполнение Start плюс определённая поддержка в течение первого академического года.',
     },
-    scope: {
+    reasons: {
+      en: [
+        'You want everything in Start plus defined checkpoints during the year.',
+        'You need three Action Credits and two Quick Reviews for issues that appear later.',
+        'You want housing readiness and one urgent triage built into the year structure.',
+        'You want documented recaps and a next activation route instead of vague “ongoing support”.',
+      ],
       uk: [
-        "усе з VANTAM Start",
-        "координація житлових, приїзних і навчальних кроків",
-        "підтримка реєстрації та BSN",
-        "підтримка активації DigiD",
-        "підтримка з банком, страховкою та GP / huisarts",
-        "підтримка з офіційними листами, до 3 листів",
-        "університетська адміністрація, до 2 кейсів",
-        "2 проміжні check-in дзвінки",
-        "узгоджена наступна перевірка"
+        'Ви хочете все зі Start плюс визначені контрольні точки протягом року.',
+        'Вам потрібні три цільові дії та два короткі перегляди для питань, які виникнуть пізніше.',
+        'Вам потрібні готовність до житла й одна термінова первинна оцінка всередині річної структури.',
+        'Вам потрібні задокументовані підсумки й наступний маршрут активації замість розмитої “постійної підтримки”.',
       ],
       ru: [
-        "всё из VANTAM Start",
-        "координация жилищных, приездных и учебных шагов",
-        "поддержка регистрации и BSN",
-        "поддержка активации DigiD",
-        "поддержка с банком, страховкой и GP / huisarts",
-        "поддержка с официальными письмами, до 3 писем",
-        "университетская администрация, до 2 кейсов",
-        "2 промежуточных check-in звонка",
-        "согласованная следующая проверка"
+        'Вы хотите всё из Start плюс определённые контрольные точки в течение года.',
+        'Вам нужны три целевых действия и два коротких обзора для вопросов, которые появятся позже.',
+        'Вам нужны готовность к жилью и одна срочная первичная оценка внутри годовой структуры.',
+        'Вам нужны задокументированные итоги и следующий маршрут активации вместо расплывчатой “постоянной поддержки”.',
       ],
-      en: [
-        "everything in VANTAM Start",
-        "coordination across housing, arrival and study steps",
-        "registration and BSN support",
-        "DigiD activation support",
-        "bank, insurance and GP / huisarts support",
-        "official letter support, up to 3 letters",
-        "university admin support, up to 2 cases",
-        "2 check-in calls",
-        "agreed follow-up review"
-      ]
     },
-      limits: {
-      uk: [
-        "дистанційна підтримка",
-        "перший рік після письмового прийняття",
-        "не включено: фізичний супровід на зустрічі, юридичні спори, платежі третіх сторін"
-      ],
-      ru: [
-        "удалённая поддержка",
-        "первый год после письменного принятия",
-        "не включено: физическое сопровождение на встречи, юридические споры, платежи третьих сторон"
-      ],
-      en: [
-        "remote support",
-        "first year after written acceptance",
-        "not included: physical appointment accompaniment, legal disputes, third-party fees"
-      ]
+    difference: {
+      en: 'Choose First Year when you need Start plus defined support through later first-year transitions.',
+      uk: 'Обирайте First Year, коли вам потрібен Start плюс визначена підтримка для пізніших переходів першого року.',
+      ru: 'Выбирайте First Year, когда вам нужен Start плюс определённая поддержка для более поздних переходов первого года.',
     },
-    cta: { uk: "Запитати про VANTAM First Year", ru: "Запросить VANTAM First Year", en: "Enquire about VANTAM First Year" }
+    cta: {
+      en: 'Choose VANTAM First Year',
+      uk: 'Обрати VANTAM First Year',
+      ru: 'Выбрать VANTAM First Year',
+    },
+    printValue: {
+      en: 'Start execution plus checkpoints, Action Credits, Quick Reviews, housing readiness, and year-end route.',
+      uk: 'Виконання Start плюс контрольні точки, цільові дії, короткі перегляди, готовність до житла й маршрут наприкінці року.',
+      ru: 'Выполнение Start плюс контрольные точки, целевые действия, короткие обзоры, готовность к жилью и маршрут на конец года.',
+    },
+    detailSections: [
+      {
+        title: {en: 'Your situation', uk: 'Ваша ситуація', ru: 'Ваша ситуация'},
+        items: {
+          en: ['You want the first month handled and later practical issues covered by defined credits and reviews.'],
+          uk: ['Ви хочете, щоб перший місяць був опрацьований, а пізніші практичні питання покривалися визначеними цільовими діями та короткими переглядами.'],
+          ru: ['Вы хотите, чтобы первый месяц был отработан, а более поздние практические вопросы покрывались определёнными целевыми действиями и короткими обзорами.'],
+        },
+      },
+      {
+        title: {en: 'Outcome', uk: 'Результат', ru: 'Результат'},
+        items: {
+          en: ['Everything in Start', 'Support through key practical moments of the first academic year'],
+          uk: ['Усе зі Start', 'Підтримка через ключові практичні моменти першого академічного року'],
+          ru: ['Всё из Start', 'Поддержка через ключевые практические моменты первого академического года'],
+        },
+      },
+      {
+        title: {en: 'During the year', uk: 'Протягом року', ru: 'В течение года'},
+        items: {
+          en: ['90-Day Check', 'Mid-Year Check', 'Year-End Check', 'Three Action Credits', 'Two Quick Reviews', 'Housing Readiness Activation', 'One Urgent Triage', 'Optional Parent Update only with separate written consent'],
+          uk: ['Перевірка через 90 днів', 'Перевірка в середині року', 'Перевірка наприкінці року', 'Три цільові дії', 'Два короткі перегляди', 'Активація готовності до житла', 'Одна термінова первинна оцінка', 'Необов’язкове оновлення для батьків лише за окремою письмовою згодою'],
+          ru: ['Проверка через 90 дней', 'Проверка в середине года', 'Проверка в конце года', 'Три целевых действия', 'Два коротких обзора', 'Активация готовности к жилью', 'Одна срочная первичная оценка', 'Необязательное обновление для родителей только по отдельному письменному согласию'],
+        },
+      },
+      {
+        title: {en: 'What you receive', uk: 'Що ви отримуєте', ru: 'Что вы получаете'},
+        items: {
+          en: ['Updated Student Life Map', 'Documented case history maintained during the engagement', 'Checkpoint Recaps', 'Year-end plan', 'Next activation route'],
+          uk: ['Оновлену Student Life Map', 'Задокументовану історію кейсу протягом співпраці', 'Підсумки контрольних точок', 'План наприкінці року', 'Наступний маршрут активації'],
+          ru: ['Обновлённую Student Life Map', 'Задокументированную историю кейса в течение сотрудничества', 'Итоги контрольных точек', 'План на конец года', 'Следующий маршрут активации'],
+        },
+      },
+      {
+        title: {en: 'Action Credit definition', uk: 'Визначення Action Credit', ru: 'Определение Action Credit'},
+        items: {
+          en: ['One defined problem', 'One agreed outcome', 'One document set', 'Up to two communication rounds', 'Completion Recap'],
+          uk: ['Одна визначена проблема', 'Один погоджений результат', 'Один пакет документів', 'До двох раундів комунікації', 'Підсумок виконання'],
+          ru: ['Одна определённая проблема', 'Один согласованный результат', 'Один пакет документов', 'До двух раундов коммуникации', 'Итог выполнения'],
+        },
+      },
+      {
+        title: {en: 'Quick Review definition', uk: 'Визначення Quick Review', ru: 'Определение Quick Review'},
+        items: {
+          en: ['One short letter, short contract, university message, or insurance communication', 'No drafting', 'No third-party communication', 'No multi-document case'],
+          uk: ['Один короткий лист, короткий договір, університетське повідомлення або страхова комунікація', 'Без підготовки тексту з нуля', 'Без комунікації з третіми сторонами', 'Без багатодокументного кейсу'],
+          ru: ['Одно короткое письмо, короткий договор, университетское сообщение или страховая коммуникация', 'Без подготовки текста с нуля', 'Без коммуникации с третьими сторонами', 'Без многодокументного кейса'],
+        },
+      },
+      {
+        title: {en: 'What is not included', uk: 'Що не входить', ru: 'Что не входит'},
+        items: {
+          en: ['Unlimited support implication', 'Live portal or dashboard', 'Guaranteed response time', 'Guaranteed third-party decisions'],
+          uk: ['Натяк на необмежену підтримку', 'Живий портал або клієнтський кабінет', 'Гарантований час відповіді', 'Гарантовані рішення третіх сторін'],
+          ru: ['Намёк на неограниченную поддержку', 'Живой портал или клиентский кабинет', 'Гарантированное время ответа', 'Гарантированные решения третьих сторон'],
+        },
+      },
+    ],
   },
-  {
-    id: "pkg_full",
-    name: { uk: "VANTAM Continue", ru: "VANTAM Continue", en: "VANTAM Continue" },
-    subtitle: {
-      uk: "Повернення для існуючих клієнтів",
-      ru: "Возврат для существующих клиентов",
-      en: "Return path for existing clients"
-    },
-    price: "За запитом",
-    tagline: {
-      uk: "Доступний лише для повернення існуючих клієнтів у цьому циклі.",
-      ru: "Доступен только для возврата существующих клиентов в этом цикле.",
-      en: "Available only as a return path for existing clients in this cycle."
-    },
-    workload: {
-      uk: "Залежить від запиту",
-      ru: "Зависит от запроса",
-      en: "Depends on the request"
-    },
-    idealFor: {
-      uk: "Існуючі клієнти, яким потрібне продовження вже відкритого запиту.",
-      ru: "Существующие клиенты, которым нужно продолжение уже открытого запроса.",
-      en: "Existing clients who need to continue an already opened request."
-    },
-    scope: {
-      uk: [
-        "продовження вже погодженого обсягу",
-        "повернення до раніше відкритого кейсу",
-        "1 короткий check-in дзвінок",
-        "узгоджені наступні кроки"
-      ],
-      ru: [
-        "продолжение уже согласованного объёма",
-        "возврат к ранее открытому кейсу",
-        "1 короткий check-in звонок",
-        "согласованные следующие шаги"
-      ],
-      en: [
-        "continuation of an already agreed scope",
-        "return to a previously opened case",
-        "1 short check-in call",
-        "agreed next steps"
-      ]
-    },
-      limits: {
-      uk: [
-        "лише для повернення існуючих клієнтів",
-        "умови підтверджуються окремо",
-        "не включено: новий первинний scope"
-      ],
-      ru: [
-        "только для возврата существующих клиентов",
-        "условия подтверждаются отдельно",
-        "не включено: новый первичный scope"
-      ],
-      en: [
-        "existing clients only",
-        "terms confirmed separately",
-        "not included: a new primary scope"
-      ]
-    },
-    cta: { uk: "Запитати про VANTAM Continue", ru: "Запросить VANTAM Continue", en: "Enquire about VANTAM Continue" }
-  }
 ];
 
 export interface Consultation {
-  id: string;
-  name: Record<Language, string>;
+  id: 'relocation_orientation';
+  name: LocalizedText;
   price: string;
-  duration: Record<Language, string>;
-  desc: Record<Language, string>;
-  result: Record<Language, string>;
-  note: Record<Language, string>;
-  cta: Record<Language, string>;
+  duration: LocalizedText;
+  summary: LocalizedText;
+  deliverables: LocalizedList;
+  note: LocalizedText;
+  cta: LocalizedText;
 }
 
 export const CONSULTATIONS_STORE: Consultation[] = [
   {
-    id: "consult_orientation",
-    name: { uk: "Орієнтація з переїзду", ru: "Ориентация по переезду", en: "Relocation Orientation" },
-    price: "€59",
-    duration: { uk: "45 хв · дистанційно", ru: "45 мин · удаленно", en: "45 min · remote" },
-    desc: {
-      uk: "Для студентів, які хочуть зрозуміти наступний практичний крок і обрати правильний шлях підтримки.",
-      ru: "Для студентов, которые хотят понять следующий практический шаг и выбрать правильный путь поддержки.",
-      en: "For students who want to understand the next practical step and choose the right support path."
+    id: 'relocation_orientation',
+    name: {en: 'Relocation Orientation', uk: 'Relocation Orientation', ru: 'Relocation Orientation'},
+    price: '€59',
+    duration: {
+      en: '45 minutes · remote',
+      uk: '45 хвилин · дистанційно',
+      ru: '45 минут · удалённо',
     },
-    result: { uk: "письмовий план дій", ru: "письменный план действий", en: "written action plan" },
-    note: { uk: "Оплачену суму можна один раз зарахувати до відповідного пакета протягом 14 днів.", ru: "Оплаченную сумму можно один раз зачесть в подходящий пакет в течение 14 дней.", en: "The paid amount may be credited once toward an eligible package within 14 days." },
-    cta: { uk: "Запитати про дзвінок", ru: "Запросить звонок", en: "Ask about this call" }
+    summary: {
+      en: 'A first paid step for students who need a practical assessment before choosing the right product.',
+      uk: 'Перший платний крок для студентів, яким потрібна практична оцінка перед вибором правильного продукту.',
+      ru: 'Первый платный шаг для студентов, которым нужна практическая оценка перед выбором правильного продукта.',
+    },
+    deliverables: {
+      en: ['Situation assessment', 'Personalised action sequence', 'Written recap', 'Product recommendation'],
+      uk: ['Оцінка ситуації', 'Персоналізована послідовність дій', 'Письмовий підсумок', 'Рекомендація продукту'],
+      ru: ['Оценка ситуации', 'Персонализированная последовательность действий', 'Письменный итог', 'Рекомендация продукта'],
+    },
+    note: {
+      en: 'The €59 may be credited toward VANTAM Start or VANTAM First Year within 14 days.',
+      uk: '€59 можуть бути зараховані у VANTAM Start або VANTAM First Year протягом 14 днів.',
+      ru: '€59 могут быть зачтены в VANTAM Start или VANTAM First Year в течение 14 дней.',
+    },
+    cta: {
+      en: 'Request Relocation Orientation',
+      uk: 'Запитати Relocation Orientation',
+      ru: 'Запросить Relocation Orientation',
+    },
   },
-  {
-    id: "consult_parent",
-    name: { uk: "Брифінг для батьків", ru: "Брифинг для родителей", en: "Parent briefing call" },
-    price: "€79",
-    duration: { uk: "45 хв · дистанційно", ru: "45 мин · удаленно", en: "45 min · remote" },
-    desc: {
-      uk: "Для батьків або близьких, які хочуть зрозуміти студентський шлях підтримки без перевантаження деталями.",
-      ru: "Для родителей или близких, которые хотят понять студенческий путь поддержки без перегруза деталями.",
-      en: "For parents or close people who want to understand the student support path without being overloaded with details."
-    },
-    result: { uk: "зрозумілі перші кроки та формат підтримки", ru: "понятные первые шаги и формат поддержки", en: "clear understanding of the first steps and support format" },
-    note: { uk: "Оплачену суму можна один раз зарахувати до відповідного пакета протягом 14 днів.", ru: "Оплаченную сумму можно один раз зачесть в подходящий пакет в течение 14 дней.", en: "The paid amount may be credited once toward an eligible package within 14 days." },
-    cta: { uk: "Запитати про дзвінок", ru: "Запросить звонок", en: "Ask about this call" }
-  },
-  {
-    id: "consult_urgent",
-    name: { uk: "Пріоритетний дзвінок", ru: "Приоритетный звонок", en: "Priority situation call" },
-    price: "€99",
-    duration: { uk: "до 60 хв · пріоритет · того ж дня, якщо можливо", ru: "до 60 мин · приоритет · в тот же день, если возможно", en: "Up to 60 min · priority · same day where possible" },
-    desc: {
-      uk: "Для ситуацій, коли вже виникла проблема в житлі, переїзді або практичному облаштуванні.",
-      ru: "Для ситуаций, когда уже возникла проблема в жилье, переезде или практическом обустройстве.",
-      en: "For situations where a problem has already appeared in housing, moving or practical settlement."
-    },
-    result: { uk: "швидка оцінка і чіткий план дій", ru: "быстрая оценка и четкий план действий", en: "quick assessment and clear action plan" },
-    note: { uk: "Пріоритетний слот за наявності.", ru: "Приоритетный слот при наличии.", en: "Priority slot where available." },
-    cta: { uk: "Запитати про пріоритетний дзвінок", ru: "Запросить приоритетный звонок", en: "Ask about the priority call" }
-  }
 ];
 
-export interface SingleService {
-  id: string;
-  name: Record<Language, string>;
+export interface HousingProduct {
+  id: 'housing_ready' | 'housing_campaign';
+  name: LocalizedText;
   price: string;
-  mode: Record<Language, string>;
-  desc: Record<Language, string>;
-  limit: Record<Language, string>;
-  notIncluded?: Record<Language, string>;
+  outcome: LocalizedText;
+  period: LocalizedText;
+  limits: LocalizedList;
+  optionalAdditions: LocalizedList;
+  cta: LocalizedText;
 }
 
-export const SINGLE_SERVICES: SingleService[] = [
+export const HOUSING_PRODUCTS: HousingProduct[] = [
   {
-    id: "housing_ready",
-    name: {
-      uk: "Housing Ready",
-      ru: "Housing Ready",
-      en: "Housing Ready",
+    id: 'housing_ready',
+    name: {en: 'Housing Ready', uk: 'Housing Ready', ru: 'Housing Ready'},
+    price: '€249',
+    outcome: {
+      en: 'A complete application-ready housing profile and the first qualified submissions.',
+      uk: 'Повний житловий профіль, готовий до заявок, і перші кваліфіковані подання.',
+      ru: 'Полный жилищный профиль, готовый к заявкам, и первые квалифицированные подачи.',
     },
-    price: {
-      uk: "€249",
-      ru: "€249",
-      en: "€249",
-    }[DEFAULT_LOCALE],
-    mode: {
-      uk: "дистанційно",
-      ru: "удаленно",
-      en: "remote",
+    period: {
+      en: '30 days',
+      uk: '30 днів',
+      ru: '30 дней',
     },
-    desc: {
-      uk: "Підготовка до житлового запиту, пояснення ситуації з поручителем і перші практичні кроки перед пошуком житла.",
-      ru: "Подготовка к жилищному запросу, объяснение ситуации с поручителем и первые практические шаги перед поиском жилья.",
-      en: "Preparation for the housing path, explaining the guarantor situation and the first practical steps before the search.",
+    limits: {
+      en: ['Budget and criteria review', 'Realistic housing strategy', 'Renter profile and guarantor positioning', 'Document checklist and guarantor checklist', 'Reusable introduction message', 'Application Pack', 'Up to three Qualified Applications', 'Basic fit check before each submission', 'One response/offer screen', 'Final next-step plan'],
+      uk: ['Огляд бюджету та критеріїв', 'Реалістична житлова стратегія', 'Профіль орендаря й позиціонування гаранта', 'Чеклист документів і чеклист гаранта', 'Багаторазове вступне повідомлення', 'Пакет документів для подання', 'До трьох кваліфікованих заявок', 'Базова перевірка відповідності перед кожним поданням', 'Один перегляд відповіді або оферу', 'Фінальний план наступних кроків'],
+      ru: ['Обзор бюджета и критериев', 'Реалистичная жилищная стратегия', 'Профиль арендатора и позиционирование гаранта', 'Чеклист документов и чеклист гаранта', 'Многоразовое вступительное сообщение', 'Пакет документов для подачи', 'До трёх квалифицированных заявок', 'Базовая проверка соответствия перед каждой подачей', 'Один разбор ответа или офера', 'Финальный план следующих шагов'],
     },
-    limit: {
-      uk: "Ліміт: один житловий шлях.",
-      ru: "Лимит: один жилищный путь.",
-      en: "Limit: one housing path.",
+    optionalAdditions: {
+      en: ['Unused application slots may remain active for another 30 days when no suitable properties were available.'],
+      uk: ['Невикористані слоти подань можуть залишатися активними ще 30 днів, якщо не було відповідних об’єктів.'],
+      ru: ['Неиспользованные слоты подач могут оставаться активными ещё 30 дней, если не было подходящих объектов.'],
     },
-    notIncluded: {
-      uk: "Не включено: гарантія житла, юридичний висновок або представництво.",
-      ru: "Не включено: гарантия жилья, юридическое заключение или представительство.",
-      en: "Not included: a housing guarantee, legal opinion or representation.",
-    }
-  },
-  {
-    id: "housing_campaign",
-    name: {
-      uk: "Housing Search Campaign",
-      ru: "Housing Search Campaign",
-      en: "Housing Search Campaign",
+    cta: {
+      en: 'Choose Housing Ready',
+      uk: 'Обрати Housing Ready',
+      ru: 'Выбрать Housing Ready',
     },
-    price: {
-      uk: "€649",
-      ru: "€649",
-      en: "€649",
-    }[DEFAULT_LOCALE],
-    mode: {
-      uk: "дистанційно / гібридно",
-      ru: "удаленно / гибридно",
-      en: "remote / hybrid",
+  },
+  {
+    id: 'housing_campaign',
+    name: {en: 'Housing Search Campaign', uk: 'Housing Search Campaign', ru: 'Housing Search Campaign'},
+    price: '€649',
+    outcome: {
+      en: 'A structured six-week housing campaign with a visible application pipeline and fixed execution limits.',
+      uk: 'Структурована шеститижнева житлова кампанія з видимою воронкою заявок і фіксованими межами виконання.',
+      ru: 'Структурированная шестинедельная жилищная кампания с видимой воронкой заявок и фиксированными пределами выполнения.',
     },
-    desc: {
-      uk: "Кампанія для активного пошуку житла з координацією повідомлень, позиціонуванням запиту та практичними наступними кроками.",
-      ru: "Кампания для активного поиска жилья с координацией сообщений, позиционированием запроса и практическими следующими шагами.",
-      en: "A campaign for active housing search with message coordination, request positioning and practical next steps.",
+    period: {
+      en: 'Six weeks',
+      uk: 'Шість тижнів',
+      ru: 'Шесть недель',
     },
-    limit: {
-      uk: "Ліміт: один житловий запит.",
-      ru: "Лимит: один жилищный запрос.",
-      en: "Limit: one housing request.",
+    limits: {
+      en: ['Housing strategy', 'Affordability and criteria review', 'Complete Application Pack', 'Guarantor positioning', 'Search-channel plan', 'Up to ten Qualified Applications', 'Housing Pipeline', 'Up to three Active Lead Cases', 'Up to two communication rounds per lead', 'Preparation for up to two viewings', 'Viewing checklist', 'One Housing Offer & Contract Check', 'Weekly pipeline update', 'Campaign recap', 'Check-in readiness checklist after success'],
+      uk: ['Житлова стратегія', 'Огляд доступності та критеріїв', 'Повний пакет документів для подання', 'Позиціонування гаранта', 'План каналів пошуку', 'До десяти кваліфікованих заявок', 'Воронка житлових заявок', 'До трьох активних кейсів із відповіддю', 'До двох раундів комунікації на один активний кейс', 'Підготовка до двох переглядів', 'Чеклист перегляду', 'Один Housing Offer & Contract Check', 'Щотижневе оновлення воронки', 'Підсумок кампанії', 'Чеклист готовності після успішного заселення'],
+      ru: ['Жилищная стратегия', 'Обзор доступности и критериев', 'Полный пакет документов для подачи', 'Позиционирование гаранта', 'План каналов поиска', 'До десяти квалифицированных заявок', 'Воронка жилищных заявок', 'До трёх активных кейсов с ответом', 'До двух раундов коммуникации на один активный кейс', 'Подготовка к двум просмотрам', 'Чеклист просмотра', 'Один Housing Offer & Contract Check', 'Еженедельное обновление воронки', 'Итог кампании', 'Чеклист готовности после успешного заселения'],
     },
-    notIncluded: {
-      uk: "Не включено: гарантія житла, юридичний висновок або представництво.",
-      ru: "Не включено: гарантия жилья, юридическое заключение или представительство.",
-      en: "Not included: a housing guarantee, legal opinion or representation.",
-    }
+    optionalAdditions: {
+      en: ['Attended viewing', 'Travel supplement', 'Five additional applications', 'Campaign extension', 'In-person check-in', 'Deposit / landlord problem — Request a price'],
+      uk: ['Супровід на перегляді', 'Доплата за поїздку', 'П’ять додаткових заявок', 'Продовження кампанії', 'Особиста зустріч для перевірки стану', 'Проблема з депозитом / орендодавцем — Запитати ціну'],
+      ru: ['Сопровождение на просмотре', 'Доплата за поездку', 'Пять дополнительных заявок', 'Продление кампании', 'Личная встреча для проверки статуса', 'Проблема с депозитом / арендодателем — Запросить цену'],
+    },
+    cta: {
+      en: 'Choose Housing Search Campaign',
+      uk: 'Обрати Housing Search Campaign',
+      ru: 'Выбрать Housing Search Campaign',
+    },
   },
-  {
-    id: "single_registration_bsn",
-    name: { uk: "Підтримка реєстрації та BSN", ru: "Поддержка регистрации и BSN", en: "Registration & BSN Support" },
-    price: "€149",
-    mode: { uk: "дистанційно / локально / гібридно", ru: "удаленно / локально / гибридно", en: "remote / local / hybrid" },
-    desc: { uk: "Підтримка з муніципальною реєстрацією, підготовкою до BSN, плануванням запису та готовністю документів.", ru: "Поддержка с муниципальной регистрацией, подготовкой к BSN, планированием записи и готовностью документов.", en: "Support with municipality registration, BSN preparation, appointment planning and document readiness." },
-    limit: { uk: "Ліміт: до 2 раундів підтримки.", ru: "Лимит: до 2 раундов поддержки.", en: "Limit: up to 2 support rounds." }
-  },
-  {
-    id: "single_digid_activation",
-    name: { uk: "Підтримка активації DigiD", ru: "Поддержка активации DigiD", en: "DigiD Activation Support" },
-    price: "€79",
-    mode: { uk: "дистанційно", ru: "удаленно", en: "remote" },
-    desc: { uk: "Покрокова підтримка з налаштуванням та активацією DigiD після отримання BSN.", ru: "Пошаговая поддержка с настройкой и активацией DigiD после получения BSN.", en: "Step-by-step support with DigiD setup and activation after BSN is received." },
-    limit: { uk: "Ліміт: один процес активації.", ru: "Лимит: один процесс активации.", en: "Limit: one activation process." }
-  },
-  {
-    id: "single_bank_setup",
-    name: { uk: "Налаштування банківського рахунку", ru: "Открытие банковского счета", en: "Bank Account Setup" },
-    price: "€89",
-    mode: { uk: "дистанційно / гібридно", ru: "удаленно / гибридно", en: "remote / hybrid" },
-    desc: { uk: "Допомога з вибором відповідного банківського варіанта та відкриттям одного рахунку.", ru: "Помощь с выбором подходящего банковского варианта и открытием одного счета.", en: "Guidance with choosing a suitable bank option and opening one account." },
-    limit: { uk: "Ліміт: один банк / один рахунок.", ru: "Лимит: один банк / один счет.", en: "Limit: one bank / one account." }
-  },
-  {
-    id: "single_insurance_setup",
-    name: { uk: "Підтримка зі страхуванням", ru: "Поддержка со страховкой", en: "Insurance Setup Support" },
-    price: "€99",
-    mode: { uk: "дистанційно", ru: "удаленно", en: "remote" },
-    desc: { uk: "Підтримка з вибором та налаштуванням правильного страхового рішення для вашої ситуації.", ru: "Поддержка с выбором и настройкой подходящего страхового решения для вашей ситуации.", en: "Support with selecting and setting up the right insurance option for your situation." },
-    limit: { uk: "Ліміт: один страховик.", ru: "Лимит: один страховщик.", en: "Limit: one insurer." },
-    notIncluded: { uk: "Не включено: ліцензована страхова консультація.", ru: "Не включено: лицензированная страховая консультация.", en: "Not included: licensed insurance advice." }
-  },
-  {
-    id: "single_official_letter",
-    name: { uk: "Підтримка з офіційним листом", ru: "Поддержка с официальным письмом", en: "Official Letter Support" },
-    price: "€79",
-    mode: { uk: "дистанційно", ru: "удаленно", en: "remote" },
-    desc: { uk: "Пояснення одного офіційного листа та допомога з підготовкою відповіді або наступного кроку.", ru: "Объяснение одного официального письма и помощь с подготовкой ответа или следующего шага.", en: "Explanation of one official letter and help preparing a response or next step." },
-    limit: { uk: "Ліміт: один лист. Додаткові листи: €49.", ru: "Лимит: одно письмо. Дополнительные письма: €49.", en: "Limit: one letter. Additional letters: €49." }
-  },
-  {
-    id: "single_university_admin",
-    name: { uk: "Університетська адміністрація", ru: "Университетская администрация", en: "University Admin Support" },
-    price: "€99",
-    mode: { uk: "дистанційно / гібридно", ru: "удаленно / гибридно", en: "remote / hybrid" },
-    desc: { uk: "Допомога з університетськими адміністративними питаннями, комунікацією з відділами або запитами документів.", ru: "Помощь с университетскими административными вопросами, коммуникацией с отделами или запросами документов.", en: "Help with university-related administrative questions, department communication or document requests." },
-    limit: { uk: "Ліміт: до 2 кейсів.", ru: "Лимит: до 2 кейсов.", en: "Limit: up to 2 cases." }
-  },
-  {
-    id: "single_rental_contract",
-    name: { uk: "Пояснення договору оренди", ru: "Объяснение договора аренды", en: "Rental Contract Explanation" },
-    price: "€129",
-    mode: { uk: "дистанційно", ru: "удаленно", en: "remote" },
-    desc: { uk: "Просте пояснення договору оренди, ключових ризиків і питань перед підписанням.", ru: "Простое объяснение договора аренды, ключевых рисков и вопросов до подписания.", en: "Plain-language explanation of a rental contract, key risks and questions before signing." },
-    limit: { uk: "Ліміт: один договір.", ru: "Лимит: один договор.", en: "Limit: one contract." },
-    notIncluded: { uk: "Не включено: юридичний висновок або представництво.", ru: "Не включено: юридическое заключение или представительство.", en: "Not included: legal opinion or representation." }
-  },
-  {
-    id: "single_housing_scam_check",
-    name: { uk: "Перевірка житлової пропозиції", ru: "Проверка жилищного предложения", en: "Housing Scam Check" },
-    price: "€99",
-    mode: { uk: "дистанційно", ru: "удаленно", en: "remote" },
-    desc: { uk: "Перевірка одного житлового оголошення, орендодавця або пропозиції на ризикові сигнали та підозрілі деталі.", ru: "Проверка одного жилищного объявления, арендодателя или предложения на рисковые сигналы и подозрительные детали.", en: "Checking one housing listing, landlord or offer for risk signals and suspicious details." },
-    limit: { uk: "Ліміт: одне оголошення / один орендодавець.", ru: "Лимит: одно объявление / один арендодатель.", en: "Limit: one listing / one landlord." },
-    notIncluded: { uk: "Не включено: пошук житла або гарантія оренди.", ru: "Не включено: поиск жилья или гарантия аренды.", en: "Not included: housing search or tenancy guarantee." }
-  },
-  {
-    id: "single_deposit_return",
-    name: { uk: "Підтримка повернення депозиту", ru: "Поддержка возврата депозита", en: "Deposit Return Support" },
-    price: "€149",
-    mode: { uk: "дистанційно / гібридно", ru: "удаленно / гибридно", en: "remote / hybrid" },
-    desc: { uk: "Підтримка з підготовкою письмового запиту та стратегії комунікації, коли депозит не повертають.", ru: "Поддержка с подготовкой письменного запроса и стратегии коммуникации, когда депозит не возвращают.", en: "Support preparing a written request and communication strategy when a deposit is not returned." },
-    limit: { uk: "Ліміт: до 3 раундів комунікації.", ru: "Лимит: до 3 раундов коммуникации.", en: "Limit: up to 3 communication rounds." },
-    notIncluded: { uk: "Не включено: юридичне представництво.", ru: "Не включено: юридическое представительство.", en: "Not included: legal representation." }
-  },
-  {
-    id: "single_insurance_claim",
-    name: { uk: "Підтримка страхового відшкодування", ru: "Поддержка страхового возмещения", en: "Insurance Claim Support" },
-    price: "€99",
-    mode: { uk: "дистанційно", ru: "удаленно", en: "remote" },
-    desc: { uk: "Підтримка з підготовкою документів і поданням однієї страхової заяви або запиту на відшкодування.", ru: "Поддержка с подготовкой документов и подачей одного страхового заявления или запроса на возмещение.", en: "Support with preparing documents and submitting one insurance claim or reimbursement request." },
-    limit: { uk: "Ліміт: один запит.", ru: "Лимит: один запрос.", en: "Limit: one claim." },
-    notIncluded: { uk: "Не включено: гарантія рішення страховика.", ru: "Не включено: гарантия решения страховщика.", en: "Not included: insurer decision guarantee." }
-  },
-  {
-    id: "single_healthcare_registration",
-    name: { uk: "Реєстрація в системі медицини", ru: "Регистрация в системе медицины", en: "Healthcare Registration" },
-    price: "€89",
-    mode: { uk: "дистанційно / локально / гібридно", ru: "удаленно / локально / гибридно", en: "remote / local / hybrid" },
-    desc: { uk: "Підтримка з пошуком і реєстрацією у GP / huisarts та пояснення базового медичного маршруту.", ru: "Поддержка с поиском и регистрацией у GP / huisarts и объяснение базового медицинского маршрута.", en: "Support with finding and registering with a GP / huisarts and understanding the basic healthcare route." },
-    limit: { uk: "Ліміт: одна реєстрація у GP.", ru: "Лимит: одна регистрация у GP.", en: "Limit: one GP registration." }
-  },
-  {
-    id: "single_landlord_communication",
-    name: { uk: "Комунікація з орендодавцем", ru: "Коммуникация с арендодателем", en: "Landlord Communication" },
-    price: "€89",
-    mode: { uk: "дистанційно", ru: "удаленно", en: "remote" },
-    desc: { uk: "Допомога з підготовкою професійних повідомлень до орендодавця або житлової агенції.", ru: "Помощь с подготовкой профессиональных сообщений арендодателю или жилищному агентству.", en: "Help preparing professional messages to a landlord or housing agency." },
-    limit: { uk: "Ліміт: до 2 повідомлень.", ru: "Лимит: до 2 сообщений.", en: "Limit: up to 2 messages." },
-    notIncluded: { uk: "Не включено: переговори як представник або агент.", ru: "Не включено: переговоры как представитель или агент.", en: "Not included: negotiation as a representative or agent." }
-  }
 ];
 
-export interface Testimonial {
-  id: string;
-  name: Record<Language, string>;
-  role: Record<Language, string>;
-  university: Record<Language, string>;
-  city: Record<Language, string>;
-  story: Record<Language, string>;
+export interface IndividualService {
+  slug: string;
+  name: LocalizedText;
+  price: string;
+  summary: LocalizedText;
+  boundary: LocalizedText;
 }
 
-export const TESTIMONIALS: Testimonial[] = [
+export interface ServiceGroup {
+  id: 'a' | 'b' | 'c' | 'd';
+  title: LocalizedText;
+  description: LocalizedText;
+  services: IndividualService[];
+}
+
+export const INDIVIDUAL_SERVICE_GROUPS: ServiceGroup[] = [
   {
-    id: "t1",
-    name: { uk: "Перед приїздом", ru: "До приезда", en: "Before arrival" },
-    role: { uk: "Новоприбулому потрібен зрозумілий план", ru: "Новоприбывшему нужен понятный план", en: "A newcomer needs a clear plan" },
-    university: { uk: "Реєстрація і BSN", ru: "Регистрация и BSN", en: "Registration and BSN" },
-    city: { uk: "Нідерланди", ru: "Нидерланды", en: "The Netherlands" },
-    story: {
-      uk: "VANTAM перевірив документи, пояснив порядок дій і допоміг сім'ї зрозуміти, що треба зробити до приїзду, а що можна відкласти до реєстрації.",
-      ru: "VANTAM проверил документы, объяснил порядок действий и помог семье понять, что нужно сделать до приезда, а что можно оставить на период после регистрации.",
-      en: "VANTAM reviewed the documents, explained the steps and helped the family understand what had to happen before arrival and what could wait until after registration."
-    }
+    id: 'a',
+    title: {
+      en: 'A — Official & Administrative Problems',
+      uk: 'A — Офіційні та адміністративні проблеми',
+      ru: 'A — Официальные и административные проблемы',
+    },
+    description: {
+      en: 'Letters, registration issues, lost-document sequences, and practical administrative follow-through.',
+      uk: 'Листи, проблеми з реєстрацією, послідовності після втрати документів і практичне адміністративне продовження.',
+      ru: 'Письма, проблемы с регистрацией, последовательности после потери документов и практическое административное сопровождение.',
+    },
+    services: [
+      {
+        slug: 'official_letter_action',
+        name: {en: 'Official Letter Action', uk: 'Official Letter Action', ru: 'Official Letter Action'},
+        price: '€79',
+        summary: {
+          en: 'Explain one official letter, the deadline, the required documents, and prepare the response or next action.',
+          uk: 'Пояснити один офіційний лист, дедлайн, потрібні документи та підготувати відповідь або наступну дію.',
+          ru: 'Объяснить одно официальное письмо, срок, нужные документы и подготовить ответ или следующее действие.',
+        },
+        boundary: {
+          en: 'One letter only. Not legal representation.',
+          uk: 'Лише один лист. Не юридичне представництво.',
+          ru: 'Только одно письмо. Не юридическое представительство.',
+        },
+      },
+      {
+        slug: 'administration_problem_support',
+        name: {en: 'Administration Problem Support', uk: 'Administration Problem Support', ru: 'Administration Problem Support'},
+        price: 'Request a price',
+        summary: {
+          en: 'Municipality, BRP, DigiD, bank administration, registration, or repeated document-request problems.',
+          uk: 'Проблеми з муніципалітетом, BRP, DigiD, банківською адміністрацією, реєстрацією або повторними запитами документів.',
+          ru: 'Проблемы с муниципалитетом, BRP, DigiD, банковской администрацией, регистрацией или повторными запросами документов.',
+        },
+        boundary: {
+          en: 'Scope depends on history, parties, and documentation.',
+          uk: 'Обсяг залежить від історії, сторін і документів.',
+          ru: 'Объём зависит от истории, сторон и документов.',
+        },
+      },
+      {
+        slug: 'lost_document_coordination',
+        name: {en: 'Lost Document Coordination', uk: 'Lost Document Coordination', ru: 'Lost Document Coordination'},
+        price: 'Request a price',
+        summary: {
+          en: 'Practical sequence after losing a passport, residence card, or important document across police, embassy, IND, and municipality.',
+          uk: 'Практична послідовність після втрати паспорта, карти побуту або важливого документа через поліцію, посольство, IND і муніципалітет.',
+          ru: 'Практическая последовательность после потери паспорта, карты проживания или важного документа через полицию, посольство, IND и муниципалитет.',
+        },
+        boundary: {
+          en: 'No legal representation claim.',
+          uk: 'Без заяв про юридичне представництво.',
+          ru: 'Без заявлений о юридическом представительстве.',
+        },
+      },
+    ],
   },
   {
-    id: "t2",
-    name: { uk: "Перший місяць", ru: "Первый месяц", en: "First month" },
-    role: { uk: "Новоприбулий починає життя на місці", ru: "Новоприбывший начинает жизнь на месте", en: "A newcomer starting life on site" },
-    university: { uk: "Адміністративні кроки", ru: "Административные шаги", en: "Administrative steps" },
-    city: { uk: "Делфт", ru: "Делфт", en: "Delft" },
-    story: {
-      uk: "Для першого місяця VANTAM допоміг тримати послідовність: реєстрація, BSN, DigiD, банк, страховка та GP без хаотичних пошуків.",
-      ru: "В первый месяц VANTAM помог удержать последовательность: регистрация, BSN, DigiD, банк, страховка и GP без хаотичных поисков.",
-      en: "During the first month, VANTAM helped keep the sequence clear: registration, BSN, DigiD, banking, insurance and GP without random searching."
-    }
+    id: 'b',
+    title: {
+      en: 'B — University, Work & Insurance',
+      uk: 'B — Університет, робота та страхування',
+      ru: 'B — Университет, работа и страховка',
+    },
+    description: {
+      en: 'Defined academic, internship, work, and insurance-related practical cases.',
+      uk: 'Визначені практичні кейси, пов’язані з навчанням, стажуванням, роботою та страхуванням.',
+      ru: 'Определённые практические кейсы, связанные с учёбой, стажировкой, работой и страховкой.',
+    },
+    services: [
+      {
+        slug: 'university_administration_case',
+        name: {en: 'University Administration Case', uk: 'University Administration Case', ru: 'University Administration Case'},
+        price: '€119',
+        summary: {
+          en: 'One defined enrolment, tuition, student-card, missing-document, internship-form, or department-communication issue.',
+          uk: 'Одна визначена проблема з enrolment, tuition, student card, missing document, internship form або department communication.',
+          ru: 'Одна определённая проблема с enrolment, tuition, student card, missing document, internship form или department communication.',
+        },
+        boundary: {
+          en: 'One defined case.',
+          uk: 'Один визначений кейс.',
+          ru: 'Один определённый кейс.',
+        },
+      },
+      {
+        slug: 'academic_issue_support',
+        name: {en: 'Academic Issue Support', uk: 'Academic Issue Support', ru: 'Academic Issue Support'},
+        price: 'Request a price',
+        summary: {
+          en: 'Study delay, attendance warning, resit administration, study-progress concern, or preparation for a study-adviser meeting.',
+          uk: 'Затримка в навчанні, попередження щодо відвідуваності, адміністрація перескладання, занепокоєння щодо прогресу або підготовка до зустрічі з навчальним радником.',
+          ru: 'Задержка в учёбе, предупреждение по посещаемости, оформление пересдачи, беспокойство по прогрессу или подготовка к встрече с учебным консультантом.',
+        },
+        boundary: {
+          en: 'No academic or legal representation claim.',
+          uk: 'Без заяв про академічне або юридичне представництво.',
+          ru: 'Без заявлений об академическом или юридическом представительстве.',
+        },
+      },
+      {
+        slug: 'internship_administration',
+        name: {en: 'Internship Administration', uk: 'Internship Administration', ru: 'Internship Administration'},
+        price: '€139',
+        summary: {
+          en: 'Documents and coordination among the student, university, and company.',
+          uk: 'Документи та координація між студентом, університетом і компанією.',
+          ru: 'Документы и координация между студентом, университетом и компанией.',
+        },
+        boundary: {
+          en: 'Defined internship administration scope.',
+          uk: 'Визначений обсяг internship administration.',
+          ru: 'Определённый объём internship administration.',
+        },
+      },
+      {
+        slug: 'work_insurance_transition',
+        name: {en: 'Work & Insurance Transition', uk: 'Work & Insurance Transition', ru: 'Work & Insurance Transition'},
+        price: '€149',
+        summary: {
+          en: 'Employment or paid-internship documents, insurance implications, and the practical sequence.',
+          uk: 'Документи щодо роботи або paid internship, наслідки для страхування та практична послідовність.',
+          ru: 'Документы по работе или paid internship, последствия для страховки и практическая последовательность.',
+        },
+        boundary: {
+          en: 'Practical sequence only. Not regulated advice.',
+          uk: 'Лише практична послідовність. Не регульована порада.',
+          ru: 'Только практическая последовательность. Не регулируемая консультация.',
+        },
+      },
+      {
+        slug: 'employment_administration_check',
+        name: {en: 'Employment Administration Check', uk: 'Employment Administration Check', ru: 'Employment Administration Check'},
+        price: '€119',
+        summary: {
+          en: 'One employment or internship document, payslip, or practical condition plus next actions.',
+          uk: 'Один документ щодо роботи або стажування, payslip або практична умова плюс наступні дії.',
+          ru: 'Один документ по работе или стажировке, payslip или практическое условие плюс следующие действия.',
+        },
+        boundary: {
+          en: 'Not employment-law advice.',
+          uk: 'Не порада з трудового права.',
+          ru: 'Не совет по трудовому праву.',
+        },
+      },
+      {
+        slug: 'cak_svb_case_support',
+        name: {en: 'CAK / SVB Case Support', uk: 'CAK / SVB Case Support', ru: 'CAK / SVB Case Support'},
+        price: 'Request a price',
+        summary: {
+          en: 'Letter, documents, route, deadline, and practical communication around CAK or SVB issues.',
+          uk: 'Лист, документи, маршрут, дедлайн і практична комунікація щодо питань CAK або SVB.',
+          ru: 'Письмо, документы, маршрут, срок и практическая коммуникация по вопросам CAK или SVB.',
+        },
+        boundary: {
+          en: 'Not legal or insurance advice.',
+          uk: 'Не юридична чи страхова порада.',
+          ru: 'Не юридическая и не страховая консультация.',
+        },
+      },
+    ],
   },
   {
-    id: "t3",
-    name: { uk: "Перевірка житла", ru: "Проверка жилья", en: "Housing check" },
-    role: { uk: "Молодий експат оцінює пропозицію", ru: "Молодой экспат оценивает предложение", en: "A young expat reviewing an offer" },
-    university: { uk: "Договір і ризики", ru: "Договор и риски", en: "Contract and risks" },
-    city: { uk: "Роттердам", ru: "Роттердам", en: "Rotterdam" },
-    story: {
-      uk: "Коли з'явилася сумнівна житлова пропозиція, VANTAM розібрав сигнали ризику та допоміг сформулювати правильні запитання до орендодавця.",
-      ru: "Когда появилось сомнительное жилищное предложение, VANTAM разобрал сигналы риска и помог сформулировать правильные вопросы арендодателю.",
-      en: "When a housing offer looked uncertain, VANTAM broke down the warning signs and helped prepare the right questions for the landlord."
-    }
-  }
+    id: 'c',
+    title: {
+      en: 'C — Housing Problems',
+      uk: 'C — Житлові проблеми',
+      ru: 'C — Жилищные проблемы',
+    },
+    description: {
+      en: 'Offer review, landlord problems, move-out issues, and emergency housing changes.',
+      uk: 'Перевірка оферу, проблеми з орендодавцем, виїзд і термінові житлові зміни.',
+      ru: 'Проверка офера, проблемы с арендодателем, выезд и срочные жилищные изменения.',
+    },
+    services: [
+      {
+        slug: 'housing_offer_contract_check',
+        name: {en: 'Housing Offer & Contract Check', uk: 'Housing Offer & Contract Check', ru: 'Housing Offer & Contract Check'},
+        price: '€129',
+        summary: {
+          en: 'Review the offer, landlord or agency information, payment structure, deposit, duration, termination terms, unusual conditions, and practical questions.',
+          uk: 'Перевірити офер, інформацію про орендодавця чи агенцію, структуру платежів, депозит, тривалість, умови припинення, незвичні умови та практичні питання.',
+          ru: 'Проверить офер, информацию об арендодателе или агентстве, структуру платежей, депозит, длительность, условия прекращения, необычные условия и практические вопросы.',
+        },
+        boundary: {
+          en: 'No legal-advice or legitimacy guarantee.',
+          uk: 'Без юридичної поради чи гарантії легітимності.',
+          ru: 'Без юридической консультации или гарантии легитимности.',
+        },
+      },
+      {
+        slug: 'landlord_problem_evidence_pack',
+        name: {en: 'Landlord Problem & Evidence Pack', uk: 'Landlord Problem & Evidence Pack', ru: 'Landlord Problem & Evidence Pack'},
+        price: 'Request a price',
+        summary: {
+          en: 'Create a chronology, organise photos and evidence, prepare communication, and map the escalation route.',
+          uk: 'Скласти хронологію, впорядкувати фото й докази, підготувати комунікацію та маршрут ескалації.',
+          ru: 'Составить хронологию, упорядочить фото и доказательства, подготовить коммуникацию и маршрут эскалации.',
+        },
+        boundary: {
+          en: 'Practical evidence structure only.',
+          uk: 'Лише практична структура доказів.',
+          ru: 'Только практическая структура доказательств.',
+        },
+      },
+      {
+        slug: 'move_out_deposit_support',
+        name: {en: 'Move-out & Deposit Support', uk: 'Move-out & Deposit Support', ru: 'Move-out & Deposit Support'},
+        price: 'Request a price',
+        summary: {
+          en: 'Evidence plan, inspection preparation, deposit request, and communication strategy.',
+          uk: 'План доказів, підготовка до огляду, запит депозиту та стратегія комунікації.',
+          ru: 'План доказательств, подготовка к осмотру, запрос депозита и стратегия коммуникации.',
+        },
+        boundary: {
+          en: 'Not legal representation.',
+          uk: 'Не юридичне представництво.',
+          ru: 'Не юридическое представительство.',
+        },
+      },
+      {
+        slug: 'emergency_relocation_coordination',
+        name: {en: 'Emergency Relocation Coordination', uk: 'Emergency Relocation Coordination', ru: 'Emergency Relocation Coordination'},
+        price: 'Request a price',
+        summary: {
+          en: 'Temporary-accommodation route, move sequence, documents, landlord communication, and the next housing route.',
+          uk: 'Маршрут тимчасового житла, послідовність переїзду, документи, комунікація з орендодавцем і наступний житловий маршрут.',
+          ru: 'Маршрут временного жилья, последовательность переезда, документы, коммуникация с арендодателем и следующий жилищный маршрут.',
+        },
+        boundary: {
+          en: 'No accommodation guarantee.',
+          uk: 'Без гарантії житла.',
+          ru: 'Без гарантии жилья.',
+        },
+      },
+    ],
+  },
+  {
+    id: 'd',
+    title: {
+      en: 'D — Urgent & Major Life Changes',
+      uk: 'D — Термінові та великі життєві зміни',
+      ru: 'D — Срочные и крупные жизненные изменения',
+    },
+    description: {
+      en: 'Urgent practical assessment and major transition routes for the next phase of student life.',
+      uk: 'Термінова практична оцінка та маршрути великих переходів для наступного етапу студентського життя.',
+      ru: 'Срочная практическая оценка и маршруты крупных переходов для следующего этапа студенческой жизни.',
+    },
+    services: [
+      {
+        slug: 'urgent_situation_assessment',
+        name: {en: 'Urgent Situation Assessment', uk: 'Urgent Situation Assessment', ru: 'Urgent Situation Assessment'},
+        price: '€99',
+        summary: {
+          en: 'Priority assessment and a written immediate-action plan.',
+          uk: 'Пріоритетна оцінка та письмовий план негайних дій.',
+          ru: 'Приоритетная оценка и письменный план немедленных действий.',
+        },
+        boundary: {
+          en: 'No unapproved response-time promise.',
+          uk: 'Без неузгодженої обіцянки часу відповіді.',
+          ru: 'Без несогласованного обещания времени ответа.',
+        },
+      },
+      {
+        slug: 'complex_urgent_case',
+        name: {en: 'Complex Urgent Case', uk: 'Complex Urgent Case', ru: 'Complex Urgent Case'},
+        price: 'Request a price',
+        summary: {
+          en: 'Several parties, several documents, or an urgent deadline across multiple practical tracks.',
+          uk: 'Кілька сторін, кілька документів або терміновий дедлайн через кілька практичних напрямів.',
+          ru: 'Несколько сторон, несколько документов или срочный срок через несколько практических направлений.',
+        },
+        boundary: {
+          en: 'Scope depends on complexity.',
+          uk: 'Обсяг залежить від складності.',
+          ru: 'Объём зависит от сложности.',
+        },
+      },
+      {
+        slug: 'graduation_orientation_year_roadmap',
+        name: {en: 'Graduation & Orientation Year Roadmap', uk: 'Graduation & Orientation Year Roadmap', ru: 'Graduation & Orientation Year Roadmap'},
+        price: '€149',
+        summary: {
+          en: 'Graduation timeline, orientation-year preparation, work, insurance, housing, and registration changes.',
+          uk: 'Таймлайн випуску, підготовка до orientation year, зміни в роботі, страхуванні, житлі та реєстрації.',
+          ru: 'Таймлайн выпуска, подготовка к orientation year, изменения в работе, страховке, жилье и регистрации.',
+        },
+        boundary: {
+          en: 'Not immigration advice.',
+          uk: 'Не імміграційна порада.',
+          ru: 'Не иммиграционная консультация.',
+        },
+      },
+      {
+        slug: 'moving_leaving_netherlands',
+        name: {en: 'Moving or Leaving the Netherlands', uk: 'Moving or Leaving the Netherlands', ru: 'Moving or Leaving the Netherlands'},
+        price: '€149',
+        summary: {
+          en: 'Municipality, deregistration, housing, insurance, subscriptions, and remaining obligations.',
+          uk: 'Муніципалітет, зняття з реєстрації, житло, страхування, підписки та залишкові зобов’язання.',
+          ru: 'Муниципалитет, снятие с регистрации, жильё, страховка, подписки и оставшиеся обязательства.',
+        },
+        boundary: {
+          en: 'Practical sequence only.',
+          uk: 'Лише практична послідовність.',
+          ru: 'Только практическая последовательность.',
+        },
+      },
+    ],
+  },
 ];
 
-export interface Pitfall {
-  id: string;
-  label: Record<Language, string>;
-  cost: number;
-  explanation: Record<Language, string>;
+export interface StudentLifeArea {
+  area: LocalizedText;
+  status: 'completed' | 'in_progress' | 'waiting_student' | 'waiting_third_party' | 'activate_later' | 'risk_identified';
 }
 
-export const PITFALLS: Pitfall[] = [
-  {
-    id: "scam",
-    label: {
-      uk: "Ризик втрати передоплати за житло",
-      ru: "Риск потери предоплаты за жилье",
-      en: "Risk of losing a housing prepayment"
-    },
-    cost: 1600,
-    explanation: {
-      uk: "Приклад для планування: депозит або передоплата переказані до перевірки пропозиції та особи орендодавця.",
-      ru: "Пример для планирования: депозит или предоплата переведены до проверки предложения и личности арендодателя.",
-      en: "Planning example: a deposit or prepayment is transferred before the listing and landlord identity are checked."
-    }
-  },
-  {
-    id: "fine",
-    label: {
-      uk: "Додаткові витрати через затримку реєстрації",
-      ru: "Дополнительные расходы из-за задержки регистрации",
-      en: "Extra costs linked to delayed registration"
-    },
-    cost: 350,
-    explanation: {
-      uk: "Приклад резерву на повторні візити, термінові документи, транспорт або інші витрати, якщо реєстрація затримується.",
-      ru: "Пример резерва на повторные визиты, срочные документы, транспорт или другие расходы при задержке регистрации.",
-      en: "Example allowance for repeat visits, urgent documents, transport or other costs when registration is delayed."
-    }
-  },
-  {
-    id: "insurance",
-    label: { 
-      uk: "Витрати через невідповідний страховий маршрут",
-      ru: "Расходы из-за неподходящего страхового маршрута",
-      en: "Costs linked to the wrong insurance route"
-    },
-    cost: 450,
-    explanation: {
-      uk: "Приклад для планування: тимчасові переплати або медичні витрати до з'ясування відповідного типу страхування.",
-      ru: "Пример для планирования: временные переплаты или медицинские расходы до выяснения подходящего типа страхования.",
-      en: "Planning example: temporary overpayments or medical costs while the appropriate insurance route is clarified."
-    }
-  },
-  {
-    id: "hostel",
-    label: { uk: "Незаплановане короткострокове проживання", ru: "Незапланированное краткосрочное проживание", en: "Unplanned short-term accommodation" },
-    cost: 1200,
-    explanation: {
-      uk: "Приклад резерву на готель, хостел або інше тимчасове житло, якщо дата заселення змінюється.",
-      ru: "Пример резерва на отель, хостел или другое временное жилье, если дата заселения меняется.",
-      en: "Example allowance for a hotel, hostel or other temporary stay when the move-in date changes."
-    }
-  },
-  {
-    id: "banking",
-    label: { uk: "Тимчасові банківські та конвертаційні витрати", ru: "Временные банковские расходы и конвертация", en: "Temporary banking and conversion costs" },
-    cost: 200,
-    explanation: {
-      uk: "Приклад резерву на комісії, конвертацію та тимчасові способи оплати до відкриття місцевого рахунку.",
-      ru: "Пример резерва на комиссии, конвертацию и временные способы оплаты до открытия местного счета.",
-      en: "Example allowance for fees, conversion and temporary payment methods before a local account is available."
-    }
-  },
-  {
-    id: "panic",
-    label: { uk: "Час родини на дистанційну координацію", ru: "Время семьи на дистанционную координацию", en: "Family time spent coordinating remotely" },
-    cost: 800,
-    explanation: {
-      uk: "Умовна оцінка часу, який родина може витратити на дзвінки, пошук інформації та координацію з іншої країни.",
-      ru: "Условная оценка времени, которое семья может потратить на звонки, поиск информации и координацию из другой страны.",
-      en: "An illustrative value for time spent on calls, research and coordination from another country."
-    }
-  }
+export const STUDENT_LIFE_STATUSES: Record<StudentLifeArea['status'], LocalizedText> = {
+  completed: {en: 'Completed', uk: 'Завершено', ru: 'Завершено'},
+  in_progress: {en: 'In progress', uk: 'У процесі', ru: 'В процессе'},
+  waiting_student: {en: 'Waiting for student', uk: 'Очікує студента', ru: 'Ожидает студента'},
+  waiting_third_party: {en: 'Waiting for third party', uk: 'Очікує третю сторону', ru: 'Ожидает третью сторону'},
+  activate_later: {en: 'Activate later', uk: 'Активувати пізніше', ru: 'Активировать позже'},
+  risk_identified: {en: 'Risk identified', uk: 'Ризик виявлено', ru: 'Риск выявлен'},
+};
+
+export const STUDENT_LIFE_MAP_PREVIEW: StudentLifeArea[] = [
+  {area: {en: 'Arrival & Documents', uk: 'Приїзд і документи', ru: 'Приезд и документы'}, status: 'completed'},
+  {area: {en: 'Housing', uk: 'Житло', ru: 'Жильё'}, status: 'in_progress'},
+  {area: {en: 'University', uk: 'Університет', ru: 'Университет'}, status: 'waiting_student'},
+  {area: {en: 'Work & Internship', uk: 'Робота та стажування', ru: 'Работа и стажировка'}, status: 'activate_later'},
+  {area: {en: 'Insurance & Healthcare', uk: 'Страхування та медицина', ru: 'Страховка и медицина'}, status: 'waiting_third_party'},
+  {area: {en: 'Important Letters', uk: 'Важливі листи', ru: 'Важные письма'}, status: 'risk_identified'},
+  {area: {en: 'Next Academic Step', uk: 'Наступний академічний крок', ru: 'Следующий академический шаг'}, status: 'activate_later'},
 ];
 
-export interface RelocationTask {
+export interface TypicalSituation {
   id: string;
-  title: Record<Language, string>;
-  category: 'assess' | 'map' | 'act' | 'verify';
+  title: LocalizedText;
+  trigger: LocalizedText;
+  risk: LocalizedText;
+  action: LocalizedText;
+  recommendedProduct: LocalizedText;
+  boundary: LocalizedText;
 }
 
-export const BLUEPRINT_CHECKLIST: RelocationTask[] = [
-  { id: "c1", category: "assess", title: { uk: "Зрозуміти свою ситуацію і пріоритет", ru: "Понять свою ситуацию и приоритет", en: "Understand the situation and priority" } },
-  { id: "c2", category: "assess", title: { uk: "Визначити, чи потрібна консультація чи пакет", ru: "Определить, нужна ли консультация или пакет", en: "Decide whether a consultation or package is needed" } },
-  { id: "c3", category: "map", title: { uk: "Скласти карту наступних кроків", ru: "Составить карту следующих шагов", en: "Map the next steps" } },
-  { id: "c4", category: "map", title: { uk: "Зібрати потрібні документи й контакти", ru: "Собрать нужные документы и контакты", en: "Gather the needed documents and contacts" } },
-  { id: "c5", category: "act", title: { uk: "Запустити відповідний шлях підтримки", ru: "Запустить подходящий путь поддержки", en: "Start the right support path" } },
-  { id: "c6", category: "act", title: { uk: "Узгодити повідомлення, запити та наступні дії", ru: "Согласовать сообщения, запросы и следующие действия", en: "Align messages, requests and next actions" } },
-  { id: "c7", category: "verify", title: { uk: "Перевірити, що вже виконано", ru: "Проверить, что уже выполнено", en: "Verify what has been done" } },
-  { id: "c8", category: "verify", title: { uk: "Вирішити, чи потрібне продовження", ru: "Решить, нужно ли продолжение", en: "Decide whether continuation is needed" } }
+export const TYPICAL_SITUATIONS: TypicalSituation[] = [
+  {
+    id: 'arrival_sequence',
+    title: {en: 'Arrival in six weeks with no sequence', uk: 'Приїзд через шість тижнів без послідовності', ru: 'Приезд через шесть недель без последовательности'},
+    trigger: {en: 'The student has dates, tasks, and pressure but no clear order.', uk: 'У студента є дати, завдання й тиск, але немає чіткої послідовності.', ru: 'У студента есть даты, задачи и давление, но нет понятной последовательности.'},
+    risk: {en: 'Documents and registration steps may happen too late or in the wrong order.', uk: 'Документи й кроки реєстрації можуть статися занадто пізно або в неправильному порядку.', ru: 'Документы и шаги регистрации могут произойти слишком поздно или в неправильном порядке.'},
+    action: {en: 'VANTAM maps the sequence, checks readiness, and prepares the first action plan.', uk: 'VANTAM складає послідовність, перевіряє готовність і готує перший план дій.', ru: 'VANTAM выстраивает последовательность, проверяет готовность и готовит первый план действий.'},
+    recommendedProduct: {en: 'Relocation Orientation or VANTAM Start', uk: 'Relocation Orientation або VANTAM Start', ru: 'Relocation Orientation или VANTAM Start'},
+    boundary: {en: 'No guarantee that third-party appointments or approvals will be available on a preferred timeline.', uk: 'Без гарантії, що записи чи погодження третіх сторін будуть доступні у бажаний термін.', ru: 'Без гарантии, что записи или одобрения третьих сторон будут доступны в желаемый срок.'},
+  },
+  {
+    id: 'setup_first_year',
+    title: {en: 'Setup plus first-year support', uk: 'Запуск плюс підтримка на перший рік', ru: 'Запуск плюс поддержка на первый год'},
+    trigger: {en: 'The student wants the first month handled and later checkpoints built in.', uk: 'Студент хоче, щоб перший місяць був опрацьований і щоб були вбудовані подальші контрольні точки.', ru: 'Студент хочет, чтобы первый месяц был отработан и чтобы были встроены последующие контрольные точки.'},
+    risk: {en: 'Important later issues can appear after the first setup is finished.', uk: 'Важливі пізніші питання можуть з’явитися після завершення першого налаштування.', ru: 'Важные более поздние вопросы могут появиться после завершения первой настройки.'},
+    action: {en: 'VANTAM uses Start execution plus checkpoints, Action Credits, and Quick Reviews.', uk: 'VANTAM використовує виконання Start плюс контрольні точки, цільові дії та короткі перегляди.', ru: 'VANTAM использует выполнение Start плюс контрольные точки, целевые действия и короткие обзоры.'},
+    recommendedProduct: {en: 'VANTAM First Year', uk: 'VANTAM First Year', ru: 'VANTAM First Year'},
+    boundary: {en: 'Defined support only. No unlimited support implication.', uk: 'Лише визначена підтримка. Без натяку на необмежену підтримку.', ru: 'Только определённая поддержка. Без намёка на неограниченную поддержку.'},
+  },
+  {
+    id: 'rental_profile',
+    title: {en: 'Rental profile plus first applications', uk: 'Профіль орендаря плюс перші заявки', ru: 'Профиль арендатора плюс первые заявки'},
+    trigger: {en: 'The student is not yet ready to apply or needs the first good submissions done properly.', uk: 'Студент ще не готовий подаватися або хоче, щоб перші хороші подання були зроблені правильно.', ru: 'Студент ещё не готов подаваться или хочет, чтобы первые хорошие подачи были сделаны правильно.'},
+    risk: {en: 'Weak documents or wrong timing can waste the first housing opportunities.', uk: 'Слабкі документи або неправильний таймінг можуть змарнувати перші житлові можливості.', ru: 'Слабые документы или неправильный тайминг могут испортить первые жилищные возможности.'},
+    action: {en: 'VANTAM prepares the profile, application pack, and up to three Qualified Applications.', uk: 'VANTAM готує профіль, пакет документів для подання і до трьох кваліфікованих заявок.', ru: 'VANTAM готовит профиль, пакет документов для подачи и до трёх квалифицированных заявок.'},
+    recommendedProduct: {en: 'Housing Ready', uk: 'Housing Ready', ru: 'Housing Ready'},
+    boundary: {en: 'No housing guarantee.', uk: 'Без гарантії житла.', ru: 'Без гарантии жилья.'},
+  },
+  {
+    id: 'six_week_campaign',
+    title: {en: 'Active six-week campaign', uk: 'Активна шеститижнева кампанія', ru: 'Активная шестинедельная кампания'},
+    trigger: {en: 'The student needs a defined housing campaign with a visible pipeline and execution caps.', uk: 'Студенту потрібна визначена житлова кампанія з видимою воронкою заявок та межами виконання.', ru: 'Студенту нужна определённая жилищная кампания с видимой воронкой заявок и пределами выполнения.'},
+    risk: {en: 'A housing search without limits can become expensive, chaotic, and hard to track.', uk: 'Пошук житла без меж може стати дорогим, хаотичним і важким для відстеження.', ru: 'Поиск жилья без пределов может стать дорогим, хаотичным и трудным для отслеживания.'},
+    action: {en: 'VANTAM runs the strategy, applications, lead handling, and viewing preparation within fixed limits.', uk: 'VANTAM веде стратегію, подання, роботу з активними кейсами та підготовку до переглядів у фіксованих межах.', ru: 'VANTAM ведёт стратегию, подачи, работу с активными кейсами и подготовку к просмотрам в фиксированных пределах.'},
+    recommendedProduct: {en: 'Housing Search Campaign', uk: 'Housing Search Campaign', ru: 'Housing Search Campaign'},
+    boundary: {en: 'Lead, viewing, and communication limits stay fixed.', uk: 'Ліміти на активні кейси, перегляди та комунікацію залишаються фіксованими.', ru: 'Лимиты на активные кейсы, просмотры и коммуникацию остаются фиксированными.'},
+  },
+  {
+    id: 'cak_svb_letter',
+    title: {en: 'CAK/SVB or municipality letter', uk: 'Лист CAK/SVB або муніципалітету', ru: 'Письмо CAK/SVB или муниципалитета'},
+    trigger: {en: 'A formal letter arrives and the student does not understand the deadline or response route.', uk: 'Приходить формальний лист, і студент не розуміє дедлайн чи маршрут відповіді.', ru: 'Приходит формальное письмо, и студент не понимает срок или маршрут ответа.'},
+    risk: {en: 'A missed response can create extra pressure, repeat requests, or avoidable cost.', uk: 'Пропущена відповідь може створити додатковий тиск, повторні запити або зайві витрати.', ru: 'Пропущенный ответ может создать дополнительное давление, повторные запросы или лишние расходы.'},
+    action: {en: 'VANTAM explains the letter, the documents, and the practical next action.', uk: 'VANTAM пояснює лист, документи та практичну наступну дію.', ru: 'VANTAM объясняет письмо, документы и практическое следующее действие.'},
+    recommendedProduct: {en: 'Official Letter Action or CAK / SVB Case Support', uk: 'Official Letter Action або CAK / SVB Case Support', ru: 'Official Letter Action или CAK / SVB Case Support'},
+    boundary: {en: 'No legal or insurance advice.', uk: 'Без юридичної чи страхової поради.', ru: 'Без юридической или страховой консультации.'},
+  },
+  {
+    id: 'academic_warning',
+    title: {en: 'Academic warning or internship administration', uk: 'Академічне попередження або адміністрація стажування', ru: 'Академическое предупреждение или администрация стажировки'},
+    trigger: {en: 'A university or internship process becomes practical, urgent, or document-heavy.', uk: 'Університетський або internship-процес стає практичним, терміновим або важким за документами.', ru: 'Университетский или internship-процесс становится практическим, срочным или тяжёлым по документам.'},
+    risk: {en: 'Missing a practical step can affect status, deadlines, or the next study/work move.', uk: 'Пропуск практичного кроку може вплинути на статус, дедлайни чи наступний крок у навчанні/роботі.', ru: 'Пропуск практического шага может повлиять на статус, сроки или следующий шаг в учёбе/работе.'},
+    action: {en: 'VANTAM organises the documents, communication, and next-step sequence for the defined case.', uk: 'VANTAM організовує документи, комунікацію та послідовність наступних кроків для визначеного кейсу.', ru: 'VANTAM организует документы, коммуникацию и последовательность следующих шагов для определённого кейса.'},
+    recommendedProduct: {en: 'University Administration Case or Internship Administration', uk: 'University Administration Case або Internship Administration', ru: 'University Administration Case или Internship Administration'},
+    boundary: {en: 'No academic or legal representation claim.', uk: 'Без заяв про академічне чи юридичне представництво.', ru: 'Без заявлений об академическом или юридическом представительстве.'},
+  },
+  {
+    id: 'urgent_exit',
+    title: {en: 'Urgent housing exit', uk: 'Терміновий вихід із житла', ru: 'Срочный выход из жилья'},
+    trigger: {en: 'The student may need to move quickly or deal with a landlord problem under time pressure.', uk: 'Студенту може знадобитися швидко переїхати або вирішувати проблему з орендодавцем під тиском часу.', ru: 'Студенту может понадобиться быстро переехать или решать проблему с арендодателем под давлением времени.'},
+    risk: {en: 'Poor evidence and rushed communication can make the next steps harder.', uk: 'Слабкі докази та поспішна комунікація можуть ускладнити наступні кроки.', ru: 'Слабые доказательства и спешная коммуникация могут усложнить следующие шаги.'},
+    action: {en: 'VANTAM assesses urgency, creates an immediate-action plan, and, where appropriate, coordinates the next practical route.', uk: 'VANTAM оцінює терміновість, створює план негайних дій і, де доречно, координує наступний практичний маршрут.', ru: 'VANTAM оценивает срочность, создаёт план немедленных действий и, где уместно, координирует следующий практический маршрут.'},
+    recommendedProduct: {en: 'Urgent Situation Assessment or Emergency Relocation Coordination', uk: 'Urgent Situation Assessment або Emergency Relocation Coordination', ru: 'Urgent Situation Assessment или Emergency Relocation Coordination'},
+    boundary: {en: 'No accommodation guarantee and no unapproved response-time promise.', uk: 'Без гарантії житла й без неузгодженої обіцянки часу відповіді.', ru: 'Без гарантии жилья и без несогласованного обещания времени ответа.'},
+  },
+  {
+    id: 'graduation_route',
+    title: {en: 'Graduation and orientation-year consideration', uk: 'Випуск і розгляд orientation year', ru: 'Выпуск и рассмотрение orientation year'},
+    trigger: {en: 'The student is moving toward graduation and the practical route is changing.', uk: 'Студент наближається до випуску, і практичний маршрут змінюється.', ru: 'Студент приближается к выпуску, и практический маршрут меняется.'},
+    risk: {en: 'Registration, insurance, housing, and work changes can fall out of sequence.', uk: 'Реєстрація, страхування, житло та зміни в роботі можуть вийти з послідовності.', ru: 'Регистрация, страховка, жильё и изменения в работе могут выйти из последовательности.'},
+    action: {en: 'VANTAM maps the graduation timeline, practical changes, and next route.', uk: 'VANTAM складає часову карту випуску, практичні зміни та наступний маршрут.', ru: 'VANTAM выстраивает временную карту выпуска, практические изменения и следующий маршрут.'},
+    recommendedProduct: {en: 'Graduation & Orientation Year Roadmap', uk: 'Graduation & Orientation Year Roadmap', ru: 'Graduation & Orientation Year Roadmap'},
+    boundary: {en: 'Not immigration advice.', uk: 'Не імміграційна порада.', ru: 'Не иммиграционная консультация.'},
+  },
 ];
 
 export interface FaqItem {
   id: string;
-  q: Record<Language, string>;
-  a: Record<Language, string>;
+  q: LocalizedText;
+  a: LocalizedText;
 }
 
 export const FAQS_STORE: FaqItem[] = [
   {
-    id: "f1",
+    id: 'f1',
     q: {
-      uk: "Що входить у послуги та пакети VANTAM?",
-      ru: "Что входит в услуги и пакеты VANTAM?",
-      en: "What is included in VANTAM services and packages?"
+      en: 'How do I choose between VANTAM Start and VANTAM First Year?',
+      uk: 'Як обрати між VANTAM Start і VANTAM First Year?',
+      ru: 'Как выбрать между VANTAM Start и VANTAM First Year?',
     },
     a: {
-      uk: "Описи на сайті є орієнтовними. Остаточний обсяг, винятки, ціна, строки і погоджені зовнішні витрати підтверджуються письмово перед формальним прийняттям.",
-      ru: "Описания на сайте являются ориентировочными. Итоговый объём, исключения, цена, сроки и согласованные внешние расходы подтверждаются письменно до формального принятия.",
-      en: "Website descriptions are indicative. Final scope, exclusions, price, timing and approved external costs are confirmed in writing before formal acceptance."
-    }
+      en: 'Choose Start when you need first-month setup organised through a clear completion point. Choose First Year when you want Start plus checkpoints, Action Credits, Quick Reviews, housing readiness, and a defined next route later in the year.',
+      uk: 'Обирайте Start, коли вам потрібно організувати перший місяць до чіткої точки завершення. Обирайте First Year, коли вам потрібен Start плюс контрольні точки, цільові дії, короткі перегляди, готовність до житла і визначений наступний маршрут пізніше протягом року.',
+      ru: 'Выбирайте Start, когда вам нужно организовать первый месяц до понятной точки завершения. Выбирайте First Year, когда вам нужен Start плюс контрольные точки, целевые действия, короткие обзоры, готовность к жилью и определённый следующий маршрут позже в течение года.',
+    },
   },
   {
-    id: "f2",
+    id: 'f2',
     q: {
-      uk: "Що VANTAM не гарантує?",
-      ru: "Что VANTAM не гарантирует?",
-      en: "What does VANTAM not guarantee?"
+      en: 'Does VANTAM guarantee housing, approvals, or responses from third parties?',
+      uk: 'Чи гарантує VANTAM житло, погодження або відповіді від третіх сторін?',
+      ru: 'Гарантирует ли VANTAM жильё, одобрения или ответы от третьих сторон?',
     },
     a: {
-      uk: "VANTAM не гарантує житло, схвалення заявки, рішення банку, страховика, муніципалітету, університету чи орендодавця. VANTAM не є агентством нерухомості, юридичною фірмою, страховим брокером або ліцензованим посередником.",
-      ru: "VANTAM не гарантирует жильё, одобрение заявки, решение банка, страховщика, муниципалитета, университета или арендодателя. VANTAM не является агентством недвижимости, юридической фирмой, страховым брокером или лицензированным посредником.",
-      en: "VANTAM does not guarantee housing, application approval, bank, insurer, municipality, university or landlord decisions. VANTAM is not a real-estate agency, law firm, insurance broker or licensed intermediary."
-    }
+      en: 'No. VANTAM supports preparation, sequence, communication, and practical follow-through. It does not guarantee housing, approvals, response times, or other third-party outcomes.',
+      uk: 'Ні. VANTAM підтримує підготовку, послідовність, комунікацію та практичне продовження. Він не гарантує житло, погодження, час відповіді або інші результати третіх сторін.',
+      ru: 'Нет. VANTAM поддерживает подготовку, последовательность, коммуникацию и практическое сопровождение. Он не гарантирует жильё, одобрения, время ответа или другие результаты третьих сторон.',
+    },
   },
   {
-    id: "f3",
+    id: 'f3',
     q: {
-      uk: "Чи надсилання форми створює договір?",
-      ru: "Создаёт ли отправка формы договор?",
-      en: "Does submitting the form create a contract?"
+      en: 'What does “Request a price” mean?',
+      uk: 'Що означає “Запитати ціну”?',
+      ru: 'Что означает “Запросить цену”?',
     },
     a: {
-      uk: "Ні. Форма є лише каналом для запиту. Вона не створює договір, бронювання, платіжне зобов’язання, запит на початок роботи або відмову від прав.",
-      ru: "Нет. Форма является только каналом для запроса. Она не создаёт договор, бронирование, платёжное обязательство, запрос на начало работы или отказ от прав.",
-      en: "No. The form is an enquiry channel only. It does not create a contract, book a consultation, create a payment obligation, request work to start or waive any rights."
-    }
+      en: 'After review, the client receives written scope, deliverables, exclusions, and price before work begins. There are no hidden mandatory additions.',
+      uk: 'Після перегляду клієнт отримує письмовий обсяг, результати, виключення та ціну до початку роботи. Прихованих обов’язкових доповнень немає.',
+      ru: 'После рассмотрения клиент получает письменный объём, результаты, исключения и цену до начала работы. Скрытых обязательных дополнений нет.',
+    },
   },
   {
-    id: "f4",
+    id: 'f4',
     q: {
-      uk: "Як підтверджується консультація?",
-      ru: "Как подтверждается консультация?",
-      en: "How is a consultation confirmed?"
+      en: 'Is Continue still available?',
+      uk: 'Чи доступний Continue?',
+      ru: 'Доступен ли Continue?',
     },
     a: {
-      uk: "Тип, обсяг, тривалість, ціна і час консультації підтверджуються письмово перед бронюванням. Якщо погоджено інвойс, він сплачується протягом 3 календарних днів, і консультація зазвичай проходить після оплати.",
-      ru: "Тип, объём, длительность, цена и время консультации подтверждаются письменно до бронирования. Если согласован счёт, он оплачивается в течение 3 календарных дней, и консультация обычно проходит после оплаты.",
-      en: "The consultation type, scope, duration, price and timing are confirmed in writing before booking. Where an invoice is agreed, it is due within 3 calendar days, and the consultation normally takes place after payment."
-    }
+      en: 'Continue remains a returning-client route only in this cycle. It is not part of the public package comparison and does not have a published public scope or price.',
+      uk: 'Continue залишається лише маршрутом для клієнтів, що повертаються, у цьому циклі. Він не входить до публічного порівняння пакетів і не має опублікованого публічного обсягу чи ціни.',
+      ru: 'Continue остаётся только маршрутом для возвращающихся клиентов в этом цикле. Он не входит в публичное сравнение пакетов и не имеет опубликованного публичного объёма или цены.',
+    },
   },
   {
-    id: "f5",
+    id: 'f5',
     q: {
-      uk: "Чи можна перенести консультацію?",
-      ru: "Можно ли перенести консультацию?",
-      en: "Can I reschedule a consultation?"
+      en: 'Is Student Life Map a portal or saved account area?',
+      uk: 'Чи є Student Life Map порталом або збереженою зоною акаунта?',
+      ru: 'Является ли Student Life Map порталом или сохранённой зоной аккаунта?',
     },
     a: {
-      uk: "Так. Одну консультацію можна перенести без додаткової плати, якщо повідомити щонайменше за 24 години до початку. Повторне перенесення не є автоматичним.",
-      ru: "Да. Одну консультацию можно перенести без дополнительной платы, если сообщить минимум за 24 часа до начала. Повторный перенос не является автоматическим.",
-      en: "Yes. One consultation can be rescheduled without an additional fee if you give at least 24 hours’ notice before the start time. Repeated rescheduling is not automatic."
-    }
+      en: 'No. Student Life Map Preview is an illustrative working-document preview. It does not imply a portal, account, or saved progress after reload.',
+      uk: 'Ні. Student Life Map Preview — це ілюстративний попередній перегляд робочого документа. Він не означає портал, акаунт або збережений прогрес після перезавантаження.',
+      ru: 'Нет. Student Life Map Preview — это иллюстративный предварительный просмотр рабочего документа. Он не означает портал, аккаунт или сохранённый прогресс после перезагрузки.',
+    },
   },
-  {
-    id: "f6",
-    q: {
-      uk: "Як працює кредит за консультацію?",
-      ru: "Как работает зачёт консультации?",
-      en: "How does the consultation credit work?"
-    },
-    a: {
-      uk: "Оплачену суму консультації можна один раз зарахувати до відповідного опублікованого пакета, який той самий клієнт формально приймає протягом 14 календарних днів. Кредит не виплачується готівкою і не може перевищувати ціну пакета.",
-      ru: "Оплаченную сумму консультации можно один раз зачесть в подходящий опубликованный пакет, который тот же клиент формально принимает в течение 14 календарных дней. Зачёт не выплачивается деньгами и не может превышать цену пакета.",
-      en: "The paid consultation amount may be credited once against an eligible published package formally accepted by the same client within 14 calendar days. The credit is not paid out in cash and cannot exceed the package price."
-    }
-  },
-  {
-    id: "f7",
-    q: {
-      uk: "Як працює оплата за послуги або пакети?",
-      ru: "Как работает оплата услуг или пакетов?",
-      en: "How does payment for services or packages work?"
-    },
-    a: {
-      uk: "Оплата, строки та будь-які погоджені зовнішні витрати підтверджуються письмово для конкретної послуги або пакета. Матеріальна додаткова робота чи зовнішні витрати потребують письмового погодження.",
-      ru: "Оплата, сроки и любые согласованные внешние расходы подтверждаются письменно для конкретной услуги или пакета. Существенная дополнительная работа или внешние расходы требуют письменного согласования.",
-      en: "Payment, timing and any approved external costs are confirmed in writing for the specific service or package. Material extra work or external costs require written approval."
-    }
-  },
-  {
-    id: "f8",
-    q: {
-      uk: "Чи можна скасувати або скористатися правом на відмову?",
-      ru: "Можно ли отменить или воспользоваться правом на отказ?",
-      en: "Can I cancel or withdraw?"
-    },
-    a: {
-      uk: "Скасування до початку роботи, припинення після початку роботи і законне право споживача на відмову є різними питаннями. Відповідні правила пояснюються в письмовій угоді та документах, наданих перед формальним прийняттям.",
-      ru: "Отмена до начала работы, прекращение после начала работы и законное право потребителя на отказ являются разными вопросами. Соответствующие правила объясняются в письменном соглашении и документах, предоставленных до формального принятия.",
-      en: "Cancellation before work starts, termination after work starts and statutory consumer withdrawal are separate issues. The applicable rules are explained in the written agreement and documents supplied before formal acceptance."
-    }
-  },
-  {
-    id: "f9",
-    q: {
-      uk: "Чи може робота початися під час строку відмови?",
-      ru: "Может ли работа начаться в период отказа?",
-      en: "Can work start during a withdrawal period?"
-    },
-    a: {
-      uk: "Звернення через форму цього не просить. Якщо окремий запит на початок під час строку законної відмови потрібен, VANTAM обробляє його окремо після надання відповідної інформації.",
-      ru: "Обращение через форму этого не запрашивает. Если нужен отдельный запрос на начало в период законного отказа, VANTAM обрабатывает его отдельно после предоставления соответствующей информации.",
-      en: "The enquiry form does not request this. If a separate request to begin during a statutory withdrawal period is needed, VANTAM handles it separately after providing the relevant information."
-    }
-  },
-  {
-    id: "f10",
-    q: {
-      uk: "Чи можна почати дистанційно до приїзду?",
-      ru: "Можно ли начать дистанционно до приезда?",
-      en: "Can support start remotely before arrival?"
-    },
-    a: {
-      uk: "Так, підготовку можна обговорити дистанційно до приїзду. Будь-яка фактична робота починається лише після письмового підтвердження обсягу, ціни, строків і потрібних умов.",
-      ru: "Да, подготовку можно обсудить дистанционно до приезда. Любая фактическая работа начинается только после письменного подтверждения объёма, цены, сроков и необходимых условий.",
-      en: "Yes, preparation can be discussed remotely before arrival. Any actual work starts only after scope, price, timing and required conditions are confirmed in writing."
-    }
-  }
 ];
+
+export const RETURNING_CLIENT_NOTE: LocalizedText = {
+  en: 'Returning client with an already-open case? Ask about Continue through the contact form.',
+  uk: 'Ви клієнт, що повертається, з уже відкритим кейсом? Запитайте про Continue через контактну форму.',
+  ru: 'Вы возвращающийся клиент с уже открытым кейсом? Спросите о Continue через контактную форму.',
+};
+
+export const APPROVED_INDIVIDUAL_SERVICE_SLUGS = INDIVIDUAL_SERVICE_GROUPS.flatMap((group) =>
+  group.services.map((service) => service.slug),
+);

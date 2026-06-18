@@ -12,6 +12,25 @@ const SITUATION_STATUSES = ['before', 'after', 'found_housing', 'need_housing', 
 const GUARANTOR_CONTEXTS = ['yes', 'maybe', 'no'] as const;
 const HOUSING_BUDGETS = ['under-700', '700-1000', '1000-1500', '1500-plus', 'not-sure'] as const;
 const HOUSING_TYPES = ['room_student', 'studio', 'apartment', 'house', 'short_stay', 'not_sure'] as const;
+const INDIVIDUAL_SERVICE_SLUGS = [
+  'official_letter_action',
+  'administration_problem_support',
+  'lost_document_coordination',
+  'university_administration_case',
+  'academic_issue_support',
+  'internship_administration',
+  'work_insurance_transition',
+  'employment_administration_check',
+  'cak_svb_case_support',
+  'housing_offer_contract_check',
+  'landlord_problem_evidence_pack',
+  'move_out_deposit_support',
+  'emergency_relocation_coordination',
+  'urgent_situation_assessment',
+  'complex_urgent_case',
+  'graduation_orientation_year_roadmap',
+  'moving_leaving_netherlands',
+] as const;
 const MIN_FORM_FILL_MS = 1_500;
 
 type ContactPayload = {
@@ -105,7 +124,7 @@ function normaliseDate(value: unknown) {
 
 function parseHelpNeeded(value: unknown) {
   if (typeof value !== 'string') return undefined;
-  if (value === 'relocation_orientation' || value === 'urgent_situation') {
+  if (value === 'relocation_orientation') {
     return {
       helpNeeded: value,
       inquiryType: 'consultation' as const,
@@ -121,14 +140,6 @@ function parseHelpNeeded(value: unknown) {
     };
   }
 
-  if (value === 'individual_service') {
-    return {
-      helpNeeded: value,
-      inquiryType: 'single' as const,
-      isHousingSearch: false,
-    };
-  }
-
   if (value === 'partnership') {
     return {
       helpNeeded: value,
@@ -137,16 +148,26 @@ function parseHelpNeeded(value: unknown) {
     };
   }
 
-  const [prefix, housingType, extra] = value.split(':');
+  const [prefix, suffix, extra] = value.split(':');
+  if (prefix === 'individual_service'
+    && extra === undefined
+    && INDIVIDUAL_SERVICE_SLUGS.includes(suffix as (typeof INDIVIDUAL_SERVICE_SLUGS)[number])) {
+    return {
+      helpNeeded: value,
+      inquiryType: 'single' as const,
+      isHousingSearch: false,
+    };
+  }
+
   if ((prefix !== 'housing_ready' && prefix !== 'housing_campaign')
     || extra !== undefined
-    || !HOUSING_TYPES.includes(housingType as (typeof HOUSING_TYPES)[number])) {
+    || !HOUSING_TYPES.includes(suffix as (typeof HOUSING_TYPES)[number])) {
     return undefined;
   }
 
   return {
-    helpNeeded: `${prefix}:${housingType}`,
-    inquiryType: 'single' as const,
+    helpNeeded: `${prefix}:${suffix}`,
+    inquiryType: 'packages' as const,
     isHousingSearch: true,
   };
 }
