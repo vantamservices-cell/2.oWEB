@@ -354,6 +354,10 @@ svg { flex: none; }
 .package-summary h3 { margin: 0.7rem 0 0; font-size: clamp(2.2rem, 4vw, 3.7rem); font-weight: 780; letter-spacing: var(--type-heading-tracking); line-height: 1; }
 .package-summary > strong { display: block; margin-top: 0.35rem; color: var(--brand-strong); font-size: 1.8rem; font-variant-numeric: tabular-nums; }
 .package-summary > span { display: block; margin-top: 1rem; color: var(--muted); font-size: 0.9rem; line-height: var(--type-line-support); text-wrap: pretty; }
+.package-summary-points { display: grid; gap: 0.8rem; margin-top: 1.4rem; }
+.package-summary-points article { border: 1px solid var(--line); border-radius: 12px; padding: 0.85rem 0.95rem; background: color-mix(in srgb, var(--surface) 88%, var(--surface-soft)); }
+.package-summary-points small { display: block; color: var(--brand-strong); font-size: 0.76rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; }
+.package-summary-points p { margin: 0.42rem 0 0; color: var(--ink-soft); font-size: 0.84rem; line-height: var(--type-line-support); text-wrap: pretty; }
 .package-actions { display: grid; gap: 0.7rem; margin-top: 1.5rem; }
 .package-download-note { margin: 1rem 0 0; color: var(--muted); font-size: 0.8rem; line-height: var(--type-line-support); text-wrap: pretty; }
 .package-list h4 { display: flex; align-items: center; gap: 0.5rem; margin: 0; border-bottom: 1px solid var(--line-strong); padding-bottom: 0.75rem; font-size: 0.9rem; font-weight: 780; }
@@ -363,9 +367,12 @@ svg { flex: none; }
 .package-list li svg { margin-top: 0.18rem; }
 .package-limits h4, .package-limits h4 svg, .package-limits li svg { color: var(--warning); }
 .structured-details-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 2rem; }
-.structured-detail-card { border: 1px solid var(--line); border-radius: 12px; padding: 1.15rem 1.2rem; background: var(--surface); }
+.structured-detail-card { position: relative; border: 1px solid var(--line); border-radius: 12px; padding: 1.15rem 1.2rem; background: var(--surface); }
+.structured-detail-step { display: inline-flex; min-width: 2rem; align-items: center; justify-content: center; border-radius: 999px; padding: 0.3rem 0.55rem; background: color-mix(in srgb, var(--surface-teal) 75%, white); color: var(--brand-strong); font-size: 0.76rem; font-weight: 800; }
 .structured-detail-card h4 { margin: 0; font-size: 0.95rem; font-weight: 760; }
 .structured-detail-card ul { display: grid; gap: 0.5rem; margin: 0.9rem 0 0; padding-left: 1rem; color: var(--ink-soft); font-size: 0.84rem; line-height: var(--type-line-support); }
+.structured-detail-card-prominent { border-color: var(--line-strong); background: color-mix(in srgb, var(--surface-teal) 42%, white); }
+.structured-detail-card-warning { border-color: color-mix(in srgb, var(--warning) 35%, var(--line)); background: color-mix(in srgb, var(--warning) 8%, white); }
 .returning-client-row { margin-top: 1rem; }
 
 .tools-section { padding-block: clamp(4.8rem, 7vw, 6.5rem); }
@@ -429,18 +436,38 @@ svg { flex: none; }
 .testimonial-controls button:active { transform: scale(0.94); }
 .testimonial-controls svg { width: 1rem; height: 1rem; }
 .life-map-shell { display: grid; gap: 1rem; border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(1.3rem, 3vw, 2rem); background: var(--surface); }
+.life-map-preview-bar { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.8rem 1.5rem; border-bottom: 1px solid var(--line); padding-bottom: 0.9rem; }
+.life-map-preview-bar strong { color: var(--brand-strong); font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; }
+.life-map-preview-bar span { max-width: 48rem; color: var(--muted); font-size: 0.84rem; line-height: var(--type-line-support); text-wrap: pretty; }
 .life-map-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.9rem; }
-.life-map-card { display: grid; gap: 0.45rem; border: 1px solid var(--line); border-radius: 12px; padding: 1rem; background: var(--surface-soft); }
+.life-map-card { display: grid; gap: 0.55rem; border: 1px solid var(--line); border-radius: 12px; padding: 1rem; background: var(--surface-soft); }
+.life-map-card-top { display: flex; justify-content: flex-end; }
+.life-map-card-top span { border: 1px solid var(--line); border-radius: 999px; padding: 0.33rem 0.56rem; background: var(--surface); color: var(--brand-dark); font-size: 0.74rem; font-weight: 800; }
 .life-map-card strong { font-size: 0.94rem; font-weight: 760; }
-.life-map-card span { color: var(--brand-dark); font-size: 0.82rem; font-weight: 760; }
+.life-map-card p { margin: 0; color: var(--ink); font-size: 0.84rem; line-height: var(--type-line-support); text-wrap: pretty; }
+.life-map-card small { color: var(--muted); font-size: 0.78rem; line-height: var(--type-line-support); text-wrap: pretty; }
 .status-legend { display: flex; flex-wrap: wrap; gap: 0.45rem; }
 .status-legend span { border: 1px solid var(--line); border-radius: 999px; padding: 0.42rem 0.72rem; color: var(--muted); font-size: 0.8rem; font-weight: 700; background: var(--surface); }
 .scenario-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 2rem; }
 .scenario-card { border: 1px solid var(--line); border-radius: 12px; padding: 1.15rem 1.2rem; background: var(--surface); }
+.scenario-card-top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1rem; margin-bottom: 0.85rem; }
+.scenario-card-top span { color: var(--brand-strong); font-size: 0.76rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; }
+.scenario-card-top strong { color: var(--ink); font-size: 0.84rem; font-weight: 760; }
 .scenario-card h3 { margin: 0 0 1rem; font-size: 1.05rem; font-weight: 760; line-height: 1.2; }
 .scenario-card dl { display: grid; gap: 0.85rem; margin: 0; }
 .scenario-card dt { color: var(--brand-strong); font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; }
 .scenario-card dd { margin: 0.3rem 0 0; color: var(--ink-soft); font-size: 0.85rem; line-height: var(--type-line-support); text-wrap: pretty; }
+
+.housing-scope-shell { display: grid; grid-template-columns: minmax(14rem, 0.42fr) minmax(0, 1fr); gap: 1rem; }
+.housing-scope-summary { display: grid; align-content: start; gap: 0.45rem; border: 1px solid var(--line); border-radius: 12px; padding: 1rem; background: color-mix(in srgb, var(--surface-teal) 42%, white); }
+.housing-scope-summary p { margin: 0; color: var(--brand-strong); font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; }
+.housing-scope-summary h4 { margin: 0; font-size: 2rem; font-weight: 780; letter-spacing: var(--type-heading-tracking); line-height: 1; }
+.housing-scope-summary span { color: var(--ink); font-size: 0.88rem; font-weight: 700; }
+.housing-scope-summary small { color: var(--muted); font-size: 0.8rem; line-height: var(--type-line-support); text-wrap: pretty; }
+.housing-included-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.8rem; }
+.housing-included-card { display: grid; grid-template-columns: 1rem 1fr; gap: 0.6rem; border: 1px solid var(--line); border-radius: 12px; padding: 0.95rem 1rem; background: var(--surface-soft); }
+.housing-included-card svg { width: 0.9rem; height: 0.9rem; margin-top: 0.18rem; color: var(--brand); }
+.housing-included-card p { margin: 0; color: var(--ink-soft); font-size: 0.84rem; line-height: var(--type-line-support); text-wrap: pretty; }
 
 .faq-section { padding-block: clamp(4.8rem, 7vw, 6.5rem); }
 .faq-layout { display: grid; grid-template-columns: minmax(16rem, 0.58fr) minmax(0, 1.42fr); gap: clamp(3rem, 7vw, 7rem); }
@@ -966,6 +993,7 @@ svg { flex: none; }
   .package-detail { grid-template-columns: 0.7fr 1fr; }
   .package-limits { grid-column: 2; }
   .structured-details-grid { grid-template-columns: 1fr; }
+  .housing-scope-shell { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 960px) {
@@ -1006,6 +1034,7 @@ svg { flex: none; }
   .privacy-footer .footer-contact-links { justify-items: start; }
   .life-map-grid,
   .scenario-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .housing-included-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 767px) {
@@ -1065,6 +1094,8 @@ svg { flex: none; }
   .structured-details-grid,
   .life-map-grid,
   .scenario-grid { grid-template-columns: 1fr; }
+  .life-map-preview-bar,
+  .scenario-card-top { align-items: flex-start; flex-direction: column; }
   .calculator-copy, .calculator-result, .planner-shell { padding: 1.3rem; }
   .risk-list button:hover, .planner-columns button:hover { padding-inline: 0; background: transparent; }
   .calculator-result > strong { font-size: 4.5rem; }

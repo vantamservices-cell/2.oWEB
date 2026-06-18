@@ -556,6 +556,28 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
   const selectedHousingData = HOUSING_PRODUCTS.find((item) => item.id === selectedHousing) ?? HOUSING_PRODUCTS[0];
   const activeServiceGroupData = INDIVIDUAL_SERVICE_GROUPS.find((item) => item.id === activeServiceGroup) ?? INDIVIDUAL_SERVICE_GROUPS[0];
   const activeSituationData = SITUATION_OPTIONS.find((item) => item.id === activeSituation) ?? SITUATION_OPTIONS[0];
+  const packagePrimarySections = selectedPackageData.detailSections.slice(0, 2);
+  const packageExecutionSections = selectedPackageData.detailSections.slice(2);
+  const housingIncludedLabel = lang === 'en'
+    ? 'Included in this fixed price'
+    : lang === 'uk'
+      ? 'Входить у цю фіксовану ціну'
+      : 'Входит в эту фиксированную цену';
+  const housingIncludedNote = lang === 'en'
+    ? 'The items below are part of the selected housing product scope. They are not separate add-on prices.'
+    : lang === 'uk'
+      ? 'Пункти нижче входять до обсягу вибраного житлового продукту. Це не окремі додаткові ціни.'
+      : 'Пункты ниже входят в объём выбранного жилищного продукта. Это не отдельные дополнительные цены.';
+  const mapPreviewNote = lang === 'en'
+    ? 'Example support view'
+    : lang === 'uk'
+      ? 'Приклад вигляду підтримки'
+      : 'Пример вида поддержки';
+  const scenarioPreviewLabel = lang === 'en'
+    ? 'Practical route'
+    : lang === 'uk'
+      ? 'Практичний маршрут'
+      : 'Практический маршрут';
 
   const scrollToId = (id: string) => {
     document.getElementById(id)?.scrollIntoView({behavior: prefersReducedMotion ? 'auto' : 'smooth'});
@@ -1012,6 +1034,14 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
                 <h3>{selectedPackageData.name[lang]}</h3>
                 <strong>{selectedPackageData.price}</strong>
                 <span>{selectedPackageData.audience[lang]}</span>
+                <div className="package-summary-points">
+                  {packagePrimarySections.map((section) => (
+                    <article key={section.title.en}>
+                      <small>{section.title[lang]}</small>
+                      <p>{section.items[lang][0]}</p>
+                    </article>
+                  ))}
+                </div>
                 <div className="package-actions">
                   <button onClick={() => handleSelectPackage(selectedPackageData.id)} className="button button-primary">
                     {selectedPackageData.cta[lang]}<ArrowRight />
@@ -1041,8 +1071,16 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
             </div>
 
             <div className="structured-details-grid">
-              {selectedPackageData.detailSections.map((section) => (
-                <article key={section.title.en} className="structured-detail-card">
+              {packageExecutionSections.map((section, index) => (
+                <article
+                  key={section.title.en}
+                  className={[
+                    'structured-detail-card',
+                    index < 2 ? 'structured-detail-card-prominent' : '',
+                    section.title.en === 'What is not included' ? 'structured-detail-card-warning' : '',
+                  ].filter(Boolean).join(' ')}
+                >
+                  <span className="structured-detail-step">{index + 1}</span>
                   <h4>{section.title[lang]}</h4>
                   <ul>
                     {section.items[lang].map((item) => (
@@ -1139,14 +1177,21 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
                 </div>
                 <span>{selectedHousingData.price}</span>
               </div>
-              <div className="service-rows">
-                {selectedHousingData.limits[lang].map((item) => (
-                  <article key={item}>
-                    <div className="service-name"><h4>{selectedHousingData.name[lang]}</h4><span>{selectedHousingData.period[lang]}</span></div>
-                    <div className="service-description"><p>{item}</p></div>
-                    <div className="service-action"><strong>{selectedHousingData.price}</strong></div>
-                  </article>
-                ))}
+              <div className="housing-scope-shell">
+                <div className="housing-scope-summary">
+                  <p>{housingIncludedLabel}</p>
+                  <h4>{selectedHousingData.price}</h4>
+                  <span>{selectedHousingData.period[lang]}</span>
+                  <small>{housingIncludedNote}</small>
+                </div>
+                <div className="housing-included-grid">
+                  {selectedHousingData.limits[lang].map((item) => (
+                    <article key={item} className="housing-included-card">
+                      <Check />
+                      <p>{item}</p>
+                    </article>
+                  ))}
+                </div>
               </div>
               <div className="boundary-note">
                 <Info />
@@ -1225,11 +1270,19 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
               <span>{copy.studentLifeText}</span>
             </div>
             <div className="life-map-shell">
+              <div className="life-map-preview-bar">
+                <strong>{mapPreviewNote}</strong>
+                <span>{lang === 'en' ? 'Areas, statuses, and next support routes remain visible without implying a live client portal.' : lang === 'uk' ? 'Зони, статуси й наступні маршрути підтримки залишаються видимими без натяку на живий клієнтський портал.' : 'Зоны, статусы и следующие маршруты поддержки остаются видимыми без намёка на живой клиентский портал.'}</span>
+              </div>
               <div className="life-map-grid">
                 {STUDENT_LIFE_MAP_PREVIEW.map((item) => (
                   <article key={item.area.en} className="life-map-card">
+                    <div className="life-map-card-top">
+                      <span>{STUDENT_LIFE_STATUSES[item.status][lang]}</span>
+                    </div>
                     <strong>{item.area[lang]}</strong>
-                    <span>{STUDENT_LIFE_STATUSES[item.status][lang]}</span>
+                    <p>{item.summary[lang]}</p>
+                    <small>{item.supportRoute[lang]}</small>
                   </article>
                 ))}
               </div>
@@ -1252,12 +1305,15 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
             <div className="scenario-grid">
               {TYPICAL_SITUATIONS.map((item) => (
                 <article key={item.id} className="scenario-card">
+                  <div className="scenario-card-top">
+                    <span>{scenarioPreviewLabel}</span>
+                    <strong>{item.recommendedProduct[lang]}</strong>
+                  </div>
                   <h3>{item.title[lang]}</h3>
                   <dl>
                     <div><dt>{copy.trigger}</dt><dd>{item.trigger[lang]}</dd></div>
                     <div><dt>{copy.whatRisk}</dt><dd>{item.risk[lang]}</dd></div>
                     <div><dt>{copy.whatVantamDoes}</dt><dd>{item.action[lang]}</dd></div>
-                    <div><dt>{copy.recommendedProduct}</dt><dd>{item.recommendedProduct[lang]}</dd></div>
                     <div><dt>{copy.boundaryTitle}</dt><dd>{item.boundary[lang]}</dd></div>
                   </dl>
                 </article>

@@ -431,25 +431,33 @@ export const PREMIUM_PACKAGES: Package[] = [
       {
         title: {en: 'Your situation', uk: 'Ваша ситуація', ru: 'Ваша ситуация'},
         items: {
-          en: ['You are moving soon or have just arrived.', 'You need one practical setup route with clear completion points.'],
-          uk: ['Ви скоро переїжджаєте або щойно приїхали.', 'Вам потрібен один практичний маршрут налаштування з чіткими точками завершення.'],
-          ru: ['Вы скоро переезжаете или только что приехали.', 'Вам нужен один практический маршрут настройки с понятными точками завершения.'],
+          en: ['You are moving soon or have just arrived.', 'You want one ordered route instead of handling registration, banking, insurance, and student admin separately.', 'You need visible completion points before deciding whether broader first-year support is necessary.'],
+          uk: ['Ви скоро переїжджаєте або щойно приїхали.', 'Ви хочете один впорядкований маршрут замість окремого керування реєстрацією, банком, страхуванням і студентською адміністрацією.', 'Вам потрібні видимі точки завершення перед рішенням, чи потрібна ширша підтримка на перший рік.'],
+          ru: ['Вы скоро переезжаете или только что приехали.', 'Вы хотите один упорядоченный маршрут вместо отдельного управления регистрацией, банком, страховкой и студенческой администрацией.', 'Вам нужны видимые точки завершения, прежде чем решать, нужна ли более широкая поддержка на первый год.'],
         },
       },
       {
-        title: {en: 'Before arrival', uk: 'До приїзду', ru: 'До приезда'},
+        title: {en: 'Core outcome', uk: 'Ключовий результат', ru: 'Ключевой результат'},
         items: {
-          en: ['Full intake', 'Personalised Student Life Map', 'Pre-arrival roadmap', 'Essential-document readiness review', 'Ordered before/after-arrival sequence'],
-          uk: ['Повний початковий збір інформації', 'Персоналізована Student Life Map', 'Дорожня карта до приїзду', 'Перевірка готовності базових документів', 'Впорядкована послідовність до та після приїзду'],
-          ru: ['Полный первичный сбор информации', 'Персонализированная Student Life Map', 'Дорожная карта до приезда', 'Проверка готовности базовых документов', 'Упорядоченная последовательность до и после приезда'],
+          en: ['Essential first-month setup is organised and driven toward a clear completion point.', 'The student receives one practical route covering arrival preparation, immediate registrations, and one defined follow-through case.', 'Outputs stay visible through the Student Life Map, status tracking, and a written next-step plan.'],
+          uk: ['Базове налаштування першого місяця організоване й ведеться до чіткої точки завершення.', 'Студент отримує один практичний маршрут, що охоплює підготовку до приїзду, перші реєстрації та один визначений кейс продовження.', 'Результати залишаються видимими через Student Life Map, відстеження статусів і письмовий план наступних кроків.'],
+          ru: ['Базовая настройка первого месяца организована и доводится до понятной точки завершения.', 'Студент получает один практический маршрут, охватывающий подготовку к приезду, первые регистрации и один определённый кейс сопровождения.', 'Результаты остаются видимыми через Student Life Map, отслеживание статусов и письменный план следующих шагов.'],
         },
       },
       {
-        title: {en: 'First-month execution', uk: 'Виконання першого місяця', ru: 'Выполнение первого месяца'},
+        title: {en: 'What VANTAM does', uk: 'Що робить VANTAM', ru: 'Что делает VANTAM'},
         items: {
-          en: ['Municipality registration and BSN process', 'DigiD', 'One bank-account process', 'Appropriate insurance route', 'GP registration', 'One university or general-administration case', 'One Official Letter Action', 'One progress check', 'Business-day support within the active period'],
-          uk: ['Муніципальна реєстрація та процес BSN', 'DigiD', 'Один банківський процес', 'Відповідний страховий маршрут', 'Реєстрація у GP', 'Один університетський або загальноадміністративний кейс', 'Одна Official Letter Action', 'Одна перевірка прогресу', 'Підтримка в робочі дні протягом активного періоду'],
-          ru: ['Муниципальная регистрация и процесс BSN', 'DigiD', 'Один банковский процесс', 'Подходящий страховой маршрут', 'Регистрация у GP', 'Один университетский или общий административный кейс', 'Одна Official Letter Action', 'Одна проверка прогресса', 'Поддержка в рабочие дни в течение активного периода'],
+          en: ['Runs the intake and creates the personalised Student Life Map.', 'Prepares the ordered before-arrival and after-arrival sequence.', 'Coordinates municipality registration, BSN, DigiD, one bank process, insurance route, and GP registration.', 'Takes one university or general-administration case plus one Official Letter Action into work.', 'Maintains business-day support within the active period and records status changes clearly.'],
+          uk: ['Проводить intake і створює персоналізовану Student Life Map.', 'Готує впорядковану послідовність до та після приїзду.', 'Координує муніципальну реєстрацію, BSN, DigiD, один банківський процес, страховий маршрут і реєстрацію у GP.', 'Бере в роботу один університетський або загальноадміністративний кейс плюс одну Official Letter Action.', 'Підтримує робочоденний супровід протягом активного періоду й чітко фіксує зміни статусів.'],
+          ru: ['Проводит intake и создаёт персонализированную Student Life Map.', 'Готовит упорядоченную последовательность до и после приезда.', 'Координирует муниципальную регистрацию, BSN, DigiD, один банковский процесс, страховой маршрут и регистрацию у GP.', 'Берёт в работу один университетский или общий административный кейс плюс одну Official Letter Action.', 'Поддерживает сопровождение в рабочие дни в течение активного периода и чётко фиксирует изменения статусов.'],
+        },
+      },
+      {
+        title: {en: 'Delivery phases', uk: 'Етапи виконання', ru: 'Этапы выполнения'},
+        items: {
+          en: ['Phase 1: intake, readiness review, and ordered first sequence.', 'Phase 2: first-month execution across registrations, access, and one defined practical case.', 'Phase 3: completion view with updated statuses, retained documents, and the next 90-day route.'],
+          uk: ['Етап 1: intake, перевірка готовності й упорядкована перша послідовність.', 'Етап 2: виконання першого місяця через реєстрації, доступи й один визначений практичний кейс.', 'Етап 3: підсумковий огляд з оновленими статусами, збереженими документами та маршрутом на наступні 90 днів.'],
+          ru: ['Этап 1: intake, проверка готовности и упорядоченная первая последовательность.', 'Этап 2: выполнение первого месяца через регистрации, доступы и один определённый практический кейс.', 'Этап 3: итоговый обзор с обновлёнными статусами, сохранёнными документами и маршрутом на следующие 90 дней.'],
         },
       },
       {
@@ -463,25 +471,25 @@ export const PREMIUM_PACKAGES: Package[] = [
       {
         title: {en: 'Scope limits', uk: 'Межі обсягу', ru: 'Границы объёма'},
         items: {
-          en: ['Up to 35 days after arrival', 'Defined execution only', 'Use status language when a provider or authority is still processing'],
-          uk: ['До 35 днів після приїзду', 'Лише визначене виконання', 'Використовуємо статусне формулювання, коли провайдер або орган ще обробляє справу'],
-          ru: ['До 35 дней после приезда', 'Только определённое выполнение', 'Используем статусные формулировки, когда провайдер или орган ещё обрабатывает дело'],
+          en: ['Up to 35 days after arrival.', 'Defined execution only, not open-ended year support.', 'Statuses stay visible when a provider or authority is still processing.'],
+          uk: ['До 35 днів після приїзду.', 'Лише визначене виконання, а не відкритий супровід на рік.', 'Статуси залишаються видимими, коли провайдер або орган ще обробляє справу.'],
+          ru: ['До 35 дней после приезда.', 'Только определённое выполнение, а не открытое сопровождение на год.', 'Статусы остаются видимыми, когда провайдер или орган ещё обрабатывает дело.'],
         },
       },
       {
         title: {en: 'What is not included', uk: 'Що не входить', ru: 'Что не входит'},
         items: {
-          en: ['Guaranteed third-party completion', 'Unlimited support', 'Legal, financial, insurance, immigration, or medical advice'],
-          uk: ['Гарантоване завершення з боку третіх сторін', 'Необмежена підтримка', 'Юридичні, фінансові, страхові, імміграційні або медичні поради'],
-          ru: ['Гарантированное завершение со стороны третьих лиц', 'Неограниченная поддержка', 'Юридические, финансовые, страховые, иммиграционные или медицинские советы'],
+          en: ['Guaranteed third-party completion.', 'Unlimited support or undefined follow-up work.', 'Legal, financial, insurance, immigration, or medical advice.'],
+          uk: ['Гарантоване завершення з боку третіх сторін.', 'Необмежена підтримка або невизначений подальший супровід.', 'Юридичні, фінансові, страхові, імміграційні або медичні поради.'],
+          ru: ['Гарантированное завершение со стороны третьих лиц.', 'Неограниченная поддержка или неопределённое дальнейшее сопровождение.', 'Юридические, финансовые, страховые, иммиграционные или медицинские советы.'],
         },
       },
       {
-        title: {en: 'Next step', uk: 'Наступний крок', ru: 'Следующий шаг'},
+        title: {en: 'Best next step', uk: 'Найкращий наступний крок', ru: 'Лучший следующий шаг'},
         items: {
-          en: ['Use Relocation Orientation if you need the first recommendation before choosing Start.'],
-          uk: ['Скористайтеся Relocation Orientation, якщо вам потрібна перша рекомендація перед вибором Start.'],
-          ru: ['Используйте Relocation Orientation, если вам нужна первая рекомендация перед выбором Start.'],
+          en: ['Choose VANTAM Start when you already know you need defined first-month execution.', 'Use Relocation Orientation first if you still need a practical recommendation before choosing a package.'],
+          uk: ['Обирайте VANTAM Start, коли вже зрозуміло, що вам потрібне визначене виконання першого місяця.', 'Спочатку скористайтеся Relocation Orientation, якщо вам ще потрібна практична рекомендація перед вибором пакета.'],
+          ru: ['Выбирайте VANTAM Start, когда уже понятно, что вам нужно определённое выполнение первого месяца.', 'Сначала используйте Relocation Orientation, если вам ещё нужна практическая рекомендация перед выбором пакета.'],
         },
       },
     ],
@@ -555,25 +563,33 @@ export const PREMIUM_PACKAGES: Package[] = [
       {
         title: {en: 'Your situation', uk: 'Ваша ситуація', ru: 'Ваша ситуация'},
         items: {
-          en: ['You want the first month handled and later practical issues covered by defined credits and reviews.'],
-          uk: ['Ви хочете, щоб перший місяць був опрацьований, а пізніші практичні питання покривалися визначеними цільовими діями та короткими переглядами.'],
-          ru: ['Вы хотите, чтобы первый месяц был отработан, а более поздние практические вопросы покрывались определёнными целевыми действиями и короткими обзорами.'],
+          en: ['You want the first month handled and later practical issues covered by defined credits and reviews.', 'You prefer a structured year route instead of needing to restart support every time a new issue appears.', 'You want visible checkpoints, activation paths, and year-end clarity rather than vague ongoing support.'],
+          uk: ['Ви хочете, щоб перший місяць був опрацьований, а пізніші практичні питання покривалися визначеними цільовими діями та короткими переглядами.', 'Ви віддаєте перевагу структурованому маршруту на рік замість повторного запуску підтримки щоразу, коли з’являється нове питання.', 'Вам потрібні видимі контрольні точки, шляхи активації та ясність наприкінці року замість розмитої постійної підтримки.'],
+          ru: ['Вы хотите, чтобы первый месяц был отработан, а более поздние практические вопросы покрывались определёнными целевыми действиями и короткими обзорами.', 'Вы предпочитаете структурированный маршрут на год вместо повторного запуска поддержки каждый раз, когда появляется новый вопрос.', 'Вам нужны видимые контрольные точки, пути активации и ясность к концу года вместо расплывчатой постоянной поддержки.'],
         },
       },
       {
-        title: {en: 'Outcome', uk: 'Результат', ru: 'Результат'},
+        title: {en: 'Core outcome', uk: 'Ключовий результат', ru: 'Ключевой результат'},
         items: {
-          en: ['Everything in Start', 'Support through key practical moments of the first academic year'],
-          uk: ['Усе зі Start', 'Підтримка через ключові практичні моменти першого академічного року'],
-          ru: ['Всё из Start', 'Поддержка через ключевые практические моменты первого академического года'],
+          en: ['Everything in VANTAM Start is included.', 'Key practical moments of the first academic year stay covered through defined checkpoints, credits, and reviews.', 'The student finishes the year with documented recaps and a clear next activation route.'],
+          uk: ['Усе з VANTAM Start входить.', 'Ключові практичні моменти першого академічного року залишаються покритими через визначені контрольні точки, цільові дії та короткі перегляди.', 'Студент завершує рік із задокументованими підсумками та чітким наступним маршрутом активації.'],
+          ru: ['Всё из VANTAM Start включено.', 'Ключевые практические моменты первого академического года остаются покрытыми через определённые контрольные точки, целевые действия и короткие обзоры.', 'Студент завершает год с задокументированными итогами и чётким следующим маршрутом активации.'],
         },
       },
       {
-        title: {en: 'During the year', uk: 'Протягом року', ru: 'В течение года'},
+        title: {en: 'What VANTAM does', uk: 'Що робить VANTAM', ru: 'Что делает VANTAM'},
         items: {
-          en: ['90-Day Check', 'Mid-Year Check', 'Year-End Check', 'Three Action Credits', 'Two Quick Reviews', 'Housing Readiness Activation', 'One Urgent Triage', 'Optional Parent Update only with separate written consent'],
-          uk: ['Перевірка через 90 днів', 'Перевірка в середині року', 'Перевірка наприкінці року', 'Три цільові дії', 'Два короткі перегляди', 'Активація готовності до житла', 'Одна термінова первинна оцінка', 'Необов’язкове оновлення для батьків лише за окремою письмовою згодою'],
-          ru: ['Проверка через 90 дней', 'Проверка в середине года', 'Проверка в конце года', 'Три целевых действия', 'Два коротких обзора', 'Активация готовности к жилью', 'Одна срочная первичная оценка', 'Необязательное обновление для родителей только по отдельному письменному согласию'],
+          en: ['Delivers the full Start execution first.', 'Runs the 90-Day Check, Mid-Year Check, and Year-End Check.', 'Uses three Action Credits for defined issues that appear later in the year.', 'Uses two Quick Reviews for short documents or messages that need fast practical review.', 'Includes one Housing Readiness Activation and one Urgent Triage within the year structure.', 'Provides an optional parent update only with separate written consent.'],
+          uk: ['Спочатку повністю виконує Start.', 'Проводить перевірку через 90 днів, перевірку в середині року та перевірку наприкінці року.', 'Використовує три цільові дії для визначених питань, що з’являються пізніше протягом року.', 'Використовує два короткі перегляди для коротких документів або повідомлень, які потребують швидкого практичного перегляду.', 'Включає одну активацію Housing Readiness і одну термінову первинну оцінку в межах річної структури.', 'Надає необов’язкове оновлення для батьків лише за окремою письмовою згодою.'],
+          ru: ['Сначала полностью выполняет Start.', 'Проводит проверку через 90 дней, проверку в середине года и проверку в конце года.', 'Использует три целевых действия для определённых вопросов, которые появляются позже в течение года.', 'Использует два коротких обзора для коротких документов или сообщений, которым нужен быстрый практический обзор.', 'Включает одну активацию Housing Readiness и одну срочную первичную оценку в рамках годовой структуры.', 'Даёт необязательное обновление для родителей только по отдельному письменному согласию.'],
+        },
+      },
+      {
+        title: {en: 'Delivery phases', uk: 'Етапи виконання', ru: 'Этапы выполнения'},
+        items: {
+          en: ['Phase 1: complete Start and establish the baseline route.', 'Phase 2: maintain the year through checkpoints, credits, and short reviews.', 'Phase 3: close the cycle with documented recaps, year-end planning, and the next activation path.'],
+          uk: ['Етап 1: завершити Start і зафіксувати базовий маршрут.', 'Етап 2: вести рік через контрольні точки, цільові дії та короткі перегляди.', 'Етап 3: закрити цикл задокументованими підсумками, планом на кінець року й наступним шляхом активації.'],
+          ru: ['Этап 1: завершить Start и зафиксировать базовый маршрут.', 'Этап 2: вести год через контрольные точки, целевые действия и короткие обзоры.', 'Этап 3: закрыть цикл задокументированными итогами, планом на конец года и следующим путём активации.'],
         },
       },
       {
@@ -582,6 +598,14 @@ export const PREMIUM_PACKAGES: Package[] = [
           en: ['Updated Student Life Map', 'Documented case history maintained during the engagement', 'Checkpoint Recaps', 'Year-end plan', 'Next activation route'],
           uk: ['Оновлену Student Life Map', 'Задокументовану історію кейсу протягом співпраці', 'Підсумки контрольних точок', 'План наприкінці року', 'Наступний маршрут активації'],
           ru: ['Обновлённую Student Life Map', 'Задокументированную историю кейса в течение сотрудничества', 'Итоги контрольных точек', 'План на конец года', 'Следующий маршрут активации'],
+        },
+      },
+      {
+        title: {en: 'Scope limits', uk: 'Межі обсягу', ru: 'Границы объёма'},
+        items: {
+          en: ['Support stays within defined checkpoints, credits, and reviews.', 'Action Credits and Quick Reviews do not convert into unlimited open support.', 'Urgency and third-party timelines remain subject to real provider and authority constraints.'],
+          uk: ['Підтримка залишається в межах визначених контрольних точок, цільових дій і коротких переглядів.', 'Action Credits і Quick Reviews не перетворюються на необмежену відкриту підтримку.', 'Терміновість і таймінги третіх сторін усе ще залежать від реальних обмежень провайдерів та органів.'],
+          ru: ['Поддержка остаётся в пределах определённых контрольных точек, целевых действий и коротких обзоров.', 'Action Credits и Quick Reviews не превращаются в неограниченную открытую поддержку.', 'Срочность и сроки третьих сторон всё ещё зависят от реальных ограничений провайдеров и органов.'],
         },
       },
       {
@@ -1066,6 +1090,8 @@ export const INDIVIDUAL_SERVICE_GROUPS: ServiceGroup[] = [
 export interface StudentLifeArea {
   area: LocalizedText;
   status: 'completed' | 'in_progress' | 'waiting_student' | 'waiting_third_party' | 'activate_later' | 'risk_identified';
+  summary: LocalizedText;
+  supportRoute: LocalizedText;
 }
 
 export const STUDENT_LIFE_STATUSES: Record<StudentLifeArea['status'], LocalizedText> = {
@@ -1078,13 +1104,104 @@ export const STUDENT_LIFE_STATUSES: Record<StudentLifeArea['status'], LocalizedT
 };
 
 export const STUDENT_LIFE_MAP_PREVIEW: StudentLifeArea[] = [
-  {area: {en: 'Arrival & Documents', uk: 'Приїзд і документи', ru: 'Приезд и документы'}, status: 'completed'},
-  {area: {en: 'Housing', uk: 'Житло', ru: 'Жильё'}, status: 'in_progress'},
-  {area: {en: 'University', uk: 'Університет', ru: 'Университет'}, status: 'waiting_student'},
-  {area: {en: 'Work & Internship', uk: 'Робота та стажування', ru: 'Работа и стажировка'}, status: 'activate_later'},
-  {area: {en: 'Insurance & Healthcare', uk: 'Страхування та медицина', ru: 'Страховка и медицина'}, status: 'waiting_third_party'},
-  {area: {en: 'Important Letters', uk: 'Важливі листи', ru: 'Важные письма'}, status: 'risk_identified'},
-  {area: {en: 'Next Academic Step', uk: 'Наступний академічний крок', ru: 'Следующий академический шаг'}, status: 'activate_later'},
+  {
+    area: {en: 'Arrival & Documents', uk: 'Приїзд і документи', ru: 'Приезд и документы'},
+    status: 'completed',
+    summary: {
+      en: 'Core arrival tasks are organised and brought to a finished state.',
+      uk: 'Базові завдання прибуття організовані й доведені до завершеного стану.',
+      ru: 'Базовые задачи прибытия организованы и доведены до завершённого состояния.',
+    },
+    supportRoute: {
+      en: 'Registration, BSN, DigiD, and stored completion notes.',
+      uk: 'Реєстрація, BSN, DigiD і збережені підсумкові нотатки.',
+      ru: 'Регистрация, BSN, DigiD и сохранённые итоговые заметки.',
+    },
+  },
+  {
+    area: {en: 'Housing', uk: 'Житло', ru: 'Жильё'},
+    status: 'in_progress',
+    summary: {
+      en: 'The housing route is active with visible next actions and tracked responses.',
+      uk: 'Житловий маршрут активний із видимими наступними діями та відстежуваними відповідями.',
+      ru: 'Жилищный маршрут активен с видимыми следующими действиями и отслеживаемыми ответами.',
+    },
+    supportRoute: {
+      en: 'Application pack, qualified submissions, and lead handling.',
+      uk: 'Пакет подання, кваліфіковані заявки та робота з активними кейсами.',
+      ru: 'Пакет подачи, квалифицированные заявки и работа с активными кейсами.',
+    },
+  },
+  {
+    area: {en: 'University', uk: 'Університет', ru: 'Университет'},
+    status: 'waiting_student',
+    summary: {
+      en: 'A next step is clear, but a student document or confirmation is still needed.',
+      uk: 'Наступний крок уже зрозумілий, але ще потрібен документ або підтвердження від студента.',
+      ru: 'Следующий шаг уже ясен, но ещё нужен документ или подтверждение от студента.',
+    },
+    supportRoute: {
+      en: 'Defined checklist, deadline view, and reactivation point.',
+      uk: 'Визначений чеклист, огляд дедлайну та точка повторної активації.',
+      ru: 'Определённый чеклист, обзор срока и точка повторной активации.',
+    },
+  },
+  {
+    area: {en: 'Work & Internship', uk: 'Робота та стажування', ru: 'Работа и стажировка'},
+    status: 'activate_later',
+    summary: {
+      en: 'This area is mapped now so it can be activated quickly when it becomes relevant.',
+      uk: 'Ця зона вже позначена зараз, щоб її можна було швидко активувати, коли вона стане актуальною.',
+      ru: 'Эта зона уже отмечена сейчас, чтобы её можно было быстро активировать, когда она станет актуальной.',
+    },
+    supportRoute: {
+      en: 'Future checkpoint, transition preparation, and practical route notes.',
+      uk: 'Майбутня контрольна точка, підготовка переходу та нотатки практичного маршруту.',
+      ru: 'Будущая контрольная точка, подготовка перехода и заметки практического маршрута.',
+    },
+  },
+  {
+    area: {en: 'Insurance & Healthcare', uk: 'Страхування та медицина', ru: 'Страховка и медицина'},
+    status: 'waiting_third_party',
+    summary: {
+      en: 'The sequence is underway, but an insurer or provider still controls the next movement.',
+      uk: 'Послідовність уже триває, але наступний рух усе ще контролює страховик або провайдер.',
+      ru: 'Последовательность уже идёт, но следующее движение всё ещё контролирует страховщик или провайдер.',
+    },
+    supportRoute: {
+      en: 'Practical preparation, provider follow-up, and status visibility.',
+      uk: 'Практична підготовка, супровід провайдера й видимість статусу.',
+      ru: 'Практическая подготовка, сопровождение провайдера и видимость статуса.',
+    },
+  },
+  {
+    area: {en: 'Important Letters', uk: 'Важливі листи', ru: 'Важные письма'},
+    status: 'risk_identified',
+    summary: {
+      en: 'A letter, deadline, or missing response needs attention before it becomes a larger issue.',
+      uk: 'Лист, дедлайн або відсутня відповідь потребує уваги, перш ніж це стане більшою проблемою.',
+      ru: 'Письмо, срок или отсутствующий ответ требуют внимания, прежде чем это станет более крупной проблемой.',
+    },
+    supportRoute: {
+      en: 'Letter review, document readiness, and immediate next action.',
+      uk: 'Перегляд листа, готовність документів і негайна наступна дія.',
+      ru: 'Разбор письма, готовность документов и немедленное следующее действие.',
+    },
+  },
+  {
+    area: {en: 'Next Academic Step', uk: 'Наступний академічний крок', ru: 'Следующий академический шаг'},
+    status: 'activate_later',
+    summary: {
+      en: 'The next transition is visible early, even if action belongs later in the year.',
+      uk: 'Наступний перехід видно заздалегідь, навіть якщо дія належить пізнішому періоду року.',
+      ru: 'Следующий переход виден заранее, даже если действие относится к более позднему периоду года.',
+    },
+    supportRoute: {
+      en: 'Checkpoint recap, planning notes, and the next activation route.',
+      uk: 'Підсумок контрольної точки, нотатки планування та наступний маршрут активації.',
+      ru: 'Итог контрольной точки, заметки планирования и следующий маршрут активации.',
+    },
+  },
 ];
 
 export interface TypicalSituation {
