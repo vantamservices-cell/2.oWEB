@@ -19,19 +19,19 @@ export const LOCALE_NAMES: Record<Locale, string> = {
 
 export const LOCALE_METADATA: Record<Locale, {title: string; description: string}> = {
   en: {
-    title: 'VANTAM | Practical support before, during and after arrival',
+    title: 'VANTAM | Practical support for students moving to the Netherlands',
     description:
-      'VANTAM supports people moving to the Netherlands with pre-arrival preparation, housing and rental-application support, and practical settlement after arrival.',
+      'VANTAM supports international students moving to the Netherlands with orientation, housing activation, a main first-year package, and practical settlement support.',
   },
   uk: {
-    title: 'VANTAM | Практична підтримка до, під час і після приїзду',
+    title: 'VANTAM | Практична підтримка для студентів у Нідерландах',
     description:
-      'VANTAM підтримує людей, які переїжджають до Нідерландів, з підготовкою до приїзду, житлом і орендними заявками, а також практичним облаштуванням після приїзду.',
+      'VANTAM підтримує студентів, які переїжджають до Нідерландів, з орієнтацією, житловою активацією, основним пакетом на перший рік і практичним облаштуванням.',
   },
   ru: {
-    title: 'VANTAM | Практическая поддержка до, во время и после приезда',
+    title: 'VANTAM | Практическая поддержка для студентов в Нидерландах',
     description:
-      'VANTAM помогает людям, которые переезжают в Нидерланды, с подготовкой к приезду, жильём и арендными заявками, а также практическим обустройством после приезда.',
+      'VANTAM поддерживает студентов, которые переезжают в Нидерланды, с ориентацией, жилищной активацией, основным пакетом на первый год и практическим обустройством.',
   },
 };
 

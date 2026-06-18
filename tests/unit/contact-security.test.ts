@@ -32,7 +32,7 @@ function validContactPayload(overrides: Record<string, unknown> = {}) {
     budget: '',
     status: 'after',
     guarantor: '',
-    help: 'consultation',
+    help: 'relocation_orientation',
     formStartedAt: Date.now() - 2000,
     ...overrides,
   };
@@ -47,7 +47,7 @@ describe('contact security helpers', () => {
 
     expect(parsed.submission.email).toBe('maria.smith@example.com');
     expect(parsed.submission.sourcePath).toBe('/en/contact');
-    expect(parsed.submission.helpNeeded).toBe('consultation');
+    expect(parsed.submission.helpNeeded).toBe('relocation_orientation');
   });
 
   it('reduces foreign source URLs to the root path', () => {
@@ -89,6 +89,18 @@ describe('contact security helpers', () => {
   ])('rejects invalid %s enum', (_label, overrides) => {
     const parsed = parseContactSubmission(validContactPayload(overrides), allowedOrigins);
     expect(parsed.status).toBe('invalid');
+  });
+
+  it.each([
+    ['housing_ready', {help: 'housing_ready:room_student'}],
+    ['housing_campaign', {help: 'housing_campaign:studio'}],
+    ['packages', {help: 'vantam_first_year'}],
+    ['partner', {help: 'partnership'}],
+  ])('accepts the %s help context', (_label, overrides) => {
+    const parsed = parseContactSubmission(validContactPayload(overrides), allowedOrigins);
+    expect(parsed.status).toBe('valid');
+    if (parsed.status !== 'valid') return;
+    expect(parsed.submission.helpNeeded).toBe(overrides.help);
   });
 
   it('rejects an invalid date when the status requires one', () => {

@@ -322,6 +322,8 @@ svg { flex: none; }
 .package-comparison { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong); }
 .package-option { display: flex; min-width: 0; flex-direction: column; border-left: 1px solid var(--line); padding: clamp(1.4rem, 3vw, 2.3rem); transition: background-color 200ms ease, color 200ms ease; }
 .package-option:first-child { border-left: 0; }
+.package-option.is-featured { background: color-mix(in srgb, var(--surface-teal) 38%, white); }
+.package-option.is-subordinate { opacity: 0.86; background: color-mix(in srgb, var(--surface) 92%, var(--surface-soft)); }
 .package-option.is-selected { background: var(--brand); color: white; }
 .package-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
 .package-heading span { color: var(--ink-soft); font-size: var(--type-label); font-weight: 700; }
@@ -390,7 +392,7 @@ svg { flex: none; }
 .planner-progress { display: flex; align-items: baseline; gap: 0.45rem; border-bottom: 1px solid var(--brand); padding-bottom: 0.3rem; }
 .planner-progress strong { font-size: 2.15rem; font-weight: 760; letter-spacing: var(--type-heading-tracking); }
 .planner-progress span { color: var(--muted); font-size: 0.8rem; font-weight: 700; }
-.planner-columns { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); }
+.planner-columns { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); }
 .planner-columns > section { border-left: 1px solid var(--line); padding: 1.35rem; }
 .planner-columns > section:first-child { border-left: 0; padding-left: 0; }
 .planner-columns > section:last-child { padding-right: 0; }
@@ -1028,6 +1030,7 @@ svg { flex: none; }
   .package-comparison { display: grid; grid-template-columns: 1fr; border: 1px solid var(--line-strong); border-radius: var(--radius); overflow: hidden; }
   .package-option { width: auto; border-top: 1px solid var(--line); border-left: 0; padding: 1.5rem; }
   .package-option:first-child { border-top: 0; border-left: 0; }
+  .package-option.is-subordinate { opacity: 0.9; }
   .package-option > p { min-height: 0; }
   .package-detail { grid-template-columns: 1fr; gap: 2.5rem; }
   .package-summary { grid-column: auto; }

@@ -52,6 +52,12 @@ for (const viewport of viewports) {
         await expect(page.getByRole('heading', {level: 1, name: copy.heroHeadline})).toBeVisible();
         await expect(page.locator('a.consent-link')).toHaveAttribute('href', `/${lang}/privacy`);
         await expect(page.getByText(warningText[lang])).toBeVisible();
+        await page.getByRole('button', {name: /VANTAM First Year/}).click();
+        await expect(page.locator('#contact-help')).toHaveValue('vantam_first_year');
+        await page.locator('.housing-highlight button').first().click();
+        await expect(page.locator('#contact-help')).toHaveValue('housing_ready:not_sure');
+        await expect(page.locator('#contact-housing-type')).toBeVisible();
+        await page.locator('#contact-housing-type').selectOption('room_student');
         await fillContactForm(page, lang);
 
         const submitButton = page.getByRole('button', {name: copy.contactSubmitBtn});

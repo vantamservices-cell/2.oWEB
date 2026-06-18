@@ -130,7 +130,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
   const [formBudget, setFormBudget] = useState('');
   const [formStatus, setFormStatus] = useState('before');
   const [formGuarantor, setFormGuarantor] = useState('');
-  const [formHelp, setFormHelp] = useState('consultation');
+  const [formHelp, setFormHelp] = useState('relocation_orientation');
   const [formHousingType, setFormHousingType] = useState('');
   const [formMessage, setFormMessage] = useState('');
   const [formConsent, setFormConsent] = useState(false);
@@ -226,34 +226,34 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       menu: 'Меню',
       darkTheme: 'Увімкнути темну тему',
       lightTheme: 'Увімкнути світлу тему',
-      heroTitle: 'Практична підтримка для тих, хто переїжджає до Нідерландів',
+      heroTitle: 'Практична підтримка для студентів, які переїжджають до Нідерландів',
       heroText: 'До приїзду, під час пошуку житла та оренди, і після приїзду для практичного облаштування. Чіткі наступні кроки без зайвого шуму.',
       heroImageAlt: 'Житлова вулиця з цегляними будинками в Амстердамі',
       photoCredit: 'Фото: Haberdoedas, Unsplash',
-      localNote: 'Три мови. Три рівні підтримки. Один локальний контакт.',
+      localNote: 'Три мови. Один студентський шлях. Один локальний контакт.',
       heroPrimary: 'Оберіть свій шлях',
       heroSecondary: 'Подивитися послуги',
       entryTitle: 'Оберіть формат, який відповідає вашій ситуації',
-      entryConsult: 'Планую переїзд',
-      entryPackage: 'Потрібна допомога з житлом',
-      entrySingle: 'Потрібне практичне облаштування',
+      entryConsult: 'Потрібна орієнтація',
+      entryPackage: 'Потрібен основний пакет',
+      entrySingle: 'Потрібна житлова активація',
       from: 'від',
       trustTitle: 'Підтримка без інституційної дистанції',
-      trustText: 'VANTAM пояснює процеси простою мовою, допомагає підготуватися і тримає наступний крок у фокусі - для житла, приїзду й практичного облаштування.',
+      trustText: 'VANTAM пояснює процеси простою мовою, допомагає підготуватися і тримає наступний крок у фокусі - для орієнтації, житлової активації та першого року.',
       boundary: 'Ми не замінюємо ліцензованих фахівців і не обіцяємо результатів, які залежать від банків, державних органів, страховиків або орендодавців.',
       consultLead: 'Найпростіший спосіб почати',
       servicesLead: 'Окремий запит',
       categoryCount: 'послуг',
-      packageLead: 'Три рівні підтримки',
+      packageLead: 'Основний пакет і житлова активація',
       packageCompare: 'Порівняйте варіанти поруч',
-      packageDetails: 'Склад обраного пакета',
+      packageDetails: 'Склад обраної пропозиції',
       selected: 'Обрано',
       choose: 'Переглянути',
       toolsLead: 'Корисні інструменти до розмови',
       toolsText: 'Оцініть типові витрати та відмітьте, що вже готово. Інструменти допомагають спланувати розмову, а не замінюють консультацію.',
       estimate: 'Сума вибраних сценаріїв',
       maximum: 'Максимум у калькуляторі: €4,575',
-      difference: 'Різниця із Arrival Setup',
+      difference: 'Різниця з VANTAM First Year',
       progress: 'готово',
       testimonialLead: 'Приклади',
       contactLead: 'Розкажіть, що відбувається',
@@ -263,38 +263,38 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       phoneLabel: 'Телефон',
       whatsappLabel: 'Написати у WhatsApp Business',
       businessDetailsLabel: 'Дані компанії',
-      responseTime: 'Відповідаємо протягом одного робочого дня.',
+      responseTime: 'Ми переглядаємо звернення і відповідаємо на вказану пошту з наступними кроками.',
       scopeLabel: 'Включено',
       limitsLabel: 'Межі',
       result: 'Результат',
       details: 'Деталі',
       audienceLead: 'Хто отримує користь',
-      audienceTitle: 'Підтримка для людей, які переїжджають до Нідерландів',
-      audienceText: 'Одна пропозиція для людей до приїзду, під час житла та оренди, і після приїзду для практичного облаштування. Комусь потрібен один чіткий крок, комусь - ширший супровід.',
+      audienceTitle: 'Підтримка для студентів, які переїжджають до Нідерландів',
+      audienceText: 'Одна пропозиція для студентів до приїзду, під час житла та оренди, і після приїзду для практичного облаштування. Комусь потрібен один чіткий крок, комусь - ширший супровід.',
       audienceBefore: 'До приїзду',
       audienceAfter: 'Після приїзду',
       selectorLead: 'Почніть із вашої ситуації',
       selectorTitle: 'Вибір за ситуацією',
       selectorText: 'Оберіть варіант, який швидше підведе вас до потрібного розділу і підставить відповідний контекст у форму.',
-      selectorServices: 'Потрібна допомога з житлом',
-      selectorPackages: 'Після приїзду потрібне облаштування',
-      selectorConsult: 'Планую переїзд',
+      selectorServices: 'Потрібна житлова активація',
+      selectorPackages: 'Потрібен основний пакет',
+      selectorConsult: 'Потрібна орієнтація',
       selectorPartner: 'Партнерський запит',
       processLead: 'Як працюємо',
-      processTitle: 'Від запиту до підтримки',
-      processText: 'Спершу ми дивимося на вашу ситуацію, потім ви обираєте формат. Підтримка починається лише після письмового підтвердження обсягу й умов.',
+      processTitle: 'Оцінити, спланувати, діяти та продовжити',
+      processText: 'Спершу ми оцінюємо ситуацію, потім будуємо карту кроків, далі діємо і координуємо, а після цього перевіряємо і продовжуємо.',
       partnerLead: 'Партнерство',
       partnerTitle: 'Партнер з VANTAM',
-      partnerText: 'Для житлових агенцій, HR-команд, університетів та освітніх консультантів, які хочуть акуратно передавати запити на практичну підтримку.',
+      partnerText: 'Для житлових агенцій, HR-команд, університетів та освітніх консультантів, які хочуть акуратно передавати практичні студентські запити.',
       partnerCTA: 'Обговорити співпрацю',
-      housingLead: 'Важлива житлова послуга',
-      housingTitle: 'Housing Preparation & Application Support',
-      housingText: 'Підготовка документів для заявки, пояснення ситуації з гарантом, повідомлення для агенції або орендодавця та практична підтримка з договором оренди.',
+      housingLead: 'Житлова активація',
+      housingTitle: 'Housing Ready',
+      housingText: 'Підготовка до житлового шляху, пояснення ситуації з гарантом і перші практичні кроки перед пошуком житла.',
       housingNote: 'Без гарантії отримання житла і без юридичного представництва.',
-      housingCta: 'Запитати цю послугу',
+      housingCta: 'Запитати житлову активацію',
       housingPriceLabel: 'Після оцінки',
       formSectionTitle: 'Кваліфікація запиту',
-      formSectionSub: 'Дайте нам кілька практичних деталей. Це допоможе швидше зрозуміти, чи вам потрібна окрема послуга, пакет або партнерська розмова.',
+      formSectionSub: 'Дайте нам кілька практичних деталей. Це допоможе швидше зрозуміти, чи вам потрібна орієнтація, основний пакет, житлова активація або партнерська розмова.',
       formEnquiryNotice: 'Це лише початковий запит. Надсилання форми не створює договір, бронювання, платіжне зобов’язання, запит на початок роботи або відмову від прав. VANTAM перегляне інформацію і зв’яжеться з вами щодо можливих наступних кроків.',
       formAudienceLabel: 'Контекст',
       formMovingDateLabel: 'Очікувана дата переїзду',
@@ -323,34 +323,34 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       menu: 'Меню',
       darkTheme: 'Включить темную тему',
       lightTheme: 'Включить светлую тему',
-      heroTitle: 'Практическая поддержка для тех, кто переезжает в Нидерланды',
+      heroTitle: 'Практическая поддержка для студентов, которые переезжают в Нидерланды',
       heroText: 'До приезда, во время поиска жилья и аренды, и после приезда для практического обустройства. Понятные следующие шаги без лишнего шума.',
       heroImageAlt: 'Жилая улица с кирпичными домами в Амстердаме',
       photoCredit: 'Фото: Haberdoedas, Unsplash',
-      localNote: 'Три языка. Три уровня поддержки. Один локальный контакт.',
+      localNote: 'Три языка. Один студенческий путь. Один локальный контакт.',
       heroPrimary: 'Выберите свой путь',
       heroSecondary: 'Посмотреть услуги',
       entryTitle: 'Выберите формат, который подходит вашей ситуации',
-      entryConsult: 'Планирую переезд',
-      entryPackage: 'Нужна помощь с жильём',
-      entrySingle: 'Нужно практическое обустройство',
+      entryConsult: 'Нужна ориентация',
+      entryPackage: 'Нужен основной пакет',
+      entrySingle: 'Нужна жилищная активация',
       from: 'от',
       trustTitle: 'Поддержка без институциональной дистанции',
-      trustText: 'VANTAM объясняет процессы простым языком, помогает подготовиться и держит следующий шаг в фокусе - для жилья, приезда и практического обустройства.',
+      trustText: 'VANTAM объясняет процессы простым языком, помогает подготовиться и держит следующий шаг в фокусе - для ориентации, жилищной активации и первого года.',
       boundary: 'Мы не заменяем лицензированных специалистов и не обещаем результатов, которые зависят от банков, государственных органов, страховщиков или арендодателей.',
       consultLead: 'Самый простой способ начать',
       servicesLead: 'Отдельный запрос',
       categoryCount: 'услуг',
-      packageLead: 'Три уровня поддержки',
+      packageLead: 'Основной пакет и жилищная активация',
       packageCompare: 'Сравните варианты рядом',
-      packageDetails: 'Состав выбранного пакета',
+      packageDetails: 'Состав выбранного предложения',
       selected: 'Выбрано',
       choose: 'Посмотреть',
       toolsLead: 'Полезные инструменты до разговора',
       toolsText: 'Оцените типичные расходы и отметьте, что уже готово. Инструменты помогают спланировать разговор, а не заменяют консультацию.',
       estimate: 'Сумма выбранных сценариев',
       maximum: 'Максимум в калькуляторе: €4,575',
-      difference: 'Разница с Arrival Setup',
+      difference: 'Разница с VANTAM First Year',
       progress: 'готово',
       testimonialLead: 'Примеры',
       contactLead: 'Расскажите, что происходит',
@@ -360,38 +360,38 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       phoneLabel: 'Телефон',
       whatsappLabel: 'Написать в WhatsApp Business',
       businessDetailsLabel: 'Данные компании',
-      responseTime: 'Отвечаем в течение одного рабочего дня.',
+      responseTime: 'Мы просматриваем обращения и отвечаем на указанную почту с следующими шагами.',
       scopeLabel: 'Включено',
       limitsLabel: 'Границы',
       result: 'Результат',
       details: 'Детали',
       audienceLead: 'Кому это полезно',
-      audienceTitle: 'Поддержка для людей, которые переезжают в Нидерланды',
-      audienceText: 'Одно предложение для людей до приезда, во время жилья и аренды, и после приезда для практического обустройства. Кому-то нужен один чёткий шаг, кому-то - более широкое сопровождение.',
+      audienceTitle: 'Поддержка для студентов, которые переезжают в Нидерланды',
+      audienceText: 'Одно предложение для студентов до приезда, во время жилья и аренды, и после приезда для практического обустройства. Кому-то нужен один чёткий шаг, кому-то - более широкое сопровождение.',
       audienceBefore: 'До приезда',
       audienceAfter: 'После приезда',
       selectorLead: 'Начните со своей ситуации',
       selectorTitle: 'Выбор по ситуации',
       selectorText: 'Выберите вариант, который быстрее приведёт вас к нужному разделу и подставит в форму нужный контекст.',
-      selectorServices: 'Нужна помощь с жильём',
-      selectorPackages: 'После приезда нужно обустройство',
-      selectorConsult: 'Планирую переезд',
+      selectorServices: 'Нужна жилищная активация',
+      selectorPackages: 'Нужен основной пакет',
+      selectorConsult: 'Нужна ориентация',
       selectorPartner: 'Партнёрский запрос',
       processLead: 'Как работаем',
-      processTitle: 'От запроса к поддержке',
-      processText: 'Сначала мы смотрим на вашу ситуацию, затем вы выбираете формат. Поддержка начинается только после письменного подтверждения объёма и условий.',
+      processTitle: 'Оценить, спланировать, действовать и продолжить',
+      processText: 'Сначала мы оцениваем ситуацию, затем строим карту шагов, дальше действуем и координируем, а после этого проверяем и продолжаем.',
       partnerLead: 'Партнёрство',
       partnerTitle: 'Партнёр с VANTAM',
-      partnerText: 'Для жилищных агентств, HR-команд, университетов и образовательных консультантов, которые хотят аккуратно передавать запросы на практическую поддержку.',
+      partnerText: 'Для жилищных агентств, HR-команд, университетов и образовательных консультантов, которые хотят аккуратно передавать практические студенческие запросы.',
       partnerCTA: 'Обсудить сотрудничество',
-      housingLead: 'Важная жилищная услуга',
-      housingTitle: 'Housing Preparation & Application Support',
-      housingText: 'Подготовка документов для заявки, объяснение ситуации с гарантом, сообщения для агентства или арендодателя и практическая поддержка по договору аренды.',
+      housingLead: 'Жилищная активация',
+      housingTitle: 'Housing Ready',
+      housingText: 'Подготовка к жилищному пути, объяснение ситуации с гарантом и первые практические шаги перед поиском жилья.',
       housingNote: 'Без гарантии получения жилья и без юридического представительства.',
-      housingCta: 'Запросить эту услугу',
+      housingCta: 'Запросить жилищную активацию',
       housingPriceLabel: 'После оценки',
       formSectionTitle: 'Квалификация запроса',
-      formSectionSub: 'Дайте нам несколько практических деталей. Это поможет быстрее понять, нужна ли вам отдельная услуга, пакет или партнёрский разговор.',
+      formSectionSub: 'Дайте нам несколько практических деталей. Это поможет быстрее понять, нужна ли вам ориентация, основной пакет, жилищная активация или партнёрский разговор.',
       formEnquiryNotice: 'Это только первоначальный запрос. Отправка формы не создаёт договор, бронирование, платёжное обязательство, запрос на начало работы или отказ от прав. VANTAM рассмотрит информацию и свяжется с вами о возможных следующих шагах.',
       formAudienceLabel: 'Контекст',
       formMovingDateLabel: 'Ожидаемая дата переезда',
@@ -420,34 +420,34 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       menu: 'Menu',
       darkTheme: 'Use dark theme',
       lightTheme: 'Use light theme',
-      heroTitle: 'Practical support for people moving to the Netherlands',
+      heroTitle: 'Practical support for students moving to the Netherlands',
       heroText: 'Before arrival, during the housing and rental process, and after arrival for practical settlement - with clear next steps and no extra noise.',
       heroImageAlt: 'Residential brick street in Amsterdam',
       photoCredit: 'Photo: Haberdoedas, Unsplash',
-      localNote: 'Three languages. Three support levels. One local contact.',
+      localNote: 'Three languages. One student path. One local contact.',
       heroPrimary: 'Choose your path',
       heroSecondary: 'See the services',
       entryTitle: 'Choose the format that fits your situation',
-      entryConsult: 'Planning my move',
-      entryPackage: 'I need housing help',
-      entrySingle: 'I need practical setup',
+      entryConsult: 'Need orientation',
+      entryPackage: 'Need the main package',
+      entrySingle: 'Need housing activation',
       from: 'from',
       trustTitle: 'Support without institutional distance',
-      trustText: 'VANTAM explains processes in plain language, helps you prepare and keeps the next step in focus - for housing, arrival and practical settlement.',
+      trustText: 'VANTAM explains processes in plain language, helps you prepare and keeps the next step in focus - for orientation, housing activation and the first year.',
       boundary: 'We do not replace licensed professionals or promise outcomes that depend on banks, public bodies, insurers or landlords.',
       consultLead: 'The simplest place to start',
       servicesLead: 'One-off tasks',
       categoryCount: 'services',
-      packageLead: 'Three levels of support',
+      packageLead: 'Main package and housing activation',
       packageCompare: 'Compare the options side by side',
-      packageDetails: 'Contents of the selected package',
+      packageDetails: 'Contents of the selected offer',
       selected: 'Selected',
       choose: 'View details',
       toolsLead: 'Useful tools before we talk',
       toolsText: 'Review common costs and mark what is already prepared. The tools help you plan the conversation; they do not replace a consultation.',
       estimate: 'Selected scenario total',
       maximum: 'Maximum in the calculator: €4,575',
-      difference: 'Difference from Arrival Setup',
+      difference: 'Difference from VANTAM First Year',
       progress: 'ready',
       testimonialLead: 'Representative examples',
       contactLead: 'Tell us what is happening',
@@ -457,38 +457,38 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       phoneLabel: 'Phone',
       whatsappLabel: 'Message VANTAM on WhatsApp Business',
       businessDetailsLabel: 'Business details',
-      responseTime: 'We respond within one business day.',
+      responseTime: 'We review enquiries and reply with next steps.',
       scopeLabel: 'Included',
       limitsLabel: 'Boundaries',
       result: 'Outcome',
       details: 'Details',
       audienceLead: 'Who we help',
-      audienceTitle: 'Support for people moving to the Netherlands',
-      audienceText: 'One offer for people before arrival, during housing and rental steps, and after arrival for practical settlement. Some need one clear step, others need broader support.',
+      audienceTitle: 'Support for students moving to the Netherlands',
+      audienceText: 'One offer for students before arrival, during housing and rental steps, and after arrival for practical settlement. Some need one clear step, others need broader support.',
       audienceBefore: 'Before arrival',
       audienceAfter: 'After arrival',
       selectorLead: 'Start with your situation',
       selectorTitle: 'Select by situation',
       selectorText: 'Choose the path that gets you to the right section and pre-fills the form with the matching context.',
-      selectorServices: 'Need housing help',
-      selectorPackages: 'Need practical setup after arrival',
-      selectorConsult: 'Planning my move',
+      selectorServices: 'Need housing activation',
+      selectorPackages: 'Need the main package',
+      selectorConsult: 'Need orientation',
       selectorPartner: 'Partnership enquiry',
       processLead: 'How it works',
-      processTitle: 'From enquiry to support',
-      processText: 'We first look at your situation, then you choose the right format. Support begins only after the scope and terms are confirmed in writing.',
+      processTitle: 'Assess, map, act and continue',
+      processText: 'We first assess the situation, then map the steps, then act and coordinate, and after that verify and continue.',
       partnerLead: 'Partnership',
       partnerTitle: 'Partner with VANTAM',
-      partnerText: 'For rental agencies, HR teams, universities and education consultants who want a clean handoff to practical support.',
+      partnerText: 'For rental agencies, HR teams, universities and education consultants who want a clean handoff for practical student requests.',
       partnerCTA: 'Discuss cooperation',
-      housingLead: 'Important housing service',
-      housingTitle: 'Housing Preparation & Application Support',
-      housingText: 'Application-file preparation, explaining the guarantor situation, messages for the agency or landlord, and practical support with rental-contract questions.',
+      housingLead: 'Housing activation',
+      housingTitle: 'Housing Ready',
+      housingText: 'Preparation for the housing path, explaining the guarantor situation and the first practical steps before the search.',
       housingNote: 'No housing guarantee and no legal representation.',
-      housingCta: 'Request this service',
+      housingCta: 'Request housing activation',
       housingPriceLabel: 'After assessment',
       formSectionTitle: 'Qualification form',
-      formSectionSub: 'Share a few practical details. It helps us see faster whether you need a service, a package or a partnership conversation.',
+      formSectionSub: 'Share a few practical details. It helps us see faster whether you need orientation, the main package, housing activation or a partnership conversation.',
       formEnquiryNotice: 'This is an initial enquiry only. Submitting the form does not create a contract, book a consultation, create a payment obligation, request work to start or waive any rights. VANTAM will review the information and contact you about possible next steps.',
       formAudienceLabel: 'Context',
       formMovingDateLabel: 'Expected move date',
@@ -502,7 +502,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       formStatusBefore: 'Before arrival',
       formStatusAfter: 'Already in the Netherlands',
       formStatusFoundHousing: 'Housing already found',
-      formStatusNeedHousing: 'Need housing or practical setup support',
+      formStatusNeedHousing: 'Need housing activation',
       formStatusOrganisation: 'Organisation / partnership',
       formAudienceStudent: 'Student',
       formAudienceProfessional: 'Expat / professional',
@@ -516,19 +516,19 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
 
   const serviceCategories = useMemo(() => [
     {
-      id: 'housing', label: lang === 'uk' ? 'Житло та орендні заявки' : lang === 'ru' ? 'Жильё и арендные заявки' : 'Housing and rental applications',
-      description: lang === 'uk' ? 'Підготовка заявки, поручитель, договір і комунікація' : lang === 'ru' ? 'Подготовка заявки, поручитель, договор и коммуникация' : 'Application prep, guarantor, contract and communication',
+      id: 'housing', label: lang === 'uk' ? 'Житлова активація' : lang === 'ru' ? 'Жилищная активация' : 'Housing activation',
+      description: lang === 'uk' ? 'Житловий шлях, поручитель і перші практичні кроки' : lang === 'ru' ? 'Жилищный путь, поручитель и первые практические шаги' : 'Housing path, guarantor and first practical steps',
       icon: House,
-      ids: ['single_housing_application_support', 'single_rental_contract', 'single_housing_scam_check', 'single_deposit_return', 'single_landlord_communication'],
+      ids: ['housing_ready', 'housing_campaign', 'single_rental_contract', 'single_housing_scam_check', 'single_deposit_return', 'single_landlord_communication'],
     },
     {
-      id: 'arrival', label: lang === 'uk' ? 'Підготовка до приїзду' : lang === 'ru' ? 'Подготовка к приезду' : 'Pre-arrival preparation',
-      description: lang === 'uk' ? 'План, документи, консультація та інші кроки до виїзду' : lang === 'ru' ? 'План, документы, консультация и другие шаги до выезда' : 'Plan, documents, consultation and other pre-departure steps',
+      id: 'arrival', label: lang === 'uk' ? 'Орієнтація до приїзду' : lang === 'ru' ? 'Ориентация до приезда' : 'Pre-arrival orientation',
+      description: lang === 'uk' ? 'План, документи, орієнтація та інші кроки до виїзду' : lang === 'ru' ? 'План, документы, ориентация и другие шаги до выезда' : 'Plan, documents, orientation and other pre-departure steps',
       icon: FileText,
       ids: ['single_official_letter', 'single_university_admin', 'single_registration_bsn', 'single_digid_activation', 'single_bank_setup'],
     },
     {
-      id: 'settlement', label: lang === 'uk' ? 'Практичне облаштування після приїзду' : lang === 'ru' ? 'Практическое обустройство после приезда' : 'Practical settlement after arrival',
+      id: 'settlement', label: lang === 'uk' ? 'Практичне облаштування' : lang === 'ru' ? 'Практическое обустройство' : 'Practical settlement',
       description: lang === 'uk' ? 'Реєстрація, DigiD, банк, страхування, GP' : lang === 'ru' ? 'Регистрация, DigiD, банк, страховка, GP' : 'Registration, DigiD, banking, insurance, GP',
       icon: HeartPulse,
       ids: ['single_insurance_setup', 'single_insurance_claim', 'single_healthcare_registration'],
@@ -566,7 +566,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
     if (overrides.guarantor !== undefined) setFormGuarantor(overrides.guarantor);
     if (overrides.help !== undefined) {
       setFormHelp(overrides.help);
-      if (overrides.help !== 'housing_search') {
+      if (!overrides.help?.startsWith('housing_')) {
         setFormHousingType('');
         setFormBudget('');
         setFormGuarantor('');
@@ -579,7 +579,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
     const service = SINGLE_SERVICES.find((item) => item.id === serviceId);
     if (service) {
       applyQualificationContext({
-        help: service.id === 'single_housing_application_support' ? 'housing_search' : 'single',
+        help: service.id === 'housing_ready' ? 'housing_ready:not_sure' : service.id === 'housing_campaign' ? 'housing_campaign:not_sure' : 'individual_service',
         message: lang === 'uk'
           ? `Мені потрібна окрема послуга: ${service.name.uk}.`
           : lang === 'ru'
@@ -593,7 +593,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
   const handleSelectConsultation = (consultationId: string) => {
     const consultation = CONSULTATIONS_STORE.find((item) => item.id === consultationId);
     if (consultation) applyQualificationContext({
-      help: 'consultation',
+      help: 'relocation_orientation',
       message: lang === 'uk'
         ? `Мені потрібна консультація: ${consultation.name.uk}.`
         : lang === 'ru'
@@ -607,7 +607,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
     const item = PREMIUM_PACKAGES.find((pkg) => pkg.id === packageId);
     setSelectedPackage(packageId);
     if (item) applyQualificationContext({
-      help: 'packages',
+      help: packageId === 'pkg_start' ? 'vantam_start' : packageId === 'pkg_full' ? 'vantam_continue' : 'vantam_first_year',
       message: lang === 'uk'
         ? `Мені потрібен пакет: ${item.name.uk} (${item.price}).`
         : lang === 'ru'
@@ -623,12 +623,12 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
     if (option.target === 'consultation') {
       applyQualificationContext({
         status: 'before',
-        help: 'consultation',
+        help: 'relocation_orientation',
         message: lang === 'uk'
-          ? `Я планую переїзд до Нідерландів і хочу почати з консультації.`
+          ? `Я планую переїзд до Нідерландів і хочу почати з орієнтації.`
           : lang === 'ru'
-            ? `Я планирую переезд в Нидерланды и хочу начать с консультации.`
-            : `I am planning my move to the Netherlands and want to start with a consultation.`,
+            ? `Я планирую переезд в Нидерланды и хочу начать с ориентации.`
+            : `I am planning my move to the Netherlands and want to start with orientation.`,
       });
       scrollToTarget(option.target);
       return;
@@ -638,12 +638,12 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       setActiveServiceCategory('housing');
       applyQualificationContext({
         status: 'need_housing',
-        help: 'housing_search',
+        help: 'housing_ready:not_sure',
         message: lang === 'uk'
-          ? `Мені потрібна допомога з житлом або орендною заявкою.`
+          ? `Мені потрібна житлова активація.`
           : lang === 'ru'
-            ? `Мне нужна помощь с жильём или арендной заявкой.`
-            : `I need help with housing or my rental application.`,
+            ? `Мне нужна жилищная активация.`
+            : `I need housing activation.`,
       });
       scrollToTarget(option.target);
       return;
@@ -653,12 +653,12 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       setSelectedPackage('pkg_setup');
       applyQualificationContext({
         status: 'after',
-        help: 'packages',
+        help: 'vantam_first_year',
         message: lang === 'uk'
-          ? `Я вже приїхав(-ла) і мені потрібне практичне облаштування після приїзду.`
+          ? `Я вже приїхав(-ла) і мені потрібен основний пакет.`
           : lang === 'ru'
-            ? `Я уже приехал(-а) и мне нужно практическое обустройство после приезда.`
-            : `I have arrived and need practical setup support after arrival.`,
+            ? `Я уже приехал(-а) и мне нужен основной пакет.`
+            : `I have arrived and need the main package.`,
       });
       scrollToTarget(option.target);
       return;
@@ -667,7 +667,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
     applyQualificationContext({
         audience: 'organisation',
         status: 'organisation',
-        help: 'b2b',
+        help: 'partnership',
         message: lang === 'uk'
           ? `Я представляю організацію і хочу обговорити співпрацю.`
         : lang === 'ru'
@@ -688,7 +688,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
         body: JSON.stringify({
           name: formName,
           email: formEmail,
-          inquiryType: formHelp === 'consultation' ? 'consultation' : formHelp === 'packages' ? 'packages' : formHelp === 'b2b' ? 'b2b' : 'single',
+          inquiryType: formHelp === 'partnership' ? 'b2b' : formHelp === 'relocation_orientation' || formHelp === 'urgent_situation' ? 'consultation' : formHelp === 'vantam_start' || formHelp === 'vantam_first_year' || formHelp === 'vantam_continue' ? 'packages' : 'single',
           message: formMessage,
           consent: formConsent,
           language: lang,
@@ -697,10 +697,10 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
           audience: formAudience,
           movingDate: formStatus === 'before' ? formMovingDate : '',
           city: formCity,
-          budget: formHelp === 'housing_search' ? formBudget : '',
+          budget: formHelp.startsWith('housing_') ? formBudget : '',
           status: formStatus,
-          guarantor: formHelp === 'housing_search' ? formGuarantor : '',
-          help: formHelp === 'housing_search' ? `housing_search:${formHousingType}` : formHelp,
+          guarantor: formHelp.startsWith('housing_') ? formGuarantor : '',
+          help: formHelp.startsWith('housing_') ? `${formHelp.split(':')[0]}:${formHousingType || formHelp.split(':')[1] || 'not_sure'}` : formHelp,
           formStartedAt: formStartedAtRef.current,
         }),
       });
@@ -723,7 +723,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
     setFormBudget('');
     setFormStatus('before');
     setFormGuarantor('');
-    setFormHelp('consultation');
+    setFormHelp('relocation_orientation');
     setFormHousingType('');
     formStartedAtRef.current = Date.now();
     setActiveSituation('moving');
@@ -733,10 +733,15 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
   const closeNavigation = (event: React.MouseEvent<HTMLAnchorElement>) => event.currentTarget.closest('details')?.removeAttribute('open');
   const formErrorMessage = lang === 'uk' ? 'Не вдалося надіслати запит. Спробуйте ще раз або напишіть у WhatsApp Business.' : lang === 'ru' ? 'Не удалось отправить запрос. Попробуйте ещё раз или напишите в WhatsApp Business.' : 'The enquiry could not be sent. Please try again or use WhatsApp Business.';
   const plannerGroups = [
-    {category: 'prep' as const, title: dict.checklistPrepTab, description: dict.checklistPrepDesc},
-    {category: 'arrival' as const, title: dict.checklistArrivalTab, description: dict.checklistArrivalDesc},
-    {category: 'settle' as const, title: dict.checklistSettleTab, description: dict.checklistSettleDesc},
+    {category: 'assess' as const, title: dict.checklistPrepTab, description: dict.checklistPrepDesc},
+    {category: 'map' as const, title: dict.checklistArrivalTab, description: dict.checklistArrivalDesc},
+    {category: 'act' as const, title: dict.checklistSettleTab, description: dict.checklistSettleDesc},
+    {category: 'verify' as const, title: dict.checklistVerifyTab, description: dict.checklistVerifyDesc},
   ];
+  const firstYearPackagePrice = useMemo(() => {
+    const firstYearPackage = PREMIUM_PACKAGES.find((item) => item.id === 'pkg_setup') || PREMIUM_PACKAGES[1];
+    return Number(firstYearPackage.price.replace(/[^\d]/g, ''));
+  }, []);
   const qualificationOptions = useMemo(() => ({
     audience: [
       { value: 'student', label: ui.formAudienceStudent },
@@ -757,11 +762,15 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
       { value: 'no', label: ui.formGuarantorNo },
     ],
     help: [
-      { value: 'consultation', label: lang === 'uk' ? 'Консультація / планування переїзду' : lang === 'ru' ? 'Консультация / планирование переезда' : 'Consultation / planning my move' },
-      { value: 'housing_search', label: lang === 'uk' ? 'Пошук житла та підтримка з орендною заявкою' : lang === 'ru' ? 'Поиск жилья и поддержка с арендной заявкой' : 'Housing search and rental application support' },
-      { value: 'single', label: lang === 'uk' ? 'Інша окрема послуга' : lang === 'ru' ? 'Другая отдельная услуга' : 'Another single service' },
-      { value: 'packages', label: lang === 'uk' ? 'Пакет після приїзду' : lang === 'ru' ? 'Пакет после приезда' : 'Post-arrival package' },
-      { value: 'b2b', label: lang === 'uk' ? 'Партнерство / організація' : lang === 'ru' ? 'Партнёрство / организация' : 'Partnership / organisation' },
+      { value: 'relocation_orientation', label: lang === 'uk' ? 'Орієнтація з переїзду' : lang === 'ru' ? 'Ориентация по переезду' : 'Relocation Orientation' },
+      { value: 'vantam_start', label: lang === 'uk' ? 'VANTAM Start' : lang === 'ru' ? 'VANTAM Start' : 'VANTAM Start' },
+      { value: 'vantam_first_year', label: lang === 'uk' ? 'VANTAM First Year' : lang === 'ru' ? 'VANTAM First Year' : 'VANTAM First Year' },
+      { value: 'vantam_continue', label: lang === 'uk' ? 'VANTAM Continue' : lang === 'ru' ? 'VANTAM Continue' : 'VANTAM Continue' },
+      { value: 'housing_ready:not_sure', label: lang === 'uk' ? 'Housing Ready' : lang === 'ru' ? 'Housing Ready' : 'Housing Ready' },
+      { value: 'housing_campaign:not_sure', label: lang === 'uk' ? 'Housing Search Campaign' : lang === 'ru' ? 'Housing Search Campaign' : 'Housing Search Campaign' },
+      { value: 'individual_service', label: lang === 'uk' ? 'Окрема послуга' : lang === 'ru' ? 'Отдельная услуга' : 'Single service' },
+      { value: 'urgent_situation', label: lang === 'uk' ? 'Пріоритетний дзвінок' : lang === 'ru' ? 'Приоритетный звонок' : 'Priority call' },
+      { value: 'partnership', label: lang === 'uk' ? 'Партнерський запит' : lang === 'ru' ? 'Партнёрский запрос' : 'Partnership enquiry' },
     ],
     housingType: [
       { value: 'room_student', label: lang === 'uk' ? 'Кімната / студентське житло' : lang === 'ru' ? 'Комната / студенческое жильё' : 'Room / student accommodation' },
@@ -998,7 +1007,8 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
                 <h3>{ui.housingTitle}</h3>
                 <p>{ui.housingText}</p>
                 <small><Info />{ui.housingNote}</small>
-                <button type="button" className="button button-secondary" onClick={() => handleSelectSingleService('single_housing_application_support')}>{ui.housingCta}<ArrowRight /></button>
+                <button type="button" className="button button-secondary" onClick={() => handleSelectSingleService('housing_ready')}>{ui.housingCta}<ArrowRight /></button>
+                <button type="button" className="button button-secondary" onClick={() => handleSelectSingleService('housing_campaign')}>{lang === 'uk' ? 'Запитати кампанію пошуку' : lang === 'ru' ? 'Запросить кампанию поиска' : 'Request the search campaign'}<ArrowRight /></button>
               </div>
               <div className="service-category-tabs" aria-label={ui.servicesLead}>
                 {serviceCategories.map((category) => {
@@ -1018,7 +1028,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
                   <article key={service.id}>
                     <div className="service-name"><h4>{service.name[lang]}</h4><span>{service.mode[lang]}</span></div>
                     <div className="service-description"><p>{service.desc[lang]}</p><small><Check />{service.limit[lang]}</small>{service.notIncluded && <small className="service-exclusion">{service.notIncluded[lang]}</small>}</div>
-                    <div className="service-action"><strong>{service.id === 'single_housing_application_support' ? ui.housingPriceLabel : service.price}</strong><button onClick={() => handleSelectSingleService(service.id)} aria-label={`${dict.singleCta}: ${service.name[lang]}`}><ArrowUpRight /></button></div>
+                    <div className="service-action"><strong>{service.id === 'housing_ready' || service.id === 'housing_campaign' ? service.price : service.price}</strong><button onClick={() => handleSelectSingleService(service.id)} aria-label={`${dict.singleCta}: ${service.name[lang]}`}><ArrowUpRight /></button></div>
                   </article>
                 ))}
               </div>
@@ -1034,7 +1044,15 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
               {PREMIUM_PACKAGES.map((item) => {
                 const isSelected = item.id === selectedPackage;
                 return (
-                  <article key={item.id} className={isSelected ? 'package-option is-selected' : 'package-option'}>
+                <article
+                  key={item.id}
+                  className={[
+                    'package-option',
+                    item.id === 'pkg_setup' ? 'is-featured' : '',
+                    item.id === 'pkg_full' ? 'is-subordinate' : '',
+                    isSelected ? 'is-selected' : '',
+                  ].filter(Boolean).join(' ')}
+                >
                     <div className="package-heading"><span>{item.subtitle[lang]}</span><strong>{item.price}</strong></div>
                     <h3>{item.name[lang]}</h3>
                     <p>{item.tagline[lang]}</p>
@@ -1064,7 +1082,7 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
             <div className="section-intro section-intro-wide"><p>{ui.toolsLead}</p><h2>{ui.toolsText}</h2></div>
             <div id="calculator" className="calculator-shell section-anchor">
               <div className="calculator-copy"><h3>{dict.calculatorTitle}</h3><p>{dict.calculatorInfo}</p><div className="risk-list">{PITFALLS.map((item) => { const checked = !!calculatorToggles[item.id]; return <button key={item.id} onClick={() => setCalculatorToggles((previous) => ({...previous, [item.id]: !previous[item.id]}))} aria-pressed={checked} className={checked ? 'is-selected' : ''}><span className="check-box">{checked && <Check />}</span><span><strong>{item.label[lang]}</strong><small>{item.explanation[lang]}</small></span><b>+€{item.cost}</b></button>; })}</div></div>
-              <aside className="calculator-result"><span>{ui.estimate}</span><strong>€{calculatorTotal}</strong><small>{ui.maximum}</small><div><span>{dict.calcPackageLabel}</span><b>€749</b>{calculatorTotal > 749 && <p>{ui.difference}: €{calculatorTotal - 749}</p>}</div><p><AlertCircle />{dict.calcFooterNotice}</p></aside>
+              <aside className="calculator-result"><span>{ui.estimate}</span><strong>€{calculatorTotal}</strong><small>{ui.maximum}</small><div><span>{dict.calcPackageLabel}</span><b>€{firstYearPackagePrice}</b>{calculatorTotal > firstYearPackagePrice && <p>{ui.difference}: €{calculatorTotal - firstYearPackagePrice}</p>}</div><p><AlertCircle />{dict.calcFooterNotice}</p></aside>
             </div>
 
             <div id="checklist" className="planner-shell section-anchor">
@@ -1145,8 +1163,8 @@ export default function VantamHome({lang, pathname, searchString}: VantamHomePro
                     {formStatus === 'before' && <label htmlFor="contact-moving-date"><span>{ui.formMovingDateLabel}</span><input id="contact-moving-date" name="movingDate" type="date" value={formMovingDate} onChange={(event) => setFormMovingDate(event.target.value)} disabled={formState === 'sending'} /></label>}
                     <label htmlFor="contact-city"><span>{ui.formCityLabel}</span><input id="contact-city" name="city" type="text" value={formCity} onChange={(event) => setFormCity(event.target.value)} disabled={formState === 'sending'} maxLength={80} placeholder={lang === 'uk' ? 'Амстердам, Гаага, Делфт...' : lang === 'ru' ? 'Амстердам, Гаага, Делфт...' : 'Amsterdam, The Hague, Delft...'} /></label>
                   </div>
-                  <label htmlFor="contact-help"><span>{ui.formHelpLabel}</span><select id="contact-help" name="help" value={formHelp} onChange={(event) => { const nextHelp = event.target.value; setFormHelp(nextHelp); if (nextHelp !== 'housing_search') { setFormHousingType(''); setFormBudget(''); setFormGuarantor(''); } }} disabled={formState === 'sending'}>{qualificationOptions.help.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
-                  {formHelp === 'housing_search' && <div className="qualification-grid">
+                  <label htmlFor="contact-help"><span>{ui.formHelpLabel}</span><select id="contact-help" name="help" value={formHelp} onChange={(event) => { const nextHelp = event.target.value; setFormHelp(nextHelp); if (!nextHelp.startsWith('housing_')) { setFormHousingType(''); setFormBudget(''); setFormGuarantor(''); } }} disabled={formState === 'sending'}>{qualificationOptions.help.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
+                  {formHelp.startsWith('housing_') && <div className="qualification-grid">
                     <label htmlFor="contact-housing-type"><span>{ui.formHousingTypeLabel} *</span><select id="contact-housing-type" name="housingType" required value={formHousingType} onChange={(event) => setFormHousingType(event.target.value)} disabled={formState === 'sending'}><option value="">{lang === 'uk' ? 'Оберіть тип житла' : lang === 'ru' ? 'Выберите тип жилья' : 'Choose a housing type'}</option>{qualificationOptions.housingType.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
                     <label htmlFor="contact-budget"><span>{ui.formBudgetLabel}</span><select id="contact-budget" name="budget" value={formBudget} onChange={(event) => setFormBudget(event.target.value)} disabled={formState === 'sending'}><option value="">{lang === 'uk' ? 'Оберіть діапазон' : lang === 'ru' ? 'Выберите диапазон' : 'Choose a range'}</option>{qualificationOptions.budget.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
                     <label htmlFor="contact-guarantor"><span>{ui.formGuarantorLabel}</span><select id="contact-guarantor" name="guarantor" value={formGuarantor} onChange={(event) => setFormGuarantor(event.target.value)} disabled={formState === 'sending'}><option value="">{lang === 'uk' ? 'Оберіть ситуацію' : lang === 'ru' ? 'Выберите ситуацию' : 'Choose a situation'}</option>{qualificationOptions.guarantor.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>

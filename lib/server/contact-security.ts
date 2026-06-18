@@ -12,8 +12,6 @@ const SITUATION_STATUSES = ['before', 'after', 'found_housing', 'need_housing', 
 const GUARANTOR_CONTEXTS = ['yes', 'maybe', 'no'] as const;
 const HOUSING_BUDGETS = ['under-700', '700-1000', '1000-1500', '1500-plus', 'not-sure'] as const;
 const HOUSING_TYPES = ['room_student', 'studio', 'apartment', 'house', 'short_stay', 'not_sure'] as const;
-const NON_HOUSING_HELP = ['consultation', 'single', 'packages', 'b2b'] as const;
-
 const MIN_FORM_FILL_MS = 1_500;
 
 type ContactPayload = {
@@ -107,23 +105,47 @@ function normaliseDate(value: unknown) {
 
 function parseHelpNeeded(value: unknown) {
   if (typeof value !== 'string') return undefined;
-  if (NON_HOUSING_HELP.includes(value as (typeof NON_HOUSING_HELP)[number])) {
+  if (value === 'relocation_orientation' || value === 'urgent_situation') {
     return {
-      helpNeeded: value as (typeof NON_HOUSING_HELP)[number],
-      inquiryType: value as (typeof INQUIRY_TYPES)[number],
+      helpNeeded: value,
+      inquiryType: 'consultation' as const,
+      isHousingSearch: false,
+    };
+  }
+
+  if (value === 'vantam_start' || value === 'vantam_first_year' || value === 'vantam_continue') {
+    return {
+      helpNeeded: value,
+      inquiryType: 'packages' as const,
+      isHousingSearch: false,
+    };
+  }
+
+  if (value === 'individual_service') {
+    return {
+      helpNeeded: value,
+      inquiryType: 'single' as const,
+      isHousingSearch: false,
+    };
+  }
+
+  if (value === 'partnership') {
+    return {
+      helpNeeded: value,
+      inquiryType: 'b2b' as const,
       isHousingSearch: false,
     };
   }
 
   const [prefix, housingType, extra] = value.split(':');
-  if (prefix !== 'housing_search'
+  if ((prefix !== 'housing_ready' && prefix !== 'housing_campaign')
     || extra !== undefined
     || !HOUSING_TYPES.includes(housingType as (typeof HOUSING_TYPES)[number])) {
     return undefined;
   }
 
   return {
-    helpNeeded: `housing_search:${housingType}`,
+    helpNeeded: `${prefix}:${housingType}`,
     inquiryType: 'single' as const,
     isHousingSearch: true,
   };
